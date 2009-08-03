@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Andoku - a sudoku puzzle game for Android.
+  Copyright (C) 2009  Markus Wiederkehr
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<resources>
+    <string name="age_0_minutes">0 minutes ago</string>
+    <string name="age_1_day">yesterday</string>
+    <string name="age_1_hour">1 hour ago</string>
+    <string name="age_1_minute">1 minute ago</string>
+    <string name="age_1_week">1 week ago</string>
+    <string name="age_2_days">2 days ago</string>
+    <string name="age_n_days">%d days ago</string>
+    <string name="age_n_hours">%d hours ago</string>
+    <string name="age_n_minutes">%d minutes ago</string>
+    <string name="age_n_weeks">%d weeks ago</string>
+    <string name="alert_dialog_cancel">Cancel</string>
+    <string name="alert_dialog_ok">OK</string>
+    <string name="app_name">Andoku</string>
+    <string name="button_dismiss_congrats">Continue</string>
+    <string name="button_nav_about">About</string>
+    <string name="button_nav_back">Back</string>
+    <string name="button_nav_cancel">Cancel</string>
+    <string name="button_nav_help">Help</string>
+    <string name="button_nav_resume_game">Resume Game</string>
+    <string name="button_nav_select_new_game">New Game</string>
+    <string name="button_nav_start_game">Start Game</string>
+    <string name="button_reset_game">Reset Game</string>
+    <string name="button_resume_game">Resume Game</string>
+    <string name="button_start_game">Start Game</string>
+    <string name="dialog_reset_puzzle">Reset Puzzle?</string>
+    <string name="html_page_about">about.html</string>
+    <string name="html_page_help">help.html</string>
+    <string name="info_puzzle_ok_1">Everything is okay. One cell to go.</string>
+    <string name="info_puzzle_ok_n">Everything is okay. %d cells to go.</string>
+    <string name="menu_check_puzzle">Check Puzzle</string>
+    <string name="menu_pause">Pause</string>
+    <string name="menu_reset_puzzle">Reset Puzzle</string>
+    <string name="menu_resume">Resume</string>
+    <string name="message_congrats">&lt;b&gt;Congratulations, you have solved this puzzle!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Statistics for &lt;i&gt;%s (%s)&lt;/i&gt;:&lt;br/&gt;&lt;br/&gt;Puzzles solved: %d&lt;br/&gt;Average time: %s&lt;br/&gt;Fastest time: %s</string>
+    <string name="message_reset_puzzle">Do you really want to clear the current puzzle and reset the timer?</string>
+    <string name="name_sudoku_squiggly">Squiggly Sudoku</string>
+    <string name="name_sudoku_squiggly_hyper">Squiggly Hyper-Sudoku</string>
+    <string name="name_sudoku_squiggly_x">Squiggly X-Sudoku</string>
+    <string name="name_sudoku_standard">Standard Sudoku</string>
+    <string name="name_sudoku_standard_hyper">Hyper-Sudoku</string>
+    <string name="name_sudoku_standard_x">X-Sudoku</string>
+    <string name="page_title_about">About Andoku</string>
+    <string name="page_title_help">Help on Andoku</string>
+    <string name="page_title_new_game">Start New Game</string>
+    <string name="page_title_resume_game">Resume Game</string>
+    <string name="page_title_welcome">Welcome to Andoku</string>
+    <string name="prompt_spinner_difficulty">Choose difficulty level</string>
+    <string name="prompt_spinner_extra_regions">Choose extra regions</string>
+    <string name="prompt_spinner_grid">Choose a grid style</string>
+    <string name="spinner_difficulty">Difficulty level:</string>
+    <string name="spinner_extra_regions">Extra regions:</string>
+    <string name="spinner_grid">Grid style:</string>
+    <string name="title_no_puzzle">No puzzle available</string>
+    <string name="title_puzzle">%s #%d/%d (%s)</string>
+    <string name="warn_error_loading_puzzle">An error has occurred while loading the puzzle!</string>
+    <string name="warn_puzzle_errors">Sorry, you have made some mistakes!</string>
+ </resources>

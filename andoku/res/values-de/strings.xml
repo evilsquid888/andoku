@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Andoku - a sudoku puzzle game for Android.
+  Copyright (C) 2009  Markus Wiederkehr
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<resources>
+    <string name="age_0_minutes">vor 0 Minuten</string>
+    <string name="age_1_day">Gestern</string>
+    <string name="age_1_hour">vor 1 Stunde</string>
+    <string name="age_1_minute">vor 1 Minute</string>
+    <string name="age_1_week">vor 1 Woche</string>
+    <string name="age_2_days">Vorgestern</string>
+    <string name="age_n_days">vor %d Tagen</string>
+    <string name="age_n_hours">vor %d Stunden</string>
+    <string name="age_n_minutes">vor %d Minuten</string>
+    <string name="age_n_weeks">vor %d Wochen</string>
+    <string name="alert_dialog_cancel">Abbrechen</string>
+    <string name="alert_dialog_ok">OK</string>
+    <string name="app_name">Andoku</string>
+    <string name="button_dismiss_congrats">Weiter</string>
+    <string name="button_nav_about">Über...</string>
+    <string name="button_nav_back">Zurück</string>
+    <string name="button_nav_cancel">Abbrechen</string>
+    <string name="button_nav_help">Hilfe</string>
+    <string name="button_nav_resume_game">Spiel fortsetzen</string>
+    <string name="button_nav_select_new_game">Neues Spiel</string>
+    <string name="button_nav_start_game">Spiel starten</string>
+    <string name="button_reset_game">Spiel zurücksetzen</string>
+    <string name="button_resume_game">Spiel fortsetzen</string>
+    <string name="button_start_game">Spiel starten</string>
+    <string name="dialog_reset_puzzle">Rätsel zurücksetzen?</string>
+    <string name="html_page_about">about-de.html</string>
+    <string name="html_page_help">help-de.html</string>
+    <string name="info_puzzle_ok_1">Alles okay. Ein Feld ist noch auszufüllen.</string>
+    <string name="info_puzzle_ok_n">Alles okay. %d Felder sind noch auszufüllen.</string>
+    <string name="menu_check_puzzle">Überprüfen</string>
+    <string name="menu_pause">Pause</string>
+    <string name="menu_reset_puzzle">Zurücksetzen</string>
+    <string name="menu_resume">Fortfahren</string>
+    <string name="message_congrats">&lt;b&gt;Gratuliere, Sie haben das Sudoku-Rätsel gelöst!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Statistik für &lt;i&gt;%s (%s)&lt;/i&gt;:&lt;br/&gt;&lt;br/&gt;Gelöste Rätsel: %d&lt;br/&gt;Durchschnittszeit: %s&lt;br/&gt;Bestzeit: %s</string>
+    <string name="message_reset_puzzle">Wollen Sie das aktuelle Sudoku-Rätsel und die Stoppuhr wirklich zurücksetzen?</string>
+    <string name="name_sudoku_squiggly">Squiggly Sudoku</string>
+    <string name="name_sudoku_squiggly_hyper">Squiggly Hyper-Sudoku</string>
+    <string name="name_sudoku_squiggly_x">Squiggly X-Sudoku</string>
+    <string name="name_sudoku_standard">Standard Sudoku</string>
+    <string name="name_sudoku_standard_hyper">Hyper-Sudoku</string>
+    <string name="name_sudoku_standard_x">X-Sudoku</string>
+    <string name="page_title_about">Über Andoku</string>
+    <string name="page_title_help">Hilfe zu Andoku</string>
+    <string name="page_title_new_game">Neues Spiel starten</string>
+    <string name="page_title_resume_game">Spiel fortsetzen</string>
+    <string name="page_title_welcome">Willkommen zu Andoku</string>
+    <string name="prompt_spinner_difficulty">Schwierigkeitsgrad auswählen</string>
+    <string name="prompt_spinner_extra_regions">Zusatzbereiche auswählen</string>
+    <string name="prompt_spinner_grid">Raster auswählen</string>
+    <string name="spinner_difficulty">Schwierigkeitsgrad:</string>
+    <string name="spinner_extra_regions">Zusatzbereiche:</string>
+    <string name="spinner_grid">Raster:</string>
+    <string name="title_no_puzzle">Kein Sudoku-Rätsel verfügbar</string>
+    <string name="title_puzzle">%s #%d/%d (%s)</string>
+    <string name="warn_error_loading_puzzle">Beim Laden des Sudoku-Rätsels ist ein Fehler aufgetreten!</string>
+    <string name="warn_puzzle_errors">Das Sudoku-Rätsel hat leider einige Fehler!</string>
+ </resources>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Andoku - a sudoku puzzle game for Android.
+  Copyright (C) 2009  Markus Wiederkehr
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<resources>
+
+    <style name="NavigationTitle">
+        <item name="android:textSize">25sp</item> 
+        <item name="android:shadowColor">#faaa</item> 
+        <item name="android:shadowDx">1.2</item> 
+        <item name="android:shadowDy">2.2</item> 
+        <item name="android:shadowRadius">1.5</item> 
+    </style>
+
+    <style name="NavigationButton">
+        <item name="android:paddingLeft">18dp</item> 
+        <item name="android:paddingRight">18dp</item> 
+        <item name="android:minWidth">100dp</item> 
+    </style>
+
+    <style name="InputToggleButton" parent="android:style/Widget.Button.Toggle">
+    </style>
+
+    <style name="SudokuInputButton">
+        <item name="android:textSize">26sp</item> 
+        <item name="android:paddingLeft">22dp</item> 
+        <item name="android:paddingRight">22dp</item> 
+        <item name="android:paddingTop">10dp</item> 
+        <item name="android:paddingBottom">14dp</item> 
+    </style>
+
+    <style name="SudokuInputToggleButton" parent="style/SudokuInputButton">
+        <item name="android:paddingTop">6dp</item> 
+        <item name="android:paddingBottom">18dp</item> 
+    </style>
+
+    <style name="SudokuEnterButton" parent="style/SudokuInputButton">
+        <item name="android:paddingTop">10dp</item> 
+        <item name="android:paddingBottom">14dp</item> 
+    </style>
+
+    <style name="SudokuClearButton" parent="style/SudokuInputButton">
+        <item name="android:paddingTop">10dp</item> 
+        <item name="android:paddingBottom">14dp</item> 
+    </style>
+
+    <style name="SudokuValueText">
+        <item name="android:textSize">26sp</item> 
+        <item name="android:textColor">#f040</item> 
+        <item name="android:gravity">center_horizontal</item> 
+        <item name="android:padding">12dp</item>
+        <!-- <item name="android:background">@drawable/input_border</item> -->
+    </style>
+
+</resources>
+    

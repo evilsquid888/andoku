@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Andoku - a sudoku puzzle game for Android.
+  Copyright (C) 2009  Markus Wiederkehr
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/flipper"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <TextView
+            style="@style/NavigationTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/page_title_welcome"/>
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <Button
+                style="@style/NavigationButton"
+                android:id="@+id/selectNewGameButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_nav_select_new_game"/>
+            <Button
+                style="@style/NavigationButton"
+                android:id="@+id/resumeGameButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/button_nav_resume_game"/>
+            <Button
+                style="@style/NavigationButton"
+                android:id="@+id/helpButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/button_nav_help"/>
+            <Button
+                style="@style/NavigationButton"
+                android:id="@+id/aboutButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/button_nav_about"/>
+        </LinearLayout>
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <TextView
+            style="@style/NavigationTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/page_title_new_game"/>
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="left"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp">
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/spinner_grid"/>
+            <Spinner android:id="@+id/gridSpinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:prompt="@string/prompt_spinner_grid"/>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/spinner_extra_regions"/>
+            <Spinner android:id="@+id/extraRegionsSpinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:prompt="@string/prompt_spinner_extra_regions"/>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/spinner_difficulty"/>
+            <Spinner android:id="@+id/difficultySpinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:prompt="@string/prompt_spinner_difficulty"/>
+            <Button
+                style="@style/NavigationButton"
+                android:id="@+id/startNewGameButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="18dp"
+                android:text="@string/button_nav_start_game"/>
+        </LinearLayout>
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="12dp">
+        <TextView
+            style="@style/NavigationTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/page_title_resume_game"
+            android:paddingBottom="8dp"/>
+        <ListView android:id="@id/android:list"
+            android:layout_width="fill_parent" 
+            android:layout_height="fill_parent"
+            android:background="#88fffeff"
+            android:cacheColorHint="#0000"
+            android:layout_weight="1"/>
+        <Button
+            style="@style/NavigationButton"
+            android:id="@+id/backButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/button_nav_cancel"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="12dp">
+        <TextView
+            style="@style/NavigationTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/page_title_help"/>
+        <WebView
+            android:id="@+id/helpWebView"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:fadingEdge="vertical"/>
+        <Button
+            style="@style/NavigationButton"
+            android:id="@+id/backButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/button_nav_back"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="12dp">
+        <TextView
+            style="@style/NavigationTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/page_title_about"/>
+        <WebView
+            android:id="@+id/aboutWebView"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:fadingEdge="vertical"/>
+        <Button
+            style="@style/NavigationButton"
+            android:id="@+id/backButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/button_nav_back"/>
+    </LinearLayout>
+
+</ViewFlipper>
