@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.googlecode.andoku.util;
+package com.googlecode.andoku.tools;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -32,9 +32,14 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Generates the index file that has to accompany a .adk level file.
+ */
 public class IndexGenerator {
+	private static final String PUZZLES_DIR = "../Andoku/assets/puzzles";
+
 	public static void main(String[] args) throws IOException {
-		File[] listFiles = new File("assets/puzzles").listFiles(new FileFilter() {
+		File[] listFiles = new File(PUZZLES_DIR).listFiles(new FileFilter() {
 			public boolean accept(File file) {
 				return file.getName().endsWith(".adk");
 			}
