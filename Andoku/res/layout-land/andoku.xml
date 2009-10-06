@@ -35,8 +35,7 @@
         android:layout_height="wrap_content"
         android:focusableInTouchMode="true"
         android:visibility="visible"
-        android:gravity="center_horizontal"
-        android:background="@drawable/sudoku_border"/>
+        android:gravity="center_horizontal"/>
 
     <LinearLayout
         android:layout_width="wrap_content"

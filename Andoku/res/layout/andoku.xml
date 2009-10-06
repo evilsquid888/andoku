@@ -45,8 +45,7 @@
         android:layout_height="wrap_content"
         android:focusableInTouchMode="true"
         android:gravity="center"
-        android:layout_weight="1"
-        android:background="@drawable/sudoku_border"/>
+        android:layout_weight="1"/>
 
     <TextView
         android:id="@+id/labelTimer"

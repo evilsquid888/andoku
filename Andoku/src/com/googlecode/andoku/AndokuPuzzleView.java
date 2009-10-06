@@ -29,6 +29,7 @@ import android.graphics.Paint.Cap;
 import android.graphics.Paint.FontMetrics;
 import android.graphics.Paint.Style;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -131,6 +132,8 @@ public class AndokuPuzzleView extends View {
 
 		pausedDrawable = getResources().getDrawable(R.drawable.paused);
 		pausedDrawable.setAlpha(144);
+
+		setBackground();
 	}
 
 	public void setDisplayDensity(float displayDensity) {
@@ -253,6 +256,16 @@ public class AndokuPuzzleView extends View {
 
 		if (Constants.LOG_V)
 			Log.v(TAG, "Draw time: " + (t1 - t0));
+	}
+
+	private void setBackground() {
+		int borderWidth = 3;
+		GradientDrawable bg = new GradientDrawable();
+		bg.setColor(0xffffffff);
+		bg.setStroke(borderWidth, 0xff000000);
+		bg.setCornerRadius(6);
+		setBackgroundDrawable(bg);
+		setPadding(borderWidth, borderWidth, borderWidth, borderWidth);
 	}
 
 	private void onDraw0(Canvas canvas) {
