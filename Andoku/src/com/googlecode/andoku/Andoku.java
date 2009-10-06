@@ -197,7 +197,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 		Display display = getWindowManager().getDefaultDisplay();
 		display.getMetrics(metrics);
 		// Util.debug(metrics);
-		andokuView.setLineWidths(metrics.density, 3 * metrics.density);
+		andokuView.setDisplayDensity(metrics.density);
 		fingertipView.setRadius((int) (64 * metrics.density), (int) (64 * metrics.density));
 
 		createPuzzle(savedInstanceState);

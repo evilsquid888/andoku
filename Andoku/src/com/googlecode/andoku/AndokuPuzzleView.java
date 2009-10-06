@@ -133,8 +133,11 @@ public class AndokuPuzzleView extends View {
 		pausedDrawable.setAlpha(144);
 	}
 
-	public void setLineWidths(float gridWidth, float regionBorderWidth) {
+	public void setDisplayDensity(float displayDensity) {
+		float gridWidth = (float) Math.floor(Math.max(displayDensity, 1));
 		gridPaint.setStrokeWidth(gridWidth);
+
+		float regionBorderWidth = 3 * gridWidth;
 		regionBorderPaint.setStrokeWidth(regionBorderWidth);
 		errorPaint.setStrokeWidth(regionBorderWidth);
 	}
