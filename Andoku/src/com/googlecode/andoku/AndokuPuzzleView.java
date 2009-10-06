@@ -57,6 +57,8 @@ public class AndokuPuzzleView extends View {
 	private final Paint valuePaint;
 	private final Paint cluePaint;
 	private final Paint errorPaint;
+	private final Paint markedCellPaint;
+	private final Paint markedCellCluePaint;
 	private float textOffset;
 
 	private int[] areaColors = { 0x0cff0000, 0x0c00ff00, 0x0c0000ff, 0x0cffff00, 0x0cff00ff,
@@ -112,6 +114,14 @@ public class AndokuPuzzleView extends View {
 		errorPaint.setARGB(255, 255, 0, 0);
 		errorPaint.setStyle(Style.STROKE);
 		errorPaint.setStrokeCap(Cap.BUTT);
+
+		markedCellPaint = new Paint();
+		markedCellPaint.setAntiAlias(false);
+		markedCellPaint.setARGB(112, 0, 255, 0);
+
+		markedCellCluePaint = new Paint();
+		markedCellCluePaint.setAntiAlias(false);
+		markedCellCluePaint.setARGB(112, 255, 0, 0);
 
 		multiValuesPainter = new MultiValuesPainter(Typeface.create(valuePaint.getTypeface(),
 				Typeface.BOLD));
@@ -285,9 +295,11 @@ public class AndokuPuzzleView extends View {
 		float y = markedCell.row * cellHeight;
 		canvas.translate(x, y);
 
-		int color = puzzle.isClue(markedCell.row, markedCell.col) ? 0x60ff0000 : 0x6000ff00;
+		Paint paint = puzzle.isClue(markedCell.row, markedCell.col)
+				? markedCellCluePaint
+				: markedCellPaint;
 		canvas.clipRect(0, 0, cellWidth, cellHeight);
-		canvas.drawColor(color);
+		canvas.drawPaint(paint);
 
 		canvas.restore();
 	}
