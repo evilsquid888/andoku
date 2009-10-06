@@ -135,6 +135,8 @@ public class SaveGameDb {
 		finally {
 			db.endTransaction();
 		}
+
+		db.close();
 	}
 
 	public boolean loadGame(String puzzleId, AndokuPuzzle puzzle, TickTimer timer) {
@@ -171,6 +173,8 @@ public class SaveGameDb {
 		SQLiteDatabase db = openHelper.getWritableDatabase();
 
 		db.delete(TABLE_NAME, PUZZLE_ID + "=?", new String[] { puzzleId });
+
+		db.close();
 	}
 
 	public void deleteAll() {
@@ -180,6 +184,8 @@ public class SaveGameDb {
 		SQLiteDatabase db = openHelper.getWritableDatabase();
 
 		db.delete(TABLE_NAME, null, null);
+
+		db.close();
 	}
 
 	public Cursor findAllGames() {
