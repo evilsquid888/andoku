@@ -47,38 +47,10 @@ public final class PuzzleSymbols {
 		return sb.toString();
 	}
 
-	public ValueSet getValues(String symbols) {
-		ValueSet values = new ValueSet();
-
-		final int length = symbols.length();
-		for (int idx = 0; idx < length; idx++) {
-			char symbol = symbols.charAt(idx);
-			int value = getValue(symbol);
-			if (value == UNDEFINED_VALUE)
-				throw new IllegalArgumentException();
-
-			values.add(value);
-		}
-
-		return values;
-	}
-
 	public char getSymbol(int value) {
 		if (value < 0 || value >= size)
 			return UNDEFINED_SYMBOL;
 
 		return symbolSet.charAt(value);
-	}
-
-	public int getValue(char symbol) {
-		int value = symbolSet.indexOf(symbol);
-		if (value < 0 || value >= size)
-			return UNDEFINED_VALUE;
-
-		return value;
-	}
-
-	public String getSymbolSet() {
-		return symbolSet;
 	}
 }
