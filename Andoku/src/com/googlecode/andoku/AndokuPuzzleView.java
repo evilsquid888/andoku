@@ -583,9 +583,7 @@ public class AndokuPuzzleView extends View {
 		valuePaint.setTextSize(fontSize);
 		calcTextOffset();
 
-		float smallFontSize = cellHeight * 0.3f;
 		multiValuesPainter.setCellSize(cellWidth, cellHeight);
-		multiValuesPainter.setFontSize(smallFontSize);
 	}
 
 	private void calcTextOffset() {

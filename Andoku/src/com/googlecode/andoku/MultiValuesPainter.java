@@ -54,18 +54,9 @@ public class MultiValuesPainter {
 	public void setCellSize(float cellSizeX, float cellSizeY) {
 		this.cellWidth = cellSizeX;
 		this.cellHeight = cellSizeY;
-	}
 
-	public void setFontSize(float fontSize) {
-		digitPaint.setTextSize(fontSize);
-
-		FontMetrics fontMetrics = digitPaint.getFontMetrics();
-		float fontHeight = -fontMetrics.ascent - fontMetrics.descent;
-		int rows = 3;
-		float spacing = (cellHeight - rows * fontHeight) / (rows + 1);
-		baselineDist = fontHeight + spacing;
-		textOffset = cellHeight - spacing - (rows - 1) * baselineDist + 0.5f;
-		xOffset = spacing + digitPaint.measureText("5") / 2;
+		float fontSize = cellHeight * 0.3f;
+		setFontSize(fontSize);
 	}
 
 	public void paintValues(Canvas canvas, ValueSet values) {
@@ -82,5 +73,17 @@ public class MultiValuesPainter {
 
 	private void setPuzzleSize(int puzzleSize) {
 		// TODO
+	}
+
+	private void setFontSize(float fontSize) {
+		digitPaint.setTextSize(fontSize);
+
+		FontMetrics fontMetrics = digitPaint.getFontMetrics();
+		float fontHeight = -fontMetrics.ascent - fontMetrics.descent;
+		int rows = 3;
+		float spacing = (cellHeight - rows * fontHeight) / (rows + 1);
+		baselineDist = fontHeight + spacing;
+		textOffset = cellHeight - spacing - (rows - 1) * baselineDist + 0.5f;
+		xOffset = spacing + digitPaint.measureText("5") / 2;
 	}
 }
