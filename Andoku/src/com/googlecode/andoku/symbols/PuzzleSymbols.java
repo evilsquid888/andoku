@@ -19,7 +19,6 @@
 package com.googlecode.andoku.symbols;
 
 import com.googlecode.andoku.model.Puzzle;
-import com.googlecode.andoku.model.ValueSet;
 
 public final class PuzzleSymbols {
 	public static char UNDEFINED_SYMBOL = '?';
@@ -31,20 +30,6 @@ public final class PuzzleSymbols {
 	public PuzzleSymbols(String symbolSet) {
 		this.symbolSet = symbolSet;
 		this.size = symbolSet.length();
-	}
-
-	public String getSymbols(ValueSet values) {
-		StringBuilder sb = new StringBuilder();
-
-		for (int value = values.nextValue(0); value != -1; value = values.nextValue(value + 1)) {
-			char symbol = getSymbol(value);
-			if (symbol == UNDEFINED_SYMBOL)
-				throw new IllegalArgumentException();
-
-			sb.append(symbol);
-		}
-
-		return sb.toString();
 	}
 
 	public char getSymbol(int value) {
