@@ -54,23 +54,25 @@ class Theme {
 		extraRegionPaint.setAntiAlias(false);
 		extraRegionPaint.setColor(0x40002dff);
 
+		Typeface typeface = Typeface.SANS_SERIF;
 		valuePaint = new Paint();
 		valuePaint.setAntiAlias(true);
 		valuePaint.setColor(0xff006000);
 		valuePaint.setTextAlign(Align.CENTER);
+		valuePaint.setTypeface(typeface);
 
-		Typeface typeface = Typeface.create(valuePaint.getTypeface(), Typeface.BOLD);
+		Typeface boldTypeface = Typeface.create(typeface, Typeface.BOLD);
 		digitPaint = new Paint();
 		digitPaint.setAntiAlias(true);
 		digitPaint.setColor(0xff006000);
 		digitPaint.setTextAlign(Align.CENTER);
-		digitPaint.setTypeface(typeface);
+		digitPaint.setTypeface(boldTypeface);
 
 		cluePaint = new Paint();
 		cluePaint.setAntiAlias(true);
 		cluePaint.setColor(0xff000000);
 		cluePaint.setTextAlign(Align.CENTER);
-		cluePaint.setTypeface(Typeface.create(valuePaint.getTypeface(), Typeface.BOLD));
+		cluePaint.setTypeface(boldTypeface);
 
 		previewCluePaint = new Paint(cluePaint);
 		previewCluePaint.setAlpha(128);
