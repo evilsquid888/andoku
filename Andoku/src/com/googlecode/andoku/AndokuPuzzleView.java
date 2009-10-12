@@ -337,9 +337,7 @@ public class AndokuPuzzleView extends View {
 				canvas.drawText(dv, cellWidth / 2f, textOffset, theme.getCluePaint(preview));
 			}
 		}
-		else if (values.size() == 1
-				&& (puzzle.isClue(row, col) || markedCell == null || markedCell.row != row
-						|| markedCell.col != col || puzzle.isErrorPosition(row, col))) {
+		else if (values.size() == 1) {
 			String dv = String.valueOf(symbols.getSymbol(values.nextValue(0)));
 			Paint paint = puzzle.isClue(row, col) ? theme.getCluePaint(preview) : theme
 					.getValuePaint();
