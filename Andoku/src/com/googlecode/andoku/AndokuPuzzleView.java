@@ -332,7 +332,7 @@ public class AndokuPuzzleView extends View {
 
 		if (preview && !puzzle.isSolved()) {
 			if (puzzle.isClue(row, col)) {
-				boolean show = previewClueCounter++ % 4 != 0;
+				boolean show = previewClueCounter++ % 3 != 0;
 				String dv = show ? String.valueOf(symbols.getSymbol(values.nextValue(0))) : "?";
 				canvas.drawText(dv, cellWidth / 2f, textOffset, theme.getCluePaint(preview));
 			}
