@@ -109,6 +109,10 @@ class Theme {
 		background = bg;
 	}
 
+	public char getSymbol(int value) {
+		return "123456789".charAt(value);
+	}
+
 	public Paint getGridPaint() {
 		return gridPaint;
 	}

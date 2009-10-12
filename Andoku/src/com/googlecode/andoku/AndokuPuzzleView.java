@@ -33,7 +33,6 @@ import com.googlecode.andoku.model.AndokuPuzzle;
 import com.googlecode.andoku.model.Position;
 import com.googlecode.andoku.model.RegionError;
 import com.googlecode.andoku.model.ValueSet;
-import com.googlecode.andoku.symbols.PuzzleSymbols;
 
 public class AndokuPuzzleView extends View {
 	private static final String TAG = AndokuPuzzleView.class.getName();
@@ -41,7 +40,6 @@ public class AndokuPuzzleView extends View {
 	private static final int PREF_SIZE = 300;
 
 	private AndokuPuzzle puzzle;
-	private PuzzleSymbols symbols; // TODO: make part of theme
 	private int size;
 	private boolean paused;
 	private boolean preview;
@@ -77,11 +75,10 @@ public class AndokuPuzzleView extends View {
 		setPadding(padding, padding, padding, padding);
 	}
 
-	public void setPuzzle(AndokuPuzzle puzzle, PuzzleSymbols symbols) {
+	public void setPuzzle(AndokuPuzzle puzzle) {
 		this.puzzle = puzzle;
-		this.symbols = symbols;
 		size = puzzle == null ? 0 : puzzle.getSize();
-		multiValuesPainter.setPuzzle(size, symbols);
+		multiValuesPainter.setPuzzleSize(size);
 
 		requestLayout();
 		invalidate();
@@ -333,12 +330,12 @@ public class AndokuPuzzleView extends View {
 		if (preview && !puzzle.isSolved()) {
 			if (puzzle.isClue(row, col)) {
 				boolean show = previewClueCounter++ % 3 != 0;
-				String dv = show ? String.valueOf(symbols.getSymbol(values.nextValue(0))) : "?";
+				String dv = show ? String.valueOf(theme.getSymbol(values.nextValue(0))) : "?";
 				canvas.drawText(dv, cellWidth / 2f, textOffset, theme.getCluePaint(preview));
 			}
 		}
 		else if (values.size() == 1) {
-			String dv = String.valueOf(symbols.getSymbol(values.nextValue(0)));
+			String dv = String.valueOf(theme.getSymbol(values.nextValue(0)));
 			Paint paint = puzzle.isClue(row, col) ? theme.getCluePaint(preview) : theme
 					.getValuePaint();
 			canvas.drawText(dv, cellWidth / 2f, textOffset, paint);

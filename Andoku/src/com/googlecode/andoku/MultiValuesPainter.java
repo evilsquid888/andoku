@@ -23,11 +23,9 @@ import android.graphics.Paint;
 import android.graphics.Paint.FontMetrics;
 
 import com.googlecode.andoku.model.ValueSet;
-import com.googlecode.andoku.symbols.PuzzleSymbols;
 
 public class MultiValuesPainter {
 	private Theme theme;
-	private PuzzleSymbols puzzleSymbols; // TODO make part of theme
 
 	private float textOffset;
 	private float baselineDist;
@@ -43,9 +41,8 @@ public class MultiValuesPainter {
 		this.theme = theme;
 	}
 
-	public void setPuzzle(int puzzleSize, PuzzleSymbols puzzleSymbols) {
-		setPuzzleSize(puzzleSize);
-		this.puzzleSymbols = puzzleSymbols;
+	public void setPuzzleSize(int puzzleSize) {
+		// TODO
 	}
 
 	public void setCellSize(float cellSizeX, float cellSizeY) {
@@ -60,16 +57,12 @@ public class MultiValuesPainter {
 		for (int value = values.nextValue(0); value != -1; value = values.nextValue(value + 1)) {
 			int vrow = value / 3;
 			int vcol = value % 3;
-			String dv = String.valueOf(puzzleSymbols.getSymbol(value));
+			String dv = String.valueOf(theme.getSymbol(value));
 			float py = textOffset + vrow * baselineDist;
 			float px = vcol == 0 ? xOffset : (vcol == 1 ? cellWidth / 2f : cellWidth - xOffset);
 			Paint paint = theme.getDigitPaint();
 			canvas.drawText(dv, px, py, paint);
 		}
-	}
-
-	private void setPuzzleSize(int puzzleSize) {
-		// TODO
 	}
 
 	private void setFontSize(float fontSize) {

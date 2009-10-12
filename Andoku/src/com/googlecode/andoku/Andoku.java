@@ -56,8 +56,6 @@ import com.googlecode.andoku.source.PuzzleIOException;
 import com.googlecode.andoku.source.PuzzleResolver;
 import com.googlecode.andoku.source.PuzzleSource;
 import com.googlecode.andoku.source.PuzzleType;
-import com.googlecode.andoku.symbols.PuzzleSymbols;
-import com.googlecode.andoku.symbols.StandardPuzzleSymbols;
 
 public class Andoku extends Activity implements OnTouchListener, OnKeyListener, TickListener {
 	private static final String TAG = Andoku.class.getName();
@@ -88,7 +86,6 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 
 	private PuzzleHolder puzzleHolder;
 	private AndokuPuzzle puzzle;
-	private PuzzleSymbols puzzleSymbols; // TODO: keep in preferences
 
 	private TickTimer timer = new TickTimer(this);
 
@@ -717,8 +714,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 	private void setPuzzle(PuzzleHolder puzzleHolder) {
 		this.puzzleHolder = puzzleHolder;
 		this.puzzle = AndokuPuzzle.create(puzzleHolder);
-		this.puzzleSymbols = StandardPuzzleSymbols.getStandardSymbols(puzzle.getSize());
-		andokuView.setPuzzle(this.puzzle, puzzleSymbols);
+		andokuView.setPuzzle(this.puzzle);
 
 		puzzleTitleView.setText(getPuzzleTitle());
 
@@ -741,8 +737,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 	private void clearPuzzle() {
 		this.puzzleHolder = null;
 		this.puzzle = null;
-		this.puzzleSymbols = null;
-		andokuView.setPuzzle(null, null);
+		andokuView.setPuzzle(null);
 
 		puzzleTitleView.setText(R.string.title_no_puzzle);
 
