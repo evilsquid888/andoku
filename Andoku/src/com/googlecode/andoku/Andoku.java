@@ -137,9 +137,6 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 
 		fingertipView = (FingertipView) findViewById(R.id.viewFingertip);
 		fingertipView.setOnTouchListener(this);
-		// TODO: multiplying with density not necessary?? looks pre-multiplied on WVGA800..
-//		float displayDensity = getResources().getDisplayMetrics().density;
-//		fingertipView.setRadius((int) (64 * displayDensity), (int) (64 * displayDensity));
 
 		timerView = (TextView) findViewById(R.id.labelTimer);
 

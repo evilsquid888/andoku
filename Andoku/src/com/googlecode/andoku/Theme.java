@@ -10,7 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 
 class Theme {
-	private final int borderStrokeWidth;
+	private final float borderStrokeWidth;
 
 	private final Paint gridPaint;
 	private final Paint regionBorderPaint;
@@ -29,12 +29,10 @@ class Theme {
 	private final Drawable background;
 
 	public Theme(Resources resources) {
-		// TODO: multiplying with density not necessary?? looks pre-multiplied on WVGA800..
-//		float displayDensity = resources.getDisplayMetrics().density;
-//		int gridWidth = (int) Math.floor(Math.max(displayDensity, 1));
+		float displayDensity = resources.getDisplayMetrics().density;
+		float gridWidth = Math.max(1, displayDensity);
 
-		int gridWidth = 1;
-		borderStrokeWidth = 3 * gridWidth;
+		borderStrokeWidth = Math.max(2, 3 * displayDensity);
 
 		gridPaint = new Paint();
 		gridPaint.setStrokeWidth(gridWidth);
@@ -97,7 +95,7 @@ class Theme {
 
 		GradientDrawable bg = new GradientDrawable();
 		bg.setColor(0xffffffff);
-		bg.setStroke(borderStrokeWidth, 0xff000000);
+		bg.setStroke(Math.round(borderStrokeWidth), 0xff000000);
 		bg.setCornerRadius(6);
 		background = bg;
 	}
@@ -151,7 +149,7 @@ class Theme {
 	}
 
 	public int getPadding() {
-		return borderStrokeWidth;
+		return Math.round(borderStrokeWidth);
 	}
 
 	public void setTextSize(float fontSize) {

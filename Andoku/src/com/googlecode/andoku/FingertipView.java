@@ -29,8 +29,8 @@ public class FingertipView extends View {
 	private PointF point;
 	private boolean editable;
 
-	private int radiusX = 64;
-	private int radiusY = 64;
+	private final int radiusX;
+	private final int radiusY;
 
 	private Drawable redFingertip;
 	private Drawable greenFingertip;
@@ -40,11 +40,11 @@ public class FingertipView extends View {
 
 		redFingertip = getResources().getDrawable(R.drawable.ftip_red);
 		greenFingertip = getResources().getDrawable(R.drawable.ftip_green);
-	}
 
-	public void setRadius(int radiusX, int radiusY) {
-		this.radiusX = radiusX;
-		this.radiusY = radiusY;
+		float displayDensity = getResources().getDisplayMetrics().density;
+		int radius = Math.round(64 * displayDensity);
+		radiusX = radius;
+		radiusY = radius;
 	}
 
 	public void highlight(PointF point, boolean editable) {
