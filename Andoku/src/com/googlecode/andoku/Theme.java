@@ -23,6 +23,9 @@ class Theme {
 	private final Paint markedCellPaint;
 	private final Paint markedCellCluePaint;
 
+	private final boolean drawAreaColors;
+	private final int[] areaColors;
+
 	private final Drawable congratsDrawable;
 	private final Drawable pausedDrawable;
 
@@ -87,6 +90,10 @@ class Theme {
 		markedCellCluePaint.setAntiAlias(false);
 		markedCellCluePaint.setColor(0x70ff0000);
 
+		drawAreaColors = false;
+		areaColors = new int[] { 0x0cff0000, 0x0c00ff00, 0x0c0000ff, 0x0cffff00, 0x0cff00ff,
+				0x0c00ffff, 0x0c800000, 0x0c008000, 0x0c000080 };
+
 		congratsDrawable = resources.getDrawable(R.drawable.congrats);
 		congratsDrawable.setAlpha(144);
 
@@ -134,6 +141,14 @@ class Theme {
 
 	public Paint getMarkedCellCluePaint() {
 		return markedCellCluePaint;
+	}
+
+	public boolean isDrawAreaColors() {
+		return drawAreaColors;
+	}
+
+	public int getAreaColor(int colorNumber) {
+		return areaColors[colorNumber];
 	}
 
 	public Drawable getCongratsDrawable() {

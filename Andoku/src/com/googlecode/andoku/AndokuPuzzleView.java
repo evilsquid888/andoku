@@ -45,15 +45,10 @@ public class AndokuPuzzleView extends View {
 	private int size;
 	private boolean paused;
 	private boolean preview;
-	private boolean drawAreaColors; // TODO: make part of theme
 
 	private Theme theme;
 
 	private float textOffset;
-
-	// TODO: make part of theme
-	private int[] areaColors = { 0x0cff0000, 0x0c00ff00, 0x0c0000ff, 0x0cffff00, 0x0cff00ff,
-			0x0c00ffff, 0x0c800000, 0x0c008000, 0x0c000080 };
 
 	private final MultiValuesPainter multiValuesPainter = new MultiValuesPainter();
 
@@ -174,14 +169,6 @@ public class AndokuPuzzleView extends View {
 		invalidate();
 	}
 
-	public void setDrawAreaColors(boolean drawAreaColors) {
-		if (this.drawAreaColors == drawAreaColors)
-			return;
-
-		this.drawAreaColors = drawAreaColors;
-		invalidate();
-	}
-
 	@Override
 	protected void onDraw(Canvas canvas) {
 		if (puzzle == null)
@@ -204,7 +191,7 @@ public class AndokuPuzzleView extends View {
 
 		Rect clipBounds = canvas.getClipBounds();
 
-		if (drawAreaColors)
+		if (theme.isDrawAreaColors())
 			drawAreaColors(canvas, clipBounds);
 
 		drawExtraRegions(canvas, clipBounds);
@@ -276,7 +263,8 @@ public class AndokuPuzzleView extends View {
 
 	private void drawAreaColors(Canvas canvas, int row, int col) {
 		int colorNumber = puzzle.getAreaColor(row, col);
-		int color = areaColors[colorNumber];
+		int color = theme.getAreaColor(colorNumber);
+
 		canvas.clipRect(0, 0, cellWidth, cellHeight);
 		canvas.drawColor(color);
 	}
