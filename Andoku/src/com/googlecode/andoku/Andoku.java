@@ -32,9 +32,7 @@ import android.os.PowerManager;
 import android.os.Vibrator;
 import android.os.PowerManager.WakeLock;
 import android.text.Html;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -135,9 +133,13 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 
 		andokuView = (AndokuPuzzleView) findViewById(R.id.viewPuzzle);
 		andokuView.setOnKeyListener(this);
+		andokuView.initialize(new Theme(getResources()));
 
 		fingertipView = (FingertipView) findViewById(R.id.viewFingertip);
 		fingertipView.setOnTouchListener(this);
+		// TODO: multiplying with density not necessary?? looks pre-multiplied on WVGA800..
+//		float displayDensity = getResources().getDisplayMetrics().density;
+//		fingertipView.setRadius((int) (64 * displayDensity), (int) (64 * displayDensity));
 
 		timerView = (TextView) findViewById(R.id.labelTimer);
 
@@ -192,13 +194,6 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 				onStartButton();
 			}
 		});
-
-		DisplayMetrics metrics = new DisplayMetrics();
-		Display display = getWindowManager().getDefaultDisplay();
-		display.getMetrics(metrics);
-		// Util.debug(metrics);
-		andokuView.setDisplayDensity(metrics.density);
-		fingertipView.setRadius((int) (64 * metrics.density), (int) (64 * metrics.density));
 
 		createPuzzle(savedInstanceState);
 	}

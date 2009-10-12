@@ -23,13 +23,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
-import android.graphics.Typeface;
-import android.graphics.Paint.Align;
-import android.graphics.Paint.Cap;
 import android.graphics.Paint.FontMetrics;
-import android.graphics.Paint.Style;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -46,29 +41,21 @@ public class AndokuPuzzleView extends View {
 	private static final int PREF_SIZE = 300;
 
 	private AndokuPuzzle puzzle;
-	private PuzzleSymbols symbols;
+	private PuzzleSymbols symbols; // TODO: make part of theme
 	private int size;
 	private boolean paused;
 	private boolean preview;
-	private boolean drawAreaColors;
+	private boolean drawAreaColors; // TODO: make part of theme
 
-	private final Paint gridPaint;
-	private final Paint regionBorderPaint;
-	private final Paint extraRegionPaint;
-	private final Paint valuePaint;
-	private final Paint cluePaint;
-	private final Paint errorPaint;
-	private final Paint markedCellPaint;
-	private final Paint markedCellCluePaint;
+	private Theme theme;
+
 	private float textOffset;
 
+	// TODO: make part of theme
 	private int[] areaColors = { 0x0cff0000, 0x0c00ff00, 0x0c0000ff, 0x0cffff00, 0x0cff00ff,
 			0x0c00ffff, 0x0c800000, 0x0c008000, 0x0c000080 };
 
-	private final MultiValuesPainter multiValuesPainter;
-
-	private Drawable congratsDrawable;
-	private Drawable pausedDrawable;
+	private final MultiValuesPainter multiValuesPainter = new MultiValuesPainter();
 
 	private float cellWidth;
 	private float cellHeight;
@@ -83,66 +70,16 @@ public class AndokuPuzzleView extends View {
 		super(context, attrs);
 
 		setFocusable(true); // make sure we get key events
-
-		gridPaint = new Paint();
-		gridPaint.setAntiAlias(false);
-		gridPaint.setARGB(64, 0, 0, 0);
-		gridPaint.setStrokeCap(Cap.BUTT);
-		// gridPaint.setShadowLayer(1, 1, 1, 0xff000000);
-
-		regionBorderPaint = new Paint();
-		regionBorderPaint.setAntiAlias(false);
-		regionBorderPaint.setARGB(255, 0, 0, 0);
-		regionBorderPaint.setStrokeCap(Cap.ROUND);
-
-		extraRegionPaint = new Paint();
-		extraRegionPaint.setAntiAlias(false);
-		extraRegionPaint.setARGB(64, 0, 45, 255);
-
-		valuePaint = new Paint();
-		valuePaint.setAntiAlias(true);
-		valuePaint.setARGB(255, 0, 96, 0);
-		valuePaint.setTextAlign(Align.CENTER);
-
-		cluePaint = new Paint();
-		cluePaint.setAntiAlias(true);
-		cluePaint.setARGB(255, 0, 0, 0);
-		cluePaint.setTextAlign(Align.CENTER);
-		cluePaint.setTypeface(Typeface.create(valuePaint.getTypeface(), Typeface.BOLD));
-
-		errorPaint = new Paint();
-		errorPaint.setAntiAlias(true);
-		errorPaint.setARGB(255, 255, 0, 0);
-		errorPaint.setStyle(Style.STROKE);
-		errorPaint.setStrokeCap(Cap.BUTT);
-
-		markedCellPaint = new Paint();
-		markedCellPaint.setAntiAlias(false);
-		markedCellPaint.setARGB(112, 0, 255, 0);
-
-		markedCellCluePaint = new Paint();
-		markedCellCluePaint.setAntiAlias(false);
-		markedCellCluePaint.setARGB(112, 255, 0, 0);
-
-		multiValuesPainter = new MultiValuesPainter(Typeface.create(valuePaint.getTypeface(),
-				Typeface.BOLD));
-
-		congratsDrawable = getResources().getDrawable(R.drawable.congrats);
-		congratsDrawable.setAlpha(144);
-
-		pausedDrawable = getResources().getDrawable(R.drawable.paused);
-		pausedDrawable.setAlpha(144);
-
-		setBackground();
 	}
 
-	public void setDisplayDensity(float displayDensity) {
-		float gridWidth = (float) Math.floor(Math.max(displayDensity, 1));
-		gridPaint.setStrokeWidth(gridWidth);
+	public void initialize(Theme theme) {
+		this.theme = theme;
+		multiValuesPainter.initialize(theme);
 
-		float regionBorderWidth = 3 * gridWidth;
-		regionBorderPaint.setStrokeWidth(regionBorderWidth);
-		errorPaint.setStrokeWidth(regionBorderWidth);
+		setBackgroundDrawable(theme.getBackground());
+
+		int padding = theme.getPadding();
+		setPadding(padding, padding, padding, padding);
 	}
 
 	public void setPuzzle(AndokuPuzzle puzzle, PuzzleSymbols symbols) {
@@ -258,16 +195,6 @@ public class AndokuPuzzleView extends View {
 			Log.v(TAG, "Draw time: " + (t1 - t0));
 	}
 
-	private void setBackground() {
-		int borderWidth = 3;
-		GradientDrawable bg = new GradientDrawable();
-		bg.setColor(0xffffffff);
-		bg.setStroke(borderWidth, 0xff000000);
-		bg.setCornerRadius(6);
-		setBackgroundDrawable(bg);
-		setPadding(borderWidth, borderWidth, borderWidth, borderWidth);
-	}
-
 	private void onDraw0(Canvas canvas) {
 		if (Constants.LOG_V)
 			Log.v(TAG, "onDraw(" + canvas.getClipBounds() + ")");
@@ -312,8 +239,8 @@ public class AndokuPuzzleView extends View {
 		canvas.translate(x, y);
 
 		Paint paint = puzzle.isClue(markedCell.row, markedCell.col)
-				? markedCellCluePaint
-				: markedCellPaint;
+				? theme.getMarkedCellCluePaint()
+				: theme.getMarkedCellPaint();
 		canvas.clipRect(0, 0, cellWidth, cellHeight);
 		canvas.drawPaint(paint);
 
@@ -321,6 +248,7 @@ public class AndokuPuzzleView extends View {
 	}
 
 	private void drawPaused(Canvas canvas) {
+		Drawable pausedDrawable = theme.getPausedDrawable();
 		pausedDrawable.setBounds(0, 0, Math.round(size * cellWidth), Math.round(size * cellHeight));
 		pausedDrawable.draw(canvas);
 	}
@@ -376,22 +304,18 @@ public class AndokuPuzzleView extends View {
 
 	private void drawExtraRegions(Canvas canvas, int row, int col) {
 		if (puzzle.isExtraRegion(row, col)) {
-			canvas.drawRect(0, 0, cellWidth, cellHeight, extraRegionPaint);
+			canvas.drawRect(0, 0, cellWidth, cellHeight, theme.getExtraRegionPaint());
 		}
 	}
 
 	private void drawCongrats(Canvas canvas) {
+		Drawable congratsDrawable = theme.getCongratsDrawable();
 		congratsDrawable.setBounds(0, 0, Math.round(size * cellWidth), Math.round(size * cellHeight));
 		congratsDrawable.draw(canvas);
 	}
 
 	private void drawValues(Canvas canvas, Rect clipBounds) {
 		previewClueCounter = 0;
-
-		if (preview)
-			cluePaint.setAlpha(128);
-		else
-			cluePaint.setAlpha(255);
 
 		for (int row = 0; row < size; row++) {
 			float y = row * cellHeight;
@@ -422,14 +346,15 @@ public class AndokuPuzzleView extends View {
 			if (puzzle.isClue(row, col)) {
 				boolean show = previewClueCounter++ % 4 != 0;
 				String dv = show ? String.valueOf(symbols.getSymbol(values.nextValue(0))) : "?";
-				canvas.drawText(dv, cellWidth / 2f, textOffset, cluePaint);
+				canvas.drawText(dv, cellWidth / 2f, textOffset, theme.getCluePaint(preview));
 			}
 		}
 		else if (values.size() == 1
 				&& (puzzle.isClue(row, col) || markedCell == null || markedCell.row != row
 						|| markedCell.col != col || puzzle.isErrorPosition(row, col))) {
 			String dv = String.valueOf(symbols.getSymbol(values.nextValue(0)));
-			Paint paint = puzzle.isClue(row, col) ? cluePaint : valuePaint;
+			Paint paint = puzzle.isClue(row, col) ? theme.getCluePaint(preview) : theme
+					.getValuePaint();
 			canvas.drawText(dv, cellWidth / 2f, textOffset, paint);
 		}
 		else {
@@ -438,6 +363,8 @@ public class AndokuPuzzleView extends View {
 	}
 
 	private void drawGrid(Canvas canvas) {
+		Paint gridPaint = theme.getGridPaint();
+
 		float gridWidth = size * cellWidth;
 		float gridHeight = size * cellHeight;
 		for (int i = 1; i < size; i++) {
@@ -449,6 +376,8 @@ public class AndokuPuzzleView extends View {
 	}
 
 	private void drawRegionBorders(Canvas canvas, Rect clipBounds) {
+		Paint regionBorderPaint = theme.getRegionBorderPaint();
+
 		for (int row = 0; row < size; row++) {
 			float y = row * cellHeight;
 			if (y > clipBounds.bottom || y + cellHeight < clipBounds.top)
@@ -470,6 +399,8 @@ public class AndokuPuzzleView extends View {
 	}
 
 	private void drawErrors(Canvas canvas, Rect clipBounds) {
+		Paint errorPaint = theme.getErrorPaint();
+
 		float radius = Math.min(cellWidth, cellHeight) * 0.4f;
 
 		for (Position p : puzzle.getErrorPositions()) {
@@ -579,15 +510,14 @@ public class AndokuPuzzleView extends View {
 		offsetY = getPaddingTop();
 
 		float fontSize = cellHeight * 0.8f;
-		cluePaint.setTextSize(fontSize);
-		valuePaint.setTextSize(fontSize);
+		theme.setTextSize(fontSize);
 		calcTextOffset();
 
 		multiValuesPainter.setCellSize(cellWidth, cellHeight);
 	}
 
 	private void calcTextOffset() {
-		FontMetrics fontMetrics = valuePaint.getFontMetrics();
+		FontMetrics fontMetrics = theme.getValuePaint().getFontMetrics();
 		float fontSize = -fontMetrics.ascent - fontMetrics.descent;
 		textOffset = cellHeight - (cellHeight - fontSize) / 2 + 0.5f;
 	}

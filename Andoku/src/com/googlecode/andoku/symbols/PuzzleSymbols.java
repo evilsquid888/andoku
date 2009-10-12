@@ -18,23 +18,16 @@
 
 package com.googlecode.andoku.symbols;
 
-import com.googlecode.andoku.model.Puzzle;
-
 public final class PuzzleSymbols {
-	public static char UNDEFINED_SYMBOL = '?';
-	public static int UNDEFINED_VALUE = Puzzle.UNDEFINED;
-
 	private final String symbolSet;
-	private final int size;
 
 	public PuzzleSymbols(String symbolSet) {
 		this.symbolSet = symbolSet;
-		this.size = symbolSet.length();
 	}
 
 	public char getSymbol(int value) {
-		if (value < 0 || value >= size)
-			return UNDEFINED_SYMBOL;
+		if (value < 0)
+			throw new IllegalArgumentException();
 
 		return symbolSet.charAt(value);
 	}

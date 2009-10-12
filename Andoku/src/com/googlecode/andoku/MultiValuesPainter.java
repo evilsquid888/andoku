@@ -20,16 +20,14 @@ package com.googlecode.andoku;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Typeface;
-import android.graphics.Paint.Align;
 import android.graphics.Paint.FontMetrics;
 
 import com.googlecode.andoku.model.ValueSet;
 import com.googlecode.andoku.symbols.PuzzleSymbols;
 
 public class MultiValuesPainter {
-	private final Paint digitPaint;
-	private PuzzleSymbols puzzleSymbols;
+	private Theme theme;
+	private PuzzleSymbols puzzleSymbols; // TODO make part of theme
 
 	private float textOffset;
 	private float baselineDist;
@@ -38,12 +36,11 @@ public class MultiValuesPainter {
 	private float cellWidth;
 	private float cellHeight;
 
-	public MultiValuesPainter(Typeface typeface) {
-		digitPaint = new Paint();
-		digitPaint.setAntiAlias(true);
-		digitPaint.setARGB(255, 0, 96, 0);
-		digitPaint.setTextAlign(Align.CENTER);
-		digitPaint.setTypeface(typeface);
+	public MultiValuesPainter() {
+	}
+
+	public void initialize(Theme theme) {
+		this.theme = theme;
 	}
 
 	public void setPuzzle(int puzzleSize, PuzzleSymbols puzzleSymbols) {
@@ -66,7 +63,7 @@ public class MultiValuesPainter {
 			String dv = String.valueOf(puzzleSymbols.getSymbol(value));
 			float py = textOffset + vrow * baselineDist;
 			float px = vcol == 0 ? xOffset : (vcol == 1 ? cellWidth / 2f : cellWidth - xOffset);
-			Paint paint = digitPaint;
+			Paint paint = theme.getDigitPaint();
 			canvas.drawText(dv, px, py, paint);
 		}
 	}
@@ -76,6 +73,7 @@ public class MultiValuesPainter {
 	}
 
 	private void setFontSize(float fontSize) {
+		Paint digitPaint = theme.getDigitPaint();
 		digitPaint.setTextSize(fontSize);
 
 		FontMetrics fontMetrics = digitPaint.getFontMetrics();
