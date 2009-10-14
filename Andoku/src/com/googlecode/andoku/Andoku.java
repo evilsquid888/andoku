@@ -130,7 +130,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 
 		andokuView = (AndokuPuzzleView) findViewById(R.id.viewPuzzle);
 		andokuView.setOnKeyListener(this);
-		andokuView.initialize(new Theme(getResources()));
+		andokuView.initialize(createTheme());
 
 		fingertipView = (FingertipView) findViewById(R.id.viewFingertip);
 		fingertipView.setOnTouchListener(this);
@@ -190,6 +190,14 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 		});
 
 		createPuzzle(savedInstanceState);
+	}
+
+	private Theme createTheme() {
+		ColorTheme.Builder builder = new ColorTheme.Builder(getResources());
+
+		// TODO: set colors from preferences or something
+
+		return builder.build();
 	}
 
 	@Override

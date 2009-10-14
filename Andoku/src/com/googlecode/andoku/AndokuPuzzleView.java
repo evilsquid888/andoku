@@ -69,9 +69,9 @@ public class AndokuPuzzleView extends View {
 		this.theme = theme;
 		multiValuesPainter.initialize(theme);
 
-		setBackgroundDrawable(theme.getBackground());
+		setBackgroundDrawable(theme.getPuzzleBackground());
 
-		int padding = theme.getPadding();
+		int padding = theme.getPuzzlePadding();
 		setPadding(padding, padding, padding, padding);
 	}
 
@@ -223,7 +223,7 @@ public class AndokuPuzzleView extends View {
 		canvas.translate(x, y);
 
 		Paint paint = puzzle.isClue(markedCell.row, markedCell.col)
-				? theme.getMarkedCellCluePaint()
+				? theme.getMarkedCluePaint()
 				: theme.getMarkedCellPaint();
 		canvas.clipRect(0, 0, cellWidth, cellHeight);
 		canvas.drawPaint(paint);
@@ -493,7 +493,7 @@ public class AndokuPuzzleView extends View {
 		offsetY = getPaddingTop();
 
 		float fontSize = cellHeight * 0.8f;
-		theme.setTextSize(fontSize);
+		theme.onNewTextSize(fontSize);
 		calcTextOffset();
 
 		multiValuesPainter.setCellSize(cellWidth, cellHeight);
