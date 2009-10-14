@@ -25,5 +25,5 @@ public interface PuzzleSource {
 
 	PuzzleHolder load(int number) throws PuzzleIOException;
 
-	int getDifficulty(int number);
+	Difficulty getDifficulty(int number);
 }

@@ -51,6 +51,7 @@ import android.widget.ToggleButton;
 import com.googlecode.andoku.model.AndokuPuzzle;
 import com.googlecode.andoku.model.Position;
 import com.googlecode.andoku.model.ValueSet;
+import com.googlecode.andoku.source.Difficulty;
 import com.googlecode.andoku.source.PuzzleHolder;
 import com.googlecode.andoku.source.PuzzleIOException;
 import com.googlecode.andoku.source.PuzzleResolver;
@@ -731,8 +732,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 
 			final Resources resources = getResources();
 			PuzzleType puzzleType = puzzleHolder.getPuzzleType();
-			String difficulty = resources.getStringArray(R.array.difficulties)[puzzleHolder
-					.getPuzzleDifficulty()];
+			String difficulty = getPuzzleDifficulty();
 			String name = resources.getString(puzzleType.getNameResId());
 
 			final String format = resources.getString(R.string.message_congrats);
@@ -761,11 +761,21 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 	private String getPuzzleTitle() {
 		final Resources resources = getResources();
 		PuzzleType puzzleType = puzzleHolder.getPuzzleType();
-		String difficulty = resources.getStringArray(R.array.difficulties)[puzzleHolder
-				.getPuzzleDifficulty()];
+		String difficulty = getPuzzleDifficulty();
 		String name = resources.getString(puzzleType.getNameResId());
 		return resources.getString(R.string.title_puzzle, name, puzzleHolder.getNumber() + 1,
 				puzzleHolder.getSource().numberOfPuzzles(), difficulty);
+	}
+
+	private String getPuzzleDifficulty() {
+		final Resources resources = getResources();
+
+		final Difficulty difficulty = puzzleHolder.getPuzzleDifficulty();
+		if (difficulty == Difficulty.UNKNOWN)
+			return resources.getString(R.string.difficulty_unknown);
+
+		String[] difficulties = resources.getStringArray(R.array.difficulties);
+		return difficulties[difficulty.ordinal()];
 	}
 
 	private void clearPuzzle() {

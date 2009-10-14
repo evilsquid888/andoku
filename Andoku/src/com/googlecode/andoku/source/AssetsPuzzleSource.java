@@ -71,8 +71,12 @@ public class AssetsPuzzleSource implements PuzzleSource {
 		return new PuzzleHolder(this, number, puzzle, solution);
 	}
 
-	public int getDifficulty(int number) {
-		return puzzleSet.charAt(puzzleSet.length() - 1) - '0' - 1;
+	public Difficulty getDifficulty(int number) {
+		final int difficulty = puzzleSet.charAt(puzzleSet.length() - 1) - '0' - 1;
+		if (difficulty < 0 || difficulty > 4)
+			throw new IllegalStateException();
+
+		return Difficulty.values()[difficulty];
 	}
 
 	private int[] loadIndex() throws PuzzleIOException {

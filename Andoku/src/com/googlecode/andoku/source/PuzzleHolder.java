@@ -67,7 +67,7 @@ public class PuzzleHolder {
 		return puzzleType;
 	}
 
-	public int getPuzzleDifficulty() {
+	public Difficulty getPuzzleDifficulty() {
 		return source.getDifficulty(number);
 	}
 
