@@ -6,11 +6,17 @@ import android.graphics.Typeface;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Cap;
 import android.graphics.Paint.Style;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 
 class ColorTheme implements Theme {
 	private final float borderStrokeWidth;
+
+	private final Drawable background;
+
+	private final int titleTextColor;
+	private final int timerTextColor;
 
 	private final Paint gridPaint;
 	private final Paint regionBorderPaint;
@@ -34,7 +40,10 @@ class ColorTheme implements Theme {
 	public static final class Builder {
 		private final Resources resources;
 
+		public int backgroudColor = 0xffeeeeee;
 		public int puzzleBackgroundColor = 0xffffffff;
+		public int titleTextColor = 0xff222222;
+		public int timerTextColor = 0xff222222;
 		public int gridColor = 0x40000000;
 		public int borderColor = 0xff000000;
 		public int extraRegionColor = 0x40002dff;
@@ -60,6 +69,11 @@ class ColorTheme implements Theme {
 		float gridWidth = Math.max(1, displayDensity);
 
 		borderStrokeWidth = Math.max(2, 3 * displayDensity);
+
+		background = new ColorDrawable(builder.backgroudColor);
+
+		titleTextColor = builder.titleTextColor;
+		timerTextColor = builder.timerTextColor;
 
 		gridPaint = new Paint();
 		gridPaint.setStrokeWidth(gridWidth);
@@ -135,6 +149,18 @@ class ColorTheme implements Theme {
 
 	public char getSymbol(int value) {
 		return "123456789".charAt(value);
+	}
+
+	public Drawable getBackground() {
+		return background;
+	}
+
+	public int getTitleTextColor() {
+		return titleTextColor;
+	}
+
+	public int getTimerTextColor() {
+		return timerTextColor;
 	}
 
 	public Paint getGridPaint() {

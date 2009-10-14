@@ -89,6 +89,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 
 	private TickTimer timer = new TickTimer(this);
 
+	private ViewGroup background;
 	private TextView puzzleTitleView;
 	private AndokuPuzzleView andokuView;
 	private FingertipView fingertipView;
@@ -126,11 +127,12 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 		PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, TAG);
 
+		background = (ViewGroup) findViewById(R.id.background);
+
 		puzzleTitleView = (TextView) findViewById(R.id.labelPuzzleTitle);
 
 		andokuView = (AndokuPuzzleView) findViewById(R.id.viewPuzzle);
 		andokuView.setOnKeyListener(this);
-		andokuView.initialize(createTheme());
 
 		fingertipView = (FingertipView) findViewById(R.id.viewFingertip);
 		fingertipView.setOnTouchListener(this);
@@ -189,6 +191,9 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 			}
 		});
 
+		Theme theme = createTheme();
+		setTheme(theme);
+
 		createPuzzle(savedInstanceState);
 	}
 
@@ -197,7 +202,28 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 
 		// TODO: set colors from preferences or something
 
+		// example for an ugly dark theme
+//		builder.backgroudColor = 0xff000000;
+//		builder.puzzleBackgroundColor = 0xff333333;
+//		builder.titleTextColor = 0xffeeeeee;
+//		builder.timerTextColor = 0xffeeeeee;
+//		builder.gridColor = 0x40ffffff;
+//		builder.borderColor = 0xffcccccc;
+//		builder.extraRegionColor = 0x60ff8dff;
+//		builder.valueColor = 0xff88cc88;
+//		builder.clueColor = 0xffcccccc;
+//		builder.errorColor = 0xffff0000;
+//		builder.markedCellColor = 0xa000ff00;
+//		builder.markedClueColor = 0xa0ff0000;
+
 		return builder.build();
+	}
+
+	private void setTheme(Theme theme) {
+		background.setBackgroundDrawable(theme.getBackground());
+		puzzleTitleView.setTextColor(theme.getTitleTextColor());
+		timerView.setTextColor(theme.getTimerTextColor());
+		andokuView.setTheme(theme);
 	}
 
 	@Override

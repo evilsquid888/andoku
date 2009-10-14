@@ -20,14 +20,14 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
 <LinearLayout
+    android:id="@+id/background"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="horizontal"
     android:paddingLeft="2dp"
     android:paddingRight="2dp"
     android:paddingTop="8dp"
-    android:paddingBottom="9dp"
-    android:background="#feee">
+    android:paddingBottom="9dp">
 
     <com.googlecode.andoku.AndokuPuzzleView
         android:id="@+id/viewPuzzle"
@@ -49,8 +49,7 @@
         <TextView
             android:id="@+id/labelPuzzleTitle"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#f222"/>
+            android:layout_height="wrap_content"/>
 
         <View
             android:layout_width="wrap_content"
@@ -136,7 +135,6 @@
             android:id="@+id/labelTimer"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="#f222"
             android:gravity="right"
             android:text="00:00:00"
             android:paddingTop="5dp"

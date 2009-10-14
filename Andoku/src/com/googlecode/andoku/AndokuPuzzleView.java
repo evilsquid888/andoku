@@ -65,7 +65,7 @@ public class AndokuPuzzleView extends View {
 		setFocusable(true); // make sure we get key events
 	}
 
-	public void initialize(Theme theme) {
+	public void setTheme(Theme theme) {
 		this.theme = theme;
 		multiValuesPainter.initialize(theme);
 

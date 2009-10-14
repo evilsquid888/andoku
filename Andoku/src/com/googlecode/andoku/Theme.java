@@ -6,6 +6,11 @@ import android.graphics.drawable.Drawable;
 interface Theme {
 	char getSymbol(int value);
 
+	Drawable getBackground();
+
+	int getTitleTextColor();
+	int getTimerTextColor();
+
 	Paint getGridPaint();
 	Paint getRegionBorderPaint();
 	Paint getExtraRegionPaint();

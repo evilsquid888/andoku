@@ -20,19 +20,18 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
 <LinearLayout
+    android:id="@+id/background"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:paddingLeft="6dp"
     android:paddingRight="6dp"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:background="#feee">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/labelPuzzleTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#f222"
         android:gravity="left"
         android:paddingBottom="1dp"
         android:layout_alignParentTop="true"
@@ -51,7 +50,6 @@
         android:id="@+id/labelTimer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#f222"
         android:gravity="right"
         android:text="00:00:00"
         android:paddingTop="1dp"/>
