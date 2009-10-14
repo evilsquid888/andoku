@@ -55,9 +55,9 @@ import com.googlecode.andoku.source.PuzzleType;
 public class Main extends ListActivity {
 	private static final String TAG = Main.class.getName();
 
-	private static final String DATABASE_BACKUP_FILE = "andoku_" + SaveGameDb.DATABASE_NAME + ".bak";
-	private static final String DATABASE_UPDATE_FILE = "andoku_" + SaveGameDb.DATABASE_NAME
-			+ ".update";
+	private static final String ANDOKU_DIR = "Andoku";
+	private static final String DATABASE_BACKUP_FILE = SaveGameDb.DATABASE_NAME + ".bak";
+	private static final String DATABASE_UPDATE_FILE = SaveGameDb.DATABASE_NAME + ".update";
 
 	private static final int FLIP_IDX_MENU = 0;
 	private static final int FLIP_IDX_SELECT_LEVEL = 1;
@@ -432,8 +432,14 @@ public class Main extends ListActivity {
 
 		File dbFile = getDatabasePath(SaveGameDb.DATABASE_NAME);
 		File sdcard = Environment.getExternalStorageDirectory();
-		File backupFile = new File(sdcard, DATABASE_BACKUP_FILE);
-		File updateFile = new File(sdcard, DATABASE_UPDATE_FILE);
+		File andokuDir = new File(sdcard, ANDOKU_DIR);
+		if (!andokuDir.isDirectory() && !andokuDir.mkdirs()) {
+			Log.w(TAG, "Could not create root directory \"" + ANDOKU_DIR + "\" on external storage");
+			return;
+		}
+
+		File backupFile = new File(andokuDir, DATABASE_BACKUP_FILE);
+		File updateFile = new File(andokuDir, DATABASE_UPDATE_FILE);
 
 		// database can be overwritten by manually placing an update-file on the sd card
 		if (updateFile.isFile()) {
