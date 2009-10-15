@@ -217,15 +217,23 @@ public class SaveGameDb {
 				new String[] { puzzleSourceId }, null, null, NUMBER);
 	}
 
-	public Cursor getStatistics(String puzzleSourceId) {
+	public GameStatistics getStatistics(String puzzleSourceId) {
 		if (Constants.LOG_V)
 			Log.v(TAG, "getStatistics(" + puzzleSourceId + ")");
 
 		SQLiteDatabase db = openHelper.getReadableDatabase();
 
-		return db.query(TABLE_NAME, new String[] { "COUNT(*)", "SUM(timer)", "MIN(timer)",
+		Cursor c = db.query(TABLE_NAME, new String[] { "COUNT(*)", "SUM(timer)", "MIN(timer)",
 				"MAX(timer)" }, SOURCE + "=? AND " + SOLVED + "=1", new String[] { puzzleSourceId },
 				null, null, null);
+		try {
+			c.moveToFirst();
+
+			return new GameStatistics(c.getInt(0), c.getLong(1), c.getLong(2));
+		}
+		finally {
+			c.close();
+		}
 	}
 
 	public String puzzleIdByRowId(long rowId) {

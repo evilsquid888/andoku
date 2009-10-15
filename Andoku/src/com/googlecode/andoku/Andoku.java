@@ -25,7 +25,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -722,27 +721,17 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 
 	private void updateCongrats() {
 		String puzzleSourceId = puzzleHolder.getSource().getSourceId();
-		Cursor c = saveGameDb.getStatistics(puzzleSourceId);
-		try {
-			c.moveToFirst();
+		GameStatistics stats = saveGameDb.getStatistics(puzzleSourceId);
 
-			int numGamesSolved = c.getInt(0);
-			long sumTime = c.getLong(1);
-			long minTime = c.getLong(2);
+		final Resources resources = getResources();
+		PuzzleType puzzleType = puzzleHolder.getPuzzleType();
+		String difficulty = getPuzzleDifficulty();
+		String name = resources.getString(puzzleType.getNameResId());
 
-			final Resources resources = getResources();
-			PuzzleType puzzleType = puzzleHolder.getPuzzleType();
-			String difficulty = getPuzzleDifficulty();
-			String name = resources.getString(puzzleType.getNameResId());
-
-			final String format = resources.getString(R.string.message_congrats);
-			final String message = String.format(format, name, difficulty, numGamesSolved, DateUtil
-					.formatTime(sumTime / numGamesSolved), DateUtil.formatTime(minTime));
-			congratsView.setText(Html.fromHtml(message));
-		}
-		finally {
-			c.close();
-		}
+		final String format = resources.getString(R.string.message_congrats);
+		final String message = String.format(format, name, difficulty, stats.numGamesSolved, DateUtil
+				.formatTime(stats.getAverageTime()), DateUtil.formatTime(stats.minTime));
+		congratsView.setText(Html.fromHtml(message));
 	}
 
 	private void setPuzzle(PuzzleHolder puzzleHolder) {
