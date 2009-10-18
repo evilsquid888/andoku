@@ -111,7 +111,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 
 	/** Called when the activity is first created. */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		if (Constants.LOG_V)
 			Log.v(TAG, "onCreate(" + savedInstanceState + ")");
 
