@@ -88,13 +88,15 @@ public class PuzzleDbTest extends AndroidTestCase {
 		try {
 			db.createFolder("folder");
 			fail();
-		} catch (SQLException expected) {
+		}
+		catch (SQLException expected) {
 		}
 
 		try {
 			db.createFolder(folderId1, "folder");
 			fail();
-		} catch (SQLException expected) {
+		}
+		catch (SQLException expected) {
 		}
 	}
 
@@ -109,8 +111,7 @@ public class PuzzleDbTest extends AndroidTestCase {
 
 		assertTrue(db.folderExists("folder"));
 
-		assertTrue(db.folderExists(folderId1,
-				"folder"));
+		assertTrue(db.folderExists(folderId1, "folder"));
 
 		assertFalse(db.folderExists("nosuchfolder"));
 	}
@@ -126,8 +127,7 @@ public class PuzzleDbTest extends AndroidTestCase {
 
 		assertEquals(new Long(folderId1), db.getFolderId("folder"));
 
-		assertEquals(new Long(folderId2), db.getFolderId(folderId1,
-				"folder"));
+		assertEquals(new Long(folderId2), db.getFolderId(folderId1, "folder"));
 
 		assertNull(db.getFolderId("nosuchfolder"));
 	}
@@ -151,8 +151,7 @@ public class PuzzleDbTest extends AndroidTestCase {
 		long folderId2 = db.createFolder(folderId1, "f2");
 		assertTrue(folderId2 >= 0);
 
-		assertEquals(new Long(PuzzleDb.ROOT_FOLDER_ID), db
-				.getParentFolderId(folderId1));
+		assertEquals(new Long(PuzzleDb.ROOT_FOLDER_ID), db.getParentFolderId(folderId1));
 		assertEquals(new Long(folderId1), db.getParentFolderId(folderId2));
 		assertNull(db.getParentFolderId(folderId2 + 1));
 	}
@@ -161,7 +160,7 @@ public class PuzzleDbTest extends AndroidTestCase {
 		long folderId1 = db.createFolder("f1");
 		assertTrue(folderId1 >= 0);
 		assertEquals("f1", db.getFolderName(folderId1));
-		
+
 		db.renameFolder(folderId1, "newf1");
 		assertEquals("newf1", db.getFolderName(folderId1));
 
@@ -179,11 +178,12 @@ public class PuzzleDbTest extends AndroidTestCase {
 
 		long folderId2 = db.createFolder("f2");
 		assertTrue(folderId2 >= 0);
-		
+
 		try {
 			db.renameFolder(folderId1, "f2");
 			fail();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 		}
 	}
 
@@ -197,7 +197,7 @@ public class PuzzleDbTest extends AndroidTestCase {
 		assertTrue(db.folderExists(folderId2));
 		assertTrue(db.folderExists(folderId3));
 		assertTrue(db.folderExists(folderId4));
-		
+
 		db.deleteFolder(folderId1);
 
 		assertFalse(db.folderExists(folderId1));
