@@ -147,23 +147,25 @@ public class SaveGameDb {
 
 		Cursor cursor = db.query(TABLE_NAME, COLUMNS_PUZZLE_TIMER, PUZZLE_ID + "=?",
 				new String[] { puzzleId }, null, null, null);
+		try {
+			if (!cursor.moveToFirst()) {
+				return false;
+			}
 
-		if (!cursor.moveToFirst()) {
+			Object memento = deserialize(cursor.getBlob(0));
+			long time = cursor.getLong(1);
+
+			if (!puzzle.restoreFromMemento(memento)) {
+				Log.w(TAG, "Could not restore puzzle memento for " + puzzleId);
+				return false;
+			}
+
+			timer.setTime(time);
+			return true;
+		}
+		finally {
 			cursor.close();
-			return false;
 		}
-
-		Object memento = deserialize(cursor.getBlob(0));
-		long time = cursor.getLong(1);
-		cursor.close();
-
-		if (!puzzle.restoreFromMemento(memento)) {
-			Log.w(TAG, "Could not restore puzzle memento for " + puzzleId);
-			return false;
-		}
-
-		timer.setTime(time);
-		return true;
 	}
 
 	public void delete(String puzzleId) {
@@ -219,16 +221,16 @@ public class SaveGameDb {
 
 		SQLiteDatabase db = openHelper.getReadableDatabase();
 
-		Cursor c = db.query(TABLE_NAME, new String[] { "COUNT(*)", "SUM(timer)", "MIN(timer)",
+		Cursor cursor = db.query(TABLE_NAME, new String[] { "COUNT(*)", "SUM(timer)", "MIN(timer)",
 				"MAX(timer)" }, SOURCE + "=? AND " + SOLVED + "=1", new String[] { puzzleSourceId },
 				null, null, null);
 		try {
-			c.moveToFirst();
+			cursor.moveToFirst();
 
-			return new GameStatistics(c.getInt(0), c.getLong(1), c.getLong(2));
+			return new GameStatistics(cursor.getInt(0), cursor.getLong(1), cursor.getLong(2));
 		}
 		finally {
-			c.close();
+			cursor.close();
 		}
 	}
 
@@ -240,15 +242,16 @@ public class SaveGameDb {
 
 		Cursor cursor = db.query(TABLE_NAME, COLUMNS_PUZZLE_ID, ID + "=?", new String[] { Long
 				.toString(rowId) }, null, null, null);
+		try {
+			if (!cursor.moveToFirst()) {
+				return null;
+			}
 
-		if (!cursor.moveToFirst()) {
-			cursor.close();
-			return null;
+			return cursor.getString(0);
 		}
-
-		String puzzleId = cursor.getString(0);
-		cursor.close();
-		return puzzleId;
+		finally {
+			cursor.close();
+		}
 	}
 
 	public void close() {
