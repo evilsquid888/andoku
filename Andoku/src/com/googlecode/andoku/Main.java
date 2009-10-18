@@ -48,6 +48,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.googlecode.andoku.db.SaveGameDb;
 import com.googlecode.andoku.source.PuzzleIOException;
 import com.googlecode.andoku.source.PuzzleResolver;
 import com.googlecode.andoku.source.PuzzleType;

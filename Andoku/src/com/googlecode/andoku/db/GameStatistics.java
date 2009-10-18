@@ -1,6 +1,6 @@
-package com.googlecode.andoku;
+package com.googlecode.andoku.db;
 
-class GameStatistics {
+public class GameStatistics {
 	public final int numGamesSolved;
 	public final long sumTime;
 	public final long minTime;

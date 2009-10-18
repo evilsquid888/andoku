@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.googlecode.andoku;
+package com.googlecode.andoku.db;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -33,6 +33,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.util.Log;
 
+import com.googlecode.andoku.Constants;
+import com.googlecode.andoku.TickTimer;
 import com.googlecode.andoku.model.AndokuPuzzle;
 
 public class SaveGameDb {

@@ -47,6 +47,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.googlecode.andoku.db.GameStatistics;
+import com.googlecode.andoku.db.SaveGameDb;
 import com.googlecode.andoku.model.AndokuPuzzle;
 import com.googlecode.andoku.model.Position;
 import com.googlecode.andoku.model.ValueSet;
