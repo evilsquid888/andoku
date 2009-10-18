@@ -267,6 +267,8 @@ public class PuzzleDb {
 	}
 
 	private void checkValidFolderName(String folderName) {
+		if (folderName == null || folderName.length() == 0)
+			throw new IllegalArgumentException();
 		if (folderName.indexOf(PATH_SEPARATOR_CHAR) != -1)
 			throw new IllegalArgumentException();
 	}
