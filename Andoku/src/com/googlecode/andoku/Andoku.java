@@ -241,8 +241,6 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 		}
 
 		setWakeLock(false);
-
-		saveGameDb.close();
 	}
 
 	@Override
@@ -256,6 +254,18 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 			setWakeLock(true);
 
 			timer.start();
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		if (Constants.LOG_V)
+			Log.v(TAG, "onDestroy()");
+
+		super.onDestroy();
+
+		if (saveGameDb != null) {
+			saveGameDb.close();
 		}
 	}
 

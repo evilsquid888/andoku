@@ -69,13 +69,8 @@ public class PuzzleDb {
 
 		SQLiteDatabase db = openHelper.getWritableDatabase();
 
-		try {
-			db.delete(TABLE_FOLDERS, null, null);
-			db.delete(TABLE_PUZZLES, null, null);
-		}
-		finally {
-			db.close();
-		}
+		db.delete(TABLE_FOLDERS, null, null);
+		db.delete(TABLE_PUZZLES, null, null);
 	}
 
 	public long createFolder(String name) {
@@ -90,20 +85,15 @@ public class PuzzleDb {
 
 		SQLiteDatabase db = openHelper.getWritableDatabase();
 
-		try {
-			ContentValues values = new ContentValues();
-			values.put(COL_FOLDER_NAME, name);
-			values.put(COL_FOLDER_PARENT, parentId);
+		ContentValues values = new ContentValues();
+		values.put(COL_FOLDER_NAME, name);
+		values.put(COL_FOLDER_PARENT, parentId);
 
-			long insertedRowId = db.insert(TABLE_FOLDERS, null, values);
-			if (insertedRowId == -1)
-				throw new SQLException("Could not create folder " + name);
+		long insertedRowId = db.insert(TABLE_FOLDERS, null, values);
+		if (insertedRowId == -1)
+			throw new SQLException("Could not create folder " + name);
 
-			return insertedRowId;
-		}
-		finally {
-			db.close();
-		}
+		return insertedRowId;
 	}
 
 	public boolean folderExists(String name) {
@@ -124,24 +114,18 @@ public class PuzzleDb {
 
 		SQLiteDatabase db = openHelper.getReadableDatabase();
 
+		String[] columns = { COL_ID };
+		String selection = COL_FOLDER_NAME + "=? AND " + COL_FOLDER_PARENT + "=?";
+		String[] selectionArgs = { name, String.valueOf(parentId) };
+		Cursor cursor = db.query(TABLE_FOLDERS, columns, selection, selectionArgs, null, null, null);
 		try {
-			String[] columns = { COL_ID };
-			String selection = COL_FOLDER_NAME + "=? AND " + COL_FOLDER_PARENT + "=?";
-			String[] selectionArgs = { name, String.valueOf(parentId) };
-			Cursor cursor = db.query(TABLE_FOLDERS, columns, selection, selectionArgs, null, null,
-					null);
-			try {
-				if (cursor.moveToNext())
-					return cursor.getLong(0);
-				else
-					return null;
-			}
-			finally {
-				cursor.close();
-			}
+			if (cursor.moveToNext())
+				return cursor.getLong(0);
+			else
+				return null;
 		}
 		finally {
-			db.close();
+			cursor.close();
 		}
 	}
 
@@ -158,13 +142,6 @@ public class PuzzleDb {
 		return getFolders(db, parentId);
 	}
 
-	private Cursor getFolders(SQLiteDatabase db, long parentId) {
-		String selection = COL_FOLDER_PARENT + "=?";
-		String[] selectionArgs = { String.valueOf(parentId) };
-		final String orderBy = COL_FOLDER_NAME + " asc";
-		return db.query(TABLE_FOLDERS, null, selection, selectionArgs, null, null, orderBy);
-	}
-
 	public boolean folderExists(long folderId) {
 		return getFolderName(folderId) != null;
 	}
@@ -175,25 +152,19 @@ public class PuzzleDb {
 
 		SQLiteDatabase db = openHelper.getReadableDatabase();
 
-		try {
-			String[] columns = { COL_FOLDER_NAME };
-			String selection = COL_ID + "=?";
-			String[] selectionArgs = { String.valueOf(folderId) };
-			Cursor cursor = db.query(TABLE_FOLDERS, columns, selection, selectionArgs, null, null,
-					null);
+		String[] columns = { COL_FOLDER_NAME };
+		String selection = COL_ID + "=?";
+		String[] selectionArgs = { String.valueOf(folderId) };
+		Cursor cursor = db.query(TABLE_FOLDERS, columns, selection, selectionArgs, null, null, null);
 
-			try {
-				if (cursor.moveToFirst())
-					return cursor.getString(0);
-				else
-					return null;
-			}
-			finally {
-				cursor.close();
-			}
+		try {
+			if (cursor.moveToFirst())
+				return cursor.getString(0);
+			else
+				return null;
 		}
 		finally {
-			db.close();
+			cursor.close();
 		}
 	}
 
@@ -203,25 +174,19 @@ public class PuzzleDb {
 
 		SQLiteDatabase db = openHelper.getReadableDatabase();
 
-		try {
-			String[] columns = { COL_FOLDER_PARENT };
-			String selection = COL_ID + "=?";
-			String[] selectionArgs = { String.valueOf(folderId) };
-			Cursor cursor = db.query(TABLE_FOLDERS, columns, selection, selectionArgs, null, null,
-					null);
+		String[] columns = { COL_FOLDER_PARENT };
+		String selection = COL_ID + "=?";
+		String[] selectionArgs = { String.valueOf(folderId) };
+		Cursor cursor = db.query(TABLE_FOLDERS, columns, selection, selectionArgs, null, null, null);
 
-			try {
-				if (cursor.moveToFirst())
-					return cursor.getLong(0);
-				else
-					return null;
-			}
-			finally {
-				cursor.close();
-			}
+		try {
+			if (cursor.moveToFirst())
+				return cursor.getLong(0);
+			else
+				return null;
 		}
 		finally {
-			db.close();
+			cursor.close();
 		}
 	}
 
@@ -232,19 +197,15 @@ public class PuzzleDb {
 		checkValidFolderName(newName);
 
 		SQLiteDatabase db = openHelper.getWritableDatabase();
-		try {
-			ContentValues values = new ContentValues();
-			values.put(COL_FOLDER_NAME, newName);
 
-			String whereClause = COL_ID + "=?";
-			String[] whereArgs = { String.valueOf(folderId) };
-			int rows = db.update(TABLE_FOLDERS, values, whereClause, whereArgs);
-			if (rows != 1)
-				throw new SQLException("Could not rename folder " + folderId + " in " + newName);
-		}
-		finally {
-			db.close();
-		}
+		ContentValues values = new ContentValues();
+		values.put(COL_FOLDER_NAME, newName);
+
+		String whereClause = COL_ID + "=?";
+		String[] whereArgs = { String.valueOf(folderId) };
+		int rows = db.update(TABLE_FOLDERS, values, whereClause, whereArgs);
+		if (rows != 1)
+			throw new SQLException("Could not rename folder " + folderId + " in " + newName);
 	}
 
 	public void deleteFolder(long folderId) {
@@ -252,12 +213,15 @@ public class PuzzleDb {
 			Log.v(TAG, "deleteFolder(" + folderId + ")");
 
 		SQLiteDatabase db = openHelper.getWritableDatabase();
-		try {
-			deleteFolder(db, folderId);
-		}
-		finally {
-			db.close();
-		}
+
+		deleteFolder(db, folderId);
+	}
+
+	public void close() {
+		if (Constants.LOG_V)
+			Log.v(TAG, "close()");
+
+		openHelper.close();
 	}
 
 	private void deleteFolder(SQLiteDatabase db, long folderId) {
@@ -293,6 +257,13 @@ public class PuzzleDb {
 		int rows = db.delete(TABLE_FOLDERS, whereClause, whereArgs);
 		if (rows != 1)
 			throw new SQLException("Could not delete folder " + folderId);
+	}
+
+	private Cursor getFolders(SQLiteDatabase db, long parentId) {
+		String selection = COL_FOLDER_PARENT + "=?";
+		String[] selectionArgs = { String.valueOf(parentId) };
+		final String orderBy = COL_FOLDER_NAME + " asc";
+		return db.query(TABLE_FOLDERS, null, selection, selectionArgs, null, null, orderBy);
 	}
 
 	private void checkValidFolderName(String folderName) {

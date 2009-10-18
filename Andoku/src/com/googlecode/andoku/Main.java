@@ -234,6 +234,18 @@ public class Main extends ListActivity {
 		}
 	}
 
+	@Override
+	protected void onDestroy() {
+		if (Constants.LOG_V)
+			Log.v(TAG, "onDestroy()");
+
+		super.onDestroy();
+
+		if (saveGameDb != null) {
+			saveGameDb.close();
+		}
+	}
+
 	void onSelectNewGameButton() {
 		if (Constants.LOG_V)
 			Log.v(TAG, "onSelectNewGameButton()");

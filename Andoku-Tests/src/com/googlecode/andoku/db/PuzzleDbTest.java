@@ -36,6 +36,11 @@ public class PuzzleDbTest extends AndroidTestCase {
 		db.resetAll();
 	}
 
+	@Override
+	protected void tearDown() throws Exception {
+		db.close();
+	}
+
 	public void testIsEmpty() throws Exception {
 		assertTrue(loadFolders().isEmpty());
 	}
