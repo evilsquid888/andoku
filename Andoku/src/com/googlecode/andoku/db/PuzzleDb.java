@@ -40,8 +40,8 @@ public class PuzzleDb {
 	private static final String COL_ID = BaseColumns._ID;
 
 	private static final String TABLE_FOLDERS = "folders";
-	public static final String COL_FOLDER_NAME = "name";
-	public static final String COL_FOLDER_PARENT = "parent";
+	private static final String COL_FOLDER_NAME = "name";
+	private static final String COL_FOLDER_PARENT = "parent";
 
 	private static final String TABLE_PUZZLES = "puzzles";
 	private static final String COL_FOLDER = "folder";
