@@ -68,15 +68,7 @@ public class AssetsPuzzleSource implements PuzzleSource {
 			throw new PuzzleIOException("Invalid puzzle", e);
 		}
 
-		return new PuzzleHolder(this, number, puzzle, solution);
-	}
-
-	public Difficulty getDifficulty(int number) {
-		final int difficulty = puzzleSet.charAt(puzzleSet.length() - 1) - '0' - 1;
-		if (difficulty < 0 || difficulty > 4)
-			throw new IllegalStateException();
-
-		return Difficulty.values()[difficulty];
+		return new PuzzleHolder(this, number, getDifficulty(), puzzle, solution);
 	}
 
 	private int[] loadIndex() throws PuzzleIOException {
@@ -124,5 +116,13 @@ public class AssetsPuzzleSource implements PuzzleSource {
 		catch (IOException e) {
 			throw new PuzzleIOException(e);
 		}
+	}
+
+	private Difficulty getDifficulty() {
+		final int difficulty = puzzleSet.charAt(puzzleSet.length() - 1) - '0' - 1;
+		if (difficulty < 0 || difficulty > 4)
+			throw new IllegalStateException();
+
+		return Difficulty.values()[difficulty];
 	}
 }

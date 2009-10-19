@@ -27,15 +27,17 @@ public class PuzzleHolder {
 	private final PuzzleSource source;
 	private final int number;
 
+	private final Difficulty difficulty;
 	private final Puzzle puzzle;
 	private final int[][] solution;
 
 	private transient PuzzleType puzzleType;
 
-	public PuzzleHolder(PuzzleSource source, int number, Puzzle puzzle, int[][] solution)
-			throws PuzzleIOException {
+	public PuzzleHolder(PuzzleSource source, int number, Difficulty difficulty, Puzzle puzzle,
+			int[][] solution) throws PuzzleIOException {
 		this.source = source;
 		this.number = number;
+		this.difficulty = difficulty;
 		this.puzzle = puzzle;
 		this.solution = solution;
 	}
@@ -68,7 +70,7 @@ public class PuzzleHolder {
 	}
 
 	public Difficulty getPuzzleDifficulty() {
-		return source.getDifficulty(number);
+		return difficulty;
 	}
 
 	private PuzzleType determinePuzzleType() {
