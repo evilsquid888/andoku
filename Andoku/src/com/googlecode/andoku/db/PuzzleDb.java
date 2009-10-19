@@ -28,12 +28,13 @@ import android.provider.BaseColumns;
 import android.util.Log;
 
 import com.googlecode.andoku.Constants;
+import com.googlecode.andoku.source.Difficulty;
 
 public class PuzzleDb {
 	private static final String TAG = PuzzleDb.class.getName();
 
 	public static final String DATABASE_NAME = "puzzles.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 3;
 
 	private static final char PATH_SEPARATOR_CHAR = '/';
 
@@ -47,10 +48,11 @@ public class PuzzleDb {
 	private static final String COL_FOLDER = "folder";
 	private static final String COL_NAME = "name";
 	private static final String COL_DIFFICULTY = "difficulty"; // 0-4|-1
+	private static final String COL_SIZE = "size"; //             9
+	private static final String COL_CLUES = "clues"; //           "...6.12........3......"
+	private static final String COL_AREAS = "areas"; //           "11122223311122222341.."|""
+	private static final String COL_EXTRA_REGIONS = "extra"; //   "H"|"X"|""
 	private static final String COL_SOLUTION = "solution"; //     "35869127496158734217.."
-	private static final String COL_CLUES = "clues"; //           "00010110000000010000.."
-	private static final String COL_AREAS = "areas"; //           "11122223311122222341.."|null
-	private static final String COL_EXTRA_REGIONS = "extra"; //   "H"|"X"|null
 
 	public static final int ROOT_FOLDER_ID = -1;
 
@@ -217,6 +219,83 @@ public class PuzzleDb {
 		deleteFolder(db, folderId);
 	}
 
+	public long insertPuzzle(long folderId, PuzzleInfo puzzleInfo) {
+		if (Constants.LOG_V)
+			Log.v(TAG, "insertPuzzle(" + folderId + "," + puzzleInfo + ")");
+
+		if (!folderExists(folderId))
+			throw new IllegalArgumentException("No such folder: " + folderId);
+
+		SQLiteDatabase db = openHelper.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(COL_FOLDER, folderId);
+		values.put(COL_NAME, puzzleInfo.getName());
+		values.put(COL_DIFFICULTY, puzzleInfo.getDifficulty().ordinal());
+		values.put(COL_SIZE, puzzleInfo.getSize());
+		values.put(COL_CLUES, puzzleInfo.getClues());
+		values.put(COL_AREAS, puzzleInfo.getAreas());
+		values.put(COL_EXTRA_REGIONS, puzzleInfo.getExtraRegions());
+		values.put(COL_SOLUTION, puzzleInfo.getSolution());
+
+		long insertedRowId = db.insert(TABLE_PUZZLES, null, values);
+		if (insertedRowId == -1)
+			throw new SQLException("Could not create puzzle " + puzzleInfo);
+
+		return insertedRowId;
+	}
+
+	public int getNumberOfPuzzles(long folderId) {
+		if (Constants.LOG_V)
+			Log.v(TAG, "getNumberOfPuzzles(" + folderId + ")");
+
+		SQLiteDatabase db = openHelper.getReadableDatabase();
+
+		Cursor cursor = db.query(TABLE_PUZZLES, new String[] { "COUNT(*)" }, COL_FOLDER + "=?",
+				new String[] { String.valueOf(folderId) }, null, null, null);
+		try {
+			cursor.moveToFirst();
+
+			return cursor.getInt(0);
+		}
+		finally {
+			cursor.close();
+		}
+	}
+
+	public PuzzleInfo loadPuzzle(long folderId, int number) {
+		if (Constants.LOG_V)
+			Log.v(TAG, "loadPuzzle(" + folderId + "," + number + ")");
+
+		SQLiteDatabase db = openHelper.getReadableDatabase();
+
+		String[] columns = { COL_NAME, COL_DIFFICULTY, COL_SIZE, COL_CLUES, COL_AREAS,
+				COL_EXTRA_REGIONS, COL_SOLUTION };
+		String selection = COL_FOLDER + "=?";
+		String[] selectionArgs = { String.valueOf(folderId) };
+		String limit = number + ",1";
+
+		Cursor cursor = db.query(TABLE_PUZZLES, columns, selection, selectionArgs, null, null, null,
+				limit);
+		try {
+			if (cursor.moveToNext()) {
+				PuzzleInfo.Builder builder = new PuzzleInfo.Builder(cursor.getString(3));
+				builder.setName(cursor.getString(0));
+				builder.setDifficulty(Difficulty.values()[cursor.getInt(1)]);
+				builder.setAreas(cursor.getString(4));
+				builder.setExtraRegions(cursor.getString(5));
+				builder.setSolution(cursor.getString(6));
+				return builder.build();
+			}
+			else {
+				return null;
+			}
+		}
+		finally {
+			cursor.close();
+		}
+	}
+
 	public void close() {
 		if (Constants.LOG_V)
 			Log.v(TAG, "close()");
@@ -289,8 +368,8 @@ public class PuzzleDb {
 
 			db.execSQL("CREATE TABLE " + TABLE_PUZZLES + " (" + COL_ID + " INTEGER PRIMARY KEY,"
 					+ COL_FOLDER + " INTEGER," + COL_NAME + " TEXT, " + COL_DIFFICULTY + " INTEGER, "
-					+ COL_SOLUTION + " TEXT, " + COL_CLUES + " TEXT, " + COL_AREAS + " TEXT, "
-					+ COL_EXTRA_REGIONS + " TEXT);");
+					+ COL_SIZE + " INTEGER, " + COL_CLUES + " TEXT, " + COL_AREAS + " TEXT, "
+					+ COL_EXTRA_REGIONS + " TEXT, " + COL_SOLUTION + " TEXT);");
 		}
 
 		@Override
