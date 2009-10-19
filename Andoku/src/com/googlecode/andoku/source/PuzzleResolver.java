@@ -35,7 +35,7 @@ public class PuzzleResolver {
 			return existsAsset(context, puzzleSource.substring(AssetsPuzzleSource.ASSET_PREFIX
 					.length()), puzzleNumber);
 
-		throw new IllegalArgumentException();
+		throw new IllegalArgumentException(puzzleSource);
 	}
 
 	private static boolean existsAsset(Context context, String puzzleSet, int puzzleNumber)
@@ -48,7 +48,7 @@ public class PuzzleResolver {
 		if (puzzleId.startsWith(AssetsPuzzleSource.ASSET_PREFIX))
 			return restoreAsset(context, puzzleId.substring(AssetsPuzzleSource.ASSET_PREFIX.length()));
 
-		throw new IllegalArgumentException();
+		throw new IllegalArgumentException(puzzleId);
 	}
 
 	private static PuzzleHolder restoreAsset(Context context, String id) throws PuzzleIOException {
