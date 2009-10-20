@@ -63,6 +63,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 	private static final String TAG = Andoku.class.getName();
 
 	private static final int DIALOG_CONFIRM_RESET_PUZZLE = 0;
+	private static final int DIALOG_PUZZLE_IO_ERROR = 1;
 
 	private static final int MENU_CHECK_PUZZLE = 0;
 	private static final int MENU_PAUSE_RESUME_PUZZLE = 1;
@@ -427,9 +428,11 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 	private void setMark(Position cell) {
 		andokuView.markCell(cell);
 
-		ValueSet values = cell == null ? null : puzzle.getValues(cell.row, cell.col);
-		for (int v = 0; v < puzzle.getSize(); v++) {
-			keyPadButtons[v].setChecked(values != null && values.contains(v));
+		if (puzzle != null) {
+			ValueSet values = cell == null ? null : puzzle.getValues(cell.row, cell.col);
+			for (int v = 0; v < puzzle.getSize(); v++) {
+				keyPadButtons[v].setChecked(values != null && values.contains(v));
+			}
 		}
 
 		cancelToast();
@@ -513,10 +516,9 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 		}
 		catch (PuzzleIOException e) {
 			Log.e(TAG, "Error loading puzzle", e);
-			showWarning(R.string.warn_error_loading_puzzle);
-
 			clearPuzzle();
 			enterGameState(GAME_STATE_ERROR);
+			showDialog(DIALOG_PUZZLE_IO_ERROR);
 		}
 	}
 
@@ -624,10 +626,9 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 		}
 		catch (PuzzleIOException e) {
 			Log.e(TAG, "Error loading puzzle", e);
-			showWarning(R.string.warn_error_loading_puzzle);
-
 			clearPuzzle();
 			enterGameState(GAME_STATE_ERROR);
+			showDialog(DIALOG_PUZZLE_IO_ERROR);
 		}
 	}
 
@@ -686,7 +687,6 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 
 			case GAME_STATE_ERROR:
 				timer.reset();
-				showWarning(R.string.warn_error_loading_puzzle);
 				break;
 
 			default:
@@ -842,6 +842,8 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 		switch (id) {
 			case DIALOG_CONFIRM_RESET_PUZZLE:
 				return createConfirmResetPuzzleDialog();
+			case DIALOG_PUZZLE_IO_ERROR:
+				return createPuzzleIoErrorDialog();
 			default:
 				return null;
 		}
@@ -859,6 +861,16 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 							public void onClick(DialogInterface dialog, int whichButton) {
 							}
 						}).create();
+	}
+
+	private Dialog createPuzzleIoErrorDialog() {
+		return new AlertDialog.Builder(this).setIcon(R.drawable.alert_dialog_icon).setTitle(
+				R.string.dialog_io_error).setMessage(R.string.message_error_loading_puzzle)
+				.setPositiveButton(R.string.alert_dialog_ok, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						finish();
+					}
+				}).create();
 	}
 
 	private void showInfo(int resId) {
