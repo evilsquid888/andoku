@@ -43,7 +43,6 @@
     <string name="button_resume_game">Resume Game</string>
     <string name="button_start_game">Start Game</string>
     <string name="dialog_reset_puzzle">Reset Puzzle?</string>
-    <string name="difficulty_unknown">Unknown</string>
     <string name="html_page_about">about.html</string>
     <string name="html_page_help">help.html</string>
     <string name="info_puzzle_ok_1">Everything is okay. One cell to go.</string>
@@ -72,7 +71,6 @@
     <string name="spinner_extra_regions">Extra regions:</string>
     <string name="spinner_grid">Grid style:</string>
     <string name="title_no_puzzle">No puzzle available</string>
-    <string name="title_puzzle">%s (%s)</string>
     <string name="warn_error_loading_puzzle">An error has occurred while loading the puzzle!</string>
     <string name="warn_puzzle_errors">Sorry, you have made some mistakes!</string>
  </resources>

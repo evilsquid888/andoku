@@ -43,7 +43,6 @@
     <string name="button_resume_game">Spiel fortsetzen</string>
     <string name="button_start_game">Spiel starten</string>
     <string name="dialog_reset_puzzle">Rätsel zurücksetzen?</string>
-    <string name="difficulty_unknown">Unbekannt</string>
     <string name="html_page_about">about-de.html</string>
     <string name="html_page_help">help-de.html</string>
     <string name="info_puzzle_ok_1">Alles okay. Ein Feld ist noch auszufüllen.</string>
@@ -72,7 +71,6 @@
     <string name="spinner_extra_regions">Zusatzbereiche:</string>
     <string name="spinner_grid">Raster:</string>
     <string name="title_no_puzzle">Kein Sudoku-Rätsel verfügbar</string>
-    <string name="title_puzzle">%s (%s)</string>
     <string name="warn_error_loading_puzzle">Beim Laden des Sudoku-Rätsels ist ein Fehler aufgetreten!</string>
     <string name="warn_puzzle_errors">Das Sudoku-Rätsel hat leider einige Fehler!</string>
  </resources>

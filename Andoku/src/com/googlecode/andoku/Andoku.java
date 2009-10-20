@@ -93,6 +93,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 
 	private ViewGroup background;
 	private TextView puzzleTitleView;
+	private TextView puzzleDifficultyView;
 	private TextView puzzleSourceView;
 	private AndokuPuzzleView andokuView;
 	private FingertipView fingertipView;
@@ -133,6 +134,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 		background = (ViewGroup) findViewById(R.id.background);
 
 		puzzleTitleView = (TextView) findViewById(R.id.labelPuzzleTitle);
+		puzzleDifficultyView = (TextView) findViewById(R.id.labelPuzzleDifficulty);
 		puzzleSourceView = (TextView) findViewById(R.id.labelPuzzleSource);
 
 		andokuView = (AndokuPuzzleView) findViewById(R.id.viewPuzzle);
@@ -210,6 +212,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 //		builder.backgroudColor = 0xff000000;
 //		builder.puzzleBackgroundColor = 0xff333333;
 //		builder.titleTextColor = 0xffeeeeee;
+//		builder.difficultyTextColor = 0xffeeeeee;
 //		builder.sourceTextColor = 0xffeeeeee;
 //		builder.timerTextColor = 0xffeeeeee;
 //		builder.gridColor = 0x40ffffff;
@@ -227,6 +230,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 	private void setTheme(Theme theme) {
 		background.setBackgroundDrawable(theme.getBackground());
 		puzzleTitleView.setTextColor(theme.getTitleTextColor());
+		puzzleDifficultyView.setTextColor(theme.getDifficultyTextColor());
 		puzzleSourceView.setTextColor(theme.getSourceTextColor());
 		timerView.setTextColor(theme.getTimerTextColor());
 		andokuView.setTheme(theme);
@@ -756,6 +760,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 		andokuView.setPuzzle(this.puzzle);
 
 		puzzleTitleView.setText(getPuzzleTitle());
+		puzzleDifficultyView.setText(getPuzzleDifficulty());
 		puzzleSourceView.setText(getPuzzleSource());
 
 		if (!restoreAutoSavedPuzzle()) {
@@ -767,9 +772,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 	private String getPuzzleTitle() {
 		final Resources resources = getResources();
 		PuzzleType puzzleType = puzzleHolder.getPuzzleType();
-		String difficulty = getPuzzleDifficulty();
-		String name = resources.getString(puzzleType.getNameResId());
-		return resources.getString(R.string.title_puzzle, name, difficulty);
+		return resources.getString(puzzleType.getNameResId());
 	}
 
 	private String getPuzzleSource() {
@@ -778,12 +781,11 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 	}
 
 	private String getPuzzleDifficulty() {
-		final Resources resources = getResources();
-
 		final Difficulty difficulty = puzzleHolder.getPuzzleDifficulty();
 		if (difficulty == Difficulty.UNKNOWN)
-			return resources.getString(R.string.difficulty_unknown);
+			return "";
 
+		final Resources resources = getResources();
 		String[] difficulties = resources.getStringArray(R.array.difficulties);
 		return difficulties[difficulty.ordinal()];
 	}
@@ -794,6 +796,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 		andokuView.setPuzzle(null);
 
 		puzzleTitleView.setText(R.string.title_no_puzzle);
+		puzzleDifficultyView.setText("");
 		puzzleSourceView.setText("");
 
 		timer.reset();

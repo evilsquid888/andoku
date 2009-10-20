@@ -9,6 +9,7 @@ interface Theme {
 	Drawable getBackground();
 
 	int getTitleTextColor();
+	int getDifficultyTextColor();
 	int getSourceTextColor();
 	int getTimerTextColor();
 
