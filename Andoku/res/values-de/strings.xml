@@ -53,6 +53,7 @@
     <string name="menu_resume">Fortfahren</string>
     <string name="message_congrats">&lt;b&gt;Gratuliere, Sie haben das Sudoku-Rätsel gelöst!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Statistik für &lt;i&gt;%s (%s)&lt;/i&gt;:&lt;br/&gt;&lt;br/&gt;Gelöste Rätsel: %d&lt;br/&gt;Durchschnittszeit: %s&lt;br/&gt;Bestzeit: %s</string>
     <string name="message_reset_puzzle">Wollen Sie das aktuelle Sudoku-Rätsel und die Stoppuhr wirklich zurücksetzen?</string>
+    <string name="name_no_puzzle">Kein Sudoku-Rätsel verfügbar</string>
     <string name="name_sudoku_squiggly">Squiggly Sudoku</string>
     <string name="name_sudoku_squiggly_hyper">Squiggly Hyper-Sudoku</string>
     <string name="name_sudoku_squiggly_x">Squiggly X-Sudoku</string>
@@ -70,7 +71,6 @@
     <string name="spinner_difficulty">Schwierigkeitsgrad:</string>
     <string name="spinner_extra_regions">Zusatzbereiche:</string>
     <string name="spinner_grid">Raster:</string>
-    <string name="title_no_puzzle">Kein Sudoku-Rätsel verfügbar</string>
     <string name="warn_error_loading_puzzle">Beim Laden des Sudoku-Rätsels ist ein Fehler aufgetreten!</string>
     <string name="warn_puzzle_errors">Das Sudoku-Rätsel hat leider einige Fehler!</string>
  </resources>

@@ -53,6 +53,7 @@
     <string name="menu_resume">Resume</string>
     <string name="message_congrats">&lt;b&gt;Congratulations, you have solved this puzzle!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Statistics for &lt;i&gt;%s (%s)&lt;/i&gt;:&lt;br/&gt;&lt;br/&gt;Puzzles solved: %d&lt;br/&gt;Average time: %s&lt;br/&gt;Fastest time: %s</string>
     <string name="message_reset_puzzle">Do you really want to clear the current puzzle and reset the timer?</string>
+    <string name="name_no_puzzle">No puzzle available</string>
     <string name="name_sudoku_squiggly">Squiggly Sudoku</string>
     <string name="name_sudoku_squiggly_hyper">Squiggly Hyper-Sudoku</string>
     <string name="name_sudoku_squiggly_x">Squiggly X-Sudoku</string>
@@ -70,7 +71,6 @@
     <string name="spinner_difficulty">Difficulty level:</string>
     <string name="spinner_extra_regions">Extra regions:</string>
     <string name="spinner_grid">Grid style:</string>
-    <string name="title_no_puzzle">No puzzle available</string>
     <string name="warn_error_loading_puzzle">An error has occurred while loading the puzzle!</string>
     <string name="warn_puzzle_errors">Sorry, you have made some mistakes!</string>
  </resources>
