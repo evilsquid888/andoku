@@ -16,6 +16,7 @@ class ColorTheme implements Theme {
 	private final Drawable background;
 
 	private final int titleTextColor;
+	private final int sourceTextColor;
 	private final int timerTextColor;
 
 	private final Paint gridPaint;
@@ -43,6 +44,7 @@ class ColorTheme implements Theme {
 		public int backgroudColor = 0xffeeeeee;
 		public int puzzleBackgroundColor = 0xffffffff;
 		public int titleTextColor = 0xff222222;
+		public int sourceTextColor = 0xff222222;
 		public int timerTextColor = 0xff222222;
 		public int gridColor = 0x40000000;
 		public int borderColor = 0xff000000;
@@ -73,6 +75,7 @@ class ColorTheme implements Theme {
 		background = new ColorDrawable(builder.backgroudColor);
 
 		titleTextColor = builder.titleTextColor;
+		sourceTextColor = builder.sourceTextColor;
 		timerTextColor = builder.timerTextColor;
 
 		gridPaint = new Paint();
@@ -157,6 +160,10 @@ class ColorTheme implements Theme {
 
 	public int getTitleTextColor() {
 		return titleTextColor;
+	}
+
+	public int getSourceTextColor() {
+		return sourceTextColor;
 	}
 
 	public int getTimerTextColor() {

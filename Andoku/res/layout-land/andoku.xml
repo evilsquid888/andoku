@@ -131,14 +131,30 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
 
-        <TextView
-            android:id="@+id/labelTimer"
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:text="00:00:00"
+            android:orientation="horizontal"
             android:paddingTop="5dp"
-            android:paddingBottom="1dp"/>
+            android:paddingBottom="1dp">
+    
+            <TextView
+                android:id="@+id/labelPuzzleSource"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingRight="8dp"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:text="#1/100"/>
+
+            <TextView
+                android:id="@+id/labelTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00:00"/>
+    
+        </LinearLayout>
 
     </LinearLayout>
 

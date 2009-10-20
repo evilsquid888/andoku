@@ -72,7 +72,7 @@
     <string name="spinner_extra_regions">Zusatzbereiche:</string>
     <string name="spinner_grid">Raster:</string>
     <string name="title_no_puzzle">Kein Sudoku-Rätsel verfügbar</string>
-    <string name="title_puzzle">%s #%d/%d (%s)</string>
+    <string name="title_puzzle">%s (%s)</string>
     <string name="warn_error_loading_puzzle">Beim Laden des Sudoku-Rätsels ist ein Fehler aufgetreten!</string>
     <string name="warn_puzzle_errors">Das Sudoku-Rätsel hat leider einige Fehler!</string>
  </resources>

@@ -9,6 +9,7 @@ interface Theme {
 	Drawable getBackground();
 
 	int getTitleTextColor();
+	int getSourceTextColor();
 	int getTimerTextColor();
 
 	Paint getGridPaint();
