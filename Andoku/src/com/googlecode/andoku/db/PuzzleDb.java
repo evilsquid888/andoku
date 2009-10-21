@@ -41,18 +41,18 @@ public class PuzzleDb {
 	private static final String COL_ID = BaseColumns._ID;
 
 	private static final String TABLE_FOLDERS = "folders";
-	private static final String COL_FOLDER_NAME = "name";
-	private static final String COL_FOLDER_PARENT = "parent";
+	public static final String COL_FOLDER_NAME = "name";
+	public static final String COL_FOLDER_PARENT = "parent";
 
 	private static final String TABLE_PUZZLES = "puzzles";
-	private static final String COL_FOLDER = "folder";
-	private static final String COL_NAME = "name";
-	private static final String COL_DIFFICULTY = "difficulty"; // 0-4|-1
-	private static final String COL_SIZE = "size"; //             9
-	private static final String COL_CLUES = "clues"; //           "...6.12........3......"
-	private static final String COL_AREAS = "areas"; //           "11122223311122222341.."|""
-	private static final String COL_EXTRA_REGIONS = "extra"; //   "H"|"X"|""
-	private static final String COL_SOLUTION = "solution"; //     "35869127496158734217.."
+	public static final String COL_FOLDER = "folder";
+	public static final String COL_NAME = "name";
+	public static final String COL_DIFFICULTY = "difficulty"; // 0-4|-1
+	public static final String COL_SIZE = "size"; //             9
+	public static final String COL_CLUES = "clues"; //           "...6.12........3......"
+	public static final String COL_AREAS = "areas"; //           "11122223311122222341.."|""
+	public static final String COL_EXTRA_REGIONS = "extra"; //   "H"|"X"|""
+	public static final String COL_SOLUTION = "solution"; //     "35869127496158734217.."
 
 	public static final int ROOT_FOLDER_ID = -1;
 
