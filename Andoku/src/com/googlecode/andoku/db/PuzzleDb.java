@@ -87,15 +87,7 @@ public class PuzzleDb {
 
 		SQLiteDatabase db = openHelper.getWritableDatabase();
 
-		ContentValues values = new ContentValues();
-		values.put(COL_FOLDER_NAME, name);
-		values.put(COL_FOLDER_PARENT, parentId);
-
-		long insertedRowId = db.insert(TABLE_FOLDERS, null, values);
-		if (insertedRowId == -1)
-			throw new SQLException("Could not create folder " + name);
-
-		return insertedRowId;
+		return createFolder(db, parentId, name);
 	}
 
 	public boolean folderExists(String name) {
@@ -116,19 +108,26 @@ public class PuzzleDb {
 
 		SQLiteDatabase db = openHelper.getReadableDatabase();
 
-		String[] columns = { COL_ID };
-		String selection = COL_FOLDER_NAME + "=? AND " + COL_FOLDER_PARENT + "=?";
-		String[] selectionArgs = { name, String.valueOf(parentId) };
-		Cursor cursor = db.query(TABLE_FOLDERS, columns, selection, selectionArgs, null, null, null);
-		try {
-			if (cursor.moveToNext())
-				return cursor.getLong(0);
-			else
-				return null;
-		}
-		finally {
-			cursor.close();
-		}
+		return getFolderId(db, parentId, name);
+	}
+
+	public long getOrCreateFolder(String name) {
+		return getOrCreateFolder(ROOT_FOLDER_ID, name);
+	}
+
+	public long getOrCreateFolder(long parentId, String name) {
+		if (Constants.LOG_V)
+			Log.v(TAG, "getOrCreateFolder(" + parentId + "," + name + ")");
+
+		checkValidFolderName(name);
+
+		SQLiteDatabase db = openHelper.getWritableDatabase();
+
+		Long folderId = getFolderId(db, parentId, name);
+		if (folderId != null)
+			return folderId;
+		else
+			return createFolder(db, parentId, name);
 	}
 
 	public Cursor getFolders() {
@@ -301,6 +300,34 @@ public class PuzzleDb {
 			Log.v(TAG, "close()");
 
 		openHelper.close();
+	}
+
+	private long createFolder(SQLiteDatabase db, long parentId, String name) {
+		ContentValues values = new ContentValues();
+		values.put(COL_FOLDER_NAME, name);
+		values.put(COL_FOLDER_PARENT, parentId);
+
+		long insertedRowId = db.insert(TABLE_FOLDERS, null, values);
+		if (insertedRowId == -1)
+			throw new SQLException("Could not create folder " + name);
+
+		return insertedRowId;
+	}
+
+	private Long getFolderId(SQLiteDatabase db, long parentId, String name) {
+		String[] columns = { COL_ID };
+		String selection = COL_FOLDER_NAME + "=? AND " + COL_FOLDER_PARENT + "=?";
+		String[] selectionArgs = { name, String.valueOf(parentId) };
+		Cursor cursor = db.query(TABLE_FOLDERS, columns, selection, selectionArgs, null, null, null);
+		try {
+			if (cursor.moveToNext())
+				return cursor.getLong(0);
+			else
+				return null;
+		}
+		finally {
+			cursor.close();
+		}
 	}
 
 	private void deleteFolder(SQLiteDatabase db, long folderId) {

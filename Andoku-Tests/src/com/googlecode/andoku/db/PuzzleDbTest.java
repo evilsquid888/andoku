@@ -132,6 +132,20 @@ public class PuzzleDbTest extends AndroidTestCase {
 		assertNull(db.getFolderId("nosuchfolder"));
 	}
 
+	public void testGetOrCreateFolder() throws Exception {
+		long folderId1 = db.getOrCreateFolder("f1");
+		assertTrue(folderId1 >= 0);
+
+		long folderId2 = db.getOrCreateFolder("f1");
+		assertEquals(folderId1, folderId2);
+
+		long folderId3 = db.getOrCreateFolder(folderId1, "f2");
+		assertTrue(folderId3 >= 0);
+
+		long folderId4 = db.getOrCreateFolder(folderId1, "f2");
+		assertEquals(folderId3, folderId4);
+	}
+
 	public void testGetFolderName() throws Exception {
 		long folderId1 = db.createFolder("f1");
 		assertTrue(folderId1 >= 0);
