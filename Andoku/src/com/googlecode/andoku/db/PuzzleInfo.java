@@ -141,6 +141,7 @@ public class PuzzleInfo {
 
 	@Override
 	public String toString() {
-		return name + "|" + clues + "|" + areas + "|" + extraRegions + "|" + solution;
+		return name + "|" + clues + "|" + areas + "|" + extraRegions + "|" + solution + "|"
+				+ difficulty;
 	}
 }
