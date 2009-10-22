@@ -21,6 +21,7 @@ package com.googlecode.andoku.transfer;
 import com.googlecode.andoku.model.ExtraRegion;
 import com.googlecode.andoku.model.ExtraRegions;
 import com.googlecode.andoku.model.Puzzle;
+import com.googlecode.andoku.model.Solution;
 
 public class PuzzleDecoder {
 	private PuzzleDecoder() {
@@ -66,7 +67,7 @@ public class PuzzleDecoder {
 		return puzzle;
 	}
 
-	public static int[][] decodeValues(String values) {
+	public static Solution decodeValues(String values) {
 		int size = (int) Math.sqrt(values.length());
 		if (values.length() != size * size)
 			throw new IllegalArgumentException();
@@ -93,7 +94,7 @@ public class PuzzleDecoder {
 			}
 		}
 
-		return result;
+		return new Solution(result);
 	}
 
 	private static int[][] parseAreaCodes(int size, String areas) {

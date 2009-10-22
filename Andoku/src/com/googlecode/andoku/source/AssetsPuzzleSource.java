@@ -28,6 +28,7 @@ import java.io.Reader;
 import android.content.res.AssetManager;
 
 import com.googlecode.andoku.model.Puzzle;
+import com.googlecode.andoku.model.Solution;
 import com.googlecode.andoku.transfer.PuzzleDecoder;
 
 public class AssetsPuzzleSource implements PuzzleSource {
@@ -59,7 +60,7 @@ public class AssetsPuzzleSource implements PuzzleSource {
 		String[] loaded = loadPuzzle(number);
 
 		Puzzle puzzle;
-		int[][] solution;
+		Solution solution;
 		try {
 			puzzle = PuzzleDecoder.decode(loaded[0]);
 			solution = PuzzleDecoder.decodeValues(loaded[1]);

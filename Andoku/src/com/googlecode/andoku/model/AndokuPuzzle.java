@@ -34,7 +34,7 @@ public class AndokuPuzzle {
 	private final Puzzle puzzle;
 	private final PuzzleType puzzleType;
 	private final boolean[][] extra;
-	private final int[][] solution;
+	private final Solution solution;
 	private boolean solved;
 
 	private int[][] areaColors = null;
@@ -48,7 +48,7 @@ public class AndokuPuzzle {
 	// errors compared to actual solution; correct value has been eliminated
 	private HashSet<Position> cellErrors;
 
-	private AndokuPuzzle(Puzzle puzzle, PuzzleType puzzleType, int[][] solution) {
+	private AndokuPuzzle(Puzzle puzzle, PuzzleType puzzleType, Solution solution) {
 		this.size = puzzle.getSize();
 		this.puzzle = puzzle;
 		this.puzzleType = puzzleType;
@@ -224,7 +224,7 @@ public class AndokuPuzzle {
 		for (int row = 0; row < size; row++) {
 			for (int col = 0; col < size; col++) {
 				ValueSet values = this.values[row][col];
-				if (!values.isEmpty() && !values.contains(solution[row][col])) {
+				if (!values.isEmpty() && !values.contains(solution.getValue(row, col))) {
 					cellErrors.add(new Position(row, col));
 				}
 			}
@@ -298,13 +298,13 @@ public class AndokuPuzzle {
 		cellErrors.clear();
 	}
 
-	private static int hash(Puzzle puzzle, int[][] solution) {
+	private static int hash(Puzzle puzzle, Solution solution) {
 		int hash = puzzle.getSize();
 
 		final int size = puzzle.getSize();
 		for (int row = 0; row < size; row++) {
 			for (int col = 0; col < size; col++) {
-				hash = 37 * hash + solution[row][col];
+				hash = 37 * hash + solution.getValue(row, col);
 
 				hash = 37 * hash + puzzle.getAreaCode(row, col);
 
