@@ -24,6 +24,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 import android.provider.BaseColumns;
 import android.util.Log;
 
@@ -57,6 +58,8 @@ public class PuzzleDb {
 	public static final int ROOT_FOLDER_ID = -1;
 
 	private DatabaseHelper openHelper;
+
+	private SQLiteStatement insertPuzzleStatement;
 
 	public PuzzleDb(Context context) {
 		if (Constants.LOG_V)
@@ -225,19 +228,24 @@ public class PuzzleDb {
 		if (!folderExists(folderId))
 			throw new IllegalArgumentException("No such folder: " + folderId);
 
-		SQLiteDatabase db = openHelper.getWritableDatabase();
+		if (insertPuzzleStatement == null) {
+			SQLiteDatabase db = openHelper.getWritableDatabase();
+			insertPuzzleStatement = db.compileStatement("INSERT INTO " + TABLE_PUZZLES + "("
+					+ COL_FOLDER + ", " + COL_NAME + ", " + COL_DIFFICULTY + ", " + COL_SIZE + ", "
+					+ COL_CLUES + ", " + COL_AREAS + ", " + COL_EXTRA_REGIONS + ", " + COL_SOLUTION
+					+ ") VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+		}
 
-		ContentValues values = new ContentValues();
-		values.put(COL_FOLDER, folderId);
-		values.put(COL_NAME, puzzleInfo.getName());
-		values.put(COL_DIFFICULTY, puzzleInfo.getDifficulty().ordinal());
-		values.put(COL_SIZE, puzzleInfo.getSize());
-		values.put(COL_CLUES, puzzleInfo.getClues());
-		values.put(COL_AREAS, puzzleInfo.getAreas());
-		values.put(COL_EXTRA_REGIONS, puzzleInfo.getExtraRegions());
-		values.put(COL_SOLUTION, puzzleInfo.getSolution());
+		insertPuzzleStatement.bindLong(1, folderId);
+		insertPuzzleStatement.bindString(2, puzzleInfo.getName());
+		insertPuzzleStatement.bindLong(3, puzzleInfo.getDifficulty().ordinal());
+		insertPuzzleStatement.bindLong(4, puzzleInfo.getSize());
+		insertPuzzleStatement.bindString(5, puzzleInfo.getClues());
+		insertPuzzleStatement.bindString(6, puzzleInfo.getAreas());
+		insertPuzzleStatement.bindString(7, puzzleInfo.getExtraRegions());
+		insertPuzzleStatement.bindString(8, puzzleInfo.getSolution());
 
-		long insertedRowId = db.insert(TABLE_PUZZLES, null, values);
+		long insertedRowId = insertPuzzleStatement.executeInsert();
 		if (insertedRowId == -1)
 			throw new SQLException("Could not create puzzle " + puzzleInfo);
 
