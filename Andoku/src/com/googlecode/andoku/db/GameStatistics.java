@@ -30,6 +30,6 @@ public class GameStatistics {
 	}
 
 	public long getAverageTime() {
-		return sumTime / numGamesSolved;
+		return numGamesSolved == 0 ? 0 : sumTime / numGamesSolved;
 	}
 }
