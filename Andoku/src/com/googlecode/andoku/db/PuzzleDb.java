@@ -225,8 +225,8 @@ public class PuzzleDb {
 		if (Constants.LOG_V)
 			Log.v(TAG, "insertPuzzle(" + folderId + "," + puzzleInfo + ")");
 
-		if (!folderExists(folderId))
-			throw new IllegalArgumentException("No such folder: " + folderId);
+		// if (!folderExists(folderId))
+		//	  throw new IllegalArgumentException("No such folder: " + folderId);
 
 		if (insertPuzzleStatement == null) {
 			SQLiteDatabase db = openHelper.getWritableDatabase();
@@ -308,6 +308,18 @@ public class PuzzleDb {
 			Log.v(TAG, "close()");
 
 		openHelper.close();
+	}
+
+	public void beginTransaction() {
+		openHelper.getWritableDatabase().beginTransaction();
+	}
+
+	public void endTransaction() {
+		openHelper.getWritableDatabase().endTransaction();
+	}
+
+	public void setTransactionSuccessful() {
+		openHelper.getWritableDatabase().setTransactionSuccessful();
 	}
 
 	private long createFolder(SQLiteDatabase db, long parentId, String name) {
