@@ -820,14 +820,6 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 		saveGameDb.delete(puzzleId);
 	}
 
-	@SuppressWarnings("unused")
-	private void deleteAllAutoSavedPuzzles() {
-		if (Constants.LOG_V)
-			Log.v(TAG, "deleting all auto-save games..");
-
-		saveGameDb.deleteAll();
-	}
-
 	private boolean restoreAutoSavedPuzzle() {
 		String puzzleId = puzzleHolder.getPuzzleId();
 

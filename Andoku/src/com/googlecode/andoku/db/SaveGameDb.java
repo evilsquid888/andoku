@@ -85,6 +85,15 @@ public class SaveGameDb {
 		openHelper = new DatabaseHelper(context);
 	}
 
+	public void resetAll() {
+		if (Constants.LOG_V)
+			Log.v(TAG, "resetAll()");
+
+		SQLiteDatabase db = openHelper.getWritableDatabase();
+
+		db.delete(TABLE_NAME, null, null);
+	}
+
 	public void saveGame(String puzzleId, AndokuPuzzle puzzle, TickTimer timer) {
 		if (Constants.LOG_V)
 			Log.v(TAG, "saveGame(" + puzzleId + ")");
@@ -175,15 +184,6 @@ public class SaveGameDb {
 		SQLiteDatabase db = openHelper.getWritableDatabase();
 
 		db.delete(TABLE_NAME, PUZZLE_ID + "=?", new String[] { puzzleId });
-	}
-
-	public void deleteAll() {
-		if (Constants.LOG_V)
-			Log.v(TAG, "deleteAll()");
-
-		SQLiteDatabase db = openHelper.getWritableDatabase();
-
-		db.delete(TABLE_NAME, null, null);
 	}
 
 	public Cursor findAllGames() {
