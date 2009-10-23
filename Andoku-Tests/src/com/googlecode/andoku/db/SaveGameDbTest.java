@@ -50,7 +50,7 @@ public class SaveGameDbTest extends AndroidTestCase {
 		TickTimer timerSave = new TickTimer(new MockTickListener());
 		timerSave.setTime(700);
 
-		String puzzleId = MockPuzzleSource.SOURCE_ID + ':' + number;
+		PuzzleId puzzleId = new PuzzleId(MockPuzzleSource.SOURCE_ID, number);
 		db.saveGame(puzzleId, puzzleSave, timerSave);
 
 		AndokuPuzzle puzzleLoad = MockPuzzleSource.createPuzzle(number);
@@ -67,7 +67,7 @@ public class SaveGameDbTest extends AndroidTestCase {
 		AndokuPuzzle puzzle = MockPuzzleSource.createPuzzle(number);
 		TickTimer timer = new TickTimer(new MockTickListener());
 
-		String puzzleId = MockPuzzleSource.SOURCE_ID + ':' + number;
+		PuzzleId puzzleId = new PuzzleId(MockPuzzleSource.SOURCE_ID, number);
 		db.saveGame(puzzleId, puzzle, timer);
 		assertTrue(db.loadGame(puzzleId, puzzle, timer));
 
@@ -87,39 +87,45 @@ public class SaveGameDbTest extends AndroidTestCase {
 		timer3.setTime(900);
 
 		long t1 = System.currentTimeMillis();
-		db.saveGame("mock:17:1", puzzle1, timer1);
+		db.saveGame(new PuzzleId("mock:17", 1), puzzle1, timer1);
 		long t2 = System.currentTimeMillis();
-		db.saveGame("mock:16:2", puzzle2, timer2);
+		db.saveGame(new PuzzleId("mock:16", 2), puzzle2, timer2);
 		long t3 = System.currentTimeMillis();
-		db.saveGame("mock:17:3", puzzle3, timer3);
+		db.saveGame(new PuzzleId("mock:17", 3), puzzle3, timer3);
 		long t4 = System.currentTimeMillis();
 
 		Cursor cursor = db.findAllGames();
-		// cursor: ID, PUZZLE_ID, TYPE, TIMER, CREATED_DATE, MODIFIED_DATE
+		// cursor: ID, SOURCE, NUMBER, TYPE, TIMER, CREATED_DATE, MODIFIED_DATE
 
 		assertTrue(cursor.moveToNext());
-		assertEquals("mock:17:1", cursor.getString(1));
-		assertEquals(puzzle1.getPuzzleType().ordinal(), cursor.getInt(2));
-		assertEquals(timer1.getTime(), cursor.getLong(3));
-		assertTrue(cursor.getLong(4) >= t1);
-		assertTrue(cursor.getLong(4) < t2);
-		assertEquals(cursor.getLong(5), cursor.getLong(4));
+		assertEquals("mock:17", cursor.getString(SaveGameDb.IDX_GAME_SOURCE));
+		assertEquals(1, cursor.getInt(SaveGameDb.IDX_GAME_NUMBER));
+		assertEquals(puzzle1.getPuzzleType().ordinal(), cursor.getInt(SaveGameDb.IDX_GAME_TYPE));
+		assertEquals(timer1.getTime(), cursor.getLong(SaveGameDb.IDX_GAME_TIMER));
+		assertTrue(cursor.getLong(SaveGameDb.IDX_GAME_CREATED_DATE) >= t1);
+		assertTrue(cursor.getLong(SaveGameDb.IDX_GAME_CREATED_DATE) < t2);
+		assertEquals(cursor.getLong(SaveGameDb.IDX_GAME_MODIFIED_DATE), cursor
+				.getLong(SaveGameDb.IDX_GAME_CREATED_DATE));
 
 		assertTrue(cursor.moveToNext());
-		assertEquals("mock:16:2", cursor.getString(1));
-		assertEquals(puzzle2.getPuzzleType().ordinal(), cursor.getInt(2));
-		assertEquals(timer2.getTime(), cursor.getLong(3));
-		assertTrue(cursor.getLong(4) >= t2);
-		assertTrue(cursor.getLong(4) < t3);
-		assertEquals(cursor.getLong(5), cursor.getLong(4));
+		assertEquals("mock:16", cursor.getString(SaveGameDb.IDX_GAME_SOURCE));
+		assertEquals(2, cursor.getInt(SaveGameDb.IDX_GAME_NUMBER));
+		assertEquals(puzzle2.getPuzzleType().ordinal(), cursor.getInt(SaveGameDb.IDX_GAME_TYPE));
+		assertEquals(timer2.getTime(), cursor.getLong(SaveGameDb.IDX_GAME_TIMER));
+		assertTrue(cursor.getLong(SaveGameDb.IDX_GAME_CREATED_DATE) >= t2);
+		assertTrue(cursor.getLong(SaveGameDb.IDX_GAME_CREATED_DATE) < t3);
+		assertEquals(cursor.getLong(SaveGameDb.IDX_GAME_MODIFIED_DATE), cursor
+				.getLong(SaveGameDb.IDX_GAME_CREATED_DATE));
 
 		assertTrue(cursor.moveToNext());
-		assertEquals("mock:17:3", cursor.getString(1));
-		assertEquals(puzzle3.getPuzzleType().ordinal(), cursor.getInt(2));
-		assertEquals(timer3.getTime(), cursor.getLong(3));
-		assertTrue(cursor.getLong(4) >= t3);
-		assertTrue(cursor.getLong(4) < t4);
-		assertEquals(cursor.getLong(5), cursor.getLong(4));
+		assertEquals("mock:17", cursor.getString(SaveGameDb.IDX_GAME_SOURCE));
+		assertEquals(3, cursor.getInt(SaveGameDb.IDX_GAME_NUMBER));
+		assertEquals(puzzle3.getPuzzleType().ordinal(), cursor.getInt(SaveGameDb.IDX_GAME_TYPE));
+		assertEquals(timer3.getTime(), cursor.getLong(SaveGameDb.IDX_GAME_TIMER));
+		assertTrue(cursor.getLong(SaveGameDb.IDX_GAME_CREATED_DATE) >= t3);
+		assertTrue(cursor.getLong(SaveGameDb.IDX_GAME_CREATED_DATE) < t4);
+		assertEquals(cursor.getLong(SaveGameDb.IDX_GAME_MODIFIED_DATE), cursor
+				.getLong(SaveGameDb.IDX_GAME_CREATED_DATE));
 
 		assertFalse(cursor.moveToNext());
 
@@ -138,31 +144,35 @@ public class SaveGameDbTest extends AndroidTestCase {
 		timer3.setTime(900);
 
 		long t1 = System.currentTimeMillis();
-		db.saveGame("mock:17:1", puzzle1, timer1);
+		db.saveGame(new PuzzleId("mock:17", 1), puzzle1, timer1);
 		long t2 = System.currentTimeMillis();
-		db.saveGame("mock:16:2", puzzle2, timer2);
+		db.saveGame(new PuzzleId("mock:16", 2), puzzle2, timer2);
 		long t3 = System.currentTimeMillis();
-		db.saveGame("mock:17:3", puzzle3, timer3);
+		db.saveGame(new PuzzleId("mock:17", 3), puzzle3, timer3);
 		long t4 = System.currentTimeMillis();
 
 		Cursor cursor = db.findUnfinishedGames();
-		// cursor: ID, PUZZLE_ID, TYPE, TIMER, CREATED_DATE, MODIFIED_DATE
+		// cursor: ID, SOURCE, NUMBER, TYPE, TIMER, CREATED_DATE, MODIFIED_DATE
 
 		assertTrue(cursor.moveToNext());
-		assertEquals("mock:17:3", cursor.getString(1));
-		assertEquals(puzzle3.getPuzzleType().ordinal(), cursor.getInt(2));
-		assertEquals(timer3.getTime(), cursor.getLong(3));
-		assertTrue(cursor.getLong(4) >= t3);
-		assertTrue(cursor.getLong(4) < t4);
-		assertEquals(cursor.getLong(5), cursor.getLong(4));
+		assertEquals("mock:17", cursor.getString(SaveGameDb.IDX_GAME_SOURCE));
+		assertEquals(3, cursor.getInt(SaveGameDb.IDX_GAME_NUMBER));
+		assertEquals(puzzle3.getPuzzleType().ordinal(), cursor.getInt(SaveGameDb.IDX_GAME_TYPE));
+		assertEquals(timer3.getTime(), cursor.getLong(SaveGameDb.IDX_GAME_TIMER));
+		assertTrue(cursor.getLong(SaveGameDb.IDX_GAME_CREATED_DATE) >= t3);
+		assertTrue(cursor.getLong(SaveGameDb.IDX_GAME_CREATED_DATE) < t4);
+		assertEquals(cursor.getLong(SaveGameDb.IDX_GAME_MODIFIED_DATE), cursor
+				.getLong(SaveGameDb.IDX_GAME_CREATED_DATE));
 
 		assertTrue(cursor.moveToNext());
-		assertEquals("mock:17:1", cursor.getString(1));
-		assertEquals(puzzle1.getPuzzleType().ordinal(), cursor.getInt(2));
-		assertEquals(timer1.getTime(), cursor.getLong(3));
-		assertTrue(cursor.getLong(4) >= t1);
-		assertTrue(cursor.getLong(4) < t2);
-		assertEquals(cursor.getLong(5), cursor.getLong(4));
+		assertEquals("mock:17", cursor.getString(SaveGameDb.IDX_GAME_SOURCE));
+		assertEquals(1, cursor.getInt(SaveGameDb.IDX_GAME_NUMBER));
+		assertEquals(puzzle1.getPuzzleType().ordinal(), cursor.getInt(SaveGameDb.IDX_GAME_TYPE));
+		assertEquals(timer1.getTime(), cursor.getLong(SaveGameDb.IDX_GAME_TIMER));
+		assertTrue(cursor.getLong(SaveGameDb.IDX_GAME_CREATED_DATE) >= t1);
+		assertTrue(cursor.getLong(SaveGameDb.IDX_GAME_CREATED_DATE) < t2);
+		assertEquals(cursor.getLong(SaveGameDb.IDX_GAME_MODIFIED_DATE), cursor
+				.getLong(SaveGameDb.IDX_GAME_CREATED_DATE));
 
 		assertFalse(cursor.moveToNext());
 
@@ -180,9 +190,9 @@ public class SaveGameDbTest extends AndroidTestCase {
 		TickTimer timer3 = new TickTimer(new MockTickListener());
 		timer3.setTime(900);
 
-		db.saveGame("mock:17:1", puzzle1, timer1);
-		db.saveGame("mock:16:2", puzzle2, timer2);
-		db.saveGame("mock:17:3", puzzle3, timer3);
+		db.saveGame(new PuzzleId("mock:17", 1), puzzle1, timer1);
+		db.saveGame(new PuzzleId("mock:16", 2), puzzle2, timer2);
+		db.saveGame(new PuzzleId("mock:17", 3), puzzle3, timer3);
 
 		Cursor cursor = db.findGamesBySource("mock:16");
 		// cursor: NUMBER, SOLVED
@@ -221,9 +231,9 @@ public class SaveGameDbTest extends AndroidTestCase {
 		TickTimer timer3 = new TickTimer(new MockTickListener());
 		timer3.setTime(900);
 
-		db.saveGame("mock:17:1", puzzle1, timer1);
-		db.saveGame("mock:17:2", puzzle2, timer2);
-		db.saveGame("mock:17:3", puzzle3, timer3);
+		db.saveGame(new PuzzleId("mock:17", 1), puzzle1, timer1);
+		db.saveGame(new PuzzleId("mock:17", 2), puzzle2, timer2);
+		db.saveGame(new PuzzleId("mock:17", 3), puzzle3, timer3);
 
 		GameStatistics statistics = db.getStatistics("mock:17");
 		assertEquals(2, statistics.numGamesSolved);
@@ -240,9 +250,9 @@ public class SaveGameDbTest extends AndroidTestCase {
 		AndokuPuzzle puzzle3 = MockPuzzleSource.createPuzzle(7);
 		TickTimer timer3 = new TickTimer(new MockTickListener());
 
-		db.saveGame("mock:17:1", puzzle1, timer1);
-		db.saveGame("mock:16:2", puzzle2, timer2);
-		db.saveGame("mock:17:3", puzzle3, timer3);
+		db.saveGame(new PuzzleId("mock:17", 1), puzzle1, timer1);
+		db.saveGame(new PuzzleId("mock:16", 2), puzzle2, timer2);
+		db.saveGame(new PuzzleId("mock:17", 3), puzzle3, timer3);
 
 		Cursor cursor = db.findAllGames();
 		assertTrue(cursor.moveToNext());

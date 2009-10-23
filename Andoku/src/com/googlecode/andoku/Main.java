@@ -111,11 +111,12 @@ public class Main extends ListActivity {
 		Cursor cursor = saveGameDb.findUnfinishedGames();
 		startManagingCursor(cursor);
 
+		String[] from = { SaveGameDb.COL_TYPE, SaveGameDb.COL_SOURCE, SaveGameDb.COL_TYPE,
+				SaveGameDb.COL_TIMER, SaveGameDb.COL_MODIFIED_DATE };
+		int[] to = { R.id.save_game_icon, R.id.save_game_difficulty, R.id.save_game_title,
+				R.id.save_game_timer, R.id.save_game_modified };
 		SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(this, R.layout.save_game_list_item,
-				cursor, new String[] { SaveGameDb.COL_TYPE, SaveGameDb.COL_PUZZLE_ID,
-						SaveGameDb.COL_TYPE, SaveGameDb.COL_TIMER, SaveGameDb.COL_MODIFIED_DATE },
-				new int[] { R.id.save_game_icon, R.id.save_game_difficulty, R.id.save_game_title,
-						R.id.save_game_timer, R.id.save_game_modified });
+				cursor, from, to);
 		listAdapter.setViewBinder(new SaveGameViewBinder(getResources()));
 		setListAdapter(listAdapter);
 
@@ -541,7 +542,8 @@ public class Main extends ListActivity {
 	}
 
 	private final class SaveGameViewBinder implements SimpleCursorAdapter.ViewBinder {
-		private static final int IDX_PUZZLE_ID = SaveGameDb.IDX_GAME_PUZZLE_ID;
+		private static final int IDX_SOURCE = SaveGameDb.IDX_GAME_SOURCE;
+		private static final int IDX_NUMBER = SaveGameDb.IDX_GAME_NUMBER;
 		private static final int IDX_TYPE = SaveGameDb.IDX_GAME_TYPE;
 		private static final int IDX_TIMER = SaveGameDb.IDX_GAME_TIMER;
 		private static final int IDX_DATE_MODIFIED = SaveGameDb.IDX_GAME_MODIFIED_DATE;
@@ -581,8 +583,9 @@ public class Main extends ListActivity {
 					textView.setText(age);
 					return true;
 
-				case IDX_PUZZLE_ID:
-					String difficultyAndNumber = parseDifficultyAndNumber(cursor.getString(columnIndex));
+				case IDX_SOURCE:
+					String difficultyAndNumber = parseDifficultyAndNumber(cursor.getString(IDX_SOURCE),
+							cursor.getInt(IDX_NUMBER));
 					textView.setText(difficultyAndNumber);
 					return true;
 			}
@@ -590,15 +593,10 @@ public class Main extends ListActivity {
 			return false;
 		}
 
-		private String parseDifficultyAndNumber(String puzzleId) {
-			int idx = puzzleId.lastIndexOf(':');
-			if (idx == -1)
-				return puzzleId;
-
+		private String parseDifficultyAndNumber(String puzzleSourceId, int number) {
 			String[] difficulties = getResources().getStringArray(R.array.difficulties);
-			int difficulty = puzzleId.charAt(idx - 1) - '0' - 1;
-			int number = Integer.parseInt(puzzleId.substring(idx + 1)) + 1;
-			return difficulties[difficulty] + " #" + number;
+			int difficulty = puzzleSourceId.charAt(puzzleSourceId.length() - 1) - '0' - 1;
+			return difficulties[difficulty] + " #" + (number + 1);
 		}
 	}
 }

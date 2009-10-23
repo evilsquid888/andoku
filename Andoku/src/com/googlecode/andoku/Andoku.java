@@ -48,6 +48,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.googlecode.andoku.db.GameStatistics;
+import com.googlecode.andoku.db.PuzzleId;
 import com.googlecode.andoku.db.SaveGameDb;
 import com.googlecode.andoku.model.AndokuPuzzle;
 import com.googlecode.andoku.model.Position;
@@ -69,7 +70,8 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 	private static final int MENU_PAUSE_RESUME_PUZZLE = 1;
 	private static final int MENU_RESET_PUZZLE = 2;
 
-	private static final String APP_STATE_PUZZLE_ID = "puzzleId";
+	private static final String APP_STATE_PUZZLE_SOURCE_ID = "puzzleSourceId";
+	private static final String APP_STATE_PUZZLE_NUMBER = "puzzleNumber";
 	private static final String APP_STATE_GAME_STATE = "gameState";
 
 	private static final int GAME_STATE_NEW_ACTIVITY_STARTED = 0;
@@ -286,7 +288,9 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 		super.onSaveInstanceState(outState);
 
 		if (puzzleHolder != null) {
-			outState.putString(APP_STATE_PUZZLE_ID, puzzleHolder.getPuzzleId());
+			PuzzleId puzzleId = puzzleHolder.getPuzzleId();
+			outState.putString(APP_STATE_PUZZLE_SOURCE_ID, puzzleId.puzzleSourceId);
+			outState.putInt(APP_STATE_PUZZLE_NUMBER, puzzleId.number);
 			outState.putInt(APP_STATE_GAME_STATE, gameState);
 		}
 	}
@@ -599,14 +603,14 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 		}
 	}
 
+	// TODO: PuzzleResolver should resolve PuzzleSource instead of PuzzleHolder
 	private void createPuzzle(Bundle savedInstanceState) {
 		try {
-			String puzzleId = savedInstanceState == null ? null : savedInstanceState
-					.getString(APP_STATE_PUZZLE_ID);
+			PuzzleId puzzleId = getPuzzleIdFromSavedInstanceState(savedInstanceState);
 
 			if (puzzleId == null) {
 				puzzleId = getPuzzleIdFromIntent();
-				PuzzleHolder puzzleHolder = PuzzleResolver.resolve(this, puzzleId);
+				PuzzleHolder puzzleHolder = PuzzleResolver.resolve(this, puzzleId.toString()); // FIXME
 
 				gameState = GAME_STATE_NEW_ACTIVITY_STARTED;
 
@@ -616,7 +620,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 			}
 			else {
 				assert savedInstanceState != null;
-				PuzzleHolder puzzleHolder = PuzzleResolver.resolve(this, puzzleId);
+				PuzzleHolder puzzleHolder = PuzzleResolver.resolve(this, puzzleId.toString()); // FIXME
 
 				gameState = GAME_STATE_ACTIVITY_STATE_RESTORED;
 
@@ -632,15 +636,23 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 		}
 	}
 
-	// TODO: return PuzzleId instead of String
-	private String getPuzzleIdFromIntent() {
+	private PuzzleId getPuzzleIdFromSavedInstanceState(Bundle savedInstanceState) {
+		if (savedInstanceState == null)
+			return null;
+
+		String puzzleSourceId = savedInstanceState.getString(APP_STATE_PUZZLE_SOURCE_ID);
+		int number = savedInstanceState.getInt(APP_STATE_PUZZLE_NUMBER);
+		return new PuzzleId(puzzleSourceId, number);
+	}
+
+	private PuzzleId getPuzzleIdFromIntent() {
 		Intent intent = getIntent();
 		String puzzleSourceId = intent.getStringExtra(Constants.EXTRA_PUZZLE_SOURCE_ID);
 		int number = intent.getIntExtra(Constants.EXTRA_PUZZLE_NUMBER, -1);
 		if (puzzleSourceId != null && number != -1)
-			return puzzleSourceId + ':' + number;
+			return new PuzzleId(puzzleSourceId, number);
 
-		return "asset:standard_n_1:0";
+		return new PuzzleId("asset:standard_n_1", 0);
 	}
 
 	private void onPauseResumeGame() {
@@ -805,7 +817,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 	}
 
 	private void autoSavePuzzle() {
-		String puzzleId = puzzleHolder.getPuzzleId();
+		PuzzleId puzzleId = puzzleHolder.getPuzzleId();
 
 		if (Constants.LOG_V)
 			Log.v(TAG, "auto-saving puzzle " + puzzleId);
@@ -814,7 +826,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 	}
 
 	private void deleteAutoSavedPuzzle() {
-		String puzzleId = puzzleHolder.getPuzzleId();
+		PuzzleId puzzleId = puzzleHolder.getPuzzleId();
 
 		if (Constants.LOG_V)
 			Log.v(TAG, "deleting auto-save game " + puzzleId);
@@ -823,7 +835,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 	}
 
 	private boolean restoreAutoSavedPuzzle() {
-		String puzzleId = puzzleHolder.getPuzzleId();
+		PuzzleId puzzleId = puzzleHolder.getPuzzleId();
 
 		if (Constants.LOG_V)
 			Log.v(TAG, "restoring auto-save game " + puzzleId);

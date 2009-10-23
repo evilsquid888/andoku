@@ -57,11 +57,12 @@ public class SaveGameDb {
 
 	// indexes for findAllGames() and findUnfinishedGames();
 	public static final int IDX_GAME_ID = 0;
-	public static final int IDX_GAME_PUZZLE_ID = 1;
-	public static final int IDX_GAME_TYPE = 2;
-	public static final int IDX_GAME_TIMER = 3;
-	public static final int IDX_GAME_CREATED_DATE = 4;
-	public static final int IDX_GAME_MODIFIED_DATE = 5;
+	public static final int IDX_GAME_SOURCE = 1;
+	public static final int IDX_GAME_NUMBER = 2;
+	public static final int IDX_GAME_TYPE = 3;
+	public static final int IDX_GAME_TIMER = 4;
+	public static final int IDX_GAME_CREATED_DATE = 5;
+	public static final int IDX_GAME_MODIFIED_DATE = 6;
 
 	// indexes for findGamesBySource()
 	public static final int IDX_GAME_BY_SOURCE_NUMBER = 0;
@@ -85,7 +86,7 @@ public class SaveGameDb {
 		db.delete(TABLE_GAMES, null, null);
 	}
 
-	public void saveGame(String puzzleId, AndokuPuzzle puzzle, TickTimer timer) {
+	public void saveGame(PuzzleId puzzleId, AndokuPuzzle puzzle, TickTimer timer) {
 		if (Constants.LOG_V)
 			Log.v(TAG, "saveGame(" + puzzleId + ")");
 
@@ -96,8 +97,8 @@ public class SaveGameDb {
 		db.beginTransaction();
 		try {
 			String[] columns = { COL_ID };
-			String selection = COL_PUZZLE_ID + "=?";
-			String[] selectionArgs = { puzzleId };
+			String selection = COL_SOURCE + "=? AND " + COL_NUMBER + "=?";
+			String[] selectionArgs = { puzzleId.puzzleSourceId, String.valueOf(puzzleId.number) };
 			Cursor cursor = db.query(TABLE_GAMES, columns, selection, selectionArgs, null, null, null);
 
 			long rowId = -1;
@@ -114,13 +115,8 @@ public class SaveGameDb {
 			values.put(COL_MODIFIED_DATE, now);
 
 			if (rowId == -1) {
-				int idx = puzzleId.lastIndexOf(':');
-				String source = puzzleId.substring(0, idx);
-				int number = Integer.parseInt(puzzleId.substring(idx + 1));
-
-				values.put(COL_PUZZLE_ID, puzzleId);
-				values.put(COL_SOURCE, source);
-				values.put(COL_NUMBER, number);
+				values.put(COL_SOURCE, puzzleId.puzzleSourceId);
+				values.put(COL_NUMBER, puzzleId.number);
 				values.put(COL_TYPE, puzzle.getPuzzleType().ordinal());
 				values.put(COL_CREATED_DATE, now);
 				long insertedRowId = db.insert(TABLE_GAMES, null, values);
@@ -141,15 +137,15 @@ public class SaveGameDb {
 		}
 	}
 
-	public boolean loadGame(String puzzleId, AndokuPuzzle puzzle, TickTimer timer) {
+	public boolean loadGame(PuzzleId puzzleId, AndokuPuzzle puzzle, TickTimer timer) {
 		if (Constants.LOG_V)
 			Log.v(TAG, "loadGame(" + puzzleId + ")");
 
 		SQLiteDatabase db = openHelper.getReadableDatabase();
 
 		String[] columns = { COL_PUZZLE, COL_TIMER };
-		String selection = COL_PUZZLE_ID + "=?";
-		String[] selectionArgs = { puzzleId };
+		String selection = COL_SOURCE + "=? AND " + COL_NUMBER + "=?";
+		String[] selectionArgs = { puzzleId.puzzleSourceId, String.valueOf(puzzleId.number) };
 		Cursor cursor = db.query(TABLE_GAMES, columns, selection, selectionArgs, null, null, null);
 		try {
 			if (!cursor.moveToFirst()) {
@@ -172,13 +168,15 @@ public class SaveGameDb {
 		}
 	}
 
-	public void delete(String puzzleId) {
+	public void delete(PuzzleId puzzleId) {
 		if (Constants.LOG_V)
 			Log.v(TAG, "delete(" + puzzleId + ")");
 
 		SQLiteDatabase db = openHelper.getWritableDatabase();
 
-		db.delete(TABLE_GAMES, COL_PUZZLE_ID + "=?", new String[] { puzzleId });
+		String whereClause = COL_SOURCE + "=? AND " + COL_NUMBER + "=?";
+		String[] whereArgs = { puzzleId.puzzleSourceId, String.valueOf(puzzleId.number) };
+		db.delete(TABLE_GAMES, whereClause, whereArgs);
 	}
 
 	public Cursor findAllGames() {
@@ -187,7 +185,7 @@ public class SaveGameDb {
 
 		SQLiteDatabase db = openHelper.getReadableDatabase();
 
-		String[] columns = { COL_ID, COL_PUZZLE_ID, COL_TYPE, COL_TIMER, COL_CREATED_DATE,
+		String[] columns = { COL_ID, COL_SOURCE, COL_NUMBER, COL_TYPE, COL_TIMER, COL_CREATED_DATE,
 				COL_MODIFIED_DATE };
 		return db.query(TABLE_GAMES, columns, null, null, null, null, null);
 	}
@@ -198,7 +196,7 @@ public class SaveGameDb {
 
 		SQLiteDatabase db = openHelper.getReadableDatabase();
 
-		String[] columns = { COL_ID, COL_PUZZLE_ID, COL_TYPE, COL_TIMER, COL_CREATED_DATE,
+		String[] columns = { COL_ID, COL_SOURCE, COL_NUMBER, COL_TYPE, COL_TIMER, COL_CREATED_DATE,
 				COL_MODIFIED_DATE };
 		String selection = COL_SOLVED + "=0";
 		String orderBy = COL_MODIFIED_DATE + " DESC";

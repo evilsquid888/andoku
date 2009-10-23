@@ -18,6 +18,7 @@
 
 package com.googlecode.andoku.source;
 
+import com.googlecode.andoku.db.PuzzleId;
 import com.googlecode.andoku.model.Puzzle;
 import com.googlecode.andoku.model.Solution;
 import com.googlecode.andoku.transfer.StandardAreas;
@@ -51,8 +52,8 @@ public class PuzzleHolder {
 		return number;
 	}
 
-	public String getPuzzleId() {
-		return source.getSourceId() + NUMBER_SEPARATOR + number;
+	public PuzzleId getPuzzleId() {
+		return new PuzzleId(source.getSourceId(), number);
 	}
 
 	public Puzzle getPuzzle() {
