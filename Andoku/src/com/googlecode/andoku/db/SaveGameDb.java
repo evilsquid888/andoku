@@ -238,13 +238,13 @@ public class SaveGameDb {
 		}
 	}
 
-	public String puzzleIdByRowId(long rowId) {
+	public PuzzleId puzzleIdByRowId(long rowId) {
 		if (Constants.LOG_V)
 			Log.v(TAG, "puzzleIdByRowId(" + rowId + ")");
 
 		SQLiteDatabase db = openHelper.getReadableDatabase();
 
-		String[] columns = { COL_PUZZLE_ID };
+		String[] columns = { COL_SOURCE, COL_NUMBER };
 		String selection = COL_ID + "=?";
 		String[] selectionArgs = { Long.toString(rowId) };
 		Cursor cursor = db.query(TABLE_GAMES, columns, selection, selectionArgs, null, null, null);
@@ -253,7 +253,9 @@ public class SaveGameDb {
 				return null;
 			}
 
-			return cursor.getString(0);
+			String puzzleSourceId = cursor.getString(0);
+			int number = cursor.getInt(1);
+			return new PuzzleId(puzzleSourceId, number);
 		}
 		finally {
 			cursor.close();

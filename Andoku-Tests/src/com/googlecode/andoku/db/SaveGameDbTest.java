@@ -254,9 +254,9 @@ public class SaveGameDbTest extends AndroidTestCase {
 		assertFalse(cursor.moveToNext());
 		cursor.close();
 
-		assertEquals("mock:17:1", db.puzzleIdByRowId(id1));
-		assertEquals("mock:16:2", db.puzzleIdByRowId(id2));
-		assertEquals("mock:17:3", db.puzzleIdByRowId(id3));
+		assertEquals(new PuzzleId("mock:17", 1), db.puzzleIdByRowId(id1));
+		assertEquals(new PuzzleId("mock:16", 2), db.puzzleIdByRowId(id2));
+		assertEquals(new PuzzleId("mock:17", 3), db.puzzleIdByRowId(id3));
 	}
 
 	private static final class MockTickListener implements TickListener {

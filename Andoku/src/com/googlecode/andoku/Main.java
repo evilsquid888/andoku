@@ -48,6 +48,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.googlecode.andoku.db.PuzzleId;
 import com.googlecode.andoku.db.SaveGameDb;
 import com.googlecode.andoku.source.PuzzleIOException;
 import com.googlecode.andoku.source.PuzzleResolver;
@@ -295,10 +296,10 @@ public class Main extends ListActivity {
 
 		String puzzleSourceId = getSelectedPuzzleSource();
 		int number = findAvailableGame(puzzleSourceId);
-		String puzzleId = puzzleSourceId + ':' + number;
 
 		Intent intent = new Intent(this, Andoku.class);
-		intent.putExtra(Constants.EXTRA_PUZZLE_ID, puzzleId);
+		intent.putExtra(Constants.EXTRA_PUZZLE_SOURCE_ID, puzzleSourceId);
+		intent.putExtra(Constants.EXTRA_PUZZLE_NUMBER, number);
 		startActivity(intent);
 	}
 
@@ -306,8 +307,11 @@ public class Main extends ListActivity {
 		if (Constants.LOG_V)
 			Log.v(TAG, "onResumeGameItem(" + rowId + ")");
 
+		PuzzleId puzzleId = saveGameDb.puzzleIdByRowId(rowId);
+
 		Intent intent = new Intent(this, Andoku.class);
-		intent.putExtra(Constants.EXTRA_PUZZLE_ID, saveGameDb.puzzleIdByRowId(rowId));
+		intent.putExtra(Constants.EXTRA_PUZZLE_SOURCE_ID, puzzleId.puzzleSourceId);
+		intent.putExtra(Constants.EXTRA_PUZZLE_NUMBER, puzzleId.number);
 		intent.putExtra(Constants.EXTRA_START_PUZZLE, true);
 		startActivity(intent);
 	}

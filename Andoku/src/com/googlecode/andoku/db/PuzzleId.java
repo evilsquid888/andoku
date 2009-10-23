@@ -16,17 +16,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.googlecode.andoku;
+package com.googlecode.andoku.db;
 
-public class Constants {
-	private static final String PREFIX = Constants.class.getPackage().getName() + ".";
+public class PuzzleId {
+	public final String puzzleSourceId;
+	public final int number;
 
-	public static final String EXTRA_PUZZLE_SOURCE_ID = PREFIX + "puzzleSourceId";
-	public static final String EXTRA_PUZZLE_NUMBER = PREFIX + "puzzleNumber";
-	public static final String EXTRA_START_PUZZLE = PREFIX + "start";
+	public PuzzleId(String puzzleSourceId, int number) {
+		this.puzzleSourceId = puzzleSourceId;
+		this.number = number;
+	}
 
-	public static final boolean LOG_V = false;
+	@Override
+	public int hashCode() {
+		return puzzleSourceId.hashCode() ^ number;
+	}
 
-	private Constants() {
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this)
+			return true;
+		if (!(obj instanceof PuzzleId))
+			return false;
+
+		PuzzleId other = (PuzzleId) obj;
+		return puzzleSourceId.equals(other.puzzleSourceId) && number == other.number;
+	}
+
+	@Override
+	public String toString() {
+		return puzzleSourceId + ':' + number;
 	}
 }

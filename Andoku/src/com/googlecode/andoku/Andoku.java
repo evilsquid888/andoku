@@ -632,11 +632,13 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 		}
 	}
 
+	// TODO: return PuzzleId instead of String
 	private String getPuzzleIdFromIntent() {
 		Intent intent = getIntent();
-		String puzzleId = intent.getStringExtra(Constants.EXTRA_PUZZLE_ID);
-		if (puzzleId != null)
-			return puzzleId;
+		String puzzleSourceId = intent.getStringExtra(Constants.EXTRA_PUZZLE_SOURCE_ID);
+		int number = intent.getIntExtra(Constants.EXTRA_PUZZLE_NUMBER, -1);
+		if (puzzleSourceId != null && number != -1)
+			return puzzleSourceId + ':' + number;
 
 		return "asset:standard_n_1:0";
 	}
