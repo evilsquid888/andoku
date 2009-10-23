@@ -67,12 +67,8 @@ public class AndokuPuzzle {
 	}
 
 	public Serializable saveToMemento() {
-		PuzzleMemento memento = new PuzzleMemento(hash(puzzle, solution), copyValues(values),
+		return new PuzzleMemento(hash(puzzle, solution), copyValues(values),
 				copyRegionErrors(regionErrors), copyCellErrors(cellErrors));
-
-		// memento = SerializableUtil.roundTrip(memento);
-
-		return memento;
 	}
 
 	public boolean restoreFromMemento(Object object) {
