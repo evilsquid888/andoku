@@ -6,12 +6,7 @@ import android.test.AndroidTestCase;
 import com.googlecode.andoku.TickListener;
 import com.googlecode.andoku.TickTimer;
 import com.googlecode.andoku.model.AndokuPuzzle;
-import com.googlecode.andoku.model.Solution;
 import com.googlecode.andoku.model.ValueSet;
-import com.googlecode.andoku.source.PuzzleHolder;
-import com.googlecode.andoku.source.PuzzleIOException;
-import com.googlecode.andoku.source.PuzzleSource;
-import com.googlecode.andoku.transfer.PuzzleDecoder;
 import com.googlecode.andoku.util.MockPuzzleSource;
 
 public class SaveGameDbTest extends AndroidTestCase {
@@ -30,7 +25,7 @@ public class SaveGameDbTest extends AndroidTestCase {
 
 	public void testSaveAndLoadGame() throws Exception {
 		int number = 0;
-		AndokuPuzzle puzzleSave = createPuzzle(number);
+		AndokuPuzzle puzzleSave = MockPuzzleSource.createPuzzle(number);
 		puzzleSave.setValues(0, 1, ValueSet.single(7));
 		puzzleSave.setValues(0, 2, ValueSet.single(3));
 
@@ -40,7 +35,7 @@ public class SaveGameDbTest extends AndroidTestCase {
 		String puzzleId = MockPuzzleSource.SOURCE_ID + ':' + number;
 		db.saveGame(puzzleId, puzzleSave, timerSave);
 
-		AndokuPuzzle puzzleLoad = createPuzzle(number);
+		AndokuPuzzle puzzleLoad = MockPuzzleSource.createPuzzle(number);
 		TickTimer timerLoad = new TickTimer(new MockTickListener());
 
 		assertTrue(db.loadGame(puzzleId, puzzleLoad, timerLoad));
@@ -51,7 +46,7 @@ public class SaveGameDbTest extends AndroidTestCase {
 
 	public void testDeleteGame() throws Exception {
 		int number = 0;
-		AndokuPuzzle puzzle = createPuzzle(number);
+		AndokuPuzzle puzzle = MockPuzzleSource.createPuzzle(number);
 		TickTimer timer = new TickTimer(new MockTickListener());
 
 		String puzzleId = MockPuzzleSource.SOURCE_ID + ':' + number;
@@ -63,13 +58,13 @@ public class SaveGameDbTest extends AndroidTestCase {
 	}
 
 	public void testFindAllGames() throws Exception {
-		AndokuPuzzle puzzle1 = createPuzzle(1);
+		AndokuPuzzle puzzle1 = MockPuzzleSource.createPuzzle(1);
 		TickTimer timer1 = new TickTimer(new MockTickListener());
 		timer1.setTime(700);
-		AndokuPuzzle puzzle2 = createSolvedPuzzle(4);
+		AndokuPuzzle puzzle2 = MockPuzzleSource.createSolvedPuzzle(4);
 		TickTimer timer2 = new TickTimer(new MockTickListener());
 		timer2.setTime(800);
-		AndokuPuzzle puzzle3 = createPuzzle(7);
+		AndokuPuzzle puzzle3 = MockPuzzleSource.createPuzzle(7);
 		TickTimer timer3 = new TickTimer(new MockTickListener());
 		timer3.setTime(900);
 
@@ -114,13 +109,13 @@ public class SaveGameDbTest extends AndroidTestCase {
 	}
 
 	public void testFindUnfinishedGames() throws Exception {
-		AndokuPuzzle puzzle1 = createPuzzle(1);
+		AndokuPuzzle puzzle1 = MockPuzzleSource.createPuzzle(1);
 		TickTimer timer1 = new TickTimer(new MockTickListener());
 		timer1.setTime(700);
-		AndokuPuzzle puzzle2 = createSolvedPuzzle(4);
+		AndokuPuzzle puzzle2 = MockPuzzleSource.createSolvedPuzzle(4);
 		TickTimer timer2 = new TickTimer(new MockTickListener());
 		timer2.setTime(800);
-		AndokuPuzzle puzzle3 = createPuzzle(7);
+		AndokuPuzzle puzzle3 = MockPuzzleSource.createPuzzle(7);
 		TickTimer timer3 = new TickTimer(new MockTickListener());
 		timer3.setTime(900);
 
@@ -157,13 +152,13 @@ public class SaveGameDbTest extends AndroidTestCase {
 	}
 
 	public void testFindGamesBySource() throws Exception {
-		AndokuPuzzle puzzle1 = createPuzzle(1);
+		AndokuPuzzle puzzle1 = MockPuzzleSource.createPuzzle(1);
 		TickTimer timer1 = new TickTimer(new MockTickListener());
 		timer1.setTime(700);
-		AndokuPuzzle puzzle2 = createSolvedPuzzle(4);
+		AndokuPuzzle puzzle2 = MockPuzzleSource.createSolvedPuzzle(4);
 		TickTimer timer2 = new TickTimer(new MockTickListener());
 		timer2.setTime(800);
-		AndokuPuzzle puzzle3 = createSolvedPuzzle(7);
+		AndokuPuzzle puzzle3 = MockPuzzleSource.createSolvedPuzzle(7);
 		TickTimer timer3 = new TickTimer(new MockTickListener());
 		timer3.setTime(900);
 
@@ -198,13 +193,13 @@ public class SaveGameDbTest extends AndroidTestCase {
 	}
 
 	public void testGetStatistics() throws Exception {
-		AndokuPuzzle puzzle1 = createPuzzle(1);
+		AndokuPuzzle puzzle1 = MockPuzzleSource.createPuzzle(1);
 		TickTimer timer1 = new TickTimer(new MockTickListener());
 		timer1.setTime(700);
-		AndokuPuzzle puzzle2 = createSolvedPuzzle(4);
+		AndokuPuzzle puzzle2 = MockPuzzleSource.createSolvedPuzzle(4);
 		TickTimer timer2 = new TickTimer(new MockTickListener());
 		timer2.setTime(800);
-		AndokuPuzzle puzzle3 = createSolvedPuzzle(7);
+		AndokuPuzzle puzzle3 = MockPuzzleSource.createSolvedPuzzle(7);
 		TickTimer timer3 = new TickTimer(new MockTickListener());
 		timer3.setTime(900);
 
@@ -220,11 +215,11 @@ public class SaveGameDbTest extends AndroidTestCase {
 	}
 
 	public void testGetPuzzleIdByRowId() throws Exception {
-		AndokuPuzzle puzzle1 = createPuzzle(1);
+		AndokuPuzzle puzzle1 = MockPuzzleSource.createPuzzle(1);
 		TickTimer timer1 = new TickTimer(new MockTickListener());
-		AndokuPuzzle puzzle2 = createSolvedPuzzle(4);
+		AndokuPuzzle puzzle2 = MockPuzzleSource.createSolvedPuzzle(4);
 		TickTimer timer2 = new TickTimer(new MockTickListener());
-		AndokuPuzzle puzzle3 = createPuzzle(7);
+		AndokuPuzzle puzzle3 = MockPuzzleSource.createPuzzle(7);
 		TickTimer timer3 = new TickTimer(new MockTickListener());
 
 		db.saveGame("mock:17:1", puzzle1, timer1);
@@ -244,28 +239,6 @@ public class SaveGameDbTest extends AndroidTestCase {
 		assertEquals("mock:17:1", db.puzzleIdByRowId(id1));
 		assertEquals("mock:16:2", db.puzzleIdByRowId(id2));
 		assertEquals("mock:17:3", db.puzzleIdByRowId(id3));
-	}
-
-	private AndokuPuzzle createPuzzle(int number) throws PuzzleIOException {
-		PuzzleSource source = new MockPuzzleSource();
-		PuzzleHolder puzzleHolder = source.load(number);
-		return AndokuPuzzle.create(puzzleHolder);
-	}
-
-	private AndokuPuzzle createSolvedPuzzle(int number) throws PuzzleIOException {
-		AndokuPuzzle puzzle = createPuzzle(number);
-		solve(puzzle, PuzzleDecoder.decodeValues(MockPuzzleSource.SOLUTIONS[number]));
-		return puzzle;
-	}
-
-	private void solve(AndokuPuzzle puzzle, Solution solution) {
-		int size = puzzle.getSize();
-		for (int row = 0; row < size; row++) {
-			for (int col = 0; col < size; col++) {
-				if (!puzzle.isClue(row, col))
-					puzzle.setValues(row, col, ValueSet.single(solution.getValue(row, col)));
-			}
-		}
 	}
 
 	private static final class MockTickListener implements TickListener {

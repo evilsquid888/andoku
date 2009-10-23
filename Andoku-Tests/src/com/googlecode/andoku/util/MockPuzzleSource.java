@@ -1,7 +1,9 @@
 package com.googlecode.andoku.util;
 
+import com.googlecode.andoku.model.AndokuPuzzle;
 import com.googlecode.andoku.model.Puzzle;
 import com.googlecode.andoku.model.Solution;
+import com.googlecode.andoku.model.ValueSet;
 import com.googlecode.andoku.source.Difficulty;
 import com.googlecode.andoku.source.PuzzleHolder;
 import com.googlecode.andoku.source.PuzzleIOException;
@@ -42,6 +44,28 @@ public class MockPuzzleSource implements PuzzleSource {
 	public static final String[] PUZZLES = { P1, P2, P3, P4, P5, P6, P7, P8, P9 };
 	public static final Difficulty[] DIFFICULTIES = { D1, D2, D3, D4, D5, D6, D7, D8, D9 };
 	public static final String[] SOLUTIONS = { S1, S2, S3, S4, S5, S6, S7, S8, S9 };
+
+	public static AndokuPuzzle createPuzzle(int number) throws PuzzleIOException {
+		PuzzleSource source = new MockPuzzleSource();
+		PuzzleHolder puzzleHolder = source.load(number);
+		return AndokuPuzzle.create(puzzleHolder);
+	}
+
+	public static AndokuPuzzle createSolvedPuzzle(int number) throws PuzzleIOException {
+		AndokuPuzzle puzzle = createPuzzle(number);
+		solve(puzzle, PuzzleDecoder.decodeValues(SOLUTIONS[number]));
+		return puzzle;
+	}
+
+	private static void solve(AndokuPuzzle puzzle, Solution solution) {
+		int size = puzzle.getSize();
+		for (int row = 0; row < size; row++) {
+			for (int col = 0; col < size; col++) {
+				if (!puzzle.isClue(row, col))
+					puzzle.setValues(row, col, ValueSet.single(solution.getValue(row, col)));
+			}
+		}
+	}
 
 	public String getSourceId() {
 		return SOURCE_ID;
