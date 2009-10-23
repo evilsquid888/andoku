@@ -52,6 +52,13 @@ public final class ValueSet {
 		return values;
 	}
 
+	public static ValueSet of(int... values) {
+		ValueSet valueSet = new ValueSet();
+		for (int value : values)
+			valueSet.add(value);
+		return valueSet;
+	}
+
 	public int toInt() {
 		return values;
 	}
