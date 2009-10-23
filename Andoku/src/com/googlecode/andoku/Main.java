@@ -111,10 +111,10 @@ public class Main extends ListActivity {
 		startManagingCursor(cursor);
 
 		SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(this, R.layout.save_game_list_item,
-				cursor, new String[] { SaveGameDb.TYPE, SaveGameDb.PUZZLE_ID, SaveGameDb.TYPE,
-						SaveGameDb.TIMER, SaveGameDb.MODIFIED_DATE }, new int[] { R.id.save_game_icon,
-						R.id.save_game_difficulty, R.id.save_game_title, R.id.save_game_timer,
-						R.id.save_game_modified });
+				cursor, new String[] { SaveGameDb.COL_TYPE, SaveGameDb.COL_PUZZLE_ID,
+						SaveGameDb.COL_TYPE, SaveGameDb.COL_TIMER, SaveGameDb.COL_MODIFIED_DATE },
+				new int[] { R.id.save_game_icon, R.id.save_game_difficulty, R.id.save_game_title,
+						R.id.save_game_timer, R.id.save_game_modified });
 		listAdapter.setViewBinder(new SaveGameViewBinder(getResources()));
 		setListAdapter(listAdapter);
 
@@ -371,7 +371,7 @@ public class Main extends ListActivity {
 		Cursor c = saveGameDb.findGamesBySource(puzzleSourceId);
 		try {
 			while (c.moveToNext()) {
-				int number = c.getInt(SaveGameDb.GAMES_BY_SOURCE_COL_NUMBER);
+				int number = c.getInt(SaveGameDb.IDX_GAME_BY_SOURCE_NUMBER);
 
 				// is there a gap and candidate number is available?
 				if (number > candidate) {
@@ -381,7 +381,7 @@ public class Main extends ListActivity {
 					return candidate;
 				}
 
-				boolean solved = c.getInt(SaveGameDb.GAMES_BY_SOURCE_COL_SOLVED) != 0;
+				boolean solved = c.getInt(SaveGameDb.IDX_GAME_BY_SOURCE_SOLVED) != 0;
 				if (!solved && fallback == -1)
 					fallback = number;
 
@@ -537,18 +537,18 @@ public class Main extends ListActivity {
 	}
 
 	private final class SaveGameViewBinder implements SimpleCursorAdapter.ViewBinder {
-		private static final int COL_PUZZLE_ID = SaveGameDb.UNFINISHED_COL_PUZZLE_ID;
-		private static final int COL_TYPE = SaveGameDb.UNFINISHED_COL_TYPE;
-		private static final int COL_TIMER = SaveGameDb.UNFINISHED_COL_TIMER;
-		private static final int COL_DATE_MODIFIED = SaveGameDb.UNFINISHED_COL_MODIFIED_DATE;
+		private static final int IDX_PUZZLE_ID = SaveGameDb.IDX_GAME_PUZZLE_ID;
+		private static final int IDX_TYPE = SaveGameDb.IDX_GAME_TYPE;
+		private static final int IDX_TIMER = SaveGameDb.IDX_GAME_TIMER;
+		private static final int IDX_DATE_MODIFIED = SaveGameDb.IDX_GAME_MODIFIED_DATE;
 
 		public SaveGameViewBinder(Resources resources) {
 		}
 
 		public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
 			if (view instanceof ImageView) {
-				assert columnIndex == COL_TYPE;
-				PuzzleType puzzleType = PuzzleType.forOrdinal(cursor.getInt(COL_TYPE));
+				assert columnIndex == IDX_TYPE;
+				PuzzleType puzzleType = PuzzleType.forOrdinal(cursor.getInt(IDX_TYPE));
 				Drawable drawable = getResources().getDrawable(puzzleType.getIconResId());
 				((ImageView) view).setImageDrawable(drawable);
 				return true;
@@ -560,24 +560,24 @@ public class Main extends ListActivity {
 			TextView textView = (TextView) view;
 
 			switch (columnIndex) {
-				case COL_TYPE:
+				case IDX_TYPE:
 					PuzzleType puzzleType = PuzzleType.forOrdinal(cursor.getInt(columnIndex));
 					String name = getResources().getString(puzzleType.getNameResId());
 					textView.setText(name);
 					return true;
 
-				case COL_TIMER:
+				case IDX_TIMER:
 					String time = DateUtil.formatTime(cursor.getLong(columnIndex));
 					textView.setText(time);
 					return true;
 
-				case COL_DATE_MODIFIED:
+				case IDX_DATE_MODIFIED:
 					String age = DateUtil.formatTimeSpan(getResources(), baseTime, cursor
 							.getLong(columnIndex));
 					textView.setText(age);
 					return true;
 
-				case COL_PUZZLE_ID:
+				case IDX_PUZZLE_ID:
 					String difficultyAndNumber = parseDifficultyAndNumber(cursor.getString(columnIndex));
 					textView.setText(difficultyAndNumber);
 					return true;

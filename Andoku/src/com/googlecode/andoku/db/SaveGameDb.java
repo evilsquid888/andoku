@@ -44,29 +44,28 @@ public class SaveGameDb {
 	private static final int DATABASE_VERSION = 1;
 
 	private static final String TABLE_GAMES = "games";
+	public static final String COL_ID = BaseColumns._ID;
+	public static final String COL_PUZZLE_ID = "pid";
+	public static final String COL_SOURCE = "source";
+	public static final String COL_NUMBER = "number";
+	public static final String COL_TYPE = "type";
+	public static final String COL_PUZZLE = "puzzle";
+	public static final String COL_TIMER = "timer";
+	public static final String COL_SOLVED = "solved";
+	public static final String COL_CREATED_DATE = "created";
+	public static final String COL_MODIFIED_DATE = "modified";
 
-	public static final String ID = BaseColumns._ID;
-	public static final String PUZZLE_ID = "pid";
-	public static final String SOURCE = "source";
-	public static final String NUMBER = "number";
-	public static final String TYPE = "type";
-	public static final String PUZZLE = "puzzle";
-	public static final String TIMER = "timer";
-	public static final String SOLVED = "solved";
-	public static final String CREATED_DATE = "created";
-	public static final String MODIFIED_DATE = "modified";
+	// indexes for findAllGames() and findUnfinishedGames();
+	public static final int IDX_GAME_ID = 0;
+	public static final int IDX_GAME_PUZZLE_ID = 1;
+	public static final int IDX_GAME_TYPE = 2;
+	public static final int IDX_GAME_TIMER = 3;
+	public static final int IDX_GAME_CREATED_DATE = 4;
+	public static final int IDX_GAME_MODIFIED_DATE = 5;
 
-	// indexes to COLUMNS_UNFINISHED_GAMES
-	public static final int UNFINISHED_COL_ID = 0;
-	public static final int UNFINISHED_COL_PUZZLE_ID = 1;
-	public static final int UNFINISHED_COL_TYPE = 2;
-	public static final int UNFINISHED_COL_TIMER = 3;
-	public static final int UNFINISHED_COL_CREATED_DATE = 4;
-	public static final int UNFINISHED_COL_MODIFIED_DATE = 5;
-
-	// indexes to COLUMNS_GAMES_BY_SOURCE
-	public static final int GAMES_BY_SOURCE_COL_NUMBER = 0;
-	public static final int GAMES_BY_SOURCE_COL_SOLVED = 1;
+	// indexes for findGamesBySource()
+	public static final int IDX_GAME_BY_SOURCE_NUMBER = 0;
+	public static final int IDX_GAME_BY_SOURCE_SOLVED = 1;
 
 	private DatabaseHelper openHelper;
 
@@ -96,8 +95,8 @@ public class SaveGameDb {
 
 		db.beginTransaction();
 		try {
-			String[] columns = { ID };
-			String selection = PUZZLE_ID + "=?";
+			String[] columns = { COL_ID };
+			String selection = COL_PUZZLE_ID + "=?";
 			String[] selectionArgs = { puzzleId };
 			Cursor cursor = db.query(TABLE_GAMES, columns, selection, selectionArgs, null, null, null);
 
@@ -109,27 +108,27 @@ public class SaveGameDb {
 			cursor.close();
 
 			ContentValues values = new ContentValues();
-			values.put(PUZZLE, serialize(puzzle.saveToMemento()));
-			values.put(TIMER, timer.getTime());
-			values.put(SOLVED, puzzle.isSolved());
-			values.put(MODIFIED_DATE, now);
+			values.put(COL_PUZZLE, serialize(puzzle.saveToMemento()));
+			values.put(COL_TIMER, timer.getTime());
+			values.put(COL_SOLVED, puzzle.isSolved());
+			values.put(COL_MODIFIED_DATE, now);
 
 			if (rowId == -1) {
 				int idx = puzzleId.lastIndexOf(':');
 				String source = puzzleId.substring(0, idx);
 				int number = Integer.parseInt(puzzleId.substring(idx + 1));
 
-				values.put(PUZZLE_ID, puzzleId);
-				values.put(SOURCE, source);
-				values.put(NUMBER, number);
-				values.put(TYPE, puzzle.getPuzzleType().ordinal());
-				values.put(CREATED_DATE, now);
+				values.put(COL_PUZZLE_ID, puzzleId);
+				values.put(COL_SOURCE, source);
+				values.put(COL_NUMBER, number);
+				values.put(COL_TYPE, puzzle.getPuzzleType().ordinal());
+				values.put(COL_CREATED_DATE, now);
 				long insertedRowId = db.insert(TABLE_GAMES, null, values);
 				if (insertedRowId == -1)
 					return;
 			}
 			else {
-				int updated = db.update(TABLE_GAMES, values, ID + "=?", new String[] { String
+				int updated = db.update(TABLE_GAMES, values, COL_ID + "=?", new String[] { String
 						.valueOf(rowId) });
 				if (updated == 0)
 					return;
@@ -148,8 +147,8 @@ public class SaveGameDb {
 
 		SQLiteDatabase db = openHelper.getReadableDatabase();
 
-		String[] columns = { PUZZLE, TIMER };
-		String selection = PUZZLE_ID + "=?";
+		String[] columns = { COL_PUZZLE, COL_TIMER };
+		String selection = COL_PUZZLE_ID + "=?";
 		String[] selectionArgs = { puzzleId };
 		Cursor cursor = db.query(TABLE_GAMES, columns, selection, selectionArgs, null, null, null);
 		try {
@@ -179,7 +178,7 @@ public class SaveGameDb {
 
 		SQLiteDatabase db = openHelper.getWritableDatabase();
 
-		db.delete(TABLE_GAMES, PUZZLE_ID + "=?", new String[] { puzzleId });
+		db.delete(TABLE_GAMES, COL_PUZZLE_ID + "=?", new String[] { puzzleId });
 	}
 
 	public Cursor findAllGames() {
@@ -188,7 +187,8 @@ public class SaveGameDb {
 
 		SQLiteDatabase db = openHelper.getReadableDatabase();
 
-		String[] columns = { ID, PUZZLE_ID, TYPE, TIMER, CREATED_DATE, MODIFIED_DATE };
+		String[] columns = { COL_ID, COL_PUZZLE_ID, COL_TYPE, COL_TIMER, COL_CREATED_DATE,
+				COL_MODIFIED_DATE };
 		return db.query(TABLE_GAMES, columns, null, null, null, null, null);
 	}
 
@@ -198,9 +198,10 @@ public class SaveGameDb {
 
 		SQLiteDatabase db = openHelper.getReadableDatabase();
 
-		String[] columns = { ID, PUZZLE_ID, TYPE, TIMER, CREATED_DATE, MODIFIED_DATE };
-		String selection = SOLVED + "=0";
-		String orderBy = MODIFIED_DATE + " DESC";
+		String[] columns = { COL_ID, COL_PUZZLE_ID, COL_TYPE, COL_TIMER, COL_CREATED_DATE,
+				COL_MODIFIED_DATE };
+		String selection = COL_SOLVED + "=0";
+		String orderBy = COL_MODIFIED_DATE + " DESC";
 		return db.query(TABLE_GAMES, columns, selection, null, null, null, orderBy);
 	}
 
@@ -210,10 +211,10 @@ public class SaveGameDb {
 
 		SQLiteDatabase db = openHelper.getReadableDatabase();
 
-		String[] columns = { NUMBER, SOLVED };
-		String selection = SOURCE + "=?";
+		String[] columns = { COL_NUMBER, COL_SOLVED };
+		String selection = COL_SOURCE + "=?";
 		String[] selectionArgs = new String[] { puzzleSourceId };
-		String orderBy = NUMBER;
+		String orderBy = COL_NUMBER;
 		return db.query(TABLE_GAMES, columns, selection, selectionArgs, null, null, orderBy);
 	}
 
@@ -224,7 +225,7 @@ public class SaveGameDb {
 		SQLiteDatabase db = openHelper.getReadableDatabase();
 
 		String[] columns = { "COUNT(*)", "SUM(timer)", "MIN(timer)", "MAX(timer)" };
-		String selection = SOURCE + "=? AND " + SOLVED + "=1";
+		String selection = COL_SOURCE + "=? AND " + COL_SOLVED + "=1";
 		String[] selectionArgs = new String[] { puzzleSourceId };
 		Cursor cursor = db.query(TABLE_GAMES, columns, selection, selectionArgs, null, null, null);
 		try {
@@ -243,8 +244,8 @@ public class SaveGameDb {
 
 		SQLiteDatabase db = openHelper.getReadableDatabase();
 
-		String[] columns = { PUZZLE_ID };
-		String selection = ID + "=?";
+		String[] columns = { COL_PUZZLE_ID };
+		String selection = COL_ID + "=?";
 		String[] selectionArgs = { Long.toString(rowId) };
 		Cursor cursor = db.query(TABLE_GAMES, columns, selection, selectionArgs, null, null, null);
 		try {
@@ -305,10 +306,11 @@ public class SaveGameDb {
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			db.execSQL("CREATE TABLE " + TABLE_GAMES + " (" + ID + " INTEGER PRIMARY KEY," + PUZZLE_ID
-					+ " TEXT," + SOURCE + " TEXT," + NUMBER + " INTEGER," + TYPE + " INTEGER," + PUZZLE
-					+ " BLOB," + TIMER + " INTEGER," + SOLVED + " BOOLEAN," + CREATED_DATE + " INTEGER,"
-					+ MODIFIED_DATE + " INTEGER" + ");");
+			db.execSQL("CREATE TABLE " + TABLE_GAMES + " (" + COL_ID + " INTEGER PRIMARY KEY,"
+					+ COL_PUZZLE_ID + " TEXT," + COL_SOURCE + " TEXT," + COL_NUMBER + " INTEGER,"
+					+ COL_TYPE + " INTEGER," + COL_PUZZLE + " BLOB," + COL_TIMER + " INTEGER,"
+					+ COL_SOLVED + " BOOLEAN," + COL_CREATED_DATE + " INTEGER," + COL_MODIFIED_DATE
+					+ " INTEGER" + ");");
 		}
 
 		@Override
