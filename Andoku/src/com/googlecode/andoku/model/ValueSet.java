@@ -46,7 +46,7 @@ public final class ValueSet {
 		return new ValueSet(0);
 	}
 
-	public static ValueSet single(int value) {
+	public static ValueSet of(int value) {
 		ValueSet values = new ValueSet();
 		values.add(value);
 		return values;

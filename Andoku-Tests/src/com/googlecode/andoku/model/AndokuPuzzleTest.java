@@ -32,11 +32,11 @@ public class AndokuPuzzleTest extends TestCase {
 
 		AndokuPuzzle p1 = MockPuzzleSource.createPuzzle(0);
 		// set correct values
-		p1.setValues(0, 1, ValueSet.single(7));
-		p1.setValues(0, 2, ValueSet.single(6));
+		p1.setValues(0, 1, ValueSet.of(7));
+		p1.setValues(0, 2, ValueSet.of(6));
 		p1.setValues(0, 4, ValueSet.of(3, 4));
 		// set incorrect values
-		p1.setValues(0, 5, ValueSet.single(8));
+		p1.setValues(0, 5, ValueSet.of(8));
 		p1.checkForErrors();
 
 		assertEquals(2, p1.getRegionErrors().size());
@@ -58,10 +58,10 @@ public class AndokuPuzzleTest extends TestCase {
 
 		p2.restoreFromMemento(memento);
 
-		assertEquals(ValueSet.single(7), p2.getValues(0, 1));
-		assertEquals(ValueSet.single(6), p2.getValues(0, 2));
+		assertEquals(ValueSet.of(7), p2.getValues(0, 1));
+		assertEquals(ValueSet.of(6), p2.getValues(0, 2));
 		assertEquals(ValueSet.of(3, 4), p2.getValues(0, 4));
-		assertEquals(ValueSet.single(8), p2.getValues(0, 5));
+		assertEquals(ValueSet.of(8), p2.getValues(0, 5));
 
 		assertEquals(2, p2.getRegionErrors().size());
 		assertEquals(3, p2.getErrorPositions().size());

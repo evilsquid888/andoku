@@ -44,8 +44,8 @@ public class SaveGameDbTest extends AndroidTestCase {
 	public void testSaveAndLoadGame() throws Exception {
 		int number = 0;
 		AndokuPuzzle puzzleSave = MockPuzzleSource.createPuzzle(number);
-		puzzleSave.setValues(0, 1, ValueSet.single(7));
-		puzzleSave.setValues(0, 2, ValueSet.single(3));
+		puzzleSave.setValues(0, 1, ValueSet.of(7));
+		puzzleSave.setValues(0, 2, ValueSet.of(3));
 
 		TickTimer timerSave = new TickTimer(new MockTickListener());
 		timerSave.setTime(700);
@@ -57,8 +57,8 @@ public class SaveGameDbTest extends AndroidTestCase {
 		TickTimer timerLoad = new TickTimer(new MockTickListener());
 
 		assertTrue(db.loadGame(puzzleId, puzzleLoad, timerLoad));
-		assertEquals(ValueSet.single(7), puzzleLoad.getValues(0, 1));
-		assertEquals(ValueSet.single(3), puzzleLoad.getValues(0, 2));
+		assertEquals(ValueSet.of(7), puzzleLoad.getValues(0, 1));
+		assertEquals(ValueSet.of(3), puzzleLoad.getValues(0, 2));
 		assertEquals(700, timerLoad.getTime());
 	}
 

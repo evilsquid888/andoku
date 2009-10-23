@@ -80,7 +80,7 @@ public class MockPuzzleSource implements PuzzleSource {
 		for (int row = 0; row < size; row++) {
 			for (int col = 0; col < size; col++) {
 				if (!puzzle.isClue(row, col))
-					puzzle.setValues(row, col, ValueSet.single(solution.getValue(row, col)));
+					puzzle.setValues(row, col, ValueSet.of(solution.getValue(row, col)));
 			}
 		}
 	}
