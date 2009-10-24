@@ -60,7 +60,7 @@ public class PuzzleHolder {
 		return solution;
 	}
 
-	public Difficulty getPuzzleDifficulty() {
+	public Difficulty getDifficulty() {
 		return difficulty;
 	}
 }

@@ -773,7 +773,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 	private void setPuzzle(PuzzleHolder puzzleHolder) {
 		this.puzzleHolder = puzzleHolder;
 		this.puzzle = new AndokuPuzzle(puzzleHolder.getPuzzle(), puzzleHolder.getSolution(),
-				puzzleHolder.getPuzzleDifficulty());
+				puzzleHolder.getDifficulty());
 		andokuView.setPuzzle(this.puzzle);
 
 		puzzleNameView.setText(getPuzzleName());
