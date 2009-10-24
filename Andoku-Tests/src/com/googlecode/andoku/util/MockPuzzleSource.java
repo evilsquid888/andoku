@@ -99,4 +99,7 @@ public class MockPuzzleSource implements PuzzleSource {
 	public int numberOfPuzzles() {
 		return PUZZLES.length;
 	}
+
+	public void close() {
+	}
 }
