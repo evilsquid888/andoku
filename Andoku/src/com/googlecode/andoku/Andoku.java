@@ -56,7 +56,7 @@ import com.googlecode.andoku.model.ValueSet;
 import com.googlecode.andoku.source.Difficulty;
 import com.googlecode.andoku.source.PuzzleHolder;
 import com.googlecode.andoku.source.PuzzleIOException;
-import com.googlecode.andoku.source.PuzzleResolver;
+import com.googlecode.andoku.source.PuzzleSourceResolver;
 import com.googlecode.andoku.source.PuzzleSource;
 import com.googlecode.andoku.source.PuzzleType;
 
@@ -603,14 +603,15 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 		}
 	}
 
-	// TODO: PuzzleResolver should resolve PuzzleSource instead of PuzzleHolder
+	// TODO: close puzzleSource?
 	private void createPuzzle(Bundle savedInstanceState) {
 		try {
 			PuzzleId puzzleId = getPuzzleIdFromSavedInstanceState(savedInstanceState);
 
 			if (puzzleId == null) {
 				puzzleId = getPuzzleIdFromIntent();
-				PuzzleHolder puzzleHolder = PuzzleResolver.resolve(this, puzzleId.toString()); // FIXME
+				PuzzleSource puzzleSource = PuzzleSourceResolver.resolveSource(this, puzzleId.puzzleSourceId);
+				PuzzleHolder puzzleHolder = puzzleSource.load(puzzleId.number);
 
 				gameState = GAME_STATE_NEW_ACTIVITY_STARTED;
 
@@ -620,7 +621,8 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 			}
 			else {
 				assert savedInstanceState != null;
-				PuzzleHolder puzzleHolder = PuzzleResolver.resolve(this, puzzleId.toString()); // FIXME
+				PuzzleSource puzzleSource = PuzzleSourceResolver.resolveSource(this, puzzleId.puzzleSourceId);
+				PuzzleHolder puzzleHolder = puzzleSource.load(puzzleId.number);
 
 				gameState = GAME_STATE_ACTIVITY_STATE_RESTORED;
 

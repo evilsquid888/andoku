@@ -23,41 +23,24 @@ import java.util.HashMap;
 import android.content.Context;
 import android.content.res.AssetManager;
 
-public class PuzzleResolver {
+public class PuzzleSourceResolver {
 	private static final HashMap<String, AssetsPuzzleSource> ASSET_SOURCES = new HashMap<String, AssetsPuzzleSource>();
 
-	private PuzzleResolver() {
+	private PuzzleSourceResolver() {
 	}
 
-	public static boolean exists(Context context, String puzzleSource, int puzzleNumber)
+	public static PuzzleSource resolveSource(Context context, String puzzleSourceId)
 			throws PuzzleIOException {
-		if (puzzleSource.startsWith(AssetsPuzzleSource.ASSET_PREFIX))
-			return existsAsset(context, puzzleSource.substring(AssetsPuzzleSource.ASSET_PREFIX
-					.length()), puzzleNumber);
+		if (puzzleSourceId.startsWith(AssetsPuzzleSource.ASSET_PREFIX))
+			return restoreAssetSource(context, puzzleSourceId
+					.substring(AssetsPuzzleSource.ASSET_PREFIX.length()));
 
-		throw new IllegalArgumentException(puzzleSource);
+		throw new IllegalArgumentException(puzzleSourceId);
 	}
 
-	private static boolean existsAsset(Context context, String puzzleSet, int puzzleNumber)
+	private static PuzzleSource restoreAssetSource(Context context, String puzzleSet)
 			throws PuzzleIOException {
-		AssetsPuzzleSource source = getAssetSource(context.getAssets(), puzzleSet);
-		return puzzleNumber >= 0 && puzzleNumber < source.numberOfPuzzles();
-	}
-
-	public static PuzzleHolder resolve(Context context, String puzzleId) throws PuzzleIOException {
-		if (puzzleId.startsWith(AssetsPuzzleSource.ASSET_PREFIX))
-			return restoreAsset(context, puzzleId.substring(AssetsPuzzleSource.ASSET_PREFIX.length()));
-
-		throw new IllegalArgumentException(puzzleId);
-	}
-
-	private static PuzzleHolder restoreAsset(Context context, String id) throws PuzzleIOException {
-		int idx = id.lastIndexOf(PuzzleHolder.NUMBER_SEPARATOR);
-		String puzzleSet = id.substring(0, idx);
-		int puzzleNumber = Integer.parseInt(id.substring(idx + 1));
-
-		AssetsPuzzleSource source = getAssetSource(context.getAssets(), puzzleSet);
-		return source.load(puzzleNumber);
+		return getAssetSource(context.getAssets(), puzzleSet);
 	}
 
 	private static AssetsPuzzleSource getAssetSource(AssetManager assets, String puzzleSet)

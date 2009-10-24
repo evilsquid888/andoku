@@ -51,7 +51,8 @@ import android.widget.ViewFlipper;
 import com.googlecode.andoku.db.PuzzleId;
 import com.googlecode.andoku.db.SaveGameDb;
 import com.googlecode.andoku.source.PuzzleIOException;
-import com.googlecode.andoku.source.PuzzleResolver;
+import com.googlecode.andoku.source.PuzzleSourceResolver;
+import com.googlecode.andoku.source.PuzzleSource;
 import com.googlecode.andoku.source.PuzzleType;
 
 public class Main extends ListActivity {
@@ -374,7 +375,11 @@ public class Main extends ListActivity {
 		int fallback = -1; // use an unsolved game if no unplayed game found
 
 		Cursor c = saveGameDb.findGamesBySource(puzzleSourceId);
+
 		try {
+			PuzzleSource puzzleSource = PuzzleSourceResolver.resolveSource(this, puzzleSourceId);
+			// TODO: close puzzleSource?
+
 			while (c.moveToNext()) {
 				int number = c.getInt(SaveGameDb.IDX_GAME_BY_SOURCE_NUMBER);
 
@@ -393,14 +398,14 @@ public class Main extends ListActivity {
 				candidate++;
 			}
 
-			if (PuzzleResolver.exists(this, puzzleSourceId, candidate)) {
+			if (puzzleExists(puzzleSource, candidate)) {
 				if (Constants.LOG_V)
 					Log.v(TAG, "returning next game after save games: " + candidate);
 
 				return candidate;
 			}
 
-			if (fallback != -1 && PuzzleResolver.exists(this, puzzleSourceId, fallback)) {
+			if (fallback != -1 && puzzleExists(puzzleSource, fallback)) {
 				if (Constants.LOG_V)
 					Log.v(TAG, "all games played; returning first uncomplete: " + fallback);
 
@@ -419,6 +424,10 @@ public class Main extends ListActivity {
 		finally {
 			c.close();
 		}
+	}
+
+	private boolean puzzleExists(PuzzleSource puzzleSource, int number) {
+		return number >= 0 && number < puzzleSource.numberOfPuzzles();
 	}
 
 	private void savePuzzlePreferences() {

@@ -24,8 +24,6 @@ import com.googlecode.andoku.model.Solution;
 import com.googlecode.andoku.transfer.StandardAreas;
 
 public class PuzzleHolder {
-	static final char NUMBER_SEPARATOR = ':';
-
 	private final PuzzleSource source;
 	private final int number;
 
