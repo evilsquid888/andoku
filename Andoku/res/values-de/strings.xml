@@ -43,6 +43,7 @@
     <string name="button_resume_game">Spiel fortsetzen</string>
     <string name="button_start_game">Spiel starten</string>
     <string name="dialog_reset_puzzle">Rätsel zurücksetzen?</string>
+    <string name="error_message_finding_available">Beim Auffinden der verfügbaren Sudoku-Rätsel ist ein Fehler aufgetreten!</string>
     <string name="error_message_loading_puzzle">Beim Laden des Sudoku-Rätsels ist ein Fehler aufgetreten!</string>
     <string name="error_message_stack_trace">Stack-Trace:</string>
     <string name="error_title_io_error">I/O-Fehler</string>

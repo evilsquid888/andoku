@@ -296,13 +296,38 @@ public class MainActivity extends ListActivity {
 
 		savePuzzlePreferences();
 
-		String puzzleSourceId = getSelectedPuzzleSource();
-		int number = findAvailableGame(puzzleSourceId);
+		try {
+			String puzzleSourceId = getSelectedPuzzleSource();
+			int number = findAvailableGame(puzzleSourceId);
 
+			startGame(puzzleSourceId, number);
+		}
+		catch (PuzzleIOException e) {
+			handlePuzzleIOException(e);
+		}
+	}
+
+	private void startGame(String puzzleSourceId, int number) {
 		Intent intent = new Intent(this, AndokuActivity.class);
 		intent.putExtra(Constants.EXTRA_PUZZLE_SOURCE_ID, puzzleSourceId);
 		intent.putExtra(Constants.EXTRA_PUZZLE_NUMBER, number);
 		startActivity(intent);
+	}
+
+	private void handlePuzzleIOException(PuzzleIOException e) {
+		Log.e(TAG, "Error finding available games", e);
+
+		Resources resources = getResources();
+		String title = resources.getString(R.string.error_title_io_error);
+		String message = getResources().getString(R.string.error_message_finding_available);
+
+		Intent intent = new Intent(this, DisplayErrorActivity.class);
+		intent.putExtra(Constants.EXTRA_ERROR_TITLE, title);
+		intent.putExtra(Constants.EXTRA_ERROR_MESSAGE, message);
+		intent.putExtra(Constants.EXTRA_ERROR_THROWABLE, e);
+		startActivity(intent);
+
+		finish();
 	}
 
 	void onResumeGameItem(long rowId) {
@@ -367,9 +392,11 @@ public class MainActivity extends ListActivity {
 		return sb.toString();
 	}
 
-	private int findAvailableGame(String puzzleSourceId) {
+	private int findAvailableGame(String puzzleSourceId) throws PuzzleIOException {
 		if (Constants.LOG_V)
 			Log.v(TAG, "findAvailableGame(" + puzzleSourceId + ")");
+
+		int numberOfPuzzles = getNumberOfPuzzles(puzzleSourceId);
 
 		int candidate = 0;
 		int fallback = -1; // use an unsolved game if no unplayed game found
@@ -377,9 +404,6 @@ public class MainActivity extends ListActivity {
 		Cursor c = saveGameDb.findGamesBySource(puzzleSourceId);
 
 		try {
-			PuzzleSource puzzleSource = PuzzleSourceResolver.resolveSource(this, puzzleSourceId);
-			// TODO: close puzzleSource?
-
 			while (c.moveToNext()) {
 				int number = c.getInt(SaveGameDb.IDX_GAME_BY_SOURCE_NUMBER);
 
@@ -398,14 +422,14 @@ public class MainActivity extends ListActivity {
 				candidate++;
 			}
 
-			if (puzzleExists(puzzleSource, candidate)) {
+			if (puzzleExists(candidate, numberOfPuzzles)) {
 				if (Constants.LOG_V)
 					Log.v(TAG, "returning next game after save games: " + candidate);
 
 				return candidate;
 			}
 
-			if (fallback != -1 && puzzleExists(puzzleSource, fallback)) {
+			if (fallback != -1 && puzzleExists(fallback, numberOfPuzzles)) {
 				if (Constants.LOG_V)
 					Log.v(TAG, "all games played; returning first uncomplete: " + fallback);
 
@@ -417,17 +441,23 @@ public class MainActivity extends ListActivity {
 
 			return 0;
 		}
-		catch (PuzzleIOException e) {
-			Log.e(TAG, "Could not determine if puzzle exists", e);
-			return 0;
-		}
 		finally {
 			c.close();
 		}
 	}
 
-	private boolean puzzleExists(PuzzleSource puzzleSource, int number) {
-		return number >= 0 && number < puzzleSource.numberOfPuzzles();
+	private int getNumberOfPuzzles(String puzzleSourceId) throws PuzzleIOException {
+		PuzzleSource puzzleSource = PuzzleSourceResolver.resolveSource(this, puzzleSourceId);
+		try {
+			return puzzleSource.numberOfPuzzles();
+		}
+		finally {
+			puzzleSource.close();
+		}
+	}
+
+	private boolean puzzleExists(int number, int total) {
+		return number >= 0 && number < total;
 	}
 
 	private void savePuzzlePreferences() {

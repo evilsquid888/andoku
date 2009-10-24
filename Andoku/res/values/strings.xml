@@ -43,6 +43,7 @@
     <string name="button_resume_game">Resume Game</string>
     <string name="button_start_game">Start Game</string>
     <string name="dialog_reset_puzzle">Reset Puzzle?</string>
+    <string name="error_message_finding_available">An error has occurred while finding available puzzles!</string>
     <string name="error_message_loading_puzzle">An error has occurred while loading the puzzle!</string>
     <string name="error_message_stack_trace">Stack trace:</string>
     <string name="error_title_io_error">I/O Error</string>
