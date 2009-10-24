@@ -41,11 +41,10 @@ public class SaveGameDb {
 	private static final String TAG = SaveGameDb.class.getName();
 
 	public static final String DATABASE_NAME = "save_games.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	private static final String TABLE_GAMES = "games";
 	public static final String COL_ID = BaseColumns._ID;
-	public static final String COL_PUZZLE_ID = "pid";
 	public static final String COL_SOURCE = "source";
 	public static final String COL_NUMBER = "number";
 	public static final String COL_TYPE = "type";
@@ -307,19 +306,57 @@ public class SaveGameDb {
 		@Override
 		public void onCreate(SQLiteDatabase db) {
 			db.execSQL("CREATE TABLE " + TABLE_GAMES + " (" + COL_ID + " INTEGER PRIMARY KEY,"
-					+ COL_PUZZLE_ID + " TEXT," + COL_SOURCE + " TEXT," + COL_NUMBER + " INTEGER,"
-					+ COL_TYPE + " INTEGER," + COL_PUZZLE + " BLOB," + COL_TIMER + " INTEGER,"
-					+ COL_SOLVED + " BOOLEAN," + COL_CREATED_DATE + " INTEGER," + COL_MODIFIED_DATE
-					+ " INTEGER" + ");");
+					+ COL_SOURCE + " TEXT," + COL_NUMBER + " INTEGER," + COL_TYPE + " INTEGER,"
+					+ COL_PUZZLE + " BLOB," + COL_TIMER + " INTEGER," + COL_SOLVED + " BOOLEAN,"
+					+ COL_CREATED_DATE + " INTEGER," + COL_MODIFIED_DATE + " INTEGER" + ");");
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			Log.i(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion
-					+ "; which will destroy all old data!");
+			Log.i(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion + ".");
 
-			db.execSQL("DROP TABLE IF EXISTS " + TABLE_GAMES);
+			db.beginTransaction();
+			try {
+				if (oldVersion < 2)
+					upgradeV1ToV2(db);
+
+				db.setTransactionSuccessful();
+			}
+			finally {
+				db.endTransaction();
+			}
+		}
+
+		private void upgradeV1ToV2(SQLiteDatabase db) {
+			Log.d(TAG, "Upgrading from version 1 to 2.");
+
+			// Equivalent to "ALTER TABLE games DROP COLUMN pid;" which is not supported by sqlite.
+			// Loses the ID column but that does not matter.
+
+			db.execSQL("ALTER TABLE " + TABLE_GAMES + " RENAME TO tmp;");
 			onCreate(db);
+
+			Cursor cursor = db.query("tmp", null, null, null, null, null, null);
+			while (cursor.moveToNext()) {
+				ContentValues values = new ContentValues();
+				// idx 0 is ID
+				// idx 1 is old puzzleId ("pid") to be removed
+				values.put(COL_SOURCE, cursor.getString(2));
+				values.put(COL_NUMBER, cursor.getInt(3));
+				values.put(COL_TYPE, cursor.getInt(4));
+				values.put(COL_PUZZLE, cursor.getBlob(5));
+				values.put(COL_TIMER, cursor.getLong(6));
+				values.put(COL_SOLVED, cursor.getInt(7));
+				values.put(COL_CREATED_DATE, cursor.getLong(8));
+				values.put(COL_MODIFIED_DATE, cursor.getLong(9));
+
+				db.insert(TABLE_GAMES, null, values);
+			}
+			cursor.close();
+
+			db.execSQL("DROP TABLE tmp;");
+
+			Log.d(TAG, "Upgraded from version 1 to 2.");
 		}
 	}
 }
