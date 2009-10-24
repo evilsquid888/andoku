@@ -26,7 +26,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import com.googlecode.andoku.source.PuzzleHolder;
 import com.googlecode.andoku.transfer.StandardAreas;
 
 public class AndokuPuzzle {
@@ -49,7 +48,7 @@ public class AndokuPuzzle {
 	// errors compared to actual solution; correct value has been eliminated
 	private HashSet<Position> cellErrors;
 
-	private AndokuPuzzle(Puzzle puzzle, Solution solution, Difficulty difficulty) {
+	public AndokuPuzzle(Puzzle puzzle, Solution solution, Difficulty difficulty) {
 		this.size = puzzle.getSize();
 		this.puzzle = puzzle;
 		this.puzzleType = determinePuzzleType(puzzle);
@@ -61,11 +60,6 @@ public class AndokuPuzzle {
 		this.solved = checkSolved();
 		this.regionErrors = new HashSet<RegionError>();
 		this.cellErrors = new HashSet<Position>();
-	}
-
-	public static AndokuPuzzle create(PuzzleHolder puzzleHolder) {
-		return new AndokuPuzzle(puzzleHolder.getPuzzle(), puzzleHolder.getSolution(), puzzleHolder
-				.getPuzzleDifficulty());
 	}
 
 	public Serializable saveToMemento() {
