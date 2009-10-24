@@ -606,29 +606,10 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 	// TODO: close puzzleSource?
 	private void createPuzzle(Bundle savedInstanceState) {
 		try {
-			PuzzleId puzzleId = getPuzzleIdFromSavedInstanceState(savedInstanceState);
-
-			if (puzzleId == null) {
-				puzzleId = getPuzzleIdFromIntent();
-				PuzzleSource puzzleSource = PuzzleSourceResolver.resolveSource(this, puzzleId.puzzleSourceId);
-				PuzzleHolder puzzleHolder = puzzleSource.load(puzzleId.number);
-
-				gameState = GAME_STATE_NEW_ACTIVITY_STARTED;
-
-				setPuzzle(puzzleHolder);
-				boolean start = getIntent().getBooleanExtra(Constants.EXTRA_START_PUZZLE, false);
-				enterGameState(start ? GAME_STATE_PLAYING : GAME_STATE_READY);
-			}
-			else {
-				assert savedInstanceState != null;
-				PuzzleSource puzzleSource = PuzzleSourceResolver.resolveSource(this, puzzleId.puzzleSourceId);
-				PuzzleHolder puzzleHolder = puzzleSource.load(puzzleId.number);
-
-				gameState = GAME_STATE_ACTIVITY_STATE_RESTORED;
-
-				setPuzzle(puzzleHolder);
-				enterGameState(savedInstanceState.getInt(APP_STATE_GAME_STATE));
-			}
+			if (isRestoreSavedInstanceState(savedInstanceState))
+				createPuzzleFromSavedInstanceState(savedInstanceState);
+			else
+				createPuzzleFromIntent();
 		}
 		catch (PuzzleIOException e) {
 			Log.e(TAG, "Error loading puzzle", e);
@@ -638,26 +619,44 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 		}
 	}
 
-	private PuzzleId getPuzzleIdFromSavedInstanceState(Bundle savedInstanceState) {
-		if (savedInstanceState == null)
-			return null;
-
-		String puzzleSourceId = savedInstanceState.getString(APP_STATE_PUZZLE_SOURCE_ID);
-		if (puzzleSourceId == null)
-			return null;
-
-		int number = savedInstanceState.getInt(APP_STATE_PUZZLE_NUMBER);
-		return new PuzzleId(puzzleSourceId, number);
+	private boolean isRestoreSavedInstanceState(Bundle savedInstanceState) {
+		return savedInstanceState != null
+				&& savedInstanceState.getString(APP_STATE_PUZZLE_SOURCE_ID) != null;
 	}
 
-	private PuzzleId getPuzzleIdFromIntent() {
-		Intent intent = getIntent();
-		String puzzleSourceId = intent.getStringExtra(Constants.EXTRA_PUZZLE_SOURCE_ID);
-		int number = intent.getIntExtra(Constants.EXTRA_PUZZLE_NUMBER, -1);
-		if (puzzleSourceId != null && number != -1)
-			return new PuzzleId(puzzleSourceId, number);
+	private void createPuzzleFromSavedInstanceState(Bundle savedInstanceState)
+			throws PuzzleIOException {
+		String puzzleSourceId = savedInstanceState.getString(APP_STATE_PUZZLE_SOURCE_ID);
+		int number = savedInstanceState.getInt(APP_STATE_PUZZLE_NUMBER);
 
-		return new PuzzleId("asset:standard_n_1", 0);
+		if (Constants.LOG_V)
+			Log.v(TAG, "createPuzzleFromSavedInstanceState(): " + puzzleSourceId + ":" + number);
+
+		PuzzleSource puzzleSource = PuzzleSourceResolver.resolveSource(this, puzzleSourceId);
+		PuzzleHolder puzzleHolder = puzzleSource.load(number);
+		setPuzzle(puzzleHolder);
+
+		gameState = GAME_STATE_ACTIVITY_STATE_RESTORED;
+		enterGameState(savedInstanceState.getInt(APP_STATE_GAME_STATE));
+	}
+
+	private void createPuzzleFromIntent() throws PuzzleIOException {
+		final Intent intent = getIntent();
+		String puzzleSourceId = intent.getStringExtra(Constants.EXTRA_PUZZLE_SOURCE_ID);
+		if (puzzleSourceId == null)
+			puzzleSourceId = "asset:standard_n_1";
+		int number = intent.getIntExtra(Constants.EXTRA_PUZZLE_NUMBER, 0);
+
+		if (Constants.LOG_V)
+			Log.v(TAG, "createPuzzleFromIntent(): " + puzzleSourceId + ":" + number);
+
+		PuzzleSource puzzleSource = PuzzleSourceResolver.resolveSource(this, puzzleSourceId);
+		PuzzleHolder puzzleHolder = puzzleSource.load(number);
+		setPuzzle(puzzleHolder);
+
+		gameState = GAME_STATE_NEW_ACTIVITY_STARTED;
+		boolean start = getIntent().getBooleanExtra(Constants.EXTRA_START_PUZZLE, false);
+		enterGameState(start ? GAME_STATE_PLAYING : GAME_STATE_READY);
 	}
 
 	private void onPauseResumeGame() {
