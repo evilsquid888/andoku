@@ -42,8 +42,10 @@
     <string name="button_reset_game">Reset Game</string>
     <string name="button_resume_game">Resume Game</string>
     <string name="button_start_game">Start Game</string>
-    <string name="dialog_io_error">I/O Error</string>
     <string name="dialog_reset_puzzle">Reset Puzzle?</string>
+    <string name="error_message_loading_puzzle">An error has occurred while loading the puzzle!</string>
+    <string name="error_message_stack_trace">Stack trace:</string>
+    <string name="error_title_io_error">I/O Error</string>
     <string name="html_page_about">about.html</string>
     <string name="html_page_help">help.html</string>
     <string name="info_puzzle_ok_1">Everything is okay. One cell to go.</string>
@@ -53,7 +55,6 @@
     <string name="menu_reset_puzzle">Reset Puzzle</string>
     <string name="menu_resume">Resume</string>
     <string name="message_congrats">&lt;b&gt;Congratulations, you have solved this puzzle!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Statistics for &lt;i&gt;%s (%s)&lt;/i&gt;:&lt;br/&gt;&lt;br/&gt;Puzzles solved: %d&lt;br/&gt;Average time: %s&lt;br/&gt;Fastest time: %s</string>
-    <string name="message_error_loading_puzzle">An error has occurred while loading the puzzle!</string>
     <string name="message_reset_puzzle">Do you really want to clear the current puzzle and reset the timer?</string>
     <string name="name_no_puzzle">No puzzle available</string>
     <string name="name_sudoku_squiggly">Squiggly Sudoku</string>

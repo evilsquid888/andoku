@@ -25,6 +25,10 @@ public class Constants {
 	public static final String EXTRA_PUZZLE_NUMBER = PREFIX + "puzzleNumber";
 	public static final String EXTRA_START_PUZZLE = PREFIX + "start";
 
+	public static final String EXTRA_ERROR_TITLE = "errorTitle";
+	public static final String EXTRA_ERROR_MESSAGE = "errorMessage";
+	public static final String EXTRA_ERROR_THROWABLE = "errorException";
+
 	public static final boolean LOG_V = false;
 
 	private Constants() {

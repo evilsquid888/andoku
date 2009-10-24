@@ -59,11 +59,11 @@ import com.googlecode.andoku.source.PuzzleIOException;
 import com.googlecode.andoku.source.PuzzleSource;
 import com.googlecode.andoku.source.PuzzleSourceResolver;
 
-public class AndokuActivity extends Activity implements OnTouchListener, OnKeyListener, TickListener {
+public class AndokuActivity extends Activity
+		implements OnTouchListener, OnKeyListener, TickListener {
 	private static final String TAG = AndokuActivity.class.getName();
 
 	private static final int DIALOG_CONFIRM_RESET_PUZZLE = 0;
-	private static final int DIALOG_PUZZLE_IO_ERROR = 1;
 
 	private static final int MENU_CHECK_PUZZLE = 0;
 	private static final int MENU_PAUSE_RESUME_PUZZLE = 1;
@@ -78,7 +78,6 @@ public class AndokuActivity extends Activity implements OnTouchListener, OnKeyLi
 	private static final int GAME_STATE_READY = 2;
 	private static final int GAME_STATE_PLAYING = 3;
 	private static final int GAME_STATE_SOLVED = 4;
-	private static final int GAME_STATE_ERROR = 5;
 
 	private int gameState;
 
@@ -519,10 +518,7 @@ public class AndokuActivity extends Activity implements OnTouchListener, OnKeyLi
 			enterGameState(GAME_STATE_READY);
 		}
 		catch (PuzzleIOException e) {
-			Log.e(TAG, "Error loading puzzle", e);
-			clearPuzzle();
-			enterGameState(GAME_STATE_ERROR);
-			showDialog(DIALOG_PUZZLE_IO_ERROR);
+			handlePuzzleIOException(e);
 		}
 	}
 
@@ -610,11 +606,24 @@ public class AndokuActivity extends Activity implements OnTouchListener, OnKeyLi
 				createPuzzleFromIntent();
 		}
 		catch (PuzzleIOException e) {
-			Log.e(TAG, "Error loading puzzle", e);
-			clearPuzzle();
-			enterGameState(GAME_STATE_ERROR);
-			showDialog(DIALOG_PUZZLE_IO_ERROR);
+			handlePuzzleIOException(e);
 		}
+	}
+
+	private void handlePuzzleIOException(PuzzleIOException e) {
+		Log.e(TAG, "Error loading puzzle", e);
+
+		Resources resources = getResources();
+		String title = resources.getString(R.string.error_title_io_error);
+		String message = getResources().getString(R.string.error_message_loading_puzzle);
+
+		Intent intent = new Intent(this, DisplayErrorActivity.class);
+		intent.putExtra(Constants.EXTRA_ERROR_TITLE, title);
+		intent.putExtra(Constants.EXTRA_ERROR_MESSAGE, message);
+		intent.putExtra(Constants.EXTRA_ERROR_THROWABLE, e);
+		startActivity(intent);
+
+		finish();
 	}
 
 	private boolean isRestoreSavedInstanceState(Bundle savedInstanceState) {
@@ -743,10 +752,6 @@ public class AndokuActivity extends Activity implements OnTouchListener, OnKeyLi
 				updateCongrats();
 				break;
 
-			case GAME_STATE_ERROR:
-				timer.reset();
-				break;
-
 			default:
 				throw new IllegalStateException();
 		}
@@ -811,17 +816,6 @@ public class AndokuActivity extends Activity implements OnTouchListener, OnKeyLi
 		congratsView.setText(Html.fromHtml(message));
 	}
 
-	private void clearPuzzle() {
-		this.puzzle = null;
-		andokuView.setPuzzle(null);
-
-		puzzleNameView.setText(R.string.name_no_puzzle);
-		puzzleDifficultyView.setText("");
-		puzzleSourceView.setText("");
-
-		timer.reset();
-	}
-
 	private void autoSavePuzzle() {
 		PuzzleId puzzleId = getCurrentPuzzleId();
 
@@ -858,8 +852,6 @@ public class AndokuActivity extends Activity implements OnTouchListener, OnKeyLi
 		switch (id) {
 			case DIALOG_CONFIRM_RESET_PUZZLE:
 				return createConfirmResetPuzzleDialog();
-			case DIALOG_PUZZLE_IO_ERROR:
-				return createPuzzleIoErrorDialog();
 			default:
 				return null;
 		}
@@ -877,16 +869,6 @@ public class AndokuActivity extends Activity implements OnTouchListener, OnKeyLi
 							public void onClick(DialogInterface dialog, int whichButton) {
 							}
 						}).create();
-	}
-
-	private Dialog createPuzzleIoErrorDialog() {
-		return new AlertDialog.Builder(this).setIcon(R.drawable.alert_dialog_icon).setTitle(
-				R.string.dialog_io_error).setMessage(R.string.message_error_loading_puzzle)
-				.setPositiveButton(R.string.alert_dialog_ok, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						finish();
-					}
-				}).create();
 	}
 
 	private void showInfo(int resId) {
