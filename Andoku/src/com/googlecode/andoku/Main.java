@@ -52,8 +52,8 @@ import com.googlecode.andoku.db.PuzzleId;
 import com.googlecode.andoku.db.SaveGameDb;
 import com.googlecode.andoku.model.PuzzleType;
 import com.googlecode.andoku.source.PuzzleIOException;
-import com.googlecode.andoku.source.PuzzleSourceResolver;
 import com.googlecode.andoku.source.PuzzleSource;
+import com.googlecode.andoku.source.PuzzleSourceResolver;
 
 public class Main extends ListActivity {
 	private static final String TAG = Main.class.getName();
@@ -564,7 +564,7 @@ public class Main extends ListActivity {
 			if (view instanceof ImageView) {
 				assert columnIndex == IDX_TYPE;
 				PuzzleType puzzleType = PuzzleType.forOrdinal(cursor.getInt(IDX_TYPE));
-				Drawable drawable = getResources().getDrawable(puzzleType.getIconResId());
+				Drawable drawable = Util.getPuzzleIcon(getResources(), puzzleType);
 				((ImageView) view).setImageDrawable(drawable);
 				return true;
 			}
@@ -577,7 +577,7 @@ public class Main extends ListActivity {
 			switch (columnIndex) {
 				case IDX_TYPE:
 					PuzzleType puzzleType = PuzzleType.forOrdinal(cursor.getInt(columnIndex));
-					String name = getResources().getString(puzzleType.getNameResId());
+					String name = Util.getPuzzleName(getResources(), puzzleType);
 					textView.setText(name);
 					return true;
 

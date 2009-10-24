@@ -19,9 +19,14 @@
 package com.googlecode.andoku;
 
 import android.app.Activity;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.view.WindowManager;
 
-public class Util {
+import com.googlecode.andoku.model.AndokuPuzzle;
+import com.googlecode.andoku.model.PuzzleType;
+
+class Util {
 	private Util() {
 	}
 
@@ -30,5 +35,54 @@ public class Util {
 		// FLAG_LAYOUT_NO_LIMITS: allow window to extend outside of the screen.
 		activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
 				WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+	}
+
+	public static String getPuzzleName(Resources resources, AndokuPuzzle puzzle) {
+		PuzzleType puzzleType = puzzle.getPuzzleType();
+		return getPuzzleName(resources, puzzleType);
+	}
+
+	public static String getPuzzleName(Resources resources, PuzzleType puzzleType) {
+		return resources.getString(getNameResourceId(puzzleType));
+	}
+
+	public static Drawable getPuzzleIcon(Resources resources, PuzzleType puzzleType) {
+		return resources.getDrawable(getIconResourceId(puzzleType));
+	}
+
+	private static int getNameResourceId(PuzzleType puzzleType) {
+		switch (puzzleType) {
+			case STANDARD:
+				return R.string.name_sudoku_standard;
+			case STANDARD_X:
+				return R.string.name_sudoku_standard_x;
+			case STANDARD_HYPER:
+				return R.string.name_sudoku_standard_hyper;
+			case SQUIGGLY:
+				return R.string.name_sudoku_squiggly;
+			case SQUIGGLY_X:
+				return R.string.name_sudoku_squiggly_x;
+			case SQUIGGLY_H:
+				return R.string.name_sudoku_squiggly_hyper;
+		}
+		throw new IllegalStateException();
+	}
+
+	private static int getIconResourceId(PuzzleType puzzleType) {
+		switch (puzzleType) {
+			case STANDARD:
+				return R.drawable.standard_n;
+			case STANDARD_X:
+				return R.drawable.standard_x;
+			case STANDARD_HYPER:
+				return R.drawable.standard_h;
+			case SQUIGGLY:
+				return R.drawable.squiggly_n;
+			case SQUIGGLY_X:
+				return R.drawable.squiggly_x;
+			case SQUIGGLY_H:
+				return R.drawable.squiggly_h;
+		}
+		throw new IllegalStateException();
 	}
 }

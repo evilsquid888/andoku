@@ -18,83 +18,8 @@
 
 package com.googlecode.andoku.model;
 
-import com.googlecode.andoku.R;
-
 public enum PuzzleType {
-	STANDARD {
-		@Override
-		public int getNameResId() {
-			return R.string.name_sudoku_standard;
-		}
-
-		@Override
-		public int getIconResId() {
-			return R.drawable.standard_n;
-		}
-	},
-
-	STANDARD_X {
-		@Override
-		public int getNameResId() {
-			return R.string.name_sudoku_standard_x;
-		}
-
-		@Override
-		public int getIconResId() {
-			return R.drawable.standard_x;
-		}
-	},
-
-	STANDARD_HYPER {
-		@Override
-		public int getNameResId() {
-			return R.string.name_sudoku_standard_hyper;
-		}
-
-		@Override
-		public int getIconResId() {
-			return R.drawable.standard_h;
-		}
-	},
-
-	SQUIGGLY {
-		@Override
-		public int getNameResId() {
-			return R.string.name_sudoku_squiggly;
-		}
-
-		@Override
-		public int getIconResId() {
-			return R.drawable.squiggly_n;
-		}
-	},
-
-	SQUIGGLY_X {
-		@Override
-		public int getNameResId() {
-			return R.string.name_sudoku_squiggly_x;
-		}
-
-		@Override
-		public int getIconResId() {
-			return R.drawable.squiggly_x;
-		}
-	},
-
-	SQUIGGLY_H {
-		@Override
-		public int getNameResId() {
-			return R.string.name_sudoku_squiggly_hyper;
-		}
-
-		@Override
-		public int getIconResId() {
-			return R.drawable.squiggly_h;
-		}
-	};
-
-	public abstract int getNameResId();
-	public abstract int getIconResId();
+	STANDARD, STANDARD_X, STANDARD_HYPER, SQUIGGLY, SQUIGGLY_X, SQUIGGLY_H;
 
 	public static PuzzleType forOrdinal(int ordinal) {
 		return PuzzleType.values()[ordinal];

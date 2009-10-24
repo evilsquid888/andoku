@@ -52,7 +52,6 @@ import com.googlecode.andoku.db.PuzzleId;
 import com.googlecode.andoku.db.SaveGameDb;
 import com.googlecode.andoku.model.AndokuPuzzle;
 import com.googlecode.andoku.model.Position;
-import com.googlecode.andoku.model.PuzzleType;
 import com.googlecode.andoku.model.ValueSet;
 import com.googlecode.andoku.source.Difficulty;
 import com.googlecode.andoku.source.PuzzleHolder;
@@ -762,9 +761,8 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 		GameStatistics stats = saveGameDb.getStatistics(puzzleSourceId);
 
 		final Resources resources = getResources();
-		PuzzleType puzzleType = puzzle.getPuzzleType();
 		String difficulty = getPuzzleDifficulty();
-		String name = resources.getString(puzzleType.getNameResId());
+		String name = Util.getPuzzleName(resources, puzzle);
 
 		final String format = resources.getString(R.string.message_congrats);
 		final String message = String.format(format, name, difficulty, stats.numGamesSolved, DateUtil
@@ -788,9 +786,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 	}
 
 	private String getPuzzleName() {
-		final Resources resources = getResources();
-		PuzzleType puzzleType = puzzle.getPuzzleType();
-		return resources.getString(puzzleType.getNameResId());
+		return Util.getPuzzleName(getResources(), puzzle);
 	}
 
 	private String getPuzzleSource() {
