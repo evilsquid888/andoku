@@ -56,8 +56,8 @@ import com.googlecode.andoku.model.ValueSet;
 import com.googlecode.andoku.source.Difficulty;
 import com.googlecode.andoku.source.PuzzleHolder;
 import com.googlecode.andoku.source.PuzzleIOException;
-import com.googlecode.andoku.source.PuzzleSourceResolver;
 import com.googlecode.andoku.source.PuzzleSource;
+import com.googlecode.andoku.source.PuzzleSourceResolver;
 import com.googlecode.andoku.source.PuzzleType;
 
 public class Andoku extends Activity implements OnTouchListener, OnKeyListener, TickListener {
@@ -643,6 +643,9 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 			return null;
 
 		String puzzleSourceId = savedInstanceState.getString(APP_STATE_PUZZLE_SOURCE_ID);
+		if (puzzleSourceId == null)
+			return null;
+
 		int number = savedInstanceState.getInt(APP_STATE_PUZZLE_NUMBER);
 		return new PuzzleId(puzzleSourceId, number);
 	}
