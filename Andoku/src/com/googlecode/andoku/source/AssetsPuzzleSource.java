@@ -33,7 +33,7 @@ import com.googlecode.andoku.model.Puzzle;
 import com.googlecode.andoku.model.Solution;
 import com.googlecode.andoku.transfer.PuzzleDecoder;
 
-public class AssetsPuzzleSource implements PuzzleSource {
+class AssetsPuzzleSource implements PuzzleSource {
 	static final String ASSET_PREFIX = "asset:";
 
 	private static final String PUZZLES_FOLDER = "puzzles/";
