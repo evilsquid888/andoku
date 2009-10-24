@@ -20,6 +20,7 @@ package com.googlecode.andoku.source;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -106,7 +107,7 @@ public class AssetsPuzzleSource implements PuzzleSource {
 
 			InputStream in = assets.open(puzzleFile);
 			try {
-				in.skip(offset);
+				skipFully(in, offset);
 				Reader reader = new InputStreamReader(in, "US-ASCII");
 				BufferedReader br = new BufferedReader(reader, 512);
 				String puzzleRep = br.readLine();
@@ -129,5 +130,22 @@ public class AssetsPuzzleSource implements PuzzleSource {
 			throw new IllegalStateException();
 
 		return Difficulty.values()[difficulty];
+	}
+
+	private void skipFully(InputStream in, int bytes) throws IOException {
+		while (bytes > 0) {
+			bytes -= skip(in, bytes);
+		}
+	}
+
+	private long skip(InputStream in, int bytes) throws IOException {
+		long skipped = in.skip(bytes);
+		if (skipped > 0)
+			return skipped;
+
+		if (in.read() != -1)
+			return 1;
+
+		throw new EOFException();
 	}
 }
