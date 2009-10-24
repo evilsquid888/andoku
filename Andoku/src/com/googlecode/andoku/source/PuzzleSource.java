@@ -24,4 +24,6 @@ public interface PuzzleSource {
 	int numberOfPuzzles();
 
 	PuzzleHolder load(int number) throws PuzzleIOException;
+
+	void close();
 }

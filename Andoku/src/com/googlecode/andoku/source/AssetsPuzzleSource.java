@@ -72,6 +72,9 @@ public class AssetsPuzzleSource implements PuzzleSource {
 		return new PuzzleHolder(this, number, getDifficulty(), puzzle, solution);
 	}
 
+	public void close() {
+	}
+
 	private int[] loadIndex() throws PuzzleIOException {
 		try {
 			String indexFile = PUZZLES_FOLDER + puzzleSet + ".idx";
