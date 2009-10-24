@@ -52,13 +52,13 @@ import com.googlecode.andoku.db.PuzzleId;
 import com.googlecode.andoku.db.SaveGameDb;
 import com.googlecode.andoku.model.AndokuPuzzle;
 import com.googlecode.andoku.model.Position;
+import com.googlecode.andoku.model.PuzzleType;
 import com.googlecode.andoku.model.ValueSet;
 import com.googlecode.andoku.source.Difficulty;
 import com.googlecode.andoku.source.PuzzleHolder;
 import com.googlecode.andoku.source.PuzzleIOException;
 import com.googlecode.andoku.source.PuzzleSource;
 import com.googlecode.andoku.source.PuzzleSourceResolver;
-import com.googlecode.andoku.source.PuzzleType;
 
 public class Andoku extends Activity implements OnTouchListener, OnKeyListener, TickListener {
 	private static final String TAG = Andoku.class.getName();
@@ -762,7 +762,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 		GameStatistics stats = saveGameDb.getStatistics(puzzleSourceId);
 
 		final Resources resources = getResources();
-		PuzzleType puzzleType = puzzleHolder.getPuzzleType();
+		PuzzleType puzzleType = puzzle.getPuzzleType();
 		String difficulty = getPuzzleDifficulty();
 		String name = resources.getString(puzzleType.getNameResId());
 
@@ -789,7 +789,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 
 	private String getPuzzleName() {
 		final Resources resources = getResources();
-		PuzzleType puzzleType = puzzleHolder.getPuzzleType();
+		PuzzleType puzzleType = puzzle.getPuzzleType();
 		return resources.getString(puzzleType.getNameResId());
 	}
 

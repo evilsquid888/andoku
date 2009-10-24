@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.googlecode.andoku.source;
+package com.googlecode.andoku.model;
 
 import com.googlecode.andoku.R;
 

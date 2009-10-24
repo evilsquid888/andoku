@@ -27,7 +27,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 import com.googlecode.andoku.source.PuzzleHolder;
-import com.googlecode.andoku.source.PuzzleType;
+import com.googlecode.andoku.transfer.StandardAreas;
 
 public class AndokuPuzzle {
 	private final int size;
@@ -48,10 +48,10 @@ public class AndokuPuzzle {
 	// errors compared to actual solution; correct value has been eliminated
 	private HashSet<Position> cellErrors;
 
-	private AndokuPuzzle(Puzzle puzzle, PuzzleType puzzleType, Solution solution) {
+	private AndokuPuzzle(Puzzle puzzle, Solution solution) {
 		this.size = puzzle.getSize();
 		this.puzzle = puzzle;
-		this.puzzleType = puzzleType;
+		this.puzzleType = determinePuzzleType(puzzle);
 		this.extra = obtainExtra(puzzle);
 		this.solution = solution;
 		this.values = obtainValues(puzzle);
@@ -62,8 +62,7 @@ public class AndokuPuzzle {
 	}
 
 	public static AndokuPuzzle create(PuzzleHolder puzzleHolder) {
-		return new AndokuPuzzle(puzzleHolder.getPuzzle(), puzzleHolder.getPuzzleType(), puzzleHolder
-				.getSolution());
+		return new AndokuPuzzle(puzzleHolder.getPuzzle(), puzzleHolder.getSolution());
 	}
 
 	public Serializable saveToMemento() {
@@ -264,6 +263,41 @@ public class AndokuPuzzle {
 		positions.addAll(cellErrors);
 
 		return positions;
+	}
+
+	private static PuzzleType determinePuzzleType(Puzzle puzzle) {
+		boolean squiggly = isSquiggly(puzzle);
+		boolean x = puzzle.getExtraRegions().length == 2;
+		boolean hyper = puzzle.getExtraRegions().length == 4;
+
+		if (squiggly) {
+			if (x)
+				return PuzzleType.SQUIGGLY_X;
+			else if (hyper)
+				return PuzzleType.SQUIGGLY_H;
+			else
+				return PuzzleType.SQUIGGLY;
+		}
+		else {
+			if (x)
+				return PuzzleType.STANDARD_X;
+			else if (hyper)
+				return PuzzleType.STANDARD_HYPER;
+			else
+				return PuzzleType.STANDARD;
+		}
+	}
+
+	private static boolean isSquiggly(Puzzle puzzle) {
+		final int size = puzzle.getSize();
+		int[][] stdAreas = StandardAreas.getAreas(size);
+
+		for (int row = 0; row < size; row++)
+			for (int col = 0; col < size; col++)
+				if (puzzle.getAreaCode(row, col) != stdAreas[row][col])
+					return true;
+
+		return false;
 	}
 
 	private void addErrorLink(Position from, Position to) {

@@ -50,10 +50,10 @@ import android.widget.ViewFlipper;
 
 import com.googlecode.andoku.db.PuzzleId;
 import com.googlecode.andoku.db.SaveGameDb;
+import com.googlecode.andoku.model.PuzzleType;
 import com.googlecode.andoku.source.PuzzleIOException;
 import com.googlecode.andoku.source.PuzzleSourceResolver;
 import com.googlecode.andoku.source.PuzzleSource;
-import com.googlecode.andoku.source.PuzzleType;
 
 public class Main extends ListActivity {
 	private static final String TAG = Main.class.getName();

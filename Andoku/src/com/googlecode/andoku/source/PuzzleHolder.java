@@ -21,7 +21,6 @@ package com.googlecode.andoku.source;
 import com.googlecode.andoku.db.PuzzleId;
 import com.googlecode.andoku.model.Puzzle;
 import com.googlecode.andoku.model.Solution;
-import com.googlecode.andoku.transfer.StandardAreas;
 
 public class PuzzleHolder {
 	private final PuzzleSource source;
@@ -30,8 +29,6 @@ public class PuzzleHolder {
 	private final Difficulty difficulty;
 	private final Puzzle puzzle;
 	private final Solution solution;
-
-	private transient PuzzleType puzzleType;
 
 	public PuzzleHolder(PuzzleSource source, int number, Difficulty difficulty, Puzzle puzzle,
 			Solution solution) throws PuzzleIOException {
@@ -62,49 +59,7 @@ public class PuzzleHolder {
 		return solution;
 	}
 
-	public PuzzleType getPuzzleType() {
-		if (puzzleType == null)
-			puzzleType = determinePuzzleType();
-
-		return puzzleType;
-	}
-
 	public Difficulty getPuzzleDifficulty() {
 		return difficulty;
-	}
-
-	private PuzzleType determinePuzzleType() {
-		boolean squiggly = isSquiggly();
-		boolean x = puzzle.getExtraRegions().length == 2;
-		boolean hyper = puzzle.getExtraRegions().length == 4;
-
-		if (squiggly) {
-			if (x)
-				return PuzzleType.SQUIGGLY_X;
-			else if (hyper)
-				return PuzzleType.SQUIGGLY_H;
-			else
-				return PuzzleType.SQUIGGLY;
-		}
-		else {
-			if (x)
-				return PuzzleType.STANDARD_X;
-			else if (hyper)
-				return PuzzleType.STANDARD_HYPER;
-			else
-				return PuzzleType.STANDARD;
-		}
-	}
-
-	private boolean isSquiggly() {
-		final int size = puzzle.getSize();
-		int[][] stdAreas = StandardAreas.getAreas(size);
-
-		for (int row = 0; row < size; row++)
-			for (int col = 0; col < size; col++)
-				if (puzzle.getAreaCode(row, col) != stdAreas[row][col])
-					return true;
-
-		return false;
 	}
 }
