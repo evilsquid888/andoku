@@ -27,6 +27,7 @@ import java.io.Reader;
 
 import android.content.res.AssetManager;
 
+import com.googlecode.andoku.model.Difficulty;
 import com.googlecode.andoku.model.Puzzle;
 import com.googlecode.andoku.model.Solution;
 import com.googlecode.andoku.transfer.PuzzleDecoder;

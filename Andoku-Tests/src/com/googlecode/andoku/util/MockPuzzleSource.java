@@ -19,10 +19,10 @@
 package com.googlecode.andoku.util;
 
 import com.googlecode.andoku.model.AndokuPuzzle;
+import com.googlecode.andoku.model.Difficulty;
 import com.googlecode.andoku.model.Puzzle;
 import com.googlecode.andoku.model.Solution;
 import com.googlecode.andoku.model.ValueSet;
-import com.googlecode.andoku.source.Difficulty;
 import com.googlecode.andoku.source.PuzzleHolder;
 import com.googlecode.andoku.source.PuzzleIOException;
 import com.googlecode.andoku.source.PuzzleSource;

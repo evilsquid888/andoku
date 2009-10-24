@@ -19,6 +19,7 @@
 package com.googlecode.andoku.source;
 
 import com.googlecode.andoku.db.PuzzleId;
+import com.googlecode.andoku.model.Difficulty;
 import com.googlecode.andoku.model.Puzzle;
 import com.googlecode.andoku.model.Solution;
 

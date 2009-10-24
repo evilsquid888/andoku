@@ -29,7 +29,7 @@ import android.provider.BaseColumns;
 import android.util.Log;
 
 import com.googlecode.andoku.Constants;
-import com.googlecode.andoku.source.Difficulty;
+import com.googlecode.andoku.model.Difficulty;
 
 public class PuzzleDb {
 	private static final String TAG = PuzzleDb.class.getName();

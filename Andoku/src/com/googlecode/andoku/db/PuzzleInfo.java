@@ -18,7 +18,7 @@
 
 package com.googlecode.andoku.db;
 
-import com.googlecode.andoku.source.Difficulty;
+import com.googlecode.andoku.model.Difficulty;
 
 public class PuzzleInfo {
 	public static final String AREAS_NONE = "";

@@ -25,7 +25,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.test.AndroidTestCase;
 
-import com.googlecode.andoku.source.Difficulty;
+import com.googlecode.andoku.model.Difficulty;
 
 public class PuzzleDbTest extends AndroidTestCase {
 	private PuzzleDb db;

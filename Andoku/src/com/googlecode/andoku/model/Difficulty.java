@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.googlecode.andoku.source;
+package com.googlecode.andoku.model;
 
 public enum Difficulty {
 	EASY, MEDIUM, CHALLENGING, HARD, FIENDISH, UNKNOWN

@@ -33,6 +33,7 @@ public class AndokuPuzzle {
 	private final int size;
 	private final Puzzle puzzle;
 	private final PuzzleType puzzleType;
+	private final Difficulty difficulty;
 	private final boolean[][] extra;
 	private final Solution solution;
 	private boolean solved;
@@ -48,10 +49,11 @@ public class AndokuPuzzle {
 	// errors compared to actual solution; correct value has been eliminated
 	private HashSet<Position> cellErrors;
 
-	private AndokuPuzzle(Puzzle puzzle, Solution solution) {
+	private AndokuPuzzle(Puzzle puzzle, Solution solution, Difficulty difficulty) {
 		this.size = puzzle.getSize();
 		this.puzzle = puzzle;
 		this.puzzleType = determinePuzzleType(puzzle);
+		this.difficulty = difficulty;
 		this.extra = obtainExtra(puzzle);
 		this.solution = solution;
 		this.values = obtainValues(puzzle);
@@ -62,7 +64,8 @@ public class AndokuPuzzle {
 	}
 
 	public static AndokuPuzzle create(PuzzleHolder puzzleHolder) {
-		return new AndokuPuzzle(puzzleHolder.getPuzzle(), puzzleHolder.getSolution());
+		return new AndokuPuzzle(puzzleHolder.getPuzzle(), puzzleHolder.getSolution(), puzzleHolder
+				.getPuzzleDifficulty());
 	}
 
 	public Serializable saveToMemento() {
@@ -92,6 +95,10 @@ public class AndokuPuzzle {
 
 	public PuzzleType getPuzzleType() {
 		return puzzleType;
+	}
+
+	public Difficulty getDifficulty() {
+		return difficulty;
 	}
 
 	public boolean isSolved() {

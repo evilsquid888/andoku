@@ -51,9 +51,9 @@ import com.googlecode.andoku.db.GameStatistics;
 import com.googlecode.andoku.db.PuzzleId;
 import com.googlecode.andoku.db.SaveGameDb;
 import com.googlecode.andoku.model.AndokuPuzzle;
+import com.googlecode.andoku.model.Difficulty;
 import com.googlecode.andoku.model.Position;
 import com.googlecode.andoku.model.ValueSet;
-import com.googlecode.andoku.source.Difficulty;
 import com.googlecode.andoku.source.PuzzleHolder;
 import com.googlecode.andoku.source.PuzzleIOException;
 import com.googlecode.andoku.source.PuzzleSource;
@@ -795,7 +795,7 @@ public class Andoku extends Activity implements OnTouchListener, OnKeyListener, 
 	}
 
 	private String getPuzzleDifficulty() {
-		final Difficulty difficulty = puzzleHolder.getPuzzleDifficulty();
+		final Difficulty difficulty = puzzle.getDifficulty();
 		if (difficulty == Difficulty.UNKNOWN)
 			return "";
 
