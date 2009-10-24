@@ -198,8 +198,8 @@ public class SaveGameDbTest extends AndroidTestCase {
 		// cursor: NUMBER, SOLVED
 
 		assertTrue(cursor.moveToNext());
-		assertEquals(2, cursor.getInt(0));
-		assertEquals(1, cursor.getInt(1));
+		assertEquals(2, cursor.getInt(SaveGameDb.IDX_GAME_BY_SOURCE_NUMBER));
+		assertEquals(1, cursor.getInt(SaveGameDb.IDX_GAME_BY_SOURCE_SOLVED));
 
 		assertFalse(cursor.moveToNext());
 
@@ -208,12 +208,12 @@ public class SaveGameDbTest extends AndroidTestCase {
 		cursor = db.findGamesBySource("mock:17");
 
 		assertTrue(cursor.moveToNext());
-		assertEquals(1, cursor.getInt(0));
-		assertEquals(0, cursor.getInt(1));
+		assertEquals(1, cursor.getInt(SaveGameDb.IDX_GAME_BY_SOURCE_NUMBER));
+		assertEquals(0, cursor.getInt(SaveGameDb.IDX_GAME_BY_SOURCE_SOLVED));
 
 		assertTrue(cursor.moveToNext());
-		assertEquals(3, cursor.getInt(0));
-		assertEquals(1, cursor.getInt(1));
+		assertEquals(3, cursor.getInt(SaveGameDb.IDX_GAME_BY_SOURCE_NUMBER));
+		assertEquals(1, cursor.getInt(SaveGameDb.IDX_GAME_BY_SOURCE_SOLVED));
 
 		assertFalse(cursor.moveToNext());
 
