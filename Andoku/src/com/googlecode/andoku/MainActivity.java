@@ -55,8 +55,8 @@ import com.googlecode.andoku.source.PuzzleIOException;
 import com.googlecode.andoku.source.PuzzleSource;
 import com.googlecode.andoku.source.PuzzleSourceResolver;
 
-public class Main extends ListActivity {
-	private static final String TAG = Main.class.getName();
+public class MainActivity extends ListActivity {
+	private static final String TAG = MainActivity.class.getName();
 
 	private static final String ANDOKU_DIR = "Andoku";
 	private static final String DATABASE_BACKUP_FILE = SaveGameDb.DATABASE_NAME + ".bak";
@@ -299,7 +299,7 @@ public class Main extends ListActivity {
 		String puzzleSourceId = getSelectedPuzzleSource();
 		int number = findAvailableGame(puzzleSourceId);
 
-		Intent intent = new Intent(this, Andoku.class);
+		Intent intent = new Intent(this, AndokuActivity.class);
 		intent.putExtra(Constants.EXTRA_PUZZLE_SOURCE_ID, puzzleSourceId);
 		intent.putExtra(Constants.EXTRA_PUZZLE_NUMBER, number);
 		startActivity(intent);
@@ -311,7 +311,7 @@ public class Main extends ListActivity {
 
 		PuzzleId puzzleId = saveGameDb.puzzleIdByRowId(rowId);
 
-		Intent intent = new Intent(this, Andoku.class);
+		Intent intent = new Intent(this, AndokuActivity.class);
 		intent.putExtra(Constants.EXTRA_PUZZLE_SOURCE_ID, puzzleId.puzzleSourceId);
 		intent.putExtra(Constants.EXTRA_PUZZLE_NUMBER, puzzleId.number);
 		intent.putExtra(Constants.EXTRA_START_PUZZLE, true);

@@ -59,8 +59,8 @@ import com.googlecode.andoku.source.PuzzleIOException;
 import com.googlecode.andoku.source.PuzzleSource;
 import com.googlecode.andoku.source.PuzzleSourceResolver;
 
-public class Andoku extends Activity implements OnTouchListener, OnKeyListener, TickListener {
-	private static final String TAG = Andoku.class.getName();
+public class AndokuActivity extends Activity implements OnTouchListener, OnKeyListener, TickListener {
+	private static final String TAG = AndokuActivity.class.getName();
 
 	private static final int DIALOG_CONFIRM_RESET_PUZZLE = 0;
 	private static final int DIALOG_PUZZLE_IO_ERROR = 1;
