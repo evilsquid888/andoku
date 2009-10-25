@@ -18,41 +18,35 @@
 
 package com.googlecode.andoku.source;
 
-import java.util.HashMap;
-
 import android.content.Context;
 import android.content.res.AssetManager;
 
-public class PuzzleSourceResolver {
-	private static final HashMap<String, AssetsPuzzleSource> ASSET_SOURCES = new HashMap<String, AssetsPuzzleSource>();
+import com.googlecode.andoku.db.PuzzleDb;
 
+public class PuzzleSourceResolver {
 	private PuzzleSourceResolver() {
 	}
 
 	public static PuzzleSource resolveSource(Context context, String puzzleSourceId)
 			throws PuzzleIOException {
-		if (puzzleSourceId.startsWith(AssetsPuzzleSource.ASSET_PREFIX))
-			return restoreAssetSource(context, puzzleSourceId
-					.substring(AssetsPuzzleSource.ASSET_PREFIX.length()));
+		if (PuzzleSourceIds.isAssetSource(puzzleSourceId))
+			return resolveAssetSource(context, PuzzleSourceIds.getAssetFolderName(puzzleSourceId));
+
+		if (PuzzleSourceIds.isDbSource(puzzleSourceId))
+			return resolveDbSource(context, PuzzleSourceIds.getDbFolderId(puzzleSourceId));
 
 		throw new IllegalArgumentException(puzzleSourceId);
 	}
 
-	private static PuzzleSource restoreAssetSource(Context context, String puzzleSet)
+	private static PuzzleSource resolveAssetSource(Context context, String folderName)
 			throws PuzzleIOException {
-		return getAssetSource(context.getAssets(), puzzleSet);
+		AssetManager assets = context.getAssets();
+		return new AssetsPuzzleSource(assets, folderName);
 	}
 
-	private static AssetsPuzzleSource getAssetSource(AssetManager assets, String puzzleSet)
+	private static PuzzleSource resolveDbSource(Context context, long folderId)
 			throws PuzzleIOException {
-		synchronized (ASSET_SOURCES) {
-			AssetsPuzzleSource source = ASSET_SOURCES.get(puzzleSet);
-			if (source == null) {
-				source = new AssetsPuzzleSource(assets, puzzleSet);
-				ASSET_SOURCES.put(puzzleSet, source);
-			}
-
-			return source;
-		}
+		PuzzleDb puzzleDb = new PuzzleDb(context);
+		return new DbPuzzleSource(puzzleDb, folderId);
 	}
 }

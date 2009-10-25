@@ -53,6 +53,7 @@ import com.googlecode.andoku.db.SaveGameDb;
 import com.googlecode.andoku.model.PuzzleType;
 import com.googlecode.andoku.source.PuzzleIOException;
 import com.googlecode.andoku.source.PuzzleSource;
+import com.googlecode.andoku.source.PuzzleSourceIds;
 import com.googlecode.andoku.source.PuzzleSourceResolver;
 
 public class MainActivity extends ListActivity {
@@ -356,7 +357,12 @@ public class MainActivity extends ListActivity {
 	}
 
 	private String getSelectedPuzzleSource() {
-		StringBuilder sb = new StringBuilder("asset:");
+		String folderName = getSelectedAssetFolderName();
+		return PuzzleSourceIds.forAssetFolder(folderName);
+	}
+
+	private String getSelectedAssetFolderName() {
+		StringBuilder sb = new StringBuilder();
 
 		switch (gridSpinner.getSelectedItemPosition()) {
 			case 0:

@@ -57,6 +57,7 @@ import com.googlecode.andoku.model.ValueSet;
 import com.googlecode.andoku.source.PuzzleHolder;
 import com.googlecode.andoku.source.PuzzleIOException;
 import com.googlecode.andoku.source.PuzzleSource;
+import com.googlecode.andoku.source.PuzzleSourceIds;
 import com.googlecode.andoku.source.PuzzleSourceResolver;
 
 public class AndokuActivity extends Activity
@@ -649,7 +650,7 @@ public class AndokuActivity extends Activity
 		final Intent intent = getIntent();
 		String puzzleSourceId = intent.getStringExtra(Constants.EXTRA_PUZZLE_SOURCE_ID);
 		if (puzzleSourceId == null)
-			puzzleSourceId = "asset:standard_n_1";
+			puzzleSourceId = PuzzleSourceIds.forAssetFolder("standard_n_1");
 		int number = intent.getIntExtra(Constants.EXTRA_PUZZLE_NUMBER, 0);
 
 		if (Constants.LOG_V)

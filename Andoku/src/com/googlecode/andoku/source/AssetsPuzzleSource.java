@@ -34,24 +34,22 @@ import com.googlecode.andoku.model.Solution;
 import com.googlecode.andoku.transfer.PuzzleDecoder;
 
 class AssetsPuzzleSource implements PuzzleSource {
-	static final String ASSET_PREFIX = "asset:";
-
 	private static final String PUZZLES_FOLDER = "puzzles/";
 
 	private final AssetManager assets;
-	private final String puzzleSet;
+	private final String folderName;
 
 	private final int[] index;
 
-	public AssetsPuzzleSource(AssetManager assets, String puzzleSet) throws PuzzleIOException {
+	public AssetsPuzzleSource(AssetManager assets, String folderName) throws PuzzleIOException {
 		this.assets = assets;
-		this.puzzleSet = puzzleSet;
+		this.folderName = folderName;
 
 		this.index = loadIndex();
 	}
 
 	public String getSourceId() {
-		return ASSET_PREFIX + puzzleSet;
+		return PuzzleSourceIds.forAssetFolder(folderName);
 	}
 
 	public int numberOfPuzzles() {
@@ -79,7 +77,7 @@ class AssetsPuzzleSource implements PuzzleSource {
 
 	private int[] loadIndex() throws PuzzleIOException {
 		try {
-			String indexFile = PUZZLES_FOLDER + puzzleSet + ".idx";
+			String indexFile = PUZZLES_FOLDER + folderName + ".idx";
 
 			InputStream in = assets.open(indexFile);
 			try {
@@ -102,7 +100,7 @@ class AssetsPuzzleSource implements PuzzleSource {
 
 	private String[] loadPuzzle(int number) throws PuzzleIOException {
 		try {
-			String puzzleFile = PUZZLES_FOLDER + puzzleSet + ".adk";
+			String puzzleFile = PUZZLES_FOLDER + folderName + ".adk";
 			int offset = index[number];
 
 			InputStream in = assets.open(puzzleFile);
@@ -125,7 +123,7 @@ class AssetsPuzzleSource implements PuzzleSource {
 	}
 
 	private Difficulty getDifficulty() {
-		final int difficulty = puzzleSet.charAt(puzzleSet.length() - 1) - '0' - 1;
+		final int difficulty = folderName.charAt(folderName.length() - 1) - '0' - 1;
 		if (difficulty < 0 || difficulty > 4)
 			throw new IllegalStateException();
 
