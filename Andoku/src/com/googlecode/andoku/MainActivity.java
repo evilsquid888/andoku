@@ -60,8 +60,8 @@ public class MainActivity extends ListActivity {
 	private static final String TAG = MainActivity.class.getName();
 
 	private static final String ANDOKU_DIR = "Andoku";
-	private static final String DATABASE_BACKUP_FILE = AndokuDatabase.DATABASE_NAME + ".bak";
-	private static final String DATABASE_UPDATE_FILE = AndokuDatabase.DATABASE_NAME + ".update";
+	private static final String DATABASE_BACKUP_FILE = "database.bak";
+	private static final String DATABASE_UPDATE_FILE = "database.update";
 
 	private static final int FLIP_IDX_MENU = 0;
 	private static final int FLIP_IDX_SELECT_LEVEL = 1;
