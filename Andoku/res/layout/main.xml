@@ -53,6 +53,12 @@
                 android:text="@string/button_nav_select_new_game"/>
             <Button
                 style="@style/NavigationButton"
+                android:id="@+id/selectFoldersButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_nav_select_folders"/>
+            <Button
+                style="@style/NavigationButton"
                 android:id="@+id/resumeGameButton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

@@ -48,6 +48,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.googlecode.andoku.db.PuzzleDb;
 import com.googlecode.andoku.db.PuzzleId;
 import com.googlecode.andoku.db.SaveGameDb;
 import com.googlecode.andoku.model.PuzzleType;
@@ -81,7 +82,11 @@ public class MainActivity extends ListActivity {
 	private Spinner extraRegionsSpinner;
 	private Spinner difficultySpinner;
 
+	private Button foldersButton;
 	private Button resumeGameButton;
+
+	private PuzzleDb puzzleDb;
+	private long importedPuzzlesFolderId;
 
 	private SaveGameDb saveGameDb;
 
@@ -109,6 +114,9 @@ public class MainActivity extends ListActivity {
 		flipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_in));
 		flipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_out));
 
+		puzzleDb = new PuzzleDb(this);
+		importedPuzzlesFolderId = puzzleDb.getOrCreateFolder(Constants.IMPORTED_PUZZLES_FOLDER);
+
 		saveGameDb = new SaveGameDb(this);
 		Cursor cursor = saveGameDb.findUnfinishedGames();
 		startManagingCursor(cursor);
@@ -132,6 +140,13 @@ public class MainActivity extends ListActivity {
 		newGameButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				onSelectNewGameButton();
+			}
+		});
+
+		foldersButton = (Button) findViewById(R.id.selectFoldersButton);
+		foldersButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				onSelectFoldersButton();
 			}
 		});
 
@@ -168,9 +183,9 @@ public class MainActivity extends ListActivity {
 				onBackButton();
 			}
 		};
-		setOnClickListener(findViewById(R.id.backButton1), backListener);
-		setOnClickListener(findViewById(R.id.backButton2), backListener);
-		setOnClickListener(findViewById(R.id.backButton3), backListener);
+		Util.saveSetOnClickListener(findViewById(R.id.backButton1), backListener);
+		Util.saveSetOnClickListener(findViewById(R.id.backButton2), backListener);
+		Util.saveSetOnClickListener(findViewById(R.id.backButton3), backListener);
 
 		gridSpinner = (Spinner) findViewById(R.id.gridSpinner);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -201,11 +216,6 @@ public class MainActivity extends ListActivity {
 		loadPuzzlePreferences();
 	}
 
-	private void setOnClickListener(View view, OnClickListener backListener) {
-		if (view != null)
-			view.setOnClickListener(backListener);
-	}
-
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		if (Constants.LOG_V)
@@ -224,6 +234,9 @@ public class MainActivity extends ListActivity {
 		super.onResume();
 
 		baseTime = System.currentTimeMillis();
+
+		final boolean hasPuzzleFolders = puzzleDb.hasSubFolders(importedPuzzlesFolderId);
+		foldersButton.setVisibility(hasPuzzleFolders ? View.VISIBLE : View.GONE);
 
 		final boolean hasSavedGames = getListAdapter().getCount() != 0;
 		if (hasSavedGames) {
@@ -245,6 +258,10 @@ public class MainActivity extends ListActivity {
 
 		super.onDestroy();
 
+		if (puzzleDb != null) {
+			puzzleDb.close();
+		}
+
 		if (saveGameDb != null) {
 			saveGameDb.close();
 		}
@@ -255,6 +272,15 @@ public class MainActivity extends ListActivity {
 			Log.v(TAG, "onSelectNewGameButton()");
 
 		flipper.setDisplayedChild(FLIP_IDX_SELECT_LEVEL);
+	}
+
+	void onSelectFoldersButton() {
+		if (Constants.LOG_V)
+			Log.v(TAG, "onSelectFoldersButton()");
+
+		Intent intent = new Intent(this, FolderListActivity.class);
+		intent.putExtra(Constants.EXTRA_FOLDER_ID, importedPuzzlesFolderId);
+		startActivity(intent);
 	}
 
 	void onResumeGameButton() {

@@ -25,9 +25,13 @@ public class Constants {
 	public static final String EXTRA_PUZZLE_NUMBER = PREFIX + "puzzleNumber";
 	public static final String EXTRA_START_PUZZLE = PREFIX + "start";
 
-	public static final String EXTRA_ERROR_TITLE = "errorTitle";
-	public static final String EXTRA_ERROR_MESSAGE = "errorMessage";
-	public static final String EXTRA_ERROR_THROWABLE = "errorException";
+	public static final String EXTRA_ERROR_TITLE = PREFIX + "errorTitle";
+	public static final String EXTRA_ERROR_MESSAGE = PREFIX + "errorMessage";
+	public static final String EXTRA_ERROR_THROWABLE = PREFIX + "errorException";
+
+	public static final String EXTRA_FOLDER_ID = PREFIX + "folderId";
+
+	public static final String IMPORTED_PUZZLES_FOLDER = "Imported Puzzles";
 
 	public static final boolean LOG_V = false;
 
