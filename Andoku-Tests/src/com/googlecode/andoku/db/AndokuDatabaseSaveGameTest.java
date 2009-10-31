@@ -27,7 +27,7 @@ import com.googlecode.andoku.model.AndokuPuzzle;
 import com.googlecode.andoku.model.ValueSet;
 import com.googlecode.andoku.util.MockPuzzleSource;
 
-public class SaveGameDbTest extends AndroidTestCase {
+public class AndokuDatabaseSaveGameTest extends AndroidTestCase {
 	private AndokuDatabase db;
 
 	@Override
