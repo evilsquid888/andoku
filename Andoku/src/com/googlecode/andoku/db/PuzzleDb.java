@@ -221,6 +221,33 @@ public class PuzzleDb {
 		deleteFolder(db, folderId);
 	}
 
+	public boolean hasSubFolders(long folderId) {
+		if (Constants.LOG_V)
+			Log.v(TAG, "hasSubFolders(" + folderId + ")");
+
+		SQLiteDatabase db = openHelper.getReadableDatabase();
+
+		return hasSubFolders(db, folderId);
+	}
+
+	public boolean hasPuzzles(long folderId) {
+		if (Constants.LOG_V)
+			Log.v(TAG, "hasPuzzles(" + folderId + ")");
+
+		SQLiteDatabase db = openHelper.getReadableDatabase();
+
+		return hasPuzzles(db, folderId);
+	}
+
+	public boolean isEmpty(long folderId) {
+		if (Constants.LOG_V)
+			Log.v(TAG, "isEmpty(" + folderId + ")");
+
+		SQLiteDatabase db = openHelper.getReadableDatabase();
+
+		return !hasSubFolders(db, folderId) && !hasPuzzles(db, folderId);
+	}
+
 	public long insertPuzzle(long folderId, PuzzleInfo puzzleInfo) {
 		if (Constants.LOG_V)
 			Log.v(TAG, "insertPuzzle(" + folderId + "," + puzzleInfo + ")");
@@ -250,6 +277,17 @@ public class PuzzleDb {
 			throw new SQLException("Could not create puzzle " + puzzleInfo);
 
 		return insertedRowId;
+	}
+
+	public void deletePuzzle(long puzzleId) {
+		if (Constants.LOG_V)
+			Log.v(TAG, "deletePuzzle(" + puzzleId + ")");
+
+		SQLiteDatabase db = openHelper.getWritableDatabase();
+
+		String whereClause = COL_ID + "=?";
+		String[] whereArgs = { String.valueOf(puzzleId) };
+		db.delete(TABLE_PUZZLES, whereClause, whereArgs);
 	}
 
 	public int getNumberOfPuzzles(long folderId) {
@@ -397,6 +435,36 @@ public class PuzzleDb {
 			throw new IllegalArgumentException();
 		if (folderName.indexOf(PATH_SEPARATOR_CHAR) != -1)
 			throw new IllegalArgumentException();
+	}
+
+	private boolean hasSubFolders(SQLiteDatabase db, long folderId) {
+		String[] columns = { COL_ID };
+		String selection = COL_FOLDER_PARENT + "=?";
+		String[] selectionArgs = { String.valueOf(folderId) };
+		String limit = "1";
+		Cursor cursor = db.query(TABLE_FOLDERS, columns, selection, selectionArgs, null, null, null,
+				limit);
+		try {
+			return cursor.moveToNext();
+		}
+		finally {
+			cursor.close();
+		}
+	}
+
+	private boolean hasPuzzles(SQLiteDatabase db, long folderId) {
+		String[] columns = { COL_ID };
+		String selection = COL_FOLDER + "=?";
+		String[] selectionArgs = { String.valueOf(folderId) };
+		String limit = "1";
+		Cursor cursor = db.query(TABLE_PUZZLES, columns, selection, selectionArgs, null, null, null,
+				limit);
+		try {
+			return cursor.moveToNext();
+		}
+		finally {
+			cursor.close();
+		}
 	}
 
 	/**

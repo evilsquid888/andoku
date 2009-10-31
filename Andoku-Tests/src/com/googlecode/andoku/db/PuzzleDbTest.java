@@ -41,7 +41,7 @@ public class PuzzleDbTest extends AndroidTestCase {
 		db.close();
 	}
 
-	public void testIsEmpty() throws Exception {
+	public void testDatabaseIsEmpty() throws Exception {
 		assertTrue(loadFolders().isEmpty());
 	}
 
@@ -220,6 +220,63 @@ public class PuzzleDbTest extends AndroidTestCase {
 		assertFalse(db.folderExists(folderId4));
 	}
 
+	public void testHasSubFolders() throws Exception {
+		long folderId1 = db.createFolder("f1");
+		assertFalse(db.hasSubFolders(folderId1));
+
+		long folderId2 = db.createFolder(folderId1, "f2");
+		assertTrue(db.hasSubFolders(folderId1));
+
+		long folderId3 = db.createFolder(folderId1, "f3");
+		assertTrue(db.hasSubFolders(folderId1));
+
+		db.deleteFolder(folderId2);
+		assertTrue(db.hasSubFolders(folderId1));
+
+		db.deleteFolder(folderId3);
+		assertFalse(db.hasSubFolders(folderId1));
+	}
+
+	public void testHasPuzzles() throws Exception {
+		long folderId = db.createFolder("folder");
+		assertFalse(db.hasPuzzles(folderId));
+
+		String clues1 = ".8.4.96536428...7.......8....7..5.42...7.1...85.6..1....6.......1...47362735.8.1.";
+		PuzzleInfo puzzle1 = new PuzzleInfo.Builder(clues1).build();
+		long puzzleId1 = db.insertPuzzle(folderId, puzzle1);
+		assertTrue(db.hasPuzzles(folderId));
+
+		String clues2 = "63.2.8.1.2...5..891.9.6..3...8..6.5....187....6.5..9...9..7.1.681..2...5.2.4.3.97";
+		PuzzleInfo puzzle2 = new PuzzleInfo.Builder(clues2).build();
+		long puzzleId2 = db.insertPuzzle(folderId, puzzle2);
+		assertTrue(db.hasPuzzles(folderId));
+
+		db.deletePuzzle(puzzleId1);
+		assertTrue(db.hasPuzzles(folderId));
+
+		db.deletePuzzle(puzzleId2);
+		assertFalse(db.hasPuzzles(folderId));
+	}
+
+	public void testFolderIsEmpty() throws Exception {
+		long folderId1 = db.createFolder("folder");
+		assertTrue(db.isEmpty(folderId1));
+
+		String clues = ".8.4.96536428...7.......8....7..5.42...7.1...85.6..1....6.......1...47362735.8.1.";
+		PuzzleInfo puzzle = new PuzzleInfo.Builder(clues).build();
+		long puzzleId = db.insertPuzzle(folderId1, puzzle);
+		assertFalse(db.isEmpty(folderId1));
+
+		long folderId2 = db.createFolder(folderId1, "f2");
+		assertFalse(db.isEmpty(folderId1));
+
+		db.deletePuzzle(puzzleId);
+		assertFalse(db.isEmpty(folderId1));
+
+		db.deleteFolder(folderId2);
+		assertTrue(db.isEmpty(folderId1));
+	}
+
 	public void testPuzzleRoundtrip() throws Exception {
 		long folderId = db.createFolder("folder");
 
@@ -281,6 +338,19 @@ public class PuzzleDbTest extends AndroidTestCase {
 		assertEquals(clues3, db.loadPuzzle(folderId, 2).getClues());
 		assertEquals(clues4, db.loadPuzzle(folderId, 3).getClues());
 		assertEquals(clues5, db.loadPuzzle(folderId, 4).getClues());
+	}
+
+	public void testDeletePuzzle() throws Exception {
+		long folderId = db.createFolder("folder");
+
+		String clues = ".8.4.96536428...7.......8....7..5.42...7.1...85.6..1....6.......1...47362735.8.1.";
+		PuzzleInfo puzzle = new PuzzleInfo.Builder(clues).build();
+
+		long puzzleId = db.insertPuzzle(folderId, puzzle);
+		assertEquals(1, db.getNumberOfPuzzles(folderId));
+
+		db.deletePuzzle(puzzleId);
+		assertEquals(0, db.getNumberOfPuzzles(folderId));
 	}
 
 	public void testPuzzlesBelongToFolder() throws Exception {
