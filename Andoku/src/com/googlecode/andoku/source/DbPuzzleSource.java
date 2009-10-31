@@ -18,19 +18,19 @@
 
 package com.googlecode.andoku.source;
 
-import com.googlecode.andoku.db.PuzzleDb;
 import com.googlecode.andoku.db.PuzzleInfo;
+import com.googlecode.andoku.db.SaveGameDb;
 import com.googlecode.andoku.model.Difficulty;
 import com.googlecode.andoku.model.Puzzle;
 import com.googlecode.andoku.model.Solution;
 import com.googlecode.andoku.transfer.PuzzleDecoder;
 
 class DbPuzzleSource implements PuzzleSource {
-	private final PuzzleDb puzzleDb;
+	private final SaveGameDb saveGameDb;
 	private final long folderId;
 
-	public DbPuzzleSource(PuzzleDb puzzleDb, long folderId) {
-		this.puzzleDb = puzzleDb;
+	public DbPuzzleSource(SaveGameDb saveGameDb, long folderId) {
+		this.saveGameDb = saveGameDb;
 		this.folderId = folderId;
 	}
 
@@ -39,7 +39,7 @@ class DbPuzzleSource implements PuzzleSource {
 	}
 
 	public PuzzleHolder load(int number) throws PuzzleIOException {
-		PuzzleInfo puzzleInfo = puzzleDb.loadPuzzle(folderId, number);
+		PuzzleInfo puzzleInfo = saveGameDb.loadPuzzle(folderId, number);
 		if (puzzleInfo == null)
 			throw new PuzzleIOException("Puzzle " + number + " not found in folder " + folderId);
 
@@ -51,11 +51,11 @@ class DbPuzzleSource implements PuzzleSource {
 	}
 
 	public int numberOfPuzzles() {
-		return puzzleDb.getNumberOfPuzzles(folderId);
+		return saveGameDb.getNumberOfPuzzles(folderId);
 	}
 
 	public void close() {
-		puzzleDb.close();
+		saveGameDb.close();
 	}
 
 	private Puzzle createPuzzle(PuzzleInfo puzzleInfo) {

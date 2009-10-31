@@ -48,7 +48,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import com.googlecode.andoku.db.PuzzleDb;
 import com.googlecode.andoku.db.PuzzleId;
 import com.googlecode.andoku.db.SaveGameDb;
 import com.googlecode.andoku.model.PuzzleType;
@@ -85,10 +84,8 @@ public class MainActivity extends ListActivity {
 	private Button foldersButton;
 	private Button resumeGameButton;
 
-	private PuzzleDb puzzleDb;
-	private long importedPuzzlesFolderId;
-
 	private SaveGameDb saveGameDb;
+	private long importedPuzzlesFolderId;
 
 	private long baseTime;
 
@@ -114,10 +111,10 @@ public class MainActivity extends ListActivity {
 		flipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_in));
 		flipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_out));
 
-		puzzleDb = new PuzzleDb(this);
-		importedPuzzlesFolderId = puzzleDb.getOrCreateFolder(Constants.IMPORTED_PUZZLES_FOLDER);
-
 		saveGameDb = new SaveGameDb(this);
+
+		importedPuzzlesFolderId = saveGameDb.getOrCreateFolder(Constants.IMPORTED_PUZZLES_FOLDER);
+
 		Cursor cursor = saveGameDb.findUnfinishedGames();
 		startManagingCursor(cursor);
 
@@ -235,7 +232,7 @@ public class MainActivity extends ListActivity {
 
 		baseTime = System.currentTimeMillis();
 
-		final boolean hasPuzzleFolders = puzzleDb.hasSubFolders(importedPuzzlesFolderId);
+		final boolean hasPuzzleFolders = saveGameDb.hasSubFolders(importedPuzzlesFolderId);
 		foldersButton.setVisibility(hasPuzzleFolders ? View.VISIBLE : View.GONE);
 
 		final boolean hasSavedGames = getListAdapter().getCount() != 0;
@@ -257,10 +254,6 @@ public class MainActivity extends ListActivity {
 			Log.v(TAG, "onDestroy()");
 
 		super.onDestroy();
-
-		if (puzzleDb != null) {
-			puzzleDb.close();
-		}
 
 		if (saveGameDb != null) {
 			saveGameDb.close();
