@@ -40,8 +40,8 @@ import com.googlecode.andoku.TickTimer;
 import com.googlecode.andoku.model.AndokuPuzzle;
 import com.googlecode.andoku.model.Difficulty;
 
-public class SaveGameDb {
-	private static final String TAG = SaveGameDb.class.getName();
+public class AndokuDatabase {
+	private static final String TAG = AndokuDatabase.class.getName();
 
 	public static final String DATABASE_NAME = "save_games.db";
 	private static final int DATABASE_VERSION = 2;
@@ -93,9 +93,9 @@ public class SaveGameDb {
 
 	private DatabaseHelper openHelper;
 
-	public SaveGameDb(Context context) {
+	public AndokuDatabase(Context context) {
 		if (Constants.LOG_V)
-			Log.v(TAG, "SaveGameDb()");
+			Log.v(TAG, "AndokuDatabase()");
 
 		openHelper = new DatabaseHelper(context);
 	}

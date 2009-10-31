@@ -48,8 +48,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.googlecode.andoku.db.AndokuDatabase;
 import com.googlecode.andoku.db.PuzzleId;
-import com.googlecode.andoku.db.SaveGameDb;
 import com.googlecode.andoku.model.PuzzleType;
 import com.googlecode.andoku.source.PuzzleIOException;
 import com.googlecode.andoku.source.PuzzleSource;
@@ -60,8 +60,8 @@ public class MainActivity extends ListActivity {
 	private static final String TAG = MainActivity.class.getName();
 
 	private static final String ANDOKU_DIR = "Andoku";
-	private static final String DATABASE_BACKUP_FILE = SaveGameDb.DATABASE_NAME + ".bak";
-	private static final String DATABASE_UPDATE_FILE = SaveGameDb.DATABASE_NAME + ".update";
+	private static final String DATABASE_BACKUP_FILE = AndokuDatabase.DATABASE_NAME + ".bak";
+	private static final String DATABASE_UPDATE_FILE = AndokuDatabase.DATABASE_NAME + ".update";
 
 	private static final int FLIP_IDX_MENU = 0;
 	private static final int FLIP_IDX_SELECT_LEVEL = 1;
@@ -84,7 +84,7 @@ public class MainActivity extends ListActivity {
 	private Button foldersButton;
 	private Button resumeGameButton;
 
-	private SaveGameDb saveGameDb;
+	private AndokuDatabase db;
 	private long importedPuzzlesFolderId;
 
 	private long baseTime;
@@ -111,15 +111,15 @@ public class MainActivity extends ListActivity {
 		flipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_in));
 		flipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_out));
 
-		saveGameDb = new SaveGameDb(this);
+		db = new AndokuDatabase(this);
 
-		importedPuzzlesFolderId = saveGameDb.getOrCreateFolder(Constants.IMPORTED_PUZZLES_FOLDER);
+		importedPuzzlesFolderId = db.getOrCreateFolder(Constants.IMPORTED_PUZZLES_FOLDER);
 
-		Cursor cursor = saveGameDb.findUnfinishedGames();
+		Cursor cursor = db.findUnfinishedGames();
 		startManagingCursor(cursor);
 
-		String[] from = { SaveGameDb.COL_TYPE, SaveGameDb.COL_SOURCE, SaveGameDb.COL_TYPE,
-				SaveGameDb.COL_TIMER, SaveGameDb.COL_MODIFIED_DATE };
+		String[] from = { AndokuDatabase.COL_TYPE, AndokuDatabase.COL_SOURCE,
+				AndokuDatabase.COL_TYPE, AndokuDatabase.COL_TIMER, AndokuDatabase.COL_MODIFIED_DATE };
 		int[] to = { R.id.save_game_icon, R.id.save_game_difficulty, R.id.save_game_title,
 				R.id.save_game_timer, R.id.save_game_modified };
 		SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(this, R.layout.save_game_list_item,
@@ -232,7 +232,7 @@ public class MainActivity extends ListActivity {
 
 		baseTime = System.currentTimeMillis();
 
-		final boolean hasPuzzleFolders = saveGameDb.hasSubFolders(importedPuzzlesFolderId);
+		final boolean hasPuzzleFolders = db.hasSubFolders(importedPuzzlesFolderId);
 		foldersButton.setVisibility(hasPuzzleFolders ? View.VISIBLE : View.GONE);
 
 		final boolean hasSavedGames = getListAdapter().getCount() != 0;
@@ -255,8 +255,8 @@ public class MainActivity extends ListActivity {
 
 		super.onDestroy();
 
-		if (saveGameDb != null) {
-			saveGameDb.close();
+		if (db != null) {
+			db.close();
 		}
 	}
 
@@ -354,7 +354,7 @@ public class MainActivity extends ListActivity {
 		if (Constants.LOG_V)
 			Log.v(TAG, "onResumeGameItem(" + rowId + ")");
 
-		PuzzleId puzzleId = saveGameDb.puzzleIdByRowId(rowId);
+		PuzzleId puzzleId = db.puzzleIdByRowId(rowId);
 
 		Intent intent = new Intent(this, AndokuActivity.class);
 		intent.putExtra(Constants.EXTRA_PUZZLE_SOURCE_ID, puzzleId.puzzleSourceId);
@@ -426,11 +426,11 @@ public class MainActivity extends ListActivity {
 		int candidate = 0;
 		int fallback = -1; // use an unsolved game if no unplayed game found
 
-		Cursor c = saveGameDb.findGamesBySource(puzzleSourceId);
+		Cursor c = db.findGamesBySource(puzzleSourceId);
 
 		try {
 			while (c.moveToNext()) {
-				int number = c.getInt(SaveGameDb.IDX_GAME_BY_SOURCE_NUMBER);
+				int number = c.getInt(AndokuDatabase.IDX_GAME_BY_SOURCE_NUMBER);
 
 				// is there a gap and candidate number is available?
 				if (number > candidate) {
@@ -440,7 +440,7 @@ public class MainActivity extends ListActivity {
 					return candidate;
 				}
 
-				boolean solved = c.getInt(SaveGameDb.IDX_GAME_BY_SOURCE_SOLVED) != 0;
+				boolean solved = c.getInt(AndokuDatabase.IDX_GAME_BY_SOURCE_SOLVED) != 0;
 				if (!solved && fallback == -1)
 					fallback = number;
 
@@ -512,7 +512,7 @@ public class MainActivity extends ListActivity {
 			return;
 		}
 
-		File dbFile = getDatabasePath(SaveGameDb.DATABASE_NAME);
+		File dbFile = getDatabasePath(AndokuDatabase.DATABASE_NAME);
 		File sdcard = Environment.getExternalStorageDirectory();
 		File andokuDir = new File(sdcard, ANDOKU_DIR);
 		if (!andokuDir.isDirectory() && !andokuDir.mkdirs()) {
@@ -606,11 +606,11 @@ public class MainActivity extends ListActivity {
 	}
 
 	private final class SaveGameViewBinder implements SimpleCursorAdapter.ViewBinder {
-		private static final int IDX_SOURCE = SaveGameDb.IDX_GAME_SOURCE;
-		private static final int IDX_NUMBER = SaveGameDb.IDX_GAME_NUMBER;
-		private static final int IDX_TYPE = SaveGameDb.IDX_GAME_TYPE;
-		private static final int IDX_TIMER = SaveGameDb.IDX_GAME_TIMER;
-		private static final int IDX_DATE_MODIFIED = SaveGameDb.IDX_GAME_MODIFIED_DATE;
+		private static final int IDX_SOURCE = AndokuDatabase.IDX_GAME_SOURCE;
+		private static final int IDX_NUMBER = AndokuDatabase.IDX_GAME_NUMBER;
+		private static final int IDX_TYPE = AndokuDatabase.IDX_GAME_TYPE;
+		private static final int IDX_TIMER = AndokuDatabase.IDX_GAME_TIMER;
+		private static final int IDX_DATE_MODIFIED = AndokuDatabase.IDX_GAME_MODIFIED_DATE;
 
 		public SaveGameViewBinder(Resources resources) {
 		}

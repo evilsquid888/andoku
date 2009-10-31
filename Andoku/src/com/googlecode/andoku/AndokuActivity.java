@@ -47,9 +47,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.googlecode.andoku.db.AndokuDatabase;
 import com.googlecode.andoku.db.GameStatistics;
 import com.googlecode.andoku.db.PuzzleId;
-import com.googlecode.andoku.db.SaveGameDb;
 import com.googlecode.andoku.model.AndokuPuzzle;
 import com.googlecode.andoku.model.Difficulty;
 import com.googlecode.andoku.model.Position;
@@ -82,7 +82,7 @@ public class AndokuActivity extends Activity
 
 	private int gameState;
 
-	private SaveGameDb saveGameDb;
+	private AndokuDatabase db;
 
 	private Vibrator vibrator;
 
@@ -126,7 +126,7 @@ public class AndokuActivity extends Activity
 
 		setContentView(R.layout.andoku);
 
-		saveGameDb = new SaveGameDb(this);
+		db = new AndokuDatabase(this);
 
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -279,8 +279,8 @@ public class AndokuActivity extends Activity
 			source.close();
 		}
 
-		if (saveGameDb != null) {
-			saveGameDb.close();
+		if (db != null) {
+			db.close();
 		}
 	}
 
@@ -805,7 +805,7 @@ public class AndokuActivity extends Activity
 
 	private void updateCongrats() {
 		String puzzleSourceId = source.getSourceId();
-		GameStatistics stats = saveGameDb.getStatistics(puzzleSourceId);
+		GameStatistics stats = db.getStatistics(puzzleSourceId);
 
 		final Resources resources = getResources();
 		String difficulty = getPuzzleDifficulty();
@@ -823,7 +823,7 @@ public class AndokuActivity extends Activity
 		if (Constants.LOG_V)
 			Log.v(TAG, "auto-saving puzzle " + puzzleId);
 
-		saveGameDb.saveGame(puzzleId, puzzle, timer);
+		db.saveGame(puzzleId, puzzle, timer);
 	}
 
 	private void deleteAutoSavedPuzzle() {
@@ -832,7 +832,7 @@ public class AndokuActivity extends Activity
 		if (Constants.LOG_V)
 			Log.v(TAG, "deleting auto-save game " + puzzleId);
 
-		saveGameDb.delete(puzzleId);
+		db.delete(puzzleId);
 	}
 
 	private boolean restoreAutoSavedPuzzle() {
@@ -841,7 +841,7 @@ public class AndokuActivity extends Activity
 		if (Constants.LOG_V)
 			Log.v(TAG, "restoring auto-save game " + puzzleId);
 
-		return saveGameDb.loadGame(puzzleId, puzzle, timer);
+		return db.loadGame(puzzleId, puzzle, timer);
 	}
 
 	private PuzzleId getCurrentPuzzleId() {

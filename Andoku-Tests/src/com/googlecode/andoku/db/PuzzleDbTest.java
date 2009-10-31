@@ -28,11 +28,11 @@ import android.test.AndroidTestCase;
 import com.googlecode.andoku.model.Difficulty;
 
 public class PuzzleDbTest extends AndroidTestCase {
-	private SaveGameDb db;
+	private AndokuDatabase db;
 
 	@Override
 	protected void setUp() throws Exception {
-		db = new SaveGameDb(getContext());
+		db = new AndokuDatabase(getContext());
 		db.resetAll();
 	}
 
@@ -165,7 +165,7 @@ public class PuzzleDbTest extends AndroidTestCase {
 		long folderId2 = db.createFolder(folderId1, "f2");
 		assertTrue(folderId2 >= 0);
 
-		assertEquals(new Long(SaveGameDb.ROOT_FOLDER_ID), db.getParentFolderId(folderId1));
+		assertEquals(new Long(AndokuDatabase.ROOT_FOLDER_ID), db.getParentFolderId(folderId1));
 		assertEquals(new Long(folderId1), db.getParentFolderId(folderId2));
 		assertNull(db.getParentFolderId(folderId2 + 1));
 	}
@@ -429,7 +429,7 @@ public class PuzzleDbTest extends AndroidTestCase {
 	}
 
 	private Map<Long, String> loadFolders() {
-		return loadFolders(SaveGameDb.ROOT_FOLDER_ID);
+		return loadFolders(AndokuDatabase.ROOT_FOLDER_ID);
 	}
 
 	private Map<Long, String> loadFolders(long parent) {

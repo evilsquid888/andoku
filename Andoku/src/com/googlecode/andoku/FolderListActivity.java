@@ -11,13 +11,13 @@ import android.widget.AdapterView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
-import com.googlecode.andoku.db.SaveGameDb;
+import com.googlecode.andoku.db.AndokuDatabase;
 import com.googlecode.andoku.source.PuzzleSourceIds;
 
 public class FolderListActivity extends ListActivity {
 	private static final String TAG = FolderListActivity.class.getName();
 
-	private SaveGameDb saveGameDb;
+	private AndokuDatabase db;
 
 	private Toast toast;
 
@@ -34,13 +34,13 @@ public class FolderListActivity extends ListActivity {
 
 		long folderId = getFolderIdFromIntent();
 
-		saveGameDb = new SaveGameDb(this);
-		Cursor cursor = saveGameDb.getFolders(folderId);
+		db = new AndokuDatabase(this);
+		Cursor cursor = db.getFolders(folderId);
 		startManagingCursor(cursor);
 
 		SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(this,
 				android.R.layout.simple_list_item_1, cursor,
-				new String[] { SaveGameDb.COL_FOLDER_NAME }, new int[] { android.R.id.text1 });
+				new String[] { AndokuDatabase.COL_FOLDER_NAME }, new int[] { android.R.id.text1 });
 		setListAdapter(listAdapter);
 
 		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -58,7 +58,7 @@ public class FolderListActivity extends ListActivity {
 
 	private long getFolderIdFromIntent() {
 		Bundle extras = getIntent().getExtras();
-		return extras.getLong(Constants.EXTRA_FOLDER_ID, SaveGameDb.ROOT_FOLDER_ID);
+		return extras.getLong(Constants.EXTRA_FOLDER_ID, AndokuDatabase.ROOT_FOLDER_ID);
 	}
 
 	@Override
@@ -68,17 +68,17 @@ public class FolderListActivity extends ListActivity {
 
 		super.onDestroy();
 
-		if (saveGameDb != null) {
-			saveGameDb.close();
+		if (db != null) {
+			db.close();
 		}
 	}
 
 	void onOpenFolder(long folderId) {
 		cancelToast();
 
-		if (!saveGameDb.hasPuzzles(folderId)) {
+		if (!db.hasPuzzles(folderId)) {
 			String message = getResources().getString(R.string.message_empty_folder,
-					saveGameDb.getFolderName(folderId));
+					db.getFolderName(folderId));
 			toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
 			toast.show();
 			return;

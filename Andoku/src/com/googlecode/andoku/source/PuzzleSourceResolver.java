@@ -21,7 +21,7 @@ package com.googlecode.andoku.source;
 import android.content.Context;
 import android.content.res.AssetManager;
 
-import com.googlecode.andoku.db.SaveGameDb;
+import com.googlecode.andoku.db.AndokuDatabase;
 
 public class PuzzleSourceResolver {
 	private PuzzleSourceResolver() {
@@ -46,7 +46,7 @@ public class PuzzleSourceResolver {
 
 	private static PuzzleSource resolveDbSource(Context context, long folderId)
 			throws PuzzleIOException {
-		SaveGameDb saveGameDb = new SaveGameDb(context);
-		return new DbPuzzleSource(saveGameDb, folderId);
+		AndokuDatabase db = new AndokuDatabase(context);
+		return new DbPuzzleSource(db, folderId);
 	}
 }

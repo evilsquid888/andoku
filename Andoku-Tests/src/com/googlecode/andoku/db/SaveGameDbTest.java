@@ -28,11 +28,11 @@ import com.googlecode.andoku.model.ValueSet;
 import com.googlecode.andoku.util.MockPuzzleSource;
 
 public class SaveGameDbTest extends AndroidTestCase {
-	private SaveGameDb db;
+	private AndokuDatabase db;
 
 	@Override
 	protected void setUp() throws Exception {
-		db = new SaveGameDb(getContext());
+		db = new AndokuDatabase(getContext());
 		db.resetAll();
 	}
 
@@ -98,34 +98,34 @@ public class SaveGameDbTest extends AndroidTestCase {
 		// cursor: ID, SOURCE, NUMBER, TYPE, TIMER, CREATED_DATE, MODIFIED_DATE
 
 		assertTrue(cursor.moveToNext());
-		assertEquals("mock:17", cursor.getString(SaveGameDb.IDX_GAME_SOURCE));
-		assertEquals(1, cursor.getInt(SaveGameDb.IDX_GAME_NUMBER));
-		assertEquals(puzzle1.getPuzzleType().ordinal(), cursor.getInt(SaveGameDb.IDX_GAME_TYPE));
-		assertEquals(timer1.getTime(), cursor.getLong(SaveGameDb.IDX_GAME_TIMER));
-		assertTrue(cursor.getLong(SaveGameDb.IDX_GAME_CREATED_DATE) >= t1);
-		assertTrue(cursor.getLong(SaveGameDb.IDX_GAME_CREATED_DATE) < t2);
-		assertEquals(cursor.getLong(SaveGameDb.IDX_GAME_MODIFIED_DATE), cursor
-				.getLong(SaveGameDb.IDX_GAME_CREATED_DATE));
+		assertEquals("mock:17", cursor.getString(AndokuDatabase.IDX_GAME_SOURCE));
+		assertEquals(1, cursor.getInt(AndokuDatabase.IDX_GAME_NUMBER));
+		assertEquals(puzzle1.getPuzzleType().ordinal(), cursor.getInt(AndokuDatabase.IDX_GAME_TYPE));
+		assertEquals(timer1.getTime(), cursor.getLong(AndokuDatabase.IDX_GAME_TIMER));
+		assertTrue(cursor.getLong(AndokuDatabase.IDX_GAME_CREATED_DATE) >= t1);
+		assertTrue(cursor.getLong(AndokuDatabase.IDX_GAME_CREATED_DATE) < t2);
+		assertEquals(cursor.getLong(AndokuDatabase.IDX_GAME_MODIFIED_DATE), cursor
+				.getLong(AndokuDatabase.IDX_GAME_CREATED_DATE));
 
 		assertTrue(cursor.moveToNext());
-		assertEquals("mock:16", cursor.getString(SaveGameDb.IDX_GAME_SOURCE));
-		assertEquals(2, cursor.getInt(SaveGameDb.IDX_GAME_NUMBER));
-		assertEquals(puzzle2.getPuzzleType().ordinal(), cursor.getInt(SaveGameDb.IDX_GAME_TYPE));
-		assertEquals(timer2.getTime(), cursor.getLong(SaveGameDb.IDX_GAME_TIMER));
-		assertTrue(cursor.getLong(SaveGameDb.IDX_GAME_CREATED_DATE) >= t2);
-		assertTrue(cursor.getLong(SaveGameDb.IDX_GAME_CREATED_DATE) < t3);
-		assertEquals(cursor.getLong(SaveGameDb.IDX_GAME_MODIFIED_DATE), cursor
-				.getLong(SaveGameDb.IDX_GAME_CREATED_DATE));
+		assertEquals("mock:16", cursor.getString(AndokuDatabase.IDX_GAME_SOURCE));
+		assertEquals(2, cursor.getInt(AndokuDatabase.IDX_GAME_NUMBER));
+		assertEquals(puzzle2.getPuzzleType().ordinal(), cursor.getInt(AndokuDatabase.IDX_GAME_TYPE));
+		assertEquals(timer2.getTime(), cursor.getLong(AndokuDatabase.IDX_GAME_TIMER));
+		assertTrue(cursor.getLong(AndokuDatabase.IDX_GAME_CREATED_DATE) >= t2);
+		assertTrue(cursor.getLong(AndokuDatabase.IDX_GAME_CREATED_DATE) < t3);
+		assertEquals(cursor.getLong(AndokuDatabase.IDX_GAME_MODIFIED_DATE), cursor
+				.getLong(AndokuDatabase.IDX_GAME_CREATED_DATE));
 
 		assertTrue(cursor.moveToNext());
-		assertEquals("mock:17", cursor.getString(SaveGameDb.IDX_GAME_SOURCE));
-		assertEquals(3, cursor.getInt(SaveGameDb.IDX_GAME_NUMBER));
-		assertEquals(puzzle3.getPuzzleType().ordinal(), cursor.getInt(SaveGameDb.IDX_GAME_TYPE));
-		assertEquals(timer3.getTime(), cursor.getLong(SaveGameDb.IDX_GAME_TIMER));
-		assertTrue(cursor.getLong(SaveGameDb.IDX_GAME_CREATED_DATE) >= t3);
-		assertTrue(cursor.getLong(SaveGameDb.IDX_GAME_CREATED_DATE) < t4);
-		assertEquals(cursor.getLong(SaveGameDb.IDX_GAME_MODIFIED_DATE), cursor
-				.getLong(SaveGameDb.IDX_GAME_CREATED_DATE));
+		assertEquals("mock:17", cursor.getString(AndokuDatabase.IDX_GAME_SOURCE));
+		assertEquals(3, cursor.getInt(AndokuDatabase.IDX_GAME_NUMBER));
+		assertEquals(puzzle3.getPuzzleType().ordinal(), cursor.getInt(AndokuDatabase.IDX_GAME_TYPE));
+		assertEquals(timer3.getTime(), cursor.getLong(AndokuDatabase.IDX_GAME_TIMER));
+		assertTrue(cursor.getLong(AndokuDatabase.IDX_GAME_CREATED_DATE) >= t3);
+		assertTrue(cursor.getLong(AndokuDatabase.IDX_GAME_CREATED_DATE) < t4);
+		assertEquals(cursor.getLong(AndokuDatabase.IDX_GAME_MODIFIED_DATE), cursor
+				.getLong(AndokuDatabase.IDX_GAME_CREATED_DATE));
 
 		assertFalse(cursor.moveToNext());
 
@@ -155,24 +155,24 @@ public class SaveGameDbTest extends AndroidTestCase {
 		// cursor: ID, SOURCE, NUMBER, TYPE, TIMER, CREATED_DATE, MODIFIED_DATE
 
 		assertTrue(cursor.moveToNext());
-		assertEquals("mock:17", cursor.getString(SaveGameDb.IDX_GAME_SOURCE));
-		assertEquals(3, cursor.getInt(SaveGameDb.IDX_GAME_NUMBER));
-		assertEquals(puzzle3.getPuzzleType().ordinal(), cursor.getInt(SaveGameDb.IDX_GAME_TYPE));
-		assertEquals(timer3.getTime(), cursor.getLong(SaveGameDb.IDX_GAME_TIMER));
-		assertTrue(cursor.getLong(SaveGameDb.IDX_GAME_CREATED_DATE) >= t3);
-		assertTrue(cursor.getLong(SaveGameDb.IDX_GAME_CREATED_DATE) < t4);
-		assertEquals(cursor.getLong(SaveGameDb.IDX_GAME_MODIFIED_DATE), cursor
-				.getLong(SaveGameDb.IDX_GAME_CREATED_DATE));
+		assertEquals("mock:17", cursor.getString(AndokuDatabase.IDX_GAME_SOURCE));
+		assertEquals(3, cursor.getInt(AndokuDatabase.IDX_GAME_NUMBER));
+		assertEquals(puzzle3.getPuzzleType().ordinal(), cursor.getInt(AndokuDatabase.IDX_GAME_TYPE));
+		assertEquals(timer3.getTime(), cursor.getLong(AndokuDatabase.IDX_GAME_TIMER));
+		assertTrue(cursor.getLong(AndokuDatabase.IDX_GAME_CREATED_DATE) >= t3);
+		assertTrue(cursor.getLong(AndokuDatabase.IDX_GAME_CREATED_DATE) < t4);
+		assertEquals(cursor.getLong(AndokuDatabase.IDX_GAME_MODIFIED_DATE), cursor
+				.getLong(AndokuDatabase.IDX_GAME_CREATED_DATE));
 
 		assertTrue(cursor.moveToNext());
-		assertEquals("mock:17", cursor.getString(SaveGameDb.IDX_GAME_SOURCE));
-		assertEquals(1, cursor.getInt(SaveGameDb.IDX_GAME_NUMBER));
-		assertEquals(puzzle1.getPuzzleType().ordinal(), cursor.getInt(SaveGameDb.IDX_GAME_TYPE));
-		assertEquals(timer1.getTime(), cursor.getLong(SaveGameDb.IDX_GAME_TIMER));
-		assertTrue(cursor.getLong(SaveGameDb.IDX_GAME_CREATED_DATE) >= t1);
-		assertTrue(cursor.getLong(SaveGameDb.IDX_GAME_CREATED_DATE) < t2);
-		assertEquals(cursor.getLong(SaveGameDb.IDX_GAME_MODIFIED_DATE), cursor
-				.getLong(SaveGameDb.IDX_GAME_CREATED_DATE));
+		assertEquals("mock:17", cursor.getString(AndokuDatabase.IDX_GAME_SOURCE));
+		assertEquals(1, cursor.getInt(AndokuDatabase.IDX_GAME_NUMBER));
+		assertEquals(puzzle1.getPuzzleType().ordinal(), cursor.getInt(AndokuDatabase.IDX_GAME_TYPE));
+		assertEquals(timer1.getTime(), cursor.getLong(AndokuDatabase.IDX_GAME_TIMER));
+		assertTrue(cursor.getLong(AndokuDatabase.IDX_GAME_CREATED_DATE) >= t1);
+		assertTrue(cursor.getLong(AndokuDatabase.IDX_GAME_CREATED_DATE) < t2);
+		assertEquals(cursor.getLong(AndokuDatabase.IDX_GAME_MODIFIED_DATE), cursor
+				.getLong(AndokuDatabase.IDX_GAME_CREATED_DATE));
 
 		assertFalse(cursor.moveToNext());
 
@@ -198,8 +198,8 @@ public class SaveGameDbTest extends AndroidTestCase {
 		// cursor: NUMBER, SOLVED
 
 		assertTrue(cursor.moveToNext());
-		assertEquals(2, cursor.getInt(SaveGameDb.IDX_GAME_BY_SOURCE_NUMBER));
-		assertEquals(1, cursor.getInt(SaveGameDb.IDX_GAME_BY_SOURCE_SOLVED));
+		assertEquals(2, cursor.getInt(AndokuDatabase.IDX_GAME_BY_SOURCE_NUMBER));
+		assertEquals(1, cursor.getInt(AndokuDatabase.IDX_GAME_BY_SOURCE_SOLVED));
 
 		assertFalse(cursor.moveToNext());
 
@@ -208,12 +208,12 @@ public class SaveGameDbTest extends AndroidTestCase {
 		cursor = db.findGamesBySource("mock:17");
 
 		assertTrue(cursor.moveToNext());
-		assertEquals(1, cursor.getInt(SaveGameDb.IDX_GAME_BY_SOURCE_NUMBER));
-		assertEquals(0, cursor.getInt(SaveGameDb.IDX_GAME_BY_SOURCE_SOLVED));
+		assertEquals(1, cursor.getInt(AndokuDatabase.IDX_GAME_BY_SOURCE_NUMBER));
+		assertEquals(0, cursor.getInt(AndokuDatabase.IDX_GAME_BY_SOURCE_SOLVED));
 
 		assertTrue(cursor.moveToNext());
-		assertEquals(3, cursor.getInt(SaveGameDb.IDX_GAME_BY_SOURCE_NUMBER));
-		assertEquals(1, cursor.getInt(SaveGameDb.IDX_GAME_BY_SOURCE_SOLVED));
+		assertEquals(3, cursor.getInt(AndokuDatabase.IDX_GAME_BY_SOURCE_NUMBER));
+		assertEquals(1, cursor.getInt(AndokuDatabase.IDX_GAME_BY_SOURCE_SOLVED));
 
 		assertFalse(cursor.moveToNext());
 
