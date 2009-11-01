@@ -30,7 +30,7 @@
     <style name="NavigationButton">
         <item name="android:paddingLeft">18dp</item> 
         <item name="android:paddingRight">18dp</item> 
-        <item name="android:minWidth">100dp</item> 
+        <item name="android:minWidth">150dp</item> 
     </style>
 
     <style name="ErrorTitle" parent="style/NavigationTitle">
