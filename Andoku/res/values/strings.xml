@@ -43,6 +43,10 @@
     <string name="button_reset_game">Reset Game</string>
     <string name="button_resume_game">Resume Game</string>
     <string name="button_start_game">Start Game</string>
+    <string name="context_menu_delete_folder">Delete Folder</string>
+    <string name="context_menu_rename_folder">Rename Folder</string>
+    <string name="dialog_delete_folder">Delete Folder</string>
+    <string name="dialog_rename_folder">Rename Folder</string>
     <string name="dialog_reset_puzzle">Reset Puzzle?</string>
     <string name="error_message_finding_available">An error has occurred while finding available puzzles!</string>
     <string name="error_message_loading_puzzle">An error has occurred while loading the puzzle!</string>
@@ -57,7 +61,10 @@
     <string name="menu_reset_puzzle">Reset Puzzle</string>
     <string name="menu_resume">Resume</string>
     <string name="message_congrats">&lt;b&gt;Congratulations, you have solved this puzzle!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Statistics for &lt;i&gt;%s (%s)&lt;/i&gt;:&lt;br/&gt;&lt;br/&gt;Puzzles solved: %d&lt;br/&gt;Average time: %s&lt;br/&gt;Fastest time: %s</string>
+    <string name="message_delete_folder">Folder \'%s\' is not empty. Do you really want to delete it?</string>
     <string name="message_empty_folder">Folder \'%s\' is empty.</string>
+    <string name="message_folder_exists">Could not rename folder because another folder named \'%s\' already exists!</string>
+    <string name="message_rename_folder">New name for \'%s\':</string>
     <string name="message_reset_puzzle">Do you really want to clear the current puzzle and reset the timer?</string>
     <string name="name_no_puzzle">No puzzle available</string>
     <string name="name_sudoku_squiggly">Squiggly Sudoku</string>

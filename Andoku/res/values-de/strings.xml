@@ -43,6 +43,10 @@
     <string name="button_reset_game">Spiel zurücksetzen</string>
     <string name="button_resume_game">Spiel fortsetzen</string>
     <string name="button_start_game">Spiel starten</string>
+    <string name="context_menu_delete_folder">Ordner löschen</string>
+    <string name="context_menu_rename_folder">Ordner umbenennen</string>
+    <string name="dialog_delete_folder">Ordner löschen</string>
+    <string name="dialog_rename_folder">Ordner umbenennen</string>
     <string name="dialog_reset_puzzle">Rätsel zurücksetzen?</string>
     <string name="error_message_finding_available">Beim Auffinden der verfügbaren Sudoku-Rätsel ist ein Fehler aufgetreten!</string>
     <string name="error_message_loading_puzzle">Beim Laden des Sudoku-Rätsels ist ein Fehler aufgetreten!</string>
@@ -57,7 +61,10 @@
     <string name="menu_reset_puzzle">Zurücksetzen</string>
     <string name="menu_resume">Fortfahren</string>
     <string name="message_congrats">&lt;b&gt;Gratuliere, Sie haben das Sudoku-Rätsel gelöst!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Statistik für &lt;i&gt;%s (%s)&lt;/i&gt;:&lt;br/&gt;&lt;br/&gt;Gelöste Rätsel: %d&lt;br/&gt;Durchschnittszeit: %s&lt;br/&gt;Bestzeit: %s</string>
+    <string name="message_delete_folder">Der Ordner \'%s\' ist nicht leer. Wollen Sie ihn wirklich löschen?</string>
     <string name="message_empty_folder">Der Ordner \'%s\' ist leer.</string>
+    <string name="message_folder_exists">Der Ordner konnte nicht umbenannt werden, da bereits an anderer Ordner namens \'%s\' existiert!</string>
+    <string name="message_rename_folder">Neuer Name für \'%s\':</string>
     <string name="message_reset_puzzle">Wollen Sie das aktuelle Sudoku-Rätsel und die Stoppuhr wirklich zurücksetzen?</string>
     <string name="name_no_puzzle">Kein Sudoku-Rätsel verfügbar</string>
     <string name="name_sudoku_squiggly">Squiggly Sudoku</string>

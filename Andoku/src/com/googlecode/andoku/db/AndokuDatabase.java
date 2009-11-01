@@ -56,6 +56,11 @@ public class AndokuDatabase {
 	public static final String COL_FOLDER_NAME = "name";
 	public static final String COL_FOLDER_PARENT = "parent";
 
+	// indexes for getFolders() 
+	public static final int IDX_FOLDERS_ID = 0;
+	public static final int IDX_FOLDERS_NAME = 1;
+	public static final int IDX_FOLDERS_PARENT = 2;
+
 	private static final String TABLE_PUZZLES = "puzzles";
 	public static final String COL_FOLDER = "folder";
 	public static final String COL_NAME = "name";
