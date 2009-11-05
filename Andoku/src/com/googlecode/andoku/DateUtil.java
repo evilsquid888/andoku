@@ -30,10 +30,30 @@ public class DateUtil {
 		seconds -= hh * 3600;
 		int mm = seconds / 60;
 		seconds -= mm * 60;
-		int ss = seconds;
 
-		return hh == 0 ? String.format("%02d:%02d", mm, ss) : String.format("%d:%02d:%02d", hh, mm,
-				ss);
+		return format(hh, mm, seconds);
+	}
+
+	private static String format(int hh, int mm, int ss) {
+		StringBuilder sb = new StringBuilder();
+
+		if (hh > 0) {
+			sb.append(hh);
+			sb.append(':');
+		}
+
+		if (mm < 10) {
+			sb.append('0');
+		}
+		sb.append(mm);
+		sb.append(':');
+
+		if (ss < 10) {
+			sb.append('0');
+		}
+		sb.append(ss);
+
+		return sb.toString();
 	}
 
 	public static final String formatTimeSpan(Resources resources, long now, long then) {
