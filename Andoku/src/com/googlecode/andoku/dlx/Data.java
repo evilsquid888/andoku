@@ -19,12 +19,12 @@
 package com.googlecode.andoku.dlx;
 
 public class Data {
-	protected Header column;
+	Header column;
 
-	protected Data up;
-	protected Data down;
-	protected Data left;
-	protected Data right;
+	Data up;
+	Data down;
+	Data left;
+	Data right;
 
 	private final Object payload;
 
@@ -35,26 +35,6 @@ public class Data {
 		right = this;
 
 		this.payload = payload;
-	}
-
-	public Header getColumn() {
-		return column;
-	}
-
-	public Data getUp() {
-		return up;
-	}
-
-	public Data getDown() {
-		return down;
-	}
-
-	public Data getLeft() {
-		return left;
-	}
-
-	public Data getRight() {
-		return right;
 	}
 
 	public Object getPayload() {

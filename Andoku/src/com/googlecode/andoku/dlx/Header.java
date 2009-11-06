@@ -20,7 +20,8 @@ package com.googlecode.andoku.dlx;
 
 public class Header extends Data {
 	private String name;
-	protected int size;
+
+	int size;
 
 	public Header(String name) {
 		super(null);
