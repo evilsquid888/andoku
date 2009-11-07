@@ -49,6 +49,11 @@ public class AndokuPuzzle {
 	private HashSet<Position> cellErrors;
 
 	public AndokuPuzzle(Puzzle puzzle, Solution solution, Difficulty difficulty) {
+		if (puzzle == null)
+			throw new IllegalArgumentException();
+		if (difficulty == null)
+			throw new IllegalArgumentException();
+
 		this.size = puzzle.getSize();
 		this.puzzle = puzzle;
 		this.puzzleType = determinePuzzleType(puzzle);
@@ -212,13 +217,15 @@ public class AndokuPuzzle {
 			}
 		}
 
-		// compare values to actual solution
+		// compare values to actual solution (if we have a solution)
 
-		for (int row = 0; row < size; row++) {
-			for (int col = 0; col < size; col++) {
-				ValueSet values = this.values[row][col];
-				if (!values.isEmpty() && !values.contains(solution.getValue(row, col))) {
-					cellErrors.add(new Position(row, col));
+		if (solution != null) {
+			for (int row = 0; row < size; row++) {
+				for (int col = 0; col < size; col++) {
+					ValueSet values = this.values[row][col];
+					if (!values.isEmpty() && !values.contains(solution.getValue(row, col))) {
+						cellErrors.add(new Position(row, col));
+					}
 				}
 			}
 		}
