@@ -64,6 +64,10 @@ class DbPuzzleSource implements PuzzleSource {
 	}
 
 	private Solution createSolution(PuzzleInfo puzzleInfo) {
-		return PuzzleDecoder.decodeValues(puzzleInfo.getSolution());
+		String solution = puzzleInfo.getSolution();
+		if (solution.equals(PuzzleInfo.SOLUTION_NONE))
+			return null;
+
+		return PuzzleDecoder.decodeValues(solution);
 	}
 }

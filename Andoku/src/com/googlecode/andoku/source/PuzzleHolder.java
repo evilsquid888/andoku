@@ -33,6 +33,13 @@ public class PuzzleHolder {
 
 	public PuzzleHolder(PuzzleSource source, int number, Difficulty difficulty, Puzzle puzzle,
 			Solution solution) throws PuzzleIOException {
+		if (source == null)
+			throw new IllegalArgumentException();
+		if (difficulty == null)
+			throw new IllegalArgumentException();
+		if (puzzle == null)
+			throw new IllegalArgumentException();
+
 		this.source = source;
 		this.number = number;
 		this.difficulty = difficulty;
