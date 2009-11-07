@@ -107,7 +107,7 @@ public class AndokuActivity extends Activity
 	private Button dismissCongratsButton;
 	private ImageButton backButton;
 	private ImageButton nextButton;
-	private Button startButton;
+	private Button startOrResetButton;
 
 	private Toast toast;
 
@@ -193,10 +193,10 @@ public class AndokuActivity extends Activity
 			}
 		});
 
-		startButton = (Button) findViewById(R.id.buttonStart);
-		startButton.setOnClickListener(new OnClickListener() {
+		startOrResetButton = (Button) findViewById(R.id.buttonStart);
+		startOrResetButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				onStartButton();
+				onStartOrResetButton();
 			}
 		});
 
@@ -546,9 +546,9 @@ public class AndokuActivity extends Activity
 		andokuView.invalidate();
 	}
 
-	void onStartButton() {
+	void onStartOrResetButton() {
 		if (Constants.LOG_V)
-			Log.v(TAG, "onStartButton()");
+			Log.v(TAG, "onStartOrResetButton()");
 
 		if (gameState == GAME_STATE_READY && puzzle.isSolved()) {
 			onResetPuzzle(false);
@@ -737,11 +737,11 @@ public class AndokuActivity extends Activity
 		switch (newGameState) {
 			case GAME_STATE_READY:
 				if (puzzle.isSolved())
-					startButton.setText(R.string.button_reset_game);
+					startOrResetButton.setText(R.string.button_reset_game);
 				else if (timer.getTime() > 0)
-					startButton.setText(R.string.button_resume_game);
+					startOrResetButton.setText(R.string.button_resume_game);
 				else
-					startButton.setText(R.string.button_start_game);
+					startOrResetButton.setText(R.string.button_start_game);
 				break;
 
 			case GAME_STATE_PLAYING:
@@ -765,7 +765,7 @@ public class AndokuActivity extends Activity
 
 		int visibilityBackStartNext = newGameState == GAME_STATE_READY ? View.VISIBLE : View.GONE;
 		backButton.setVisibility(visibilityBackStartNext);
-		startButton.setVisibility(visibilityBackStartNext);
+		startOrResetButton.setVisibility(visibilityBackStartNext);
 		nextButton.setVisibility(visibilityBackStartNext);
 
 		boolean enableNav = newGameState == GAME_STATE_READY;
