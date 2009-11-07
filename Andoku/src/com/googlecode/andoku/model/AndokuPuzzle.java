@@ -63,8 +63,8 @@ public class AndokuPuzzle {
 	}
 
 	public Serializable saveToMemento() {
-		return new PuzzleMemento(hash(puzzle, solution), copyValues(values),
-				copyRegionErrors(regionErrors), copyCellErrors(cellErrors));
+		return new PuzzleMemento(copyValues(values), copyRegionErrors(regionErrors),
+				copyCellErrors(cellErrors));
 	}
 
 	public boolean restoreFromMemento(Object object) {
@@ -73,9 +73,6 @@ public class AndokuPuzzle {
 
 		PuzzleMemento memento = (PuzzleMemento) object;
 		if (memento.values.length != values.length)
-			return false;
-
-		if (memento.hash != hash(puzzle, solution))
 			return false;
 
 		this.values = copyValues(memento.values);
@@ -329,24 +326,6 @@ public class AndokuPuzzle {
 		cellErrors.clear();
 	}
 
-	private static int hash(Puzzle puzzle, Solution solution) {
-		int hash = puzzle.getSize();
-
-		final int size = puzzle.getSize();
-		for (int row = 0; row < size; row++) {
-			for (int col = 0; col < size; col++) {
-				hash = 37 * hash + solution.getValue(row, col);
-
-				hash = 37 * hash + puzzle.getAreaCode(row, col);
-
-				if (puzzle.getValue(row, col) != Puzzle.UNDEFINED)
-					hash += 17;
-			}
-		}
-
-		return hash;
-	}
-
 	private static boolean[][] obtainExtra(Puzzle puzzle) {
 		final int size = puzzle.getSize();
 
@@ -413,7 +392,6 @@ public class AndokuPuzzle {
 	private static final class PuzzleMemento implements Externalizable {
 		private static final long serialVersionUID = -7495554868028722997L;
 
-		public int hash;
 		public ValueSet[][] values;
 		public HashSet<RegionError> regionErrors;
 		public HashSet<Position> cellErrors;
@@ -421,18 +399,16 @@ public class AndokuPuzzle {
 		public PuzzleMemento() {
 		}
 
-		public PuzzleMemento(int hash, ValueSet[][] values, HashSet<RegionError> regionErrors,
+		public PuzzleMemento(ValueSet[][] values, HashSet<RegionError> regionErrors,
 				HashSet<Position> cellErrors) {
-			this.hash = hash;
 			this.values = values;
 			this.regionErrors = regionErrors;
 			this.cellErrors = cellErrors;
 		}
 
 		public void writeExternal(ObjectOutput out) throws IOException {
-			out.writeByte(3); // version
+			out.writeByte(4); // version
 
-			out.writeInt(hash);
 			writeValues(out, values);
 			writeRegionErrors(out, regionErrors);
 			writeCellErrors(out, cellErrors);
@@ -440,10 +416,12 @@ public class AndokuPuzzle {
 
 		public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
 			byte version = in.readByte();
-			if (version != 2 && version != 3)
+			if (version < 2 || version > 4)
 				throw new IOException("invalid version");
 
-			hash = in.readInt();
+			if (version < 4)
+				in.readInt(); // skip hash value
+
 			values = readValues(in);
 			regionErrors = readRegionErrors(in);
 			cellErrors = version >= 3 ? readCellErrors(in) : new HashSet<Position>();
