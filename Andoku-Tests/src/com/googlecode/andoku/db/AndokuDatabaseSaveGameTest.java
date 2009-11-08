@@ -25,6 +25,7 @@ import com.googlecode.andoku.TickListener;
 import com.googlecode.andoku.TickTimer;
 import com.googlecode.andoku.model.AndokuPuzzle;
 import com.googlecode.andoku.model.ValueSet;
+import com.googlecode.andoku.source.PuzzleSourceIds;
 import com.googlecode.andoku.util.MockPuzzleSource;
 
 public class AndokuDatabaseSaveGameTest extends AndroidTestCase {
@@ -267,6 +268,29 @@ public class AndokuDatabaseSaveGameTest extends AndroidTestCase {
 		assertEquals(new PuzzleId("mock:17", 1), db.puzzleIdByRowId(id1));
 		assertEquals(new PuzzleId("mock:16", 2), db.puzzleIdByRowId(id2));
 		assertEquals(new PuzzleId("mock:17", 3), db.puzzleIdByRowId(id3));
+	}
+
+	public void testDeleteFolderDeletesSavedGames() throws Exception {
+		long folderId1 = db.createFolder("folder");
+		String sourceId1 = PuzzleSourceIds.forDbFolder(folderId1);
+		long folderId2 = db.createFolder(folderId1, "folder");
+		String sourceId2 = PuzzleSourceIds.forDbFolder(folderId2);
+
+		AndokuPuzzle puzzle1 = MockPuzzleSource.createPuzzle(1);
+		TickTimer timer1 = new TickTimer(new MockTickListener());
+		AndokuPuzzle puzzle2 = MockPuzzleSource.createSolvedPuzzle(4);
+		TickTimer timer2 = new TickTimer(new MockTickListener());
+
+		db.saveGame(new PuzzleId(sourceId1, 1), puzzle1, timer1);
+		db.saveGame(new PuzzleId(sourceId2, 2), puzzle2, timer2);
+
+		assertTrue(db.loadGame(new PuzzleId(sourceId1, 1), puzzle1, timer1));
+		assertTrue(db.loadGame(new PuzzleId(sourceId2, 2), puzzle1, timer1));
+
+		db.deleteFolder(folderId1);
+
+		assertFalse(db.loadGame(new PuzzleId(sourceId1, 1), puzzle1, timer1));
+		assertFalse(db.loadGame(new PuzzleId(sourceId2, 2), puzzle1, timer1));
 	}
 
 	private static final class MockTickListener implements TickListener {

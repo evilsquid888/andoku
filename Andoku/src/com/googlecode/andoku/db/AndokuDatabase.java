@@ -39,6 +39,7 @@ import com.googlecode.andoku.Constants;
 import com.googlecode.andoku.TickTimer;
 import com.googlecode.andoku.model.AndokuPuzzle;
 import com.googlecode.andoku.model.Difficulty;
+import com.googlecode.andoku.source.PuzzleSourceIds;
 
 public class AndokuDatabase {
 	private static final String TAG = AndokuDatabase.class.getName();
@@ -604,6 +605,8 @@ public class AndokuDatabase {
 
 		deletePuzzles(db, folderId);
 
+		deleteSavedGames(db, folderId);
+
 		deleteFolder0(db, folderId);
 	}
 
@@ -624,6 +627,12 @@ public class AndokuDatabase {
 		String whereClause = COL_FOLDER + "=?";
 		String[] whereArgs = { String.valueOf(folderId) };
 		db.delete(TABLE_PUZZLES, whereClause, whereArgs);
+	}
+
+	private void deleteSavedGames(SQLiteDatabase db, long folderId) {
+		String whereClause = COL_SOURCE + "=?";
+		String[] whereArgs = { PuzzleSourceIds.forDbFolder(folderId) };
+		db.delete(TABLE_GAMES, whereClause, whereArgs);
 	}
 
 	private void deleteFolder0(SQLiteDatabase db, long folderId) {
