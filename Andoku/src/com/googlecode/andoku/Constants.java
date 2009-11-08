@@ -31,8 +31,6 @@ public class Constants {
 
 	public static final String EXTRA_FOLDER_ID = PREFIX + "folderId";
 
-	public static final String EXTRA_PUZZLES = PREFIX + "puzzles";
-
 	public static final String IMPORTED_PUZZLES_FOLDER = "Imported Puzzles";
 
 	public static final boolean LOG_V = false;

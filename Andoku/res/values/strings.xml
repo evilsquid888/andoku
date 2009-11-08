@@ -64,7 +64,6 @@
     <string name="message_delete_folder">Folder \'%s\' is not empty. Do you really want to delete it?</string>
     <string name="message_empty_folder">Folder \'%s\' is empty.</string>
     <string name="message_folder_exists">Could not rename folder because another folder named \'%s\' already exists!</string>
-    <string name="message_importing_puzzles">Importing puzzles into folder \'%s\'...</string>
     <string name="message_rename_folder">New name for \'%s\':</string>
     <string name="message_reset_puzzle">Do you really want to clear the current puzzle and reset the timer?</string>
     <string name="name_no_puzzle">No puzzle available</string>

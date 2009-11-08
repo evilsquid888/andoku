@@ -23,9 +23,4 @@
         <item name="android:windowBackground">@null</item>
     </style>
 
-    <!-- see http://groups.google.com/group/android-developers/browse_thread/thread/d3c076e7a0165e64 -->
-    <style name="Theme.Dialog.NoAnim" parent="android:Theme.Dialog">
-        <item name="android:windowAnimationStyle">@null</item>
-    </style>
-
 </resources>
