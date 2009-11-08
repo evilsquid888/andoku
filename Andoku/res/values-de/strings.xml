@@ -64,6 +64,7 @@
     <string name="message_delete_folder">Der Ordner \'%s\' ist nicht leer. Wollen Sie ihn wirklich löschen?</string>
     <string name="message_empty_folder">Der Ordner \'%s\' ist leer.</string>
     <string name="message_folder_exists">Der Ordner konnte nicht umbenannt werden, da bereits an anderer Ordner namens \'%s\' existiert!</string>
+    <string name="message_importing_puzzles">Importiere Rätsel in den Ordner \'%s\'...</string>
     <string name="message_rename_folder">Neuer Name für \'%s\':</string>
     <string name="message_reset_puzzle">Wollen Sie das aktuelle Sudoku-Rätsel und die Stoppuhr wirklich zurücksetzen?</string>
     <string name="name_no_puzzle">Kein Sudoku-Rätsel verfügbar</string>
