@@ -27,18 +27,18 @@ public class PuzzleDecoder {
 	private PuzzleDecoder() {
 	}
 
-	// format: values|areas|x
+	// format: clues|areas|x
 	public static Puzzle decode(String puzzleStr) {
 		String[] parts = puzzleStr.split("\\|");
 		if (parts.length == 0)
 			throw new IllegalArgumentException();
 
-		String values = parts[0];
+		String clues = parts[0];
 		String areas = parts.length > 1 ? parts[1] : "";
 		String extra = parts.length > 2 ? parts[2] : "";
 
-		int size = (int) Math.sqrt(values.length());
-		if (values.length() != size * size)
+		int size = (int) Math.sqrt(clues.length());
+		if (clues.length() != size * size)
 			throw new IllegalArgumentException();
 
 		if (size < 5 || size > 9)
@@ -52,15 +52,15 @@ public class PuzzleDecoder {
 		int idx = 0;
 		for (int row = 0; row < size; row++) {
 			for (int col = 0; col < size; col++) {
-				char valueChar = values.charAt(idx++);
-				if (valueChar == ' ' || valueChar == '.')
+				char clueChar = clues.charAt(idx++);
+				if (clueChar == ' ' || clueChar == '.')
 					continue;
 
-				int value = decode(valueChar);
-				if (value < 0 || value >= size)
+				int clue = decode(clueChar);
+				if (clue < 0 || clue >= size)
 					throw new IllegalArgumentException();
 
-				puzzle.set(row, col, value);
+				puzzle.set(row, col, clue);
 			}
 		}
 
