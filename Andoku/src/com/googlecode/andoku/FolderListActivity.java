@@ -238,6 +238,10 @@ public class FolderListActivity extends ListActivity {
 	}
 
 	private void renameFolder(String name) {
+		String oldName = getSelectedFolderName();
+		if (name.equals(oldName))
+			return;
+
 		if (db.folderExists(parentFolderId, name)) {
 			String message = getResources().getString(R.string.message_folder_exists, name);
 			toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
