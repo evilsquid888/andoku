@@ -18,6 +18,8 @@
 
 package com.googlecode.andoku.db;
 
+import java.util.Locale;
+
 import com.googlecode.andoku.model.Difficulty;
 
 public class PuzzleInfo {
@@ -80,11 +82,11 @@ public class PuzzleInfo {
 		}
 
 		public Builder setExtraRegions(String extraRegions) {
-			if (!extraRegions.equals(EXTRA_HYPER) && !extraRegions.equals(EXTRA_X)
-					&& !extraRegions.equals(EXTRA_NONE))
+			if (!extraRegions.equalsIgnoreCase(EXTRA_HYPER) && !extraRegions.equalsIgnoreCase(EXTRA_X)
+					&& !extraRegions.equalsIgnoreCase(EXTRA_NONE))
 				throw new IllegalArgumentException();
 
-			this.extraRegions = extraRegions;
+			this.extraRegions = extraRegions.toUpperCase(Locale.US);
 			return this;
 		}
 
