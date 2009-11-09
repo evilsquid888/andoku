@@ -79,6 +79,8 @@
     <string name="page_title_new_game">Neues Spiel starten</string>
     <string name="page_title_resume_game">Spiel fortsetzen</string>
     <string name="page_title_welcome">Willkommen zu Andoku</string>
+    <string name="perm_description_import">Erlaubt es einer Anwendung, Ordner in Andoku zu erstellen und Sudoku-Rätsel zu importieren.</string>
+    <string name="perm_label_import">Sudoku-Rätsel in Andoku importieren</string>
     <string name="prompt_spinner_difficulty">Schwierigkeitsgrad auswählen</string>
     <string name="prompt_spinner_extra_regions">Zusatzbereiche auswählen</string>
     <string name="prompt_spinner_grid">Raster auswählen</string>

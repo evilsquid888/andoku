@@ -28,7 +28,17 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <permission android:name="com.googlecode.andoku.permission.IMPORT"
+        android:label="@string/perm_label_import"
+        android:description="@string/perm_description_import"
+        android:permissionGroup="android.permission-group.PERSONAL_INFO"
+        android:protectionLevel="normal"/>
+
     <application android:icon="@drawable/icon" android:label="@string/app_name">
+        <provider android:name=".AndokuContentProvider"
+                  android:authorities="com.googlecode.andoku.puzzlesprovider"
+                  android:writePermission="com.googlecode.andoku.permission.IMPORT"/>
+
         <activity android:name=".MainActivity"
                   android:label="@string/app_name"
                   android:theme="@style/Theme.NoBackground.Light">
