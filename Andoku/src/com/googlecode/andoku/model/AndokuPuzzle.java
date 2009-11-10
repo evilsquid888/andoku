@@ -37,10 +37,11 @@ public class AndokuPuzzle {
 	private final Solution solution;
 	private boolean solved;
 
-	private int[] areaColors = null;
-
 	private ValueSet[][] values;
 	private int numValues;
+
+	private final int[] areaColors;
+	private final int numberOfAreaColors;
 
 	// multiple identical values within a single region
 	private HashSet<RegionError> regionErrors;
@@ -63,8 +64,18 @@ public class AndokuPuzzle {
 		this.values = obtainValues(puzzle);
 		this.numValues = countValues(this.values);
 		this.solved = checkSolved();
+		this.areaColors = new AreaColorGenerator().generate(puzzle);
+		this.numberOfAreaColors = countNumberOfAreaColors();
 		this.regionErrors = new HashSet<RegionError>();
 		this.cellErrors = new HashSet<Position>();
+	}
+
+	private int countNumberOfAreaColors() {
+		int maxColor = -1;
+		for (int color : areaColors) {
+			maxColor = Math.max(maxColor, color);
+		}
+		return maxColor + 1;
 	}
 
 	public Serializable saveToMemento() {
@@ -137,10 +148,11 @@ public class AndokuPuzzle {
 	}
 
 	public int getAreaColor(int row, int col) {
-		if (areaColors == null)
-			areaColors = new AreaColorGenerator().generate(puzzle);
-
 		return areaColors[puzzle.getAreaCode(row, col)];
+	}
+
+	public int getNumberOfAreaColors() {
+		return numberOfAreaColors;
 	}
 
 	public ValueSet getValues(int row, int col) {
