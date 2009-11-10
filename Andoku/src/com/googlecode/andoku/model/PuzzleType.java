@@ -19,7 +19,34 @@
 package com.googlecode.andoku.model;
 
 public enum PuzzleType {
-	STANDARD, STANDARD_X, STANDARD_HYPER, SQUIGGLY, SQUIGGLY_X, SQUIGGLY_H;
+	STANDARD(false, false, false),
+	STANDARD_X(false, false, true),
+	STANDARD_HYPER(false, true, false),
+	SQUIGGLY(true, false, false),
+	SQUIGGLY_X(true, false, true),
+	SQUIGGLY_H(true, true, false);
+
+	private final boolean squiggly;
+	private final boolean hyper;
+	private final boolean x;
+
+	PuzzleType(boolean squiggly, boolean hyper, boolean x) {
+		this.squiggly = squiggly;
+		this.hyper = hyper;
+		this.x = x;
+	}
+
+	public boolean isSquiggly() {
+		return squiggly;
+	}
+
+	public boolean isHyper() {
+		return hyper;
+	}
+
+	public boolean isX() {
+		return x;
+	}
 
 	public static PuzzleType forOrdinal(int ordinal) {
 		return PuzzleType.values()[ordinal];
