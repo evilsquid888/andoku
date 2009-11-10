@@ -22,7 +22,11 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
 
+import android.util.Log;
+
 public class AreaColorGenerator {
+	private static final String TAG = AreaColorGenerator.class.getName();
+
 	public AreaColorGenerator() {
 	}
 
@@ -79,8 +83,13 @@ public class AreaColorGenerator {
 			maxColor = Math.max(maxColor, freeColor);
 		}
 
-		// TODO: try a different algorithm if maxColor > 3
-		// (maxColor is never > 3 for all 1500 squiggly puzzles in andoku)
+		int numberOfColors = maxColor + 1;
+
+		if (numberOfColors > 4) {
+			// TODO: try a different algorithm (but numberOfColors is never > 4 for all
+			//       1500 squiggly puzzles in andoku)
+			Log.w(TAG, "Puzzle requires more than 4 colors: " + numberOfColors);
+		}
 	}
 
 	private Integer[] getIndexesByNodeDegree(final Node[] graph) {
