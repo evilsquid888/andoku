@@ -37,7 +37,7 @@ public class AndokuPuzzle {
 	private final Solution solution;
 	private boolean solved;
 
-	private int[][] areaColors = null;
+	private int[] areaColors = null;
 
 	private ValueSet[][] values;
 	private int numValues;
@@ -137,11 +137,10 @@ public class AndokuPuzzle {
 	}
 
 	public int getAreaColor(int row, int col) {
-		if (areaColors == null) {
-			areaColors = new AreaColorGenerator(puzzle).generate();
-		}
+		if (areaColors == null)
+			areaColors = new AreaColorGenerator().generate(puzzle);
 
-		return areaColors[row][col];
+		return areaColors[puzzle.getAreaCode(row, col)];
 	}
 
 	public ValueSet getValues(int row, int col) {

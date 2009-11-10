@@ -21,40 +21,45 @@ package com.googlecode.andoku.model;
 import java.util.HashSet;
 
 public class AreaColorGenerator {
-	private final Puzzle puzzle;
-
-	public AreaColorGenerator(Puzzle puzzle) {
-		this.puzzle = puzzle;
+	public AreaColorGenerator() {
 	}
 
-	public int[][] generate() {
-		Node[] graph = buildGraph();
+	public int[] generate(Puzzle puzzle) {
+		Node[] graph = buildGraph(puzzle);
 		paintGraph(graph);
 		return buildAreaColors(graph);
 	}
 
-	private Node[] buildGraph() {
+	private Node[] buildGraph(Puzzle puzzle) {
 		final int size = puzzle.getSize();
 
 		Node[] nodes = new Node[size];
 		for (int i = 0; i < size; i++)
 			nodes[i] = new Node();
 
-		for (int row = 0; row < size; row++) {
-			for (int col = 0; col < size; col++) {
+		for (int row = 0; row < size - 1; row++) {
+			for (int col = 0; col < size - 1; col++) {
 				int areaCode = puzzle.getAreaCode(row, col);
-				if (row > 0)
-					link(nodes, areaCode, puzzle.getAreaCode(row - 1, col));
-				if (row < size - 1)
-					link(nodes, areaCode, puzzle.getAreaCode(row + 1, col));
-				if (col > 0)
-					link(nodes, areaCode, puzzle.getAreaCode(row, col - 1));
-				if (col < size - 1)
-					link(nodes, areaCode, puzzle.getAreaCode(row, col + 1));
+
+				int nextRowAreaCode = puzzle.getAreaCode(row + 1, col);
+				link(nodes, areaCode, nextRowAreaCode);
+
+				int nextColAreaCode = puzzle.getAreaCode(row, col + 1);
+				link(nodes, areaCode, nextColAreaCode);
 			}
 		}
 
 		return nodes;
+	}
+
+	private void link(Node[] nodes, int areaCode1, int areaCode2) {
+		if (areaCode1 == areaCode2)
+			return;
+
+		Node node1 = nodes[areaCode1];
+		Node node2 = nodes[areaCode2];
+		node1.neighbors.add(node2);
+		node2.neighbors.add(node1);
 	}
 
 	// TODO: could be a lot more sophisticated
@@ -77,29 +82,13 @@ public class AreaColorGenerator {
 		}
 	}
 
-	private int[][] buildAreaColors(Node[] graph) {
-		final int size = puzzle.getSize();
+	private int[] buildAreaColors(Node[] graph) {
+		int[] areaColors = new int[graph.length];
 
-		int[][] areaColors = new int[size][size];
-		for (int row = 0; row < size; row++) {
-			for (int col = 0; col < size; col++) {
-				int areaCode = puzzle.getAreaCode(row, col);
-				int color = graph[areaCode].color;
-				areaColors[row][col] = color;
-			}
-		}
+		for (int i = 0; i < graph.length; i++)
+			areaColors[i] = graph[i].color;
 
 		return areaColors;
-	}
-
-	private void link(Node[] nodes, int areaCode1, int areaCode2) {
-		if (areaCode1 == areaCode2)
-			return;
-
-		Node node1 = nodes[areaCode1];
-		Node node2 = nodes[areaCode2];
-		node1.neighbors.add(node2);
-		node2.neighbors.add(node1);
 	}
 
 	private static final class Node {
