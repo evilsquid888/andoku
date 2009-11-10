@@ -18,6 +18,8 @@
 
 package com.googlecode.andoku.model;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
 
 public class AreaColorGenerator {
@@ -37,15 +39,19 @@ public class AreaColorGenerator {
 		for (int i = 0; i < size; i++)
 			nodes[i] = new Node();
 
-		for (int row = 0; row < size - 1; row++) {
-			for (int col = 0; col < size - 1; col++) {
+		for (int row = 0; row < size; row++) {
+			for (int col = 0; col < size; col++) {
 				int areaCode = puzzle.getAreaCode(row, col);
 
-				int nextRowAreaCode = puzzle.getAreaCode(row + 1, col);
-				link(nodes, areaCode, nextRowAreaCode);
+				if (row < size - 1) {
+					int nextRowAreaCode = puzzle.getAreaCode(row + 1, col);
+					link(nodes, areaCode, nextRowAreaCode);
+				}
 
-				int nextColAreaCode = puzzle.getAreaCode(row, col + 1);
-				link(nodes, areaCode, nextColAreaCode);
+				if (col < size - 1) {
+					int nextColAreaCode = puzzle.getAreaCode(row, col + 1);
+					link(nodes, areaCode, nextColAreaCode);
+				}
 			}
 		}
 
@@ -62,11 +68,35 @@ public class AreaColorGenerator {
 		node2.neighbors.add(node1);
 	}
 
-	// TODO: could be a lot more sophisticated
 	private void paintGraph(Node[] graph) {
-		for (int i = 0; i < graph.length; i++) {
-			graph[i].color = findFreeColor(graph[i]);
+		Integer[] indexes = getIndexesByNodeDegree(graph);
+
+		int maxColor = -1;
+
+		for (int index : indexes) {
+			final int freeColor = findFreeColor(graph[index]);
+			graph[index].color = freeColor;
+			maxColor = Math.max(maxColor, freeColor);
 		}
+
+		// TODO: try a different algorithm if maxColor > 3
+		// (maxColor is never > 3 for all 1500 squiggly puzzles in andoku)
+	}
+
+	private Integer[] getIndexesByNodeDegree(final Node[] graph) {
+		Integer[] indexes = new Integer[graph.length];
+		for (int index = 0; index < graph.length; index++)
+			indexes[index] = index;
+
+		Arrays.sort(indexes, new Comparator<Integer>() {
+			public int compare(Integer index1, Integer index2) {
+				int degree1 = graph[index1].neighbors.size();
+				int degree2 = graph[index2].neighbors.size();
+				return degree2 - degree1;
+			}
+		});
+
+		return indexes;
 	}
 
 	private int findFreeColor(Node node) {
