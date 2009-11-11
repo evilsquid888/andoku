@@ -240,7 +240,7 @@ public class MainActivity extends ListActivity {
 		baseTime = System.currentTimeMillis();
 
 		final boolean hasPuzzleFolders = db.hasSubFolders(importedPuzzlesFolderId);
-		foldersButton.setVisibility(hasPuzzleFolders ? View.VISIBLE : View.GONE);
+		foldersButton.setEnabled(hasPuzzleFolders);
 
 		final boolean hasSavedGames = getListAdapter().getCount() != 0;
 		if (hasSavedGames) {
