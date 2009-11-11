@@ -900,7 +900,7 @@ public class AndokuActivity extends Activity
 	}
 
 	private Dialog createConfirmResetPuzzleDialog() {
-		return new AlertDialog.Builder(this).setIcon(R.drawable.alert_dialog_icon).setTitle(
+		return new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle(
 				R.string.dialog_reset_puzzle).setMessage(R.string.message_reset_puzzle)
 				.setPositiveButton(R.string.alert_dialog_ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {

@@ -297,7 +297,7 @@ public class FolderListActivity extends ListActivity {
 	}
 
 	private Dialog createConfirmDeleteFolderDialog() {
-		return new AlertDialog.Builder(this).setIcon(R.drawable.alert_dialog_icon).setTitle(
+		return new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle(
 				R.string.dialog_delete_folder).setMessage("").setPositiveButton(
 				R.string.alert_dialog_ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
