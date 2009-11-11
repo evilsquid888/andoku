@@ -34,7 +34,7 @@
         android:permissionGroup="android.permission-group.PERSONAL_INFO"
         android:protectionLevel="normal"/>
 
-    <application android:icon="@drawable/icon" android:label="@string/app_name">
+    <application android:name=".Application" android:icon="@drawable/icon" android:label="@string/app_name">
         <provider android:name=".AndokuContentProvider"
                   android:authorities="com.googlecode.andoku.puzzlesprovider"
                   android:writePermission="com.googlecode.andoku.permission.IMPORT"/>
@@ -54,6 +54,11 @@
         </activity>
 
         <activity android:name=".FolderListActivity"
+                  android:label="@string/app_name"
+                  android:theme="@style/Theme.NoBackground.Light">
+        </activity>
+
+        <activity android:name=".SettingsActivity"
                   android:label="@string/app_name"
                   android:theme="@style/Theme.NoBackground.Light">
         </activity>

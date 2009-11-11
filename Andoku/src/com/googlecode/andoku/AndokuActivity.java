@@ -24,12 +24,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.Vibrator;
 import android.os.PowerManager.WakeLock;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -69,10 +71,13 @@ public class AndokuActivity extends Activity
 	private static final int MENU_CHECK_PUZZLE = 0;
 	private static final int MENU_PAUSE_RESUME_PUZZLE = 1;
 	private static final int MENU_RESET_PUZZLE = 2;
+	private static final int MENU_SETTINGS = 3;
 
 	private static final String APP_STATE_PUZZLE_SOURCE_ID = "puzzleSourceId";
 	private static final String APP_STATE_PUZZLE_NUMBER = "puzzleNumber";
 	private static final String APP_STATE_GAME_STATE = "gameState";
+
+	private static final int REQUEST_CODE_SETTINGS = 0;
 
 	private static final int GAME_STATE_NEW_ACTIVITY_STARTED = 0;
 	private static final int GAME_STATE_ACTIVITY_STATE_RESTORED = 1;
@@ -200,34 +205,45 @@ public class AndokuActivity extends Activity
 			}
 		});
 
-		Theme theme = createTheme();
-		setTheme(theme);
+		createThemeFromPreferences();
 
 		createPuzzle(savedInstanceState);
 	}
 
-	private Theme createTheme() {
+	private void createThemeFromPreferences() {
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+
 		ColorTheme.Builder builder = new ColorTheme.Builder(getResources());
 
-		// TODO: set colors from preferences or something
+		builder.drawAreaColors = settings.getBoolean(Settings.KEY_COLORED_REGIONS, true);
+		builder.drawAreaColorsIfExtra = settings
+				.getBoolean(Settings.KEY_COLORED_EXTRA_REGIONS, false);
 
-		// example for an ugly dark theme
-//		builder.backgroudColor = 0xff000000;
-//		builder.puzzleBackgroundColor = 0xff333333;
-//		builder.nameTextColor = 0xffeeeeee;
-//		builder.difficultyTextColor = 0xffeeeeee;
-//		builder.sourceTextColor = 0xffeeeeee;
-//		builder.timerTextColor = 0xffeeeeee;
-//		builder.gridColor = 0x40ffffff;
-//		builder.borderColor = 0xffcccccc;
-//		builder.extraRegionColor = 0x60ff8dff;
-//		builder.valueColor = 0xff88cc88;
-//		builder.clueColor = 0xffcccccc;
-//		builder.errorColor = 0xffff0000;
-//		builder.markedCellColor = 0xa000ff00;
-//		builder.markedClueColor = 0xa0ff0000;
+		// TODO: set colors
 
-		return builder.build();
+//		// example for a sandy theme
+//		builder.backgroudColor = 0xffefefef;
+//		builder.puzzleBackgroundColor = 0xffffffea;
+//		builder.nameTextColor = 0xff000000;
+//		builder.difficultyTextColor = 0xff000000;
+//		builder.sourceTextColor = 0xff000000;
+//		builder.timerTextColor = 0xff000000;
+//		builder.gridColor = 0x5a000000;
+//		builder.borderColor = 0xff000000;
+//		builder.extraRegionColor = 0x4d00ff00;
+//		builder.valueColor = 0xff0e4772;
+//		builder.clueColor = 0xff000000;
+//		builder.errorColor = 0xffff4a4a;
+//		builder.markedCellColor = 0x9affa600;
+//		builder.markedClueColor = 0x9aff0000;
+//		builder.areaColors2 = new int[] { 0xffffffff, 0xffe0e0e0 };
+//		builder.areaColors3 = new int[] { 0xffffd9d9, 0xffd9ffd9, 0xffd9d9ff };
+//		builder.areaColors4 = new int[] { 0xffffffd9, 0xffd9ffec, 0xffd9d9ff, 0xffffd9ec };
+
+
+		Theme theme = builder.build();
+
+		setTheme(theme);
 	}
 
 	private void setTheme(Theme theme) {
@@ -299,10 +315,21 @@ public class AndokuActivity extends Activity
 	}
 
 	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+			case REQUEST_CODE_SETTINGS:
+				onReturnedFromSettings();
+				break;
+		}
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		menu.add(0, MENU_CHECK_PUZZLE, 0, R.string.menu_check_puzzle).setIcon(R.drawable.check);
 		menu.add(0, MENU_PAUSE_RESUME_PUZZLE, 0, "");
 		menu.add(0, MENU_RESET_PUZZLE, 0, R.string.menu_reset_puzzle).setIcon(R.drawable.reset);
+		menu.add(0, MENU_SETTINGS, 0, R.string.menu_settings).setIcon(
+				android.R.drawable.ic_menu_preferences);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -332,6 +359,9 @@ public class AndokuActivity extends Activity
 				return true;
 			case MENU_RESET_PUZZLE:
 				onResetPuzzle(false);
+				return true;
+			case MENU_SETTINGS:
+				onSettings();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -597,6 +627,17 @@ public class AndokuActivity extends Activity
 
 			gotoPuzzle(puzzleNumber);
 		}
+	}
+
+	void onSettings() {
+		Intent intent = new Intent(this, SettingsActivity.class);
+		startActivityForResult(intent, REQUEST_CODE_SETTINGS);
+	}
+
+	private void onReturnedFromSettings() {
+		createThemeFromPreferences();
+
+		andokuView.invalidate();
 	}
 
 	private void createPuzzle(Bundle savedInstanceState) {

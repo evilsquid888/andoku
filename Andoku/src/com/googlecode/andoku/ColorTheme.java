@@ -28,6 +28,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 
+import com.googlecode.andoku.model.PuzzleType;
+
 class ColorTheme implements Theme {
 	private final float borderStrokeWidth;
 
@@ -50,7 +52,10 @@ class ColorTheme implements Theme {
 	private final Paint markedCluePaint;
 
 	private final boolean drawAreaColors;
-	private final int[] areaColors;
+	private final boolean drawAreaColorsIfExtra;
+	private final int[] areaColors2;
+	private final int[] areaColors3;
+	private final int[] areaColors4;
 
 	private final Drawable congratsDrawable;
 	private final Drawable pausedDrawable;
@@ -74,6 +79,11 @@ class ColorTheme implements Theme {
 		public int errorColor = 0xffff0000;
 		public int markedCellColor = 0x7000ff00;
 		public int markedClueColor = 0x70ff0000;
+		public boolean drawAreaColors = true;
+		public boolean drawAreaColorsIfExtra = false;
+		public int[] areaColors2 = { 0xffffffff, 0xffe0e0e0 };
+		public int[] areaColors3 = { 0xffffd9d9, 0xffd9ffd9, 0xffd9d9ff }; // triad
+		public int[] areaColors4 = { 0xffffffd9, 0xffd9ffec, 0xffd9d9ff, 0xffffd9ec }; // tetrad
 
 		public Builder(Resources resources) {
 			this.resources = resources;
@@ -154,9 +164,11 @@ class ColorTheme implements Theme {
 		markedCluePaint.setAntiAlias(false);
 		markedCluePaint.setColor(builder.markedClueColor);
 
-		drawAreaColors = false;
-		areaColors = new int[] { 0x0cff0000, 0x0c00ff00, 0x0c0000ff, 0x0cffff00, 0x0cff00ff,
-				0x0c00ffff, 0x0c800000, 0x0c008000, 0x0c000080 };
+		drawAreaColors = builder.drawAreaColors;
+		drawAreaColorsIfExtra = builder.drawAreaColorsIfExtra;
+		areaColors2 = copy(builder.areaColors2, 2);
+		areaColors3 = copy(builder.areaColors3, 3);
+		areaColors4 = copy(builder.areaColors4, 4);
 
 		congratsDrawable = resources.getDrawable(R.drawable.congrats);
 		congratsDrawable.setAlpha(144);
@@ -169,6 +181,15 @@ class ColorTheme implements Theme {
 		bg.setStroke(Math.round(borderStrokeWidth), builder.borderColor);
 		bg.setCornerRadius(6 * displayDensity);
 		puzzleBackground = bg;
+	}
+
+	private int[] copy(int[] colors, int length) {
+		if (colors.length != length)
+			throw new IllegalArgumentException();
+
+		int[] copy = new int[length];
+		System.arraycopy(colors, 0, copy, 0, length);
+		return copy;
 	}
 
 	public char getSymbol(int value) {
@@ -231,12 +252,30 @@ class ColorTheme implements Theme {
 		return markedCluePaint;
 	}
 
-	public boolean isDrawAreaColors() {
-		return drawAreaColors;
+	public boolean isDrawAreaColors(PuzzleType puzzleType) {
+		if (drawAreaColors) {
+			boolean hasExtraRegions = puzzleType.isHyper() || puzzleType.isX();
+			if (hasExtraRegions)
+				return drawAreaColorsIfExtra;
+			else
+				return true;
+		}
+		else {
+			return false;
+		}
 	}
 
-	public int getAreaColor(int colorNumber) {
-		return areaColors[colorNumber];
+	public int getAreaColor(int colorNumber, int numberOfColors) {
+		switch (numberOfColors) {
+			case 2:
+				return areaColors2[colorNumber];
+			case 3:
+				return areaColors3[colorNumber];
+			case 4:
+				return areaColors4[colorNumber];
+			default:
+				return areaColors4[colorNumber % 4];
+		}
 	}
 
 	public Drawable getCongratsDrawable() {
@@ -253,11 +292,5 @@ class ColorTheme implements Theme {
 
 	public int getPuzzlePadding() {
 		return Math.round(borderStrokeWidth);
-	}
-
-	public void onNewTextSize(float fontSize) {
-		cluePaint.setTextSize(fontSize);
-		previewCluePaint.setTextSize(fontSize);
-		valuePaint.setTextSize(fontSize);
 	}
 }

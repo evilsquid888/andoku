@@ -21,6 +21,8 @@ package com.googlecode.andoku;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 
+import com.googlecode.andoku.model.PuzzleType;
+
 interface Theme {
 	char getSymbol(int value);
 
@@ -41,17 +43,12 @@ interface Theme {
 	Paint getMarkedCellPaint();
 	Paint getMarkedCluePaint();
 
-	boolean isDrawAreaColors();
-	int getAreaColor(int colorNumber);
+	boolean isDrawAreaColors(PuzzleType puzzleType);
+	int getAreaColor(int colorNumber, int numberOfColors);
 
 	Drawable getCongratsDrawable();
 	Drawable getPausedDrawable();
 
 	Drawable getPuzzleBackground();
 	int getPuzzlePadding();
-
-	/**
-	 * Notify theme of text size change.
-	 */
-	void onNewTextSize(float fontSize);
 }

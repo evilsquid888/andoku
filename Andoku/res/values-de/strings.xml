@@ -39,6 +39,7 @@
     <string name="button_nav_resume_game">Spiel fortsetzen</string>
     <string name="button_nav_select_folders">Ordner</string>
     <string name="button_nav_select_new_game">Neues Spiel</string>
+    <string name="button_nav_settings">Einstellungen</string>
     <string name="button_nav_start_game">Spiel starten</string>
     <string name="button_reset_game">Spiel zurücksetzen</string>
     <string name="button_resume_game">Spiel fortsetzen</string>
@@ -60,6 +61,7 @@
     <string name="menu_pause">Pause</string>
     <string name="menu_reset_puzzle">Zurücksetzen</string>
     <string name="menu_resume">Fortfahren</string>
+    <string name="menu_settings">Einstellungen</string>
     <string name="message_congrats">&lt;b&gt;Gratuliere, Sie haben das Sudoku-Rätsel gelöst!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Statistik für &lt;i&gt;%s (%s)&lt;/i&gt;:&lt;br/&gt;&lt;br/&gt;Gelöste Rätsel: %d&lt;br/&gt;Durchschnittszeit: %s&lt;br/&gt;Bestzeit: %s</string>
     <string name="message_delete_folder">Der Ordner \'%s\' ist nicht leer. Wollen Sie ihn wirklich löschen?</string>
     <string name="message_empty_folder">Der Ordner \'%s\' ist leer.</string>

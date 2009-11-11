@@ -161,6 +161,13 @@ public class MainActivity extends ListActivity {
 			}
 		});
 
+		Button settingsButton = (Button) findViewById(R.id.settingsButton);
+		settingsButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				onSettingsButton();
+			}
+		});
+
 		Button helpButton = (Button) findViewById(R.id.helpButton);
 		helpButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -287,6 +294,14 @@ public class MainActivity extends ListActivity {
 		}
 
 		flipper.setDisplayedChild(FLIP_IDX_OPEN_SAVED);
+	}
+
+	void onSettingsButton() {
+		if (Constants.LOG_V)
+			Log.v(TAG, "onSettingsButton()");
+
+		Intent intent = new Intent(this, SettingsActivity.class);
+		startActivity(intent);
 	}
 
 	void onHelpButton() {

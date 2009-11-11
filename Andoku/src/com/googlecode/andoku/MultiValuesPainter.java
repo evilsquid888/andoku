@@ -37,7 +37,7 @@ public class MultiValuesPainter {
 	public MultiValuesPainter() {
 	}
 
-	public void initialize(Theme theme) {
+	public void setTheme(Theme theme) {
 		this.theme = theme;
 	}
 

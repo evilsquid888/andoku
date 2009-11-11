@@ -55,6 +55,8 @@ public class AndokuPuzzleView extends View {
 	private float offsetX;
 	private float offsetY;
 
+	private float textSize = 1;
+
 	private int previewClueCounter;
 
 	private Position markedCell;
@@ -67,7 +69,10 @@ public class AndokuPuzzleView extends View {
 
 	public void setTheme(Theme theme) {
 		this.theme = theme;
-		multiValuesPainter.initialize(theme);
+
+		setCurrentTextSizeOnTheme();
+
+		multiValuesPainter.setTheme(theme);
 
 		setBackgroundDrawable(theme.getPuzzleBackground());
 
@@ -188,7 +193,7 @@ public class AndokuPuzzleView extends View {
 
 		Rect clipBounds = canvas.getClipBounds();
 
-		if (theme.isDrawAreaColors())
+		if (theme.isDrawAreaColors(puzzle.getPuzzleType()))
 			drawAreaColors(canvas, clipBounds);
 
 		drawExtraRegions(canvas, clipBounds);
@@ -260,7 +265,7 @@ public class AndokuPuzzleView extends View {
 
 	private void drawAreaColors(Canvas canvas, int row, int col) {
 		int colorNumber = puzzle.getAreaColor(row, col);
-		int color = theme.getAreaColor(colorNumber);
+		int color = theme.getAreaColor(colorNumber, puzzle.getNumberOfAreaColors());
 
 		canvas.clipRect(0, 0, cellWidth, cellHeight);
 		canvas.drawColor(color);
@@ -492,11 +497,19 @@ public class AndokuPuzzleView extends View {
 		offsetX = getPaddingLeft();
 		offsetY = getPaddingTop();
 
-		float fontSize = cellHeight * 0.8f;
-		theme.onNewTextSize(fontSize);
+		textSize = cellHeight * 0.8f;
+		setCurrentTextSizeOnTheme();
 		calcTextOffset();
 
 		multiValuesPainter.setCellSize(cellWidth, cellHeight);
+	}
+
+	private void setCurrentTextSizeOnTheme() {
+		if (theme != null) {
+			theme.getValuePaint().setTextSize(textSize);
+			theme.getCluePaint(true).setTextSize(textSize);
+			theme.getCluePaint(false).setTextSize(textSize);
+		}
 	}
 
 	private void calcTextOffset() {

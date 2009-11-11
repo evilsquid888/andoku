@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Andoku - a sudoku puzzle game for Android.
+  Copyright (C) 2009  Markus Wiederkehr
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<resources>
+    <string name="pref_category_display">Anzeige</string>
+    <string name="pref_title_colored_regions">Farbige Bereiche</string>
+    <string name="pref_summary_colored_regions">Verwende Farben zur Darstellung der Bereiche eines Sudoku-Rätsels.</string>
+    <string name="pref_title_colored_extra_regions">Farbige Bereiche (Extra)</string>
+    <string name="pref_summary_colored_extra_regions">Färbe selbst wenn das Sudoku Extrabereiche hat (X oder Hyper).</string>
+ </resources>

@@ -66,6 +66,13 @@
                 android:text="@string/button_nav_resume_game"/>
             <Button
                 style="@style/NavigationButton"
+                android:id="@+id/settingsButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/button_nav_settings"/>
+            <Button
+                style="@style/NavigationButton"
                 android:id="@+id/helpButton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
