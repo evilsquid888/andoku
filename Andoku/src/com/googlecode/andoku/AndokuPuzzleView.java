@@ -23,6 +23,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Paint.FontMetrics;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -74,10 +75,8 @@ public class AndokuPuzzleView extends View {
 
 		multiValuesPainter.setTheme(theme);
 
-		setBackgroundDrawable(theme.getPuzzleBackground());
-
-		int padding = theme.getPuzzlePadding();
-		setPadding(padding, padding, padding, padding);
+		int[] padding = theme.getPuzzlePadding();
+		setPadding(padding[0], padding[1], padding[2], padding[3]);
 	}
 
 	public void setPuzzle(AndokuPuzzle puzzle) {
@@ -190,11 +189,14 @@ public class AndokuPuzzleView extends View {
 
 		canvas.save();
 		canvas.translate(offsetX, offsetY);
+		canvas.clipRect(0, 0, size * cellWidth, size * cellHeight);
 
 		Rect clipBounds = canvas.getClipBounds();
 
 		if (theme.isDrawAreaColors(puzzle.getPuzzleType()))
 			drawAreaColors(canvas, clipBounds);
+		else
+			drawBackground(canvas);
 
 		drawExtraRegions(canvas, clipBounds);
 
@@ -215,6 +217,8 @@ public class AndokuPuzzleView extends View {
 		drawRegionBorders(canvas, clipBounds);
 
 		canvas.restore();
+
+		drawOuterBorder(canvas);
 	}
 
 	private void drawMarkedCell(Canvas canvas) {
@@ -269,6 +273,10 @@ public class AndokuPuzzleView extends View {
 
 		canvas.clipRect(0, 0, cellWidth, cellHeight);
 		canvas.drawColor(color);
+	}
+
+	private void drawBackground(Canvas canvas) {
+		canvas.drawColor(theme.getPuzzleBackgroundColor());
 	}
 
 	private void drawExtraRegions(Canvas canvas, Rect clipBounds) {
@@ -384,6 +392,14 @@ public class AndokuPuzzleView extends View {
 				}
 			}
 		}
+	}
+
+	private void drawOuterBorder(Canvas canvas) {
+		Paint paint = theme.getOuterBorderPaint();
+		float radius = theme.getOuterBorderRadius();
+		float width = paint.getStrokeWidth() / 2;
+		RectF rect = new RectF(width, width, getMeasuredWidth() - width, getMeasuredHeight() - width);
+		canvas.drawRoundRect(rect, radius, radius, paint);
 	}
 
 	private void drawErrors(Canvas canvas, Rect clipBounds) {

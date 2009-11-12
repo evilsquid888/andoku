@@ -26,7 +26,11 @@ import com.googlecode.andoku.model.PuzzleType;
 interface Theme {
 	char getSymbol(int value);
 
+	int[] getPuzzlePadding();
+
 	Drawable getBackground();
+
+	int getPuzzleBackgroundColor();
 
 	int getNameTextColor();
 	int getDifficultyTextColor();
@@ -42,13 +46,13 @@ interface Theme {
 	Paint getErrorPaint();
 	Paint getMarkedCellPaint();
 	Paint getMarkedCluePaint();
+	Paint getOuterBorderPaint();
+
+	float getOuterBorderRadius();
 
 	boolean isDrawAreaColors(PuzzleType puzzleType);
 	int getAreaColor(int colorNumber, int numberOfColors);
 
 	Drawable getCongratsDrawable();
 	Drawable getPausedDrawable();
-
-	Drawable getPuzzleBackground();
-	int getPuzzlePadding();
 }

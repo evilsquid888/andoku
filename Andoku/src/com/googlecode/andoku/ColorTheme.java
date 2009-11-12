@@ -26,7 +26,6 @@ import android.graphics.Paint.Cap;
 import android.graphics.Paint.Style;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 
 import com.googlecode.andoku.model.PuzzleType;
 
@@ -34,6 +33,7 @@ class ColorTheme implements Theme {
 	private final float borderStrokeWidth;
 
 	private final Drawable background;
+	private final int puzzleBackgroundColor;
 
 	private final int nameTextColor;
 	private final int difficultyTextColor;
@@ -50,6 +50,9 @@ class ColorTheme implements Theme {
 	private final Paint errorPaint;
 	private final Paint markedCellPaint;
 	private final Paint markedCluePaint;
+	private final Paint outerBorderPaint;
+
+	private final float outerBorderRadius;
 
 	private final boolean drawAreaColors;
 	private final boolean drawAreaColorsIfExtra;
@@ -59,8 +62,6 @@ class ColorTheme implements Theme {
 
 	private final Drawable congratsDrawable;
 	private final Drawable pausedDrawable;
-
-	private final Drawable puzzleBackground;
 
 	public static final class Builder {
 		private final Resources resources;
@@ -103,6 +104,8 @@ class ColorTheme implements Theme {
 		borderStrokeWidth = Math.max(2, 3 * displayDensity);
 
 		background = new ColorDrawable(builder.backgroudColor);
+
+		puzzleBackgroundColor = builder.puzzleBackgroundColor;
 
 		nameTextColor = builder.nameTextColor;
 		difficultyTextColor = builder.difficultyTextColor;
@@ -164,6 +167,14 @@ class ColorTheme implements Theme {
 		markedCluePaint.setAntiAlias(false);
 		markedCluePaint.setColor(builder.markedClueColor);
 
+		outerBorderPaint = new Paint();
+		outerBorderPaint.setStrokeWidth(Math.round(borderStrokeWidth));
+		outerBorderPaint.setAntiAlias(true);
+		outerBorderPaint.setColor(builder.borderColor);
+		outerBorderPaint.setStyle(Style.STROKE);
+
+		outerBorderRadius = 6 * displayDensity;
+
 		drawAreaColors = builder.drawAreaColors;
 		drawAreaColorsIfExtra = builder.drawAreaColorsIfExtra;
 		areaColors2 = copy(builder.areaColors2, 2);
@@ -175,12 +186,6 @@ class ColorTheme implements Theme {
 
 		pausedDrawable = resources.getDrawable(R.drawable.paused);
 		pausedDrawable.setAlpha(144);
-
-		GradientDrawable bg = new GradientDrawable();
-		bg.setColor(builder.puzzleBackgroundColor);
-		bg.setStroke(Math.round(borderStrokeWidth), builder.borderColor);
-		bg.setCornerRadius(6 * displayDensity);
-		puzzleBackground = bg;
 	}
 
 	private int[] copy(int[] colors, int length) {
@@ -196,8 +201,17 @@ class ColorTheme implements Theme {
 		return "123456789".charAt(value);
 	}
 
+	public int[] getPuzzlePadding() {
+		final int padding = Math.round(borderStrokeWidth);
+		return new int[] { padding, padding, padding, padding };
+	}
+
 	public Drawable getBackground() {
 		return background;
+	}
+
+	public int getPuzzleBackgroundColor() {
+		return puzzleBackgroundColor;
 	}
 
 	public int getNameTextColor() {
@@ -252,6 +266,14 @@ class ColorTheme implements Theme {
 		return markedCluePaint;
 	}
 
+	public Paint getOuterBorderPaint() {
+		return outerBorderPaint;
+	}
+
+	public float getOuterBorderRadius() {
+		return outerBorderRadius;
+	}
+
 	public boolean isDrawAreaColors(PuzzleType puzzleType) {
 		if (drawAreaColors) {
 			boolean hasExtraRegions = puzzleType.isHyper() || puzzleType.isX();
@@ -284,13 +306,5 @@ class ColorTheme implements Theme {
 
 	public Drawable getPausedDrawable() {
 		return pausedDrawable;
-	}
-
-	public Drawable getPuzzleBackground() {
-		return puzzleBackground;
-	}
-
-	public int getPuzzlePadding() {
-		return Math.round(borderStrokeWidth);
 	}
 }
