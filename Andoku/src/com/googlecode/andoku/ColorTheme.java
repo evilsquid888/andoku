@@ -74,7 +74,7 @@ class ColorTheme implements Theme {
 		public int timerTextColor = 0xff222222;
 		public int gridColor = 0x40000000;
 		public int borderColor = 0xff000000;
-		public int extraRegionColor = 0x40002dff;
+		public int extraRegionColor = 0xcd99abff;
 		public int valueColor = 0xff006000;
 		public int clueColor = 0xff000000;
 		public int errorColor = 0xffff0000;
