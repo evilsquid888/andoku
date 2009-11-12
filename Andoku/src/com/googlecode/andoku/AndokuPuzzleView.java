@@ -221,31 +221,6 @@ public class AndokuPuzzleView extends View {
 		drawOuterBorder(canvas);
 	}
 
-	private void drawMarkedCell(Canvas canvas) {
-		if (markedCell == null)
-			return;
-
-		canvas.save();
-
-		float x = markedCell.col * cellWidth;
-		float y = markedCell.row * cellHeight;
-		canvas.translate(x, y);
-
-		Paint paint = puzzle.isClue(markedCell.row, markedCell.col)
-				? theme.getMarkedCluePaint()
-				: theme.getMarkedCellPaint();
-		canvas.clipRect(0, 0, cellWidth, cellHeight);
-		canvas.drawPaint(paint);
-
-		canvas.restore();
-	}
-
-	private void drawPaused(Canvas canvas) {
-		Drawable pausedDrawable = theme.getPausedDrawable();
-		pausedDrawable.setBounds(0, 0, Math.round(size * cellWidth), Math.round(size * cellHeight));
-		pausedDrawable.draw(canvas);
-	}
-
 	private void drawAreaColors(Canvas canvas, Rect clipBounds) {
 		for (int row = 0; row < size; row++) {
 			float y = row * cellHeight;
@@ -310,6 +285,84 @@ public class AndokuPuzzleView extends View {
 		Drawable congratsDrawable = theme.getCongratsDrawable();
 		congratsDrawable.setBounds(0, 0, Math.round(size * cellWidth), Math.round(size * cellHeight));
 		congratsDrawable.draw(canvas);
+	}
+
+	private void drawPaused(Canvas canvas) {
+		Drawable pausedDrawable = theme.getPausedDrawable();
+		pausedDrawable.setBounds(0, 0, Math.round(size * cellWidth), Math.round(size * cellHeight));
+		pausedDrawable.draw(canvas);
+	}
+
+	private void drawMarkedCell(Canvas canvas) {
+		if (markedCell == null)
+			return;
+
+		canvas.save();
+
+		float x = markedCell.col * cellWidth;
+		float y = markedCell.row * cellHeight;
+		canvas.translate(x, y);
+
+		Paint paint = puzzle.isClue(markedCell.row, markedCell.col)
+				? theme.getMarkedCluePaint()
+				: theme.getMarkedCellPaint();
+		canvas.clipRect(0, 0, cellWidth, cellHeight);
+		canvas.drawPaint(paint);
+
+		canvas.restore();
+	}
+
+	private void drawErrors(Canvas canvas, Rect clipBounds) {
+		Paint errorPaint = theme.getErrorPaint();
+
+		float radius = Math.min(cellWidth, cellHeight) * 0.4f;
+
+		for (Position p : puzzle.getErrorPositions()) {
+			float x = p.col * cellWidth;
+			if (x > clipBounds.right || x + cellWidth < clipBounds.left)
+				continue;
+			float y = p.row * cellHeight;
+			if (y > clipBounds.bottom || y + cellHeight < clipBounds.top)
+				continue;
+
+			float cx = x + cellWidth / 2;
+			float cy = y + cellHeight / 2;
+			canvas.drawCircle(cx, cy, radius, errorPaint);
+		}
+
+		// radius += errorPaint.getStrokeWidth() / 2;
+
+		for (RegionError error : puzzle.getRegionErrors()) {
+			float cx1 = error.p1.col * cellWidth + cellWidth / 2;
+			float cy1 = error.p1.row * cellHeight + cellHeight / 2;
+
+			float cx2 = error.p2.col * cellWidth + cellWidth / 2;
+			float cy2 = error.p2.row * cellHeight + cellHeight / 2;
+
+			if (cx1 == cx2) // vertical line
+			{
+				float vy = cy2 - cy1;
+				vy *= (radius / Math.abs(vy));
+
+				canvas.drawLine(cx1, cy1 + vy, cx2, cy2 - vy, errorPaint);
+			}
+			else if (cy1 == cy2) // horizontal line
+			{
+				float vx = cx2 - cx1;
+				vx *= (radius / Math.abs(vx));
+
+				canvas.drawLine(cx1 + vx, cy1, cx2 - vx, cy2, errorPaint);
+			}
+			else {
+				float vx = cx2 - cx1;
+				float vy = cy2 - cy1;
+				float scale = (float) (radius / Math.sqrt(vx * vx + vy * vy));
+				vx *= scale;
+				vy *= scale;
+
+				canvas.drawLine(cx1 + vx, cy1 + vy, cx2 - vx, cy2 - vy, errorPaint);
+			}
+		}
 	}
 
 	private void drawValues(Canvas canvas, Rect clipBounds) {
@@ -402,58 +455,6 @@ public class AndokuPuzzleView extends View {
 		canvas.drawRoundRect(rect, radius, radius, paint);
 	}
 
-	private void drawErrors(Canvas canvas, Rect clipBounds) {
-		Paint errorPaint = theme.getErrorPaint();
-
-		float radius = Math.min(cellWidth, cellHeight) * 0.4f;
-
-		for (Position p : puzzle.getErrorPositions()) {
-			float x = p.col * cellWidth;
-			if (x > clipBounds.right || x + cellWidth < clipBounds.left)
-				continue;
-			float y = p.row * cellHeight;
-			if (y > clipBounds.bottom || y + cellHeight < clipBounds.top)
-				continue;
-
-			float cx = x + cellWidth / 2;
-			float cy = y + cellHeight / 2;
-			canvas.drawCircle(cx, cy, radius, errorPaint);
-		}
-
-		// radius += errorPaint.getStrokeWidth() / 2;
-
-		for (RegionError error : puzzle.getRegionErrors()) {
-			float cx1 = error.p1.col * cellWidth + cellWidth / 2;
-			float cy1 = error.p1.row * cellHeight + cellHeight / 2;
-
-			float cx2 = error.p2.col * cellWidth + cellWidth / 2;
-			float cy2 = error.p2.row * cellHeight + cellHeight / 2;
-
-			if (cx1 == cx2) // vertical line
-			{
-				float vy = cy2 - cy1;
-				vy *= (radius / Math.abs(vy));
-
-				canvas.drawLine(cx1, cy1 + vy, cx2, cy2 - vy, errorPaint);
-			}
-			else if (cy1 == cy2) // horizontal line
-			{
-				float vx = cx2 - cx1;
-				vx *= (radius / Math.abs(vx));
-
-				canvas.drawLine(cx1 + vx, cy1, cx2 - vx, cy2, errorPaint);
-			}
-			else {
-				float vx = cx2 - cx1;
-				float vy = cy2 - cy1;
-				float scale = (float) (radius / Math.sqrt(vx * vx + vy * vy));
-				vx *= scale;
-				vy *= scale;
-
-				canvas.drawLine(cx1 + vx, cy1 + vy, cx2 - vx, cy2 - vy, errorPaint);
-			}
-		}
-	}
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
