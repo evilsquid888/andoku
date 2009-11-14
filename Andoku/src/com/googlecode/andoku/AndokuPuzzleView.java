@@ -60,6 +60,8 @@ public class AndokuPuzzleView extends View {
 
 	private int previewClueCounter;
 
+	private Integer highlightedDigit;
+
 	private Position markedCell;
 
 	public AndokuPuzzleView(Context context, AttributeSet attrs) {
@@ -123,6 +125,15 @@ public class AndokuPuzzleView extends View {
 		float x = cell.col * cellWidth + cellWidth / 2 + offsetX;
 		float y = cell.row * cellHeight + cellHeight / 2 + offsetY;
 		return new PointF(x, y);
+	}
+
+	public void highlightDigit(Integer digit) {
+		if (highlightedDigit == digit)
+			return;
+
+		highlightedDigit = digit;
+
+		invalidate();
 	}
 
 	public void markCell(Position cell) {
@@ -204,8 +215,12 @@ public class AndokuPuzzleView extends View {
 			drawCongrats(canvas);
 		else if (paused)
 			drawPaused(canvas);
-		else
+		else {
+			if (theme.isHighlightDigits())
+				drawHighlightedCells(canvas, clipBounds);
+
 			drawMarkedCell(canvas);
+		}
 
 		if (!preview && puzzle.hasErrors())
 			drawErrors(canvas, clipBounds);
@@ -291,6 +306,42 @@ public class AndokuPuzzleView extends View {
 		Drawable pausedDrawable = theme.getPausedDrawable();
 		pausedDrawable.setBounds(0, 0, Math.round(size * cellWidth), Math.round(size * cellHeight));
 		pausedDrawable.draw(canvas);
+	}
+
+	private void drawHighlightedCells(Canvas canvas, Rect clipBounds) {
+		if (highlightedDigit == null)
+			return;
+
+		for (int row = 0; row < size; row++) {
+			float y = row * cellHeight;
+			if (y > clipBounds.bottom || y + cellHeight < clipBounds.top)
+				continue;
+
+			for (int col = 0; col < size; col++) {
+				float x = col * cellWidth;
+				if (x > clipBounds.right || x + cellWidth < clipBounds.left)
+					continue;
+
+				final ValueSet values = puzzle.getValues(row, col);
+				if (values.contains(highlightedDigit)) {
+					canvas.save();
+					canvas.translate(x, y);
+
+					drawHighlightedcell(canvas, values);
+
+					canvas.restore();
+				}
+			}
+		}
+	}
+
+	private void drawHighlightedcell(Canvas canvas, ValueSet values) {
+		canvas.clipRect(0, 0, cellWidth, cellHeight);
+
+		if (values.size() == 1)
+			canvas.drawColor(theme.getHighlightedCellColorSingleDigit());
+		else
+			canvas.drawColor(theme.getHighlightedCellColorMultipleDigits());
 	}
 
 	private void drawMarkedCell(Canvas canvas) {

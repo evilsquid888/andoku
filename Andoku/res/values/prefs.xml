@@ -23,4 +23,6 @@
     <string name="pref_summary_colored_regions">Use colors to display the regions of a sudoku puzzle.</string>
     <string name="pref_title_colored_extra_regions">Colored Regions (Extra)</string>
     <string name="pref_summary_colored_extra_regions">Use colored regions even if the puzzle has extra regions (X or Hyper).</string>
+    <string name="pref_title_highlight_digits">Highlight Digits</string>
+    <string name="pref_summary_highlight_digits">Highlights the digit that was last entered or is currently selected.</string>
  </resources>

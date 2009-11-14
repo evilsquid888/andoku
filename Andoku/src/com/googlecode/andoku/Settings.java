@@ -22,6 +22,7 @@ package com.googlecode.andoku;
 public class Settings {
 	public static final String KEY_COLORED_REGIONS = "colored_regions";
 	public static final String KEY_COLORED_EXTRA_REGIONS = "colored_extra_regions";
+	public static final String KEY_HIGHTLIGHT_DIGITS = "highlight_digits";
 
 	private Settings() {
 	}

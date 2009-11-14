@@ -60,6 +60,10 @@ class ColorTheme implements Theme {
 	private final int[] areaColors3;
 	private final int[] areaColors4;
 
+	private final boolean highlightDigits;
+	private final int highlightedCellColorSingleDigit;
+	private final int highlightedCellColorMultipleDigits;
+
 	private final Drawable congratsDrawable;
 	private final Drawable pausedDrawable;
 
@@ -85,6 +89,9 @@ class ColorTheme implements Theme {
 		public int[] areaColors2 = { 0xffffffff, 0xffe0e0e0 };
 		public int[] areaColors3 = { 0xffffd9d9, 0xffd9ffd9, 0xffd9d9ff }; // triad
 		public int[] areaColors4 = { 0xffffffd9, 0xffd9ffec, 0xffd9d9ff, 0xffffd9ec }; // tetrad
+		public boolean highlightDigits = true;
+		public int highlightedCellColorSingleDigit = 0xe6ffff00;
+		public int highlightedCellColorMultipleDigits = 0xe6bebe00;
 
 		public Builder(Resources resources) {
 			this.resources = resources;
@@ -180,6 +187,10 @@ class ColorTheme implements Theme {
 		areaColors2 = copy(builder.areaColors2, 2);
 		areaColors3 = copy(builder.areaColors3, 3);
 		areaColors4 = copy(builder.areaColors4, 4);
+
+		highlightDigits = builder.highlightDigits;
+		highlightedCellColorSingleDigit = builder.highlightedCellColorSingleDigit;
+		highlightedCellColorMultipleDigits = builder.highlightedCellColorMultipleDigits;
 
 		congratsDrawable = resources.getDrawable(R.drawable.congrats);
 		congratsDrawable.setAlpha(144);
@@ -298,6 +309,18 @@ class ColorTheme implements Theme {
 			default:
 				return areaColors4[colorNumber % 4];
 		}
+	}
+
+	public boolean isHighlightDigits() {
+		return highlightDigits;
+	}
+
+	public int getHighlightedCellColorSingleDigit() {
+		return highlightedCellColorSingleDigit;
+	}
+
+	public int getHighlightedCellColorMultipleDigits() {
+		return highlightedCellColorMultipleDigits;
 	}
 
 	public Drawable getCongratsDrawable() {

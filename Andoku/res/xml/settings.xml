@@ -36,6 +36,12 @@
             android:title="@string/pref_title_colored_extra_regions"
             android:summary="@string/pref_summary_colored_extra_regions"/>
 
+        <CheckBoxPreference
+            android:key="highlight_digits"
+            android:defaultValue="true"
+            android:title="@string/pref_title_highlight_digits"
+            android:summary="@string/pref_summary_highlight_digits"/>
+
     </PreferenceCategory>
 
 </PreferenceScreen>

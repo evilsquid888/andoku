@@ -218,6 +218,7 @@ public class AndokuActivity extends Activity
 		builder.drawAreaColors = settings.getBoolean(Settings.KEY_COLORED_REGIONS, true);
 		builder.drawAreaColorsIfExtra = settings
 				.getBoolean(Settings.KEY_COLORED_EXTRA_REGIONS, false);
+		builder.highlightDigits = settings.getBoolean(Settings.KEY_HIGHTLIGHT_DIGITS, true);
 
 		// TODO: set colors
 
@@ -378,6 +379,8 @@ public class AndokuActivity extends Activity
 			return;
 		}
 
+		andokuView.highlightDigit(digit);
+
 		ValueSet values = puzzle.getValues(mark.row, mark.col);
 
 		if (puzzle.isClue(mark.row, mark.col)) {
@@ -465,9 +468,21 @@ public class AndokuActivity extends Activity
 	private void setMark(Position cell) {
 		andokuView.markCell(cell);
 
-		ValueSet values = cell == null ? null : puzzle.getValues(cell.row, cell.col);
-		for (int v = 0; v < puzzle.getSize(); v++) {
-			keyPadButtons[v].setChecked(values != null && values.contains(v));
+		if (cell == null) {
+			for (int v = 0; v < puzzle.getSize(); v++) {
+				keyPadButtons[v].setChecked(false);
+			}
+		}
+		else {
+			ValueSet values = puzzle.getValues(cell.row, cell.col);
+			for (int v = 0; v < puzzle.getSize(); v++) {
+				keyPadButtons[v].setChecked(values.contains(v));
+			}
+
+			if (values.size() == 1) {
+				int digit = values.nextValue(0);
+				andokuView.highlightDigit(digit);
+			}
 		}
 
 		cancelToast();
