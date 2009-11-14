@@ -465,11 +465,9 @@ public class AndokuActivity extends Activity
 	private void setMark(Position cell) {
 		andokuView.markCell(cell);
 
-		if (puzzle != null) {
-			ValueSet values = cell == null ? null : puzzle.getValues(cell.row, cell.col);
-			for (int v = 0; v < puzzle.getSize(); v++) {
-				keyPadButtons[v].setChecked(values != null && values.contains(v));
-			}
+		ValueSet values = cell == null ? null : puzzle.getValues(cell.row, cell.col);
+		for (int v = 0; v < puzzle.getSize(); v++) {
+			keyPadButtons[v].setChecked(values != null && values.contains(v));
 		}
 
 		cancelToast();
