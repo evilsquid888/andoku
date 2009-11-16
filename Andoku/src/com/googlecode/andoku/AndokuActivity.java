@@ -47,7 +47,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.googlecode.andoku.db.AndokuDatabase;
 import com.googlecode.andoku.db.GameStatistics;
@@ -106,8 +105,8 @@ public class AndokuActivity extends Activity
 	private AndokuPuzzleView andokuView;
 	private FingertipView fingertipView;
 	private TextView timerView;
-	private ViewGroup keyPad;
-	private ToggleButton[] keyPadButtons;
+	private ViewGroup keypad;
+	private KeypadButton[] keypadButtons;
 	private TextView congratsView;
 	private Button dismissCongratsButton;
 	private ImageButton backButton;
@@ -153,24 +152,24 @@ public class AndokuActivity extends Activity
 
 		timerView = (TextView) findViewById(R.id.labelTimer);
 
-		keyPad = (ViewGroup) findViewById(R.id.keyPad);
+		keypad = (ViewGroup) findViewById(R.id.keypad);
 
-		keyPadButtons = new ToggleButton[9];
-		keyPadButtons[0] = (ToggleButton) findViewById(R.id.input_1);
-		keyPadButtons[1] = (ToggleButton) findViewById(R.id.input_2);
-		keyPadButtons[2] = (ToggleButton) findViewById(R.id.input_3);
-		keyPadButtons[3] = (ToggleButton) findViewById(R.id.input_4);
-		keyPadButtons[4] = (ToggleButton) findViewById(R.id.input_5);
-		keyPadButtons[5] = (ToggleButton) findViewById(R.id.input_6);
-		keyPadButtons[6] = (ToggleButton) findViewById(R.id.input_7);
-		keyPadButtons[7] = (ToggleButton) findViewById(R.id.input_8);
-		keyPadButtons[8] = (ToggleButton) findViewById(R.id.input_9);
+		keypadButtons = new KeypadButton[9];
+		keypadButtons[0] = (KeypadButton) findViewById(R.id.input_1);
+		keypadButtons[1] = (KeypadButton) findViewById(R.id.input_2);
+		keypadButtons[2] = (KeypadButton) findViewById(R.id.input_3);
+		keypadButtons[3] = (KeypadButton) findViewById(R.id.input_4);
+		keypadButtons[4] = (KeypadButton) findViewById(R.id.input_5);
+		keypadButtons[5] = (KeypadButton) findViewById(R.id.input_6);
+		keypadButtons[6] = (KeypadButton) findViewById(R.id.input_7);
+		keypadButtons[7] = (KeypadButton) findViewById(R.id.input_8);
+		keypadButtons[8] = (KeypadButton) findViewById(R.id.input_9);
 
 		for (int i = 0; i < 9; i++) {
 			final int digit = i;
-			keyPadButtons[i].setOnClickListener(new OnClickListener() {
+			keypadButtons[i].setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
-					onKeyPad(digit);
+					onKeypad(digit);
 				}
 			});
 		}
@@ -369,29 +368,29 @@ public class AndokuActivity extends Activity
 		}
 	}
 
-	void onKeyPad(int digit) {
+	void onKeypad(int digit) {
 		if (gameState != GAME_STATE_PLAYING)
 			return;
 
 		Position mark = andokuView.getMarkedCell();
 		if (mark == null) {
-			keyPadButtons[digit].setChecked(false);
+			keypadButtons[digit].setChecked(false);
 			return;
 		}
 
 		ValueSet values = puzzle.getValues(mark.row, mark.col);
 
 		if (puzzle.isClue(mark.row, mark.col)) {
-			keyPadButtons[digit].setChecked(values.contains(digit));
+			keypadButtons[digit].setChecked(values.contains(digit));
 		}
 		else {
 			if (values.contains(digit)) {
 				values.remove(digit);
-				keyPadButtons[digit].setChecked(false);
+				keypadButtons[digit].setChecked(false);
 			}
 			else {
 				values.add(digit);
-				keyPadButtons[digit].setChecked(true);
+				keypadButtons[digit].setChecked(true);
 			}
 
 			if (values.size() == 1) {
@@ -437,7 +436,7 @@ public class AndokuActivity extends Activity
 			case KeyEvent.KEYCODE_7:
 			case KeyEvent.KEYCODE_8:
 			case KeyEvent.KEYCODE_9:
-				onKeyPad(keyCode - KeyEvent.KEYCODE_1);
+				onKeypad(keyCode - KeyEvent.KEYCODE_1);
 				return true;
 
 			default:
@@ -472,13 +471,13 @@ public class AndokuActivity extends Activity
 
 		if (cell == null) {
 			for (int v = 0; v < puzzle.getSize(); v++) {
-				keyPadButtons[v].setChecked(false);
+				keypadButtons[v].setChecked(false);
 			}
 		}
 		else {
 			ValueSet values = puzzle.getValues(cell.row, cell.col);
 			for (int v = 0; v < puzzle.getSize(); v++) {
-				keyPadButtons[v].setChecked(values.contains(v));
+				keypadButtons[v].setChecked(values.contains(v));
 			}
 
 			if (values.size() == 1) {
@@ -828,7 +827,7 @@ public class AndokuActivity extends Activity
 		backButton.setEnabled(enableNav);
 		nextButton.setEnabled(enableNav);
 
-		keyPad.setVisibility(newGameState == GAME_STATE_PLAYING ? View.VISIBLE : View.GONE);
+		keypad.setVisibility(newGameState == GAME_STATE_PLAYING ? View.VISIBLE : View.GONE);
 
 		andokuView.setPaused(newGameState == GAME_STATE_READY && !puzzle.isSolved()
 				&& timer.getTime() > 0);

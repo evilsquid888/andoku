@@ -37,7 +37,9 @@
         <item name="android:textColor">#ff00</item> 
     </style>
 
-    <style name="InputToggleButton" parent="android:style/Widget.Button.Toggle">
+    <style name="KeypadButton" parent="android:style/Widget.Button.Toggle">
+        <item name="android:background">@drawable/button_toggle_bg</item>
+        <item name="android:textSize">17dp</item>
     </style>
 
     <style name="SudokuInputButton">

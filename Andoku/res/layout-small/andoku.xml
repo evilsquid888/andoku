@@ -84,23 +84,23 @@
     </LinearLayout>
 
     <TableLayout
-        android:id="@+id/keyPad"
+        android:id="@+id/keypad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <TableRow>
-            <ToggleButton style="@style/InputToggleButton" android:id="@+id/input_1" android:text="1" android:textOn="1" android:textOff="1" />
-            <ToggleButton style="@style/InputToggleButton" android:id="@+id/input_2" android:text="2" android:textOn="2" android:textOff="2" />
-            <ToggleButton style="@style/InputToggleButton" android:id="@+id/input_3" android:text="3" android:textOn="3" android:textOff="3" />
-            <ToggleButton style="@style/InputToggleButton" android:id="@+id/input_4" android:text="4" android:textOn="4" android:textOff="4" />
-            <ToggleButton style="@style/InputToggleButton" android:id="@+id/input_5" android:text="5" android:textOn="5" android:textOff="5" />
+            <com.googlecode.andoku.KeypadButton android:id="@+id/input_1" android:text="1" />
+            <com.googlecode.andoku.KeypadButton android:id="@+id/input_2" android:text="2" />
+            <com.googlecode.andoku.KeypadButton android:id="@+id/input_3" android:text="3" />
+            <com.googlecode.andoku.KeypadButton android:id="@+id/input_4" android:text="4" />
+            <com.googlecode.andoku.KeypadButton android:id="@+id/input_5" android:text="5" />
         </TableRow>
     
         <TableRow>
-            <ToggleButton style="@style/InputToggleButton" android:id="@+id/input_6" android:text="6" android:textOn="6" android:textOff="6" />
-            <ToggleButton style="@style/InputToggleButton" android:id="@+id/input_7" android:text="7" android:textOn="7" android:textOff="7" />
-            <ToggleButton style="@style/InputToggleButton" android:id="@+id/input_8" android:text="8" android:textOn="8" android:textOff="8" />
-            <ToggleButton style="@style/InputToggleButton" android:id="@+id/input_9" android:text="9" android:textOn="9" android:textOff="9" />
+            <com.googlecode.andoku.KeypadButton android:id="@+id/input_6" android:text="6" />
+            <com.googlecode.andoku.KeypadButton android:id="@+id/input_7" android:text="7" />
+            <com.googlecode.andoku.KeypadButton android:id="@+id/input_8" android:text="8" />
+            <com.googlecode.andoku.KeypadButton android:id="@+id/input_9" android:text="9" />
         </TableRow>
 
     </TableLayout>

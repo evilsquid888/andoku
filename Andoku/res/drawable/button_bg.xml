@@ -17,11 +17,12 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<resources>
-
-    <style name="Theme.NoBackground.Light" parent="android:Theme.Light.NoTitleBar.Fullscreen">
-        <item name="android:windowBackground">@null</item>
-        <item name="buttonStyleKeypad">@style/KeypadButton</item>
-    </style>
-
-</resources>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:andoku="http://schemas.android.com/apk/res/com.googlecode.andoku">
+    <item android:state_pressed="true"
+        android:drawable="@drawable/button_pressed"/>
+    <item andoku:state_highlighted="true"
+        android:drawable="@drawable/button_highlighted"/>
+    <item
+        android:drawable="@drawable/button_normal"/>
+</selector>
