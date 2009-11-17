@@ -54,8 +54,7 @@ class ColorTheme implements Theme {
 
 	private final float outerBorderRadius;
 
-	private final boolean drawAreaColors;
-	private final boolean drawAreaColorsIfExtra;
+	private final AreaColorPolicy areaColorPolicy;
 	private final int[] areaColors2;
 	private final int[] areaColors3;
 	private final int[] areaColors4;
@@ -84,8 +83,7 @@ class ColorTheme implements Theme {
 		public int errorColor = 0xffff0000;
 		public int markedCellColor = 0x7000ff00;
 		public int markedClueColor = 0x70ff0000;
-		public boolean drawAreaColors = true;
-		public boolean drawAreaColorsIfExtra = false;
+		public AreaColorPolicy areaColorPolicy = AreaColorPolicy.STANDARD_X_HYPER_SQUIGGLY;
 		public int[] areaColors2 = { 0xffffffff, 0xffe0e0e0 };
 		public int[] areaColors3 = { 0xffffd9d9, 0xffd9ffd9, 0xffd9d9ff }; // triad
 		public int[] areaColors4 = { 0xffffffd9, 0xffd9ffec, 0xffd9d9ff, 0xffffd9ec }; // tetrad
@@ -182,8 +180,7 @@ class ColorTheme implements Theme {
 
 		outerBorderRadius = 6 * displayDensity;
 
-		drawAreaColors = builder.drawAreaColors;
-		drawAreaColorsIfExtra = builder.drawAreaColorsIfExtra;
+		areaColorPolicy = builder.areaColorPolicy;
 		areaColors2 = copy(builder.areaColors2, 2);
 		areaColors3 = copy(builder.areaColors3, 3);
 		areaColors4 = copy(builder.areaColors4, 4);
@@ -286,16 +283,7 @@ class ColorTheme implements Theme {
 	}
 
 	public boolean isDrawAreaColors(PuzzleType puzzleType) {
-		if (drawAreaColors) {
-			boolean hasExtraRegions = puzzleType.isHyper() || puzzleType.isX();
-			if (hasExtraRegions)
-				return drawAreaColorsIfExtra;
-			else
-				return true;
-		}
-		else {
-			return false;
-		}
+		return areaColorPolicy.matches(puzzleType);
 	}
 
 	public int getAreaColor(int colorNumber, int numberOfColors) {

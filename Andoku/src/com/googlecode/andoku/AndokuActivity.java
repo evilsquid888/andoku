@@ -214,9 +214,8 @@ public class AndokuActivity extends Activity
 
 		ColorTheme.Builder builder = new ColorTheme.Builder(getResources());
 
-		builder.drawAreaColors = settings.getBoolean(Settings.KEY_COLORED_REGIONS, true);
-		builder.drawAreaColorsIfExtra = settings
-				.getBoolean(Settings.KEY_COLORED_EXTRA_REGIONS, false);
+		builder.areaColorPolicy = AreaColorPolicy.valueOf(settings.getString(
+				Settings.KEY_COLORED_REGIONS, AreaColorPolicy.STANDARD_X_HYPER_SQUIGGLY.name()));
 		builder.highlightDigits = settings.getBoolean(Settings.KEY_HIGHTLIGHT_DIGITS, true);
 
 		// TODO: set colors

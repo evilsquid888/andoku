@@ -36,4 +36,11 @@
         <item>Schwierig</item>
         <item>Teuflisch</item>
     </string-array>
+
+    <string-array name="pref_entries_colored_regions">
+        <item>Niemals</item>
+        <item>Für Standard und Squiggly</item>
+        <item>Für Standard, X, Hyper und Squiggly</item>
+        <item>Immer</item>
+    </string-array>
 </resources>

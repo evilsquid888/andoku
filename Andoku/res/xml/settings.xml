@@ -22,19 +22,14 @@
     <PreferenceCategory
         android:title="@string/pref_category_display">
 
-        <CheckBoxPreference
+        <ListPreference
             android:key="colored_regions"
-            android:defaultValue="true"
+            android:defaultValue="STANDARD_X_HYPER_SQUIGGLY"
             android:title="@string/pref_title_colored_regions"
-            android:summary="@string/pref_summary_colored_regions"/>
-
-       <CheckBoxPreference
-            android:key="colored_extra_regions"
-            android:defaultValue="false"
-            android:dependency="colored_regions"
-            android:layout="?android:attr/preferenceLayoutChild"
-            android:title="@string/pref_title_colored_extra_regions"
-            android:summary="@string/pref_summary_colored_extra_regions"/>
+            android:summary="@string/pref_summary_colored_regions"
+            android:entries="@array/pref_entries_colored_regions"
+            android:entryValues="@array/pref_entryvalues_colored_regions"
+            android:dialogTitle="@string/pref_title_colored_regions"/>
 
         <CheckBoxPreference
             android:key="highlight_digits"

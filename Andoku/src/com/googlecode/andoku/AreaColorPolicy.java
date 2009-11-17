@@ -18,11 +18,24 @@
 
 package com.googlecode.andoku;
 
-// corresponds to res/xml/settings.xml
-public class Settings {
-	public static final String KEY_COLORED_REGIONS = "colored_regions";
-	public static final String KEY_HIGHTLIGHT_DIGITS = "highlight_digits";
+import java.util.EnumSet;
 
-	private Settings() {
+import com.googlecode.andoku.model.PuzzleType;
+
+public enum AreaColorPolicy {
+	NEVER(EnumSet.noneOf(PuzzleType.class)), //
+	STANDARD_SQUIGGLY(EnumSet.of(PuzzleType.STANDARD, PuzzleType.SQUIGGLY)), //
+	STANDARD_X_HYPER_SQUIGGLY(EnumSet.of(PuzzleType.STANDARD, PuzzleType.STANDARD_X,
+			PuzzleType.STANDARD_HYPER, PuzzleType.SQUIGGLY)), //
+	ALWAYS(EnumSet.allOf(PuzzleType.class));
+
+	private final EnumSet<PuzzleType> puzzleTypes;
+
+	AreaColorPolicy(EnumSet<PuzzleType> puzzleTypes) {
+		this.puzzleTypes = puzzleTypes;
+	}
+
+	public boolean matches(PuzzleType puzzleType) {
+		return puzzleTypes.contains(puzzleType);
 	}
 }

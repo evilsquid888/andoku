@@ -36,4 +36,18 @@
         <item>Hard</item>
         <item>Fiendish</item>
     </string-array>
+
+    <string-array name="pref_entries_colored_regions">
+        <item>Never</item>
+        <item>For Standard and Squiggly</item>
+        <item>For Standard, X, Hyper and Squiggly</item>
+        <item>Always</item>
+    </string-array>
+
+    <string-array name="pref_entryvalues_colored_regions">
+        <item>NEVER</item>
+        <item>STANDARD_SQUIGGLY</item>
+        <item>STANDARD_X_HYPER_SQUIGGLY</item>
+        <item>ALWAYS</item>
+    </string-array>
 </resources>
