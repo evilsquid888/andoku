@@ -42,36 +42,5 @@
         <item name="android:textSize">17dp</item>
     </style>
 
-    <style name="SudokuInputButton">
-        <item name="android:textSize">26sp</item> 
-        <item name="android:paddingLeft">22dp</item> 
-        <item name="android:paddingRight">22dp</item> 
-        <item name="android:paddingTop">10dp</item> 
-        <item name="android:paddingBottom">14dp</item> 
-    </style>
-
-    <style name="SudokuInputToggleButton" parent="style/SudokuInputButton">
-        <item name="android:paddingTop">6dp</item> 
-        <item name="android:paddingBottom">18dp</item> 
-    </style>
-
-    <style name="SudokuEnterButton" parent="style/SudokuInputButton">
-        <item name="android:paddingTop">10dp</item> 
-        <item name="android:paddingBottom">14dp</item> 
-    </style>
-
-    <style name="SudokuClearButton" parent="style/SudokuInputButton">
-        <item name="android:paddingTop">10dp</item> 
-        <item name="android:paddingBottom">14dp</item> 
-    </style>
-
-    <style name="SudokuValueText">
-        <item name="android:textSize">26sp</item> 
-        <item name="android:textColor">#f040</item> 
-        <item name="android:gravity">center_horizontal</item> 
-        <item name="android:padding">12dp</item>
-        <!-- <item name="android:background">@drawable/input_border</item> -->
-    </style>
-
 </resources>
     
