@@ -397,6 +397,8 @@ public class AndokuActivity extends Activity
 				andokuView.highlightDigit(values.nextValue(0));
 			}
 
+			updateKeypadHighlighing();
+
 			setCell(mark, values);
 		}
 
@@ -827,7 +829,10 @@ public class AndokuActivity extends Activity
 		backButton.setEnabled(enableNav);
 		nextButton.setEnabled(enableNav);
 
-		keypad.setVisibility(newGameState == GAME_STATE_PLAYING ? View.VISIBLE : View.GONE);
+		final boolean showKeypad = newGameState == GAME_STATE_PLAYING;
+		keypad.setVisibility(showKeypad ? View.VISIBLE : View.GONE);
+		if (showKeypad)
+			updateKeypadHighlighing();
 
 		andokuView.setPaused(newGameState == GAME_STATE_READY && !puzzle.isSolved()
 				&& timer.getTime() > 0);
@@ -870,6 +875,26 @@ public class AndokuActivity extends Activity
 		final String message = String.format(format, name, difficulty, stats.numGamesSolved, DateUtil
 				.formatTime(stats.getAverageTime()), DateUtil.formatTime(stats.minTime));
 		congratsView.setText(Html.fromHtml(message));
+	}
+
+	private void updateKeypadHighlighing() {
+		final int size = puzzle.getSize();
+		int[] counter = new int[size];
+
+		for (int row = 0; row < size; row++) {
+			for (int col = 0; col < size; col++) {
+				ValueSet values = puzzle.getValues(row, col);
+				if (values.size() == 1) {
+					int value = values.nextValue(0);
+					counter[value]++;
+				}
+			}
+		}
+
+		for (int digit = 0; digit < size; digit++) {
+			final boolean digitCompleted = counter[digit] == size;
+			keypadButtons[digit].setHighlighted(digitCompleted);
+		}
 	}
 
 	private void autoSavePuzzle() {
