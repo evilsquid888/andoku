@@ -396,9 +396,9 @@ public class AndokuActivity extends Activity
 				andokuView.highlightDigit(values.nextValue(0));
 			}
 
-			updateKeypadHighlighing();
-
 			setCell(mark, values);
+
+			updateKeypadHighlighing();
 		}
 
 		cancelToast();
