@@ -67,25 +67,15 @@ public class IndexGenerator {
 
 		List<Integer> offsets = new ArrayList<Integer>();
 
-		int lineNumber = 0;
-
 		int offset = 0;
 		while (true) {
 			String line = br.readLine();
 			if (line == null)
 				break;
 
-			if (line.length() == 0 || line.startsWith("#")) {
-				if ((lineNumber & 1) == 1)
-					throw new IllegalArgumentException("lines between puzzle and solution");
-			}
-			else {
-				lineNumber++;
-
-				if ((lineNumber & 1) == 1) {
-					// System.out.println(offset);
-					offsets.add(offset);
-				}
+			if (line.length() != 0 && !line.startsWith("#")) {
+				// System.out.println(offset);
+				offsets.add(offset);
 			}
 
 			offset += line.length();

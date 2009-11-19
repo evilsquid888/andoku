@@ -30,7 +30,6 @@ import android.content.res.AssetManager;
 
 import com.googlecode.andoku.model.Difficulty;
 import com.googlecode.andoku.model.Puzzle;
-import com.googlecode.andoku.model.Solution;
 import com.googlecode.andoku.transfer.PuzzleDecoder;
 
 class AssetsPuzzleSource implements PuzzleSource {
@@ -57,19 +56,17 @@ class AssetsPuzzleSource implements PuzzleSource {
 	}
 
 	public PuzzleHolder load(int number) throws PuzzleIOException {
-		String[] loaded = loadPuzzle(number);
+		String puzzleStr = loadPuzzle(number);
 
 		Puzzle puzzle;
-		Solution solution;
 		try {
-			puzzle = PuzzleDecoder.decode(loaded[0]);
-			solution = PuzzleDecoder.decodeValues(loaded[1]);
+			puzzle = PuzzleDecoder.decode(puzzleStr);
 		}
 		catch (IllegalArgumentException e) {
 			throw new PuzzleIOException("Invalid puzzle", e);
 		}
 
-		return new PuzzleHolder(this, number, getDifficulty(), puzzle, solution);
+		return new PuzzleHolder(this, number, getDifficulty(), puzzle, null);
 	}
 
 	public void close() {
@@ -98,7 +95,7 @@ class AssetsPuzzleSource implements PuzzleSource {
 		}
 	}
 
-	private String[] loadPuzzle(int number) throws PuzzleIOException {
+	private String loadPuzzle(int number) throws PuzzleIOException {
 		try {
 			String puzzleFile = PUZZLES_FOLDER + folderName + ".adk";
 			int offset = index[number];
@@ -108,10 +105,7 @@ class AssetsPuzzleSource implements PuzzleSource {
 				skipFully(in, offset);
 				Reader reader = new InputStreamReader(in, "US-ASCII");
 				BufferedReader br = new BufferedReader(reader, 512);
-				String puzzleRep = br.readLine();
-				String solutionRep = br.readLine();
-
-				return new String[] { puzzleRep, solutionRep };
+				return br.readLine();
 			}
 			finally {
 				in.close();
