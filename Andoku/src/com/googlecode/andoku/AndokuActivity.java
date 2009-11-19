@@ -21,12 +21,14 @@ package com.googlecode.andoku;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.PointF;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.Vibrator;
@@ -569,8 +571,17 @@ public class AndokuActivity extends Activity
 
 	void onCheckPuzzle() {
 		if (Constants.LOG_V)
-			Log.v(TAG, "onCheckPuzzleButton()");
+			Log.v(TAG, "onCheckPuzzle()");
 
+		if (puzzle.hasSolution()) {
+			checkPuzzle();
+		}
+		else {
+			new ComputeSolutionAndCheckPuzzleTask().execute();
+		}
+	}
+
+	private void checkPuzzle() {
 		boolean errors = puzzle.checkForErrors();
 
 		if (errors) {
@@ -980,6 +991,38 @@ public class AndokuActivity extends Activity
 		if (toast != null) {
 			toast.cancel();
 			toast = null;
+		}
+	}
+
+	private final class ComputeSolutionAndCheckPuzzleTask extends AsyncTask<Void, Integer, Boolean> {
+		private boolean timerRunning;
+		private ProgressDialog progressDialog;
+
+		@Override
+		protected void onPreExecute() {
+			timerRunning = timer.isRunning();
+			timer.stop();
+
+			String message = getResources().getString(R.string.message_computing_solution);
+			progressDialog = ProgressDialog.show(AndokuActivity.this, "", message, true);
+		}
+
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			return puzzle.computeSolution();
+		}
+
+		@Override
+		protected void onPostExecute(Boolean solved) {
+			progressDialog.dismiss();
+
+			if (timerRunning)
+				timer.start();
+
+			if (solved)
+				checkPuzzle();
+			else
+				showWarning(R.string.warn_invalid_puzzle);
 		}
 	}
 }

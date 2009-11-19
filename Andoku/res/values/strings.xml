@@ -62,6 +62,7 @@
     <string name="menu_reset_puzzle">Reset Puzzle</string>
     <string name="menu_resume">Resume</string>
     <string name="menu_settings">Settings</string>
+    <string name="message_computing_solution">Computing solution. Please wait...</string>
     <string name="message_congrats">&lt;b&gt;Congratulations, you have solved this puzzle!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Statistics for &lt;i&gt;%s (%s)&lt;/i&gt;:&lt;br/&gt;&lt;br/&gt;Puzzles solved: %d&lt;br/&gt;Average time: %s&lt;br/&gt;Fastest time: %s</string>
     <string name="message_delete_folder">Folder \'%s\' is not empty. Do you really want to delete it?</string>
     <string name="message_empty_folder">Folder \'%s\' is empty.</string>
@@ -89,5 +90,6 @@
     <string name="spinner_difficulty">Difficulty level:</string>
     <string name="spinner_extra_regions">Extra regions:</string>
     <string name="spinner_grid">Grid style:</string>
+    <string name="warn_invalid_puzzle">This puzzle is invalid and cannot be solved!</string>
     <string name="warn_puzzle_errors">Sorry, you have made some mistakes!</string>
  </resources>

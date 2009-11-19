@@ -26,6 +26,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import com.googlecode.andoku.solver.DlxPuzzleSolver;
+import com.googlecode.andoku.solver.PuzzleSolver;
+import com.googlecode.andoku.solver.SingleSolutionReporter;
 import com.googlecode.andoku.transfer.StandardAreas;
 
 public class AndokuPuzzle {
@@ -34,7 +37,7 @@ public class AndokuPuzzle {
 	private final PuzzleType puzzleType;
 	private final Difficulty difficulty;
 	private final boolean[][] extra;
-	private final Solution solution;
+	private Solution solution;
 	private boolean solved;
 
 	private ValueSet[][] values;
@@ -48,6 +51,8 @@ public class AndokuPuzzle {
 
 	// errors compared to actual solution; correct value has been eliminated
 	private HashSet<Position> cellErrors;
+
+	private boolean computeSolutionFailed = false;
 
 	public AndokuPuzzle(Puzzle puzzle, Solution solution, Difficulty difficulty) {
 		if (puzzle == null)
@@ -106,6 +111,31 @@ public class AndokuPuzzle {
 
 	public Difficulty getDifficulty() {
 		return difficulty;
+	}
+
+	public boolean hasSolution() {
+		return solution != null;
+	}
+
+	public boolean computeSolution() {
+		if (this.solution != null)
+			throw new IllegalStateException();
+
+		if (computeSolutionFailed)
+			return false;
+
+		SingleSolutionReporter reporter = new SingleSolutionReporter();
+		PuzzleSolver solver = new DlxPuzzleSolver();
+		solver.solve(puzzle, reporter);
+
+		Puzzle solution = reporter.getSolution();
+		if (solution == null) {
+			computeSolutionFailed = true;
+			return false;
+		}
+
+		this.solution = new Solution(solution);
+		return true;
 	}
 
 	public boolean isSolved() {
