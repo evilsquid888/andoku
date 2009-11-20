@@ -755,7 +755,7 @@ public class AndokuActivity extends Activity
 
 	private AndokuPuzzle createAndokuPuzzle(int number) throws PuzzleIOException {
 		PuzzleHolder holder = source.load(number);
-		return new AndokuPuzzle(holder.getPuzzle(), holder.getSolution(), holder.getDifficulty());
+		return new AndokuPuzzle(holder.getPuzzle(), holder.getDifficulty());
 	}
 
 	private String getPuzzleName() {

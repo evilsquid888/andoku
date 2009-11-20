@@ -66,7 +66,7 @@ public class MockPuzzleSource implements PuzzleSource {
 	public static AndokuPuzzle createPuzzle(int number) throws PuzzleIOException {
 		PuzzleSource source = new MockPuzzleSource();
 		PuzzleHolder holder = source.load(number);
-		return new AndokuPuzzle(holder.getPuzzle(), holder.getSolution(), holder.getDifficulty());
+		return new AndokuPuzzle(holder.getPuzzle(), holder.getDifficulty());
 	}
 
 	public static AndokuPuzzle createSolvedPuzzle(int number) throws PuzzleIOException {
@@ -92,8 +92,7 @@ public class MockPuzzleSource implements PuzzleSource {
 	public PuzzleHolder load(int number) throws PuzzleIOException {
 		Difficulty difficulty = DIFFICULTIES[number];
 		Puzzle puzzle = PuzzleDecoder.decode(PUZZLES[number]);
-		Solution solution = PuzzleDecoder.decodeValues(SOLUTIONS[number]);
-		return new PuzzleHolder(this, number, difficulty, puzzle, solution);
+		return new PuzzleHolder(this, number, difficulty, puzzle);
 	}
 
 	public int numberOfPuzzles() {

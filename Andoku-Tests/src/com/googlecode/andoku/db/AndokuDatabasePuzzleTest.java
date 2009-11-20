@@ -46,10 +46,9 @@ public class AndokuDatabasePuzzleTest extends AndroidTestCase {
 		String clues = ".8....3.2....12..43.....4.5...1...................3...2.8.....31..59....4.6....5.";
 		String areas = "111233334111233344112225334612225544662555744665577784699577788669997888699997888";
 		String extra = "H";
-		String solution = "981457362657812934329671485843126579795384216562743198218965743134598627476239851";
 
 		PuzzleInfo puzzleInfo = new PuzzleInfo.Builder(clues).setAreas(areas).setExtraRegions(extra)
-				.setSolution(solution).setName(name).setDifficulty(difficulty).build();
+				.setName(name).setDifficulty(difficulty).build();
 
 		long puzzleId = db.insertPuzzle(folderId, puzzleInfo);
 		assertTrue(puzzleId >= 0);
@@ -63,7 +62,6 @@ public class AndokuDatabasePuzzleTest extends AndroidTestCase {
 		assertEquals(clues, loaded.getClues());
 		assertEquals(areas, loaded.getAreas());
 		assertEquals(extra, loaded.getExtraRegions());
-		assertEquals(solution, loaded.getSolution());
 	}
 
 	public void testInsertPuzzles() throws Exception {

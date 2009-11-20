@@ -70,7 +70,6 @@ public class AndokuDatabase {
 	public static final String COL_CLUES = "clues"; //           "...6.12........3......"
 	public static final String COL_AREAS = "areas"; //           "11122223311122222341.."|""
 	public static final String COL_EXTRA_REGIONS = "extra"; //   "H"|"X"|""
-	public static final String COL_SOLUTION = "solution"; //     "35869127496158734217.."
 
 	private SQLiteStatement insertPuzzleStatement;
 
@@ -298,8 +297,8 @@ public class AndokuDatabase {
 			SQLiteDatabase db = openHelper.getWritableDatabase();
 			insertPuzzleStatement = db.compileStatement("INSERT INTO " + TABLE_PUZZLES + "("
 					+ COL_FOLDER + ", " + COL_NAME + ", " + COL_DIFFICULTY + ", " + COL_SIZE + ", "
-					+ COL_CLUES + ", " + COL_AREAS + ", " + COL_EXTRA_REGIONS + ", " + COL_SOLUTION
-					+ ") VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+					+ COL_CLUES + ", " + COL_AREAS + ", " + COL_EXTRA_REGIONS
+					+ ") VALUES (?, ?, ?, ?, ?, ?, ?)");
 		}
 
 		insertPuzzleStatement.bindLong(1, folderId);
@@ -309,7 +308,6 @@ public class AndokuDatabase {
 		insertPuzzleStatement.bindString(5, puzzleInfo.getClues());
 		insertPuzzleStatement.bindString(6, puzzleInfo.getAreas());
 		insertPuzzleStatement.bindString(7, puzzleInfo.getExtraRegions());
-		insertPuzzleStatement.bindString(8, puzzleInfo.getSolution());
 
 		long insertedRowId = insertPuzzleStatement.executeInsert();
 		if (insertedRowId == -1)
@@ -354,7 +352,7 @@ public class AndokuDatabase {
 		SQLiteDatabase db = openHelper.getReadableDatabase();
 
 		String[] columns = { COL_NAME, COL_DIFFICULTY, COL_SIZE, COL_CLUES, COL_AREAS,
-				COL_EXTRA_REGIONS, COL_SOLUTION };
+				COL_EXTRA_REGIONS };
 		String selection = COL_FOLDER + "=?";
 		String[] selectionArgs = { String.valueOf(folderId) };
 		String limit = number + ",1";
@@ -368,7 +366,6 @@ public class AndokuDatabase {
 				builder.setDifficulty(Difficulty.values()[cursor.getInt(1)]);
 				builder.setAreas(cursor.getString(4));
 				builder.setExtraRegions(cursor.getString(5));
-				builder.setSolution(cursor.getString(6));
 				return builder.build();
 			}
 			else {
@@ -733,7 +730,7 @@ public class AndokuDatabase {
 			db.execSQL("CREATE TABLE " + TABLE_PUZZLES + " (" + COL_ID + " INTEGER PRIMARY KEY,"
 					+ COL_FOLDER + " INTEGER," + COL_NAME + " TEXT, " + COL_DIFFICULTY + " INTEGER, "
 					+ COL_SIZE + " INTEGER, " + COL_CLUES + " TEXT, " + COL_AREAS + " TEXT, "
-					+ COL_EXTRA_REGIONS + " TEXT, " + COL_SOLUTION + " TEXT);");
+					+ COL_EXTRA_REGIONS + " TEXT);");
 
 			db.execSQL("CREATE TABLE " + TABLE_GAMES + " (" + COL_ID + " INTEGER PRIMARY KEY,"
 					+ COL_SOURCE + " TEXT," + COL_NUMBER + " INTEGER," + COL_TYPE + " INTEGER,"

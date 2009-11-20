@@ -22,7 +22,6 @@ import com.googlecode.andoku.db.AndokuDatabase;
 import com.googlecode.andoku.db.PuzzleInfo;
 import com.googlecode.andoku.model.Difficulty;
 import com.googlecode.andoku.model.Puzzle;
-import com.googlecode.andoku.model.Solution;
 import com.googlecode.andoku.transfer.PuzzleDecoder;
 
 class DbPuzzleSource implements PuzzleSource {
@@ -45,9 +44,8 @@ class DbPuzzleSource implements PuzzleSource {
 
 		Difficulty difficulty = puzzleInfo.getDifficulty();
 		Puzzle puzzle = createPuzzle(puzzleInfo);
-		Solution solution = createSolution(puzzleInfo);
 
-		return new PuzzleHolder(this, number, difficulty, puzzle, solution);
+		return new PuzzleHolder(this, number, difficulty, puzzle);
 	}
 
 	public int numberOfPuzzles() {
@@ -61,13 +59,5 @@ class DbPuzzleSource implements PuzzleSource {
 	private Puzzle createPuzzle(PuzzleInfo puzzleInfo) {
 		return PuzzleDecoder.decode(puzzleInfo.getClues() + "|" + puzzleInfo.getAreas() + "|"
 				+ puzzleInfo.getExtraRegions());
-	}
-
-	private Solution createSolution(PuzzleInfo puzzleInfo) {
-		String solution = puzzleInfo.getSolution();
-		if (solution.equals(PuzzleInfo.SOLUTION_NONE))
-			return null;
-
-		return PuzzleDecoder.decodeValues(solution);
 	}
 }

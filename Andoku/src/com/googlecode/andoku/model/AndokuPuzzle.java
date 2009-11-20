@@ -37,7 +37,6 @@ public class AndokuPuzzle {
 	private final PuzzleType puzzleType;
 	private final Difficulty difficulty;
 	private final boolean[][] extra;
-	private Solution solution;
 	private boolean solved;
 
 	private ValueSet[][] values;
@@ -46,15 +45,16 @@ public class AndokuPuzzle {
 	private final int[] areaColors;
 	private final int numberOfAreaColors;
 
+	private Solution solution;
+	private boolean computeSolutionFailed = false;
+
 	// multiple identical values within a single region
 	private HashSet<RegionError> regionErrors;
 
 	// errors compared to actual solution; correct value has been eliminated
 	private HashSet<Position> cellErrors;
 
-	private boolean computeSolutionFailed = false;
-
-	public AndokuPuzzle(Puzzle puzzle, Solution solution, Difficulty difficulty) {
+	public AndokuPuzzle(Puzzle puzzle, Difficulty difficulty) {
 		if (puzzle == null)
 			throw new IllegalArgumentException();
 		if (difficulty == null)
@@ -65,7 +65,6 @@ public class AndokuPuzzle {
 		this.puzzleType = determinePuzzleType(puzzle);
 		this.difficulty = difficulty;
 		this.extra = obtainExtra(puzzle);
-		this.solution = solution;
 		this.values = obtainValues(puzzle);
 		this.numValues = countValues(this.values);
 		this.solved = checkSolved();

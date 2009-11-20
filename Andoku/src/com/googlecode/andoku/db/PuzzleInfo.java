@@ -29,15 +29,12 @@ public class PuzzleInfo {
 	public static final String EXTRA_X = "X";
 	public static final String EXTRA_NONE = "";
 
-	public static final String SOLUTION_NONE = "";
-
 	private final String name;
 	private final Difficulty difficulty;
 	private final int size;
 	private final String clues; //        "...6.12........3......"
 	private final String areas; //        "11122223311122222341.."|""
 	private final String extraRegions; // "H"|"X"|""
-	private final String solution; //     "35869127496158734217.."
 
 	public static final class Builder {
 		private String name = "";
@@ -46,7 +43,6 @@ public class PuzzleInfo {
 		private final String clues;
 		private String areas = AREAS_NONE;
 		private String extraRegions = EXTRA_NONE;
-		private String solution = SOLUTION_NONE;
 
 		public Builder(String clues) {
 			int size = (int) Math.sqrt(clues.length());
@@ -90,14 +86,6 @@ public class PuzzleInfo {
 			return this;
 		}
 
-		public Builder setSolution(String solution) {
-			if (!solution.equals(SOLUTION_NONE) && solution.length() != size * size)
-				throw new IllegalArgumentException();
-
-			this.solution = solution;
-			return this;
-		}
-
 		public PuzzleInfo build() {
 			return new PuzzleInfo(this);
 		}
@@ -110,7 +98,6 @@ public class PuzzleInfo {
 		clues = builder.clues;
 		areas = builder.areas;
 		extraRegions = builder.extraRegions;
-		solution = builder.solution;
 	}
 
 	public String getName() {
@@ -137,13 +124,8 @@ public class PuzzleInfo {
 		return extraRegions;
 	}
 
-	public String getSolution() {
-		return solution;
-	}
-
 	@Override
 	public String toString() {
-		return name + "|" + clues + "|" + areas + "|" + extraRegions + "|" + solution + "|"
-				+ difficulty;
+		return name + "|" + clues + "|" + areas + "|" + extraRegions + "|" + difficulty;
 	}
 }

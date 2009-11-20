@@ -21,7 +21,6 @@ package com.googlecode.andoku.source;
 import com.googlecode.andoku.db.PuzzleId;
 import com.googlecode.andoku.model.Difficulty;
 import com.googlecode.andoku.model.Puzzle;
-import com.googlecode.andoku.model.Solution;
 
 public class PuzzleHolder {
 	private final PuzzleSource source;
@@ -29,10 +28,9 @@ public class PuzzleHolder {
 
 	private final Difficulty difficulty;
 	private final Puzzle puzzle;
-	private final Solution solution;
 
-	public PuzzleHolder(PuzzleSource source, int number, Difficulty difficulty, Puzzle puzzle,
-			Solution solution) throws PuzzleIOException {
+	public PuzzleHolder(PuzzleSource source, int number, Difficulty difficulty, Puzzle puzzle)
+			throws PuzzleIOException {
 		if (source == null)
 			throw new IllegalArgumentException();
 		if (difficulty == null)
@@ -44,7 +42,6 @@ public class PuzzleHolder {
 		this.number = number;
 		this.difficulty = difficulty;
 		this.puzzle = puzzle;
-		this.solution = solution;
 	}
 
 	public PuzzleSource getSource() {
@@ -61,10 +58,6 @@ public class PuzzleHolder {
 
 	public Puzzle getPuzzle() {
 		return puzzle;
-	}
-
-	public Solution getSolution() {
-		return solution;
 	}
 
 	public Difficulty getDifficulty() {

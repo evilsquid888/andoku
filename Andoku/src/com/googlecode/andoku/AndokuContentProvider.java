@@ -43,7 +43,6 @@ public class AndokuContentProvider extends ContentProvider {
 	public static final String KEY_DIFFICULTY = "difficulty";
 	public static final String KEY_AREAS = "areas";
 	public static final String KEY_EXTRA_REGIONS = "extraRegions";
-	public static final String KEY_SOLUTION = "solution";
 
 	private static final int CODE_FOLDERS = 1;
 	private static final int CODE_FOLDERS_ID = 2;
@@ -256,15 +255,6 @@ public class AndokuContentProvider extends ContentProvider {
 				throw new InvalidParameterException("Invalid extra regions: " + extraRegions);
 		}
 
-		String solution = values.getAsString(KEY_SOLUTION);
-		if (solution != null) {
-			solution = solution.trim();
-			if (isValidSolution(clues, solution))
-				builder.setSolution(solution);
-			else
-				throw new InvalidParameterException("Invalid solution: " + solution);
-		}
-
 		Integer difficulty = values.getAsInteger(KEY_DIFFICULTY);
 		if (difficulty != null) {
 			if (isValidDifficulty(difficulty))
@@ -321,25 +311,6 @@ public class AndokuContentProvider extends ContentProvider {
 		return extraRegions.equalsIgnoreCase(PuzzleInfo.EXTRA_HYPER)
 				|| extraRegions.equalsIgnoreCase(PuzzleInfo.EXTRA_X)
 				|| extraRegions.equalsIgnoreCase(PuzzleInfo.EXTRA_NONE);
-	}
-
-	private boolean isValidSolution(String clues, String solution) {
-		final int length = solution.length();
-
-		if (length != clues.length())
-			return false;
-
-		for (int i = 0; i < length; i++) {
-			char cs = solution.charAt(i);
-			if (cs < '1' || cs > '9')
-				return false;
-
-			char cc = clues.charAt(i);
-			if (cc != '.' && cc != cs)
-				return false;
-		}
-
-		return true;
 	}
 
 	private boolean isValidDifficulty(Integer difficulty) {
