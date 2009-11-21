@@ -56,6 +56,7 @@ import com.googlecode.andoku.db.PuzzleId;
 import com.googlecode.andoku.model.AndokuPuzzle;
 import com.googlecode.andoku.model.Difficulty;
 import com.googlecode.andoku.model.Position;
+import com.googlecode.andoku.model.PuzzleType;
 import com.googlecode.andoku.model.ValueSet;
 import com.googlecode.andoku.source.PuzzleHolder;
 import com.googlecode.andoku.source.PuzzleIOException;
@@ -759,7 +760,12 @@ public class AndokuActivity extends Activity
 	}
 
 	private String getPuzzleName() {
-		return Util.getPuzzleName(getResources(), puzzle);
+		String name = puzzle.getName();
+		if (name != null && name.length() > 0)
+			return name;
+
+		PuzzleType puzzleType = puzzle.getPuzzleType();
+		return Util.getPuzzleName(getResources(), puzzleType);
 	}
 
 	private String getPuzzleDifficulty() {
@@ -773,7 +779,15 @@ public class AndokuActivity extends Activity
 	}
 
 	private String getPuzzleSource() {
-		return "#" + (puzzleNumber + 1) + "/" + source.numberOfPuzzles();
+		final String suffix = "#" + (puzzleNumber + 1) + "/" + source.numberOfPuzzles();
+
+		final String sourceId = source.getSourceId();
+		if (PuzzleSourceIds.isDbSource(sourceId)) {
+			return Util.getFolderName(db, sourceId) + " " + suffix;
+		}
+		else {
+			return suffix;
+		}
 	}
 
 	private void onPauseResumeGame() {
@@ -874,17 +888,32 @@ public class AndokuActivity extends Activity
 	}
 
 	private void updateCongrats() {
-		String puzzleSourceId = source.getSourceId();
-		GameStatistics stats = db.getStatistics(puzzleSourceId);
+		String congrats = getResources().getString(R.string.message_congrats);
+		String title = getStatisticsTitle();
+		String details = getStatisticsDetails();
 
-		final Resources resources = getResources();
-		String difficulty = getPuzzleDifficulty();
-		String name = Util.getPuzzleName(resources, puzzle);
-
-		final String format = resources.getString(R.string.message_congrats);
-		final String message = String.format(format, name, difficulty, stats.numGamesSolved, DateUtil
-				.formatTime(stats.getAverageTime()), DateUtil.formatTime(stats.minTime));
+		String message = congrats + "<br/><br/>" + title + "<br/><br/>" + details;
 		congratsView.setText(Html.fromHtml(message));
+	}
+
+	private String getStatisticsTitle() {
+		final String sourceId = source.getSourceId();
+		if (PuzzleSourceIds.isDbSource(sourceId)) {
+			String folderName = Util.getFolderName(db, sourceId);
+			return getResources().getString(R.string.message_statistics_title_db, folderName);
+		}
+		else {
+			String name = getPuzzleName();
+			String difficulty = getPuzzleDifficulty();
+			return getResources()
+					.getString(R.string.message_statistics_title_assets, name, difficulty);
+		}
+	}
+
+	private String getStatisticsDetails() {
+		GameStatistics stats = db.getStatistics(source.getSourceId());
+		return getResources().getString(R.string.message_statistics_details, stats.numGamesSolved,
+				DateUtil.formatTime(stats.getAverageTime()), DateUtil.formatTime(stats.minTime));
 	}
 
 	private void updateKeypadHighlighing() {

@@ -63,12 +63,15 @@
     <string name="menu_resume">Fortfahren</string>
     <string name="menu_settings">Einstellungen</string>
     <string name="message_computing_solution">Berechne die Lösung. Bitte warten...</string>
-    <string name="message_congrats">&lt;b&gt;Gratuliere, Sie haben das Sudoku-Rätsel gelöst!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Statistik für &lt;i&gt;%s (%s)&lt;/i&gt;:&lt;br/&gt;&lt;br/&gt;Gelöste Rätsel: %d&lt;br/&gt;Durchschnittszeit: %s&lt;br/&gt;Bestzeit: %s</string>
+    <string name="message_congrats">&lt;b&gt;Gratuliere, Sie haben das Sudoku-Rätsel gelöst!&lt;/b&gt;</string>
     <string name="message_delete_folder">Der Ordner \'%s\' ist nicht leer. Wollen Sie ihn wirklich löschen?</string>
     <string name="message_empty_folder">Der Ordner \'%s\' ist leer.</string>
     <string name="message_folder_exists">Der Ordner konnte nicht umbenannt werden, da bereits an anderer Ordner namens \'%s\' existiert!</string>
     <string name="message_rename_folder">Neuer Name für \'%s\':</string>
     <string name="message_reset_puzzle">Wollen Sie das aktuelle Sudoku-Rätsel und die Stoppuhr wirklich zurücksetzen?</string>
+    <string name="message_statistics_details">Gelöste Rätsel: %d&lt;br/&gt;Durchschnittszeit: %s&lt;br/&gt;Bestzeit: %s</string>
+    <string name="message_statistics_title_assets">Statistik für &lt;i&gt;%s (%s)&lt;/i&gt;:</string>
+    <string name="message_statistics_title_db">Statistik für Ordner &lt;i&gt;%s&lt;/i&gt;:</string>
     <string name="name_no_puzzle">Kein Sudoku-Rätsel verfügbar</string>
     <string name="name_sudoku_squiggly">Squiggly Sudoku</string>
     <string name="name_sudoku_squiggly_hyper">Squiggly Hyper-Sudoku</string>

@@ -672,10 +672,16 @@ public class MainActivity extends ListActivity {
 			return false;
 		}
 
-		private String parseDifficultyAndNumber(String puzzleSourceId, int number) {
-			String[] difficulties = getResources().getStringArray(R.array.difficulties);
-			int difficulty = puzzleSourceId.charAt(puzzleSourceId.length() - 1) - '0' - 1;
-			return difficulties[difficulty] + " #" + (number + 1);
+		private String parseDifficultyAndNumber(String sourceId, int number) {
+			if (PuzzleSourceIds.isDbSource(sourceId)) {
+				String folderName = Util.getFolderName(db, sourceId);
+				return folderName + " #" + (number + 1);
+			}
+			else {
+				String[] difficulties = getResources().getStringArray(R.array.difficulties);
+				int difficulty = sourceId.charAt(sourceId.length() - 1) - '0' - 1;
+				return difficulties[difficulty] + " #" + (number + 1);
+			}
 		}
 	}
 }

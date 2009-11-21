@@ -25,8 +25,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 
-import com.googlecode.andoku.model.AndokuPuzzle;
+import com.googlecode.andoku.db.AndokuDatabase;
 import com.googlecode.andoku.model.PuzzleType;
+import com.googlecode.andoku.source.PuzzleSourceIds;
 
 class Util {
 	private Util() {
@@ -44,13 +45,8 @@ class Util {
 			view.setOnClickListener(onClickListener);
 	}
 
-	public static String getPuzzleName(Resources resources, AndokuPuzzle puzzle) {
-		String name = puzzle.getName();
-		if (name != null && name.length() > 0)
-			return name;
-
-		PuzzleType puzzleType = puzzle.getPuzzleType();
-		return getPuzzleName(resources, puzzleType);
+	public static String getFolderName(AndokuDatabase db, String sourceId) {
+		return db.getFolderName(PuzzleSourceIds.getDbFolderId(sourceId));
 	}
 
 	public static String getPuzzleName(Resources resources, PuzzleType puzzleType) {

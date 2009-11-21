@@ -34,19 +34,19 @@ public class PuzzleSourceIds {
 		return DB_PREFIX + folderId;
 	}
 
-	static boolean isAssetSource(String puzzleSourceId) {
+	public static boolean isAssetSource(String puzzleSourceId) {
 		return puzzleSourceId.startsWith(ASSET_PREFIX);
 	}
 
-	static String getAssetFolderName(String puzzleSourceId) {
+	public static String getAssetFolderName(String puzzleSourceId) {
 		return puzzleSourceId.substring(ASSET_PREFIX.length());
 	}
 
-	static boolean isDbSource(String puzzleSourceId) {
+	public static boolean isDbSource(String puzzleSourceId) {
 		return puzzleSourceId.startsWith(DB_PREFIX);
 	}
 
-	static long getDbFolderId(String puzzleSourceId) {
+	public static long getDbFolderId(String puzzleSourceId) {
 		return Long.parseLong(puzzleSourceId.substring(DB_PREFIX.length()));
 	}
 }
