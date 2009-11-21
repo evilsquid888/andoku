@@ -42,10 +42,11 @@ class DbPuzzleSource implements PuzzleSource {
 		if (puzzleInfo == null)
 			throw new PuzzleIOException("Puzzle " + number + " not found in folder " + folderId);
 
-		Difficulty difficulty = puzzleInfo.getDifficulty();
+		String name = puzzleInfo.getName();
 		Puzzle puzzle = createPuzzle(puzzleInfo);
+		Difficulty difficulty = puzzleInfo.getDifficulty();
 
-		return new PuzzleHolder(this, number, difficulty, puzzle);
+		return new PuzzleHolder(this, number, name, puzzle, difficulty);
 	}
 
 	public int numberOfPuzzles() {

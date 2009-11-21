@@ -32,6 +32,7 @@ import com.googlecode.andoku.solver.SingleSolutionReporter;
 import com.googlecode.andoku.transfer.StandardAreas;
 
 public class AndokuPuzzle {
+	private final String name;
 	private final int size;
 	private final Puzzle puzzle;
 	private final PuzzleType puzzleType;
@@ -54,12 +55,13 @@ public class AndokuPuzzle {
 	// errors compared to actual solution; correct value has been eliminated
 	private HashSet<Position> cellErrors;
 
-	public AndokuPuzzle(Puzzle puzzle, Difficulty difficulty) {
+	public AndokuPuzzle(String name, Puzzle puzzle, Difficulty difficulty) {
 		if (puzzle == null)
 			throw new IllegalArgumentException();
 		if (difficulty == null)
 			throw new IllegalArgumentException();
 
+		this.name = name;
 		this.size = puzzle.getSize();
 		this.puzzle = puzzle;
 		this.puzzleType = determinePuzzleType(puzzle);
@@ -102,6 +104,10 @@ public class AndokuPuzzle {
 		this.cellErrors = copyCellErrors(memento.cellErrors);
 
 		return true;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public PuzzleType getPuzzleType() {

@@ -26,22 +26,24 @@ public class PuzzleHolder {
 	private final PuzzleSource source;
 	private final int number;
 
-	private final Difficulty difficulty;
+	private final String name;
 	private final Puzzle puzzle;
+	private final Difficulty difficulty;
 
-	public PuzzleHolder(PuzzleSource source, int number, Difficulty difficulty, Puzzle puzzle)
-			throws PuzzleIOException {
+	public PuzzleHolder(PuzzleSource source, int number, String name, Puzzle puzzle,
+			Difficulty difficulty) throws PuzzleIOException {
 		if (source == null)
 			throw new IllegalArgumentException();
-		if (difficulty == null)
-			throw new IllegalArgumentException();
 		if (puzzle == null)
+			throw new IllegalArgumentException();
+		if (difficulty == null)
 			throw new IllegalArgumentException();
 
 		this.source = source;
 		this.number = number;
-		this.difficulty = difficulty;
+		this.name = name;
 		this.puzzle = puzzle;
+		this.difficulty = difficulty;
 	}
 
 	public PuzzleSource getSource() {
@@ -54,6 +56,10 @@ public class PuzzleHolder {
 
 	public PuzzleId getPuzzleId() {
 		return new PuzzleId(source.getSourceId(), number);
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public Puzzle getPuzzle() {

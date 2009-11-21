@@ -45,6 +45,10 @@ class Util {
 	}
 
 	public static String getPuzzleName(Resources resources, AndokuPuzzle puzzle) {
+		String name = puzzle.getName();
+		if (name != null && name.length() > 0)
+			return name;
+
 		PuzzleType puzzleType = puzzle.getPuzzleType();
 		return getPuzzleName(resources, puzzleType);
 	}

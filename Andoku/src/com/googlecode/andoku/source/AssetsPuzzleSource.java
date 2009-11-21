@@ -66,7 +66,7 @@ class AssetsPuzzleSource implements PuzzleSource {
 			throw new PuzzleIOException("Invalid puzzle", e);
 		}
 
-		return new PuzzleHolder(this, number, getDifficulty(), puzzle);
+		return new PuzzleHolder(this, number, null, puzzle, getDifficulty());
 	}
 
 	public void close() {
