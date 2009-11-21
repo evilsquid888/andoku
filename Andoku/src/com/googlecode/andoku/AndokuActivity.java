@@ -475,8 +475,6 @@ public class AndokuActivity extends Activity
 			for (int v = 0; v < puzzle.getSize(); v++) {
 				keypadButtons[v].setChecked(false);
 			}
-
-			andokuView.highlightDigit(null);
 		}
 		else {
 			ValueSet values = puzzle.getValues(cell.row, cell.col);
