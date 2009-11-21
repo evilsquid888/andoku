@@ -379,6 +379,8 @@ public class AndokuActivity extends Activity
 			return;
 		}
 
+		andokuView.highlightDigit(digit);
+
 		ValueSet values = puzzle.getValues(mark.row, mark.col);
 
 		if (puzzle.isClue(mark.row, mark.col)) {
@@ -392,10 +394,6 @@ public class AndokuActivity extends Activity
 			else {
 				values.add(digit);
 				keypadButtons[digit].setChecked(true);
-			}
-
-			if (values.size() == 1) {
-				andokuView.highlightDigit(values.nextValue(0));
 			}
 
 			setCell(mark, values);
@@ -476,6 +474,8 @@ public class AndokuActivity extends Activity
 			for (int v = 0; v < puzzle.getSize(); v++) {
 				keypadButtons[v].setChecked(false);
 			}
+
+			andokuView.highlightDigit(null);
 		}
 		else {
 			ValueSet values = puzzle.getValues(cell.row, cell.col);
