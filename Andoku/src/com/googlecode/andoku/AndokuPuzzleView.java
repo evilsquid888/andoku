@@ -136,6 +136,10 @@ public class AndokuPuzzleView extends View {
 		invalidate();
 	}
 
+	public Integer getHighlightedDigit() {
+		return highlightedDigit;
+	}
+
 	public void markCell(Position cell) {
 		if (eq(cell, markedCell))
 			return;

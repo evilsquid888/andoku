@@ -78,6 +78,8 @@ public class AndokuActivity extends Activity
 	private static final String APP_STATE_PUZZLE_SOURCE_ID = "puzzleSourceId";
 	private static final String APP_STATE_PUZZLE_NUMBER = "puzzleNumber";
 	private static final String APP_STATE_GAME_STATE = "gameState";
+	private static final String APP_STATE_MARKED_CELL = "markedCell";
+	private static final String APP_STATE_HIGHLIGHTED_DIGIT = "highlightedDigit";
 
 	private static final int REQUEST_CODE_SETTINGS = 0;
 
@@ -313,6 +315,15 @@ public class AndokuActivity extends Activity
 			outState.putString(APP_STATE_PUZZLE_SOURCE_ID, source.getSourceId());
 			outState.putInt(APP_STATE_PUZZLE_NUMBER, puzzleNumber);
 			outState.putInt(APP_STATE_GAME_STATE, gameState);
+
+			Position markedCell = andokuView.getMarkedCell();
+			if (markedCell != null)
+				outState.putIntArray(APP_STATE_MARKED_CELL,
+						new int[] { markedCell.row, markedCell.col });
+
+			Integer highlightedDigit = andokuView.getHighlightedDigit();
+			if (highlightedDigit != null)
+				outState.putInt(APP_STATE_HIGHLIGHTED_DIGIT, highlightedDigit);
 		}
 	}
 
@@ -711,6 +722,13 @@ public class AndokuActivity extends Activity
 
 		gameState = GAME_STATE_ACTIVITY_STATE_RESTORED;
 		enterGameState(savedInstanceState.getInt(APP_STATE_GAME_STATE));
+
+		int[] markedCell = savedInstanceState.getIntArray(APP_STATE_MARKED_CELL);
+		if (markedCell != null)
+			setMark(new Position(markedCell[0], markedCell[1]));
+
+		if (savedInstanceState.containsKey(APP_STATE_HIGHLIGHTED_DIGIT))
+			andokuView.highlightDigit(savedInstanceState.getInt(APP_STATE_HIGHLIGHTED_DIGIT));
 	}
 
 	private void createPuzzleFromIntent() throws PuzzleIOException {
