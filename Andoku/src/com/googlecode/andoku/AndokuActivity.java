@@ -327,9 +327,11 @@ public class AndokuActivity extends Activity
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(0, MENU_CHECK_PUZZLE, 0, R.string.menu_check_puzzle).setIcon(R.drawable.check);
+		menu.add(0, MENU_CHECK_PUZZLE, 0, R.string.menu_check_puzzle).setIcon(
+				android.R.drawable.ic_menu_help);
 		menu.add(0, MENU_PAUSE_RESUME_PUZZLE, 0, "");
-		menu.add(0, MENU_RESET_PUZZLE, 0, R.string.menu_reset_puzzle).setIcon(R.drawable.reset);
+		menu.add(0, MENU_RESET_PUZZLE, 0, R.string.menu_reset_puzzle).setIcon(
+				android.R.drawable.ic_menu_close_clear_cancel);
 		menu.add(0, MENU_SETTINGS, 0, R.string.menu_settings).setIcon(
 				android.R.drawable.ic_menu_preferences);
 		return super.onCreateOptionsMenu(menu);
