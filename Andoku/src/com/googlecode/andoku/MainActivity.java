@@ -18,16 +18,9 @@
 
 package com.googlecode.andoku;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.channels.FileChannel;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,10 +30,6 @@ import com.googlecode.andoku.db.AndokuDatabase;
 
 public class MainActivity extends Activity {
 	private static final String TAG = MainActivity.class.getName();
-
-	private static final String ANDOKU_DIR = "Andoku";
-	private static final String DATABASE_BACKUP_FILE = "database.bak";
-	private static final String DATABASE_UPDATE_FILE = "database.update";
 
 	private Button foldersButton;
 	private Button resumeGameButton;
@@ -55,7 +44,7 @@ public class MainActivity extends Activity {
 
 		super.onCreate(savedInstanceState);
 
-		restoreOrBackupDatabase();
+		BackupUtil.restoreOrBackupDatabase(this);
 
 		Util.setFullscreenWorkaround(this);
 
@@ -181,104 +170,5 @@ public class MainActivity extends Activity {
 
 		Intent intent = new Intent(this, AboutActivity.class);
 		startActivity(intent);
-	}
-
-	private void restoreOrBackupDatabase() {
-		if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-			Log.w(TAG, "Cannot restore or back up database; external storage not mounted");
-			return;
-		}
-
-		File dbFile = getDatabasePath(AndokuDatabase.DATABASE_NAME);
-		File sdcard = Environment.getExternalStorageDirectory();
-		File andokuDir = new File(sdcard, ANDOKU_DIR);
-		if (!andokuDir.isDirectory() && !andokuDir.mkdirs()) {
-			Log.w(TAG, "Could not create root directory \"" + ANDOKU_DIR + "\" on external storage");
-			return;
-		}
-
-		File backupFile = new File(andokuDir, DATABASE_BACKUP_FILE);
-		File updateFile = new File(andokuDir, DATABASE_UPDATE_FILE);
-
-		// database can be overwritten by manually placing an update-file on the sd card
-		if (updateFile.isFile()) {
-			if (Constants.LOG_V) {
-				Log.v(TAG, "Updating database from " + updateFile.getAbsolutePath());
-
-				if (dbFile.isFile())
-					Log.v(TAG, "Overwriting existing database!");
-			}
-
-			if (createDir(dbFile.getParentFile()))
-				if (copyFile(updateFile, dbFile))
-					updateFile.delete();
-		}
-		// restore from backup in case installation was wiped (i.e. andoku was uninstalled and reinstalled)
-		else if (backupFile.isFile() && !dbFile.isFile()) {
-			if (Constants.LOG_V)
-				Log.v(TAG, "Restoring database from backup " + backupFile.getAbsolutePath());
-
-			if (createDir(dbFile.getParentFile()))
-				copyFile(backupFile, dbFile);
-
-			return; // no need to back up
-		}
-
-		// copy current database to backup file
-		if (dbFile.isFile()) {
-			if (Constants.LOG_V)
-				Log.v(TAG, "Backing up database to " + backupFile.getAbsolutePath());
-
-			copyFile(dbFile, backupFile);
-		}
-	}
-
-	private boolean createDir(File dir) {
-		if (dir.isDirectory())
-			return true;
-
-		final boolean created = dir.mkdirs();
-		if (!created)
-			Log.w(TAG, "Could not create directory " + dir);
-
-		return created;
-	}
-
-	private boolean copyFile(File source, File target) {
-		try {
-			FileChannel in = null;
-			FileChannel out = null;
-
-			try {
-				in = new FileInputStream(source).getChannel();
-				out = new FileOutputStream(target).getChannel();
-
-				long written = 0;
-				long total = in.size();
-
-				while (written < total) {
-					long bytes = out.transferFrom(in, written, total - written);
-
-					written += bytes;
-				}
-			}
-			finally {
-				try {
-					if (in != null)
-						in.close();
-				}
-				finally {
-					if (out != null)
-						out.close();
-				}
-			}
-
-			return true;
-		}
-		catch (IOException e) {
-			Log.w(TAG, "Could not copy " + source + " to " + target, e);
-
-			return false;
-		}
 	}
 }
