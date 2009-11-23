@@ -19,11 +19,8 @@
 package com.googlecode.andoku;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.res.Resources;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,10 +30,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.googlecode.andoku.db.AndokuDatabase;
-import com.googlecode.andoku.source.PuzzleIOException;
-import com.googlecode.andoku.source.PuzzleSource;
 import com.googlecode.andoku.source.PuzzleSourceIds;
-import com.googlecode.andoku.source.PuzzleSourceResolver;
 
 public class NewGameActivity extends Activity {
 	private static final String TAG = NewGameActivity.class.getName();
@@ -110,15 +104,9 @@ public class NewGameActivity extends Activity {
 
 		savePuzzlePreferences();
 
-		try {
-			String puzzleSourceId = getSelectedPuzzleSource();
-			int number = findAvailableGame(puzzleSourceId);
+		String puzzleSourceId = getSelectedPuzzleSource();
 
-			startGame(puzzleSourceId, number);
-		}
-		catch (PuzzleIOException e) {
-			handlePuzzleIOException(e);
-		}
+		new GameLauncher(this, db).startNewGame(puzzleSourceId);
 	}
 
 	private void loadPuzzlePreferences() {
@@ -182,96 +170,5 @@ public class NewGameActivity extends Activity {
 		sb.append(difficulty);
 
 		return sb.toString();
-	}
-
-	private int findAvailableGame(String puzzleSourceId) throws PuzzleIOException {
-		if (Constants.LOG_V)
-			Log.v(TAG, "findAvailableGame(" + puzzleSourceId + ")");
-
-		int numberOfPuzzles = getNumberOfPuzzles(puzzleSourceId);
-
-		int candidate = 0;
-		int fallback = -1; // use an unsolved game if no unplayed game found
-
-		Cursor c = db.findGamesBySource(puzzleSourceId);
-
-		try {
-			while (c.moveToNext()) {
-				int number = c.getInt(AndokuDatabase.IDX_GAME_BY_SOURCE_NUMBER);
-
-				// is there a gap and candidate number is available?
-				if (number > candidate) {
-					if (Constants.LOG_V)
-						Log.v(TAG, "found gap before save game " + number + "; returning " + candidate);
-
-					return candidate;
-				}
-
-				boolean solved = c.getInt(AndokuDatabase.IDX_GAME_BY_SOURCE_SOLVED) != 0;
-				if (!solved && fallback == -1)
-					fallback = number;
-
-				candidate++;
-			}
-
-			if (puzzleExists(candidate, numberOfPuzzles)) {
-				if (Constants.LOG_V)
-					Log.v(TAG, "returning next game after save games: " + candidate);
-
-				return candidate;
-			}
-
-			if (fallback != -1 && puzzleExists(fallback, numberOfPuzzles)) {
-				if (Constants.LOG_V)
-					Log.v(TAG, "all games played; returning first uncomplete: " + fallback);
-
-				return fallback;
-			}
-
-			if (Constants.LOG_V)
-				Log.v(TAG, "all games solved; returning 0");
-
-			return 0;
-		}
-		finally {
-			c.close();
-		}
-	}
-
-	private int getNumberOfPuzzles(String puzzleSourceId) throws PuzzleIOException {
-		PuzzleSource puzzleSource = PuzzleSourceResolver.resolveSource(this, puzzleSourceId);
-		try {
-			return puzzleSource.numberOfPuzzles();
-		}
-		finally {
-			puzzleSource.close();
-		}
-	}
-
-	private boolean puzzleExists(int number, int total) {
-		return number >= 0 && number < total;
-	}
-
-	private void startGame(String puzzleSourceId, int number) {
-		Intent intent = new Intent(this, AndokuActivity.class);
-		intent.putExtra(Constants.EXTRA_PUZZLE_SOURCE_ID, puzzleSourceId);
-		intent.putExtra(Constants.EXTRA_PUZZLE_NUMBER, number);
-		startActivity(intent);
-	}
-
-	private void handlePuzzleIOException(PuzzleIOException e) {
-		Log.e(TAG, "Error finding available games", e);
-
-		Resources resources = getResources();
-		String title = resources.getString(R.string.error_title_io_error);
-		String message = getResources().getString(R.string.error_message_finding_available);
-
-		Intent intent = new Intent(this, DisplayErrorActivity.class);
-		intent.putExtra(Constants.EXTRA_ERROR_TITLE, title);
-		intent.putExtra(Constants.EXTRA_ERROR_MESSAGE, message);
-		intent.putExtra(Constants.EXTRA_ERROR_THROWABLE, e);
-		startActivity(intent);
-
-		finish();
 	}
 }

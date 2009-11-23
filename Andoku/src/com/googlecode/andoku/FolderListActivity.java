@@ -22,7 +22,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -228,10 +227,7 @@ public class FolderListActivity extends ListActivity {
 
 		String puzzleSourceId = PuzzleSourceIds.forDbFolder(folderId);
 
-		Intent intent = new Intent(this, AndokuActivity.class);
-		intent.putExtra(Constants.EXTRA_PUZZLE_SOURCE_ID, puzzleSourceId);
-		intent.putExtra(Constants.EXTRA_PUZZLE_NUMBER, 0); // TODO: find new puzzle
-		startActivity(intent);
+		new GameLauncher(this, db).startNewGame(puzzleSourceId);
 	}
 
 	private void onRenameFolder() {
