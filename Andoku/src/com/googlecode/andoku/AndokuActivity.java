@@ -226,7 +226,7 @@ public class AndokuActivity extends Activity
 		// TODO: set colors
 
 //		// example for a sandy theme
-//		builder.backgroudColor = 0xffefefef;
+//		builder.backgroudColors = new int[] { 0xffefefef };
 //		builder.puzzleBackgroundColor = 0xffffffea;
 //		builder.nameTextColor = 0xff000000;
 //		builder.difficultyTextColor = 0xff000000;
@@ -243,7 +243,8 @@ public class AndokuActivity extends Activity
 //		builder.areaColors2 = new int[] { 0xffffffff, 0xffe0e0e0 };
 //		builder.areaColors3 = new int[] { 0xffffd9d9, 0xffd9ffd9, 0xffd9d9ff };
 //		builder.areaColors4 = new int[] { 0xffffffd9, 0xffd9ffec, 0xffd9d9ff, 0xffffd9ec };
-
+//		builder.highlightedCellColorSingleDigit = 0xe6ffff00;
+//		builder.highlightedCellColorMultipleDigits = 0xe6bebe00;
 
 		Theme theme = builder.build();
 

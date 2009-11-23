@@ -26,6 +26,8 @@ import android.graphics.Paint.Cap;
 import android.graphics.Paint.Style;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.GradientDrawable.Orientation;
 
 import com.googlecode.andoku.model.PuzzleType;
 
@@ -69,7 +71,7 @@ class ColorTheme implements Theme {
 	public static final class Builder {
 		private final Resources resources;
 
-		public int backgroudColor = 0xffeeeeee;
+		public int[] backgroudColors = { 0xffffffff, 0xffd0d0d0 };
 		public int puzzleBackgroundColor = 0xffffffff;
 		public int nameTextColor = 0xff222222;
 		public int difficultyTextColor = 0xff222222;
@@ -108,7 +110,7 @@ class ColorTheme implements Theme {
 
 		borderStrokeWidth = Math.max(2, 3 * displayDensity);
 
-		background = new ColorDrawable(builder.backgroudColor);
+		background = createBackgroundDrawable(builder);
 
 		puzzleBackgroundColor = builder.puzzleBackgroundColor;
 
@@ -194,6 +196,17 @@ class ColorTheme implements Theme {
 
 		pausedDrawable = resources.getDrawable(R.drawable.paused);
 		pausedDrawable.setAlpha(144);
+	}
+
+	private Drawable createBackgroundDrawable(Builder builder) {
+		switch (builder.backgroudColors.length) {
+			case 0:
+				throw new IllegalArgumentException();
+			case 1:
+				return new ColorDrawable(builder.backgroudColors[0]);
+			default:
+				return new GradientDrawable(Orientation.TOP_BOTTOM, builder.backgroudColors);
+		}
 	}
 
 	private int[] copy(int[] colors, int length) {
