@@ -17,7 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_checked="false" android:drawable="@drawable/button_toggle_off" />
-    <item android:state_checked="true" android:drawable="@drawable/button_toggle_on" />
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:andoku="http://schemas.android.com/apk/res/com.googlecode.andoku">
+    <item andoku:state_checked="false" android:drawable="@drawable/button_toggle_off" />
+    <item andoku:state_checked="true" android:drawable="@drawable/button_toggle_on" />
 </selector>

@@ -24,10 +24,12 @@
     </declare-styleable>
 
     <declare-styleable name="KeypadButton">
+        <attr name="checked" format="boolean"/>
         <attr name="highlighted" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="DrawableStates">
+        <attr name="state_checked" format="boolean"/>
         <attr name="state_highlighted" format="boolean"/>
     </declare-styleable>
 

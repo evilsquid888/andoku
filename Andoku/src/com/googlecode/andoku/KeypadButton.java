@@ -21,11 +21,13 @@ package com.googlecode.andoku;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.widget.CompoundButton;
+import android.widget.Button;
 
-public class KeypadButton extends CompoundButton {
+public class KeypadButton extends Button {
+	private static final int[] CHECKED_STATE_SET = { R.attr.state_checked };
 	private static final int[] HIGHLIGHTED_STATE_SET = { R.attr.state_highlighted };
 
+	private boolean checked;
 	private boolean highlighted;
 
 	public KeypadButton(Context context) {
@@ -40,9 +42,21 @@ public class KeypadButton extends CompoundButton {
 		super(context, attrs, defStyle);
 
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.KeypadButton, defStyle, 0);
+		checked = a.getBoolean(R.styleable.KeypadButton_checked, false);
 		highlighted = a.getBoolean(R.styleable.KeypadButton_highlighted, false);
 
 		a.recycle();
+	}
+
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		if (this.checked != checked) {
+			this.checked = checked;
+			refreshDrawableState();
+		}
 	}
 
 	public boolean isHighlighted() {
@@ -58,10 +72,11 @@ public class KeypadButton extends CompoundButton {
 
 	@Override
 	protected int[] onCreateDrawableState(int extraSpace) {
-		final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
-		if (highlighted) {
+		final int[] drawableState = super.onCreateDrawableState(extraSpace + 2);
+		if (checked)
+			mergeDrawableStates(drawableState, CHECKED_STATE_SET);
+		if (highlighted)
 			mergeDrawableStates(drawableState, HIGHLIGHTED_STATE_SET);
-		}
 		return drawableState;
 	}
 }

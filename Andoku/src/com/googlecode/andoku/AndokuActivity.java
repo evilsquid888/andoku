@@ -388,19 +388,14 @@ public class AndokuActivity extends Activity
 			return;
 
 		Position mark = andokuView.getMarkedCell();
-		if (mark == null) {
-			keypadButtons[digit].setChecked(false);
+		if (mark == null)
 			return;
-		}
 
 		andokuView.highlightDigit(digit);
 
 		ValueSet values = puzzle.getValues(mark.row, mark.col);
 
-		if (puzzle.isClue(mark.row, mark.col)) {
-			keypadButtons[digit].setChecked(values.contains(digit));
-		}
-		else {
+		if (!puzzle.isClue(mark.row, mark.col)) {
 			if (values.contains(digit)) {
 				values.remove(digit);
 				keypadButtons[digit].setChecked(false);
