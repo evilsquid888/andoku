@@ -26,10 +26,6 @@ import java.nio.channels.FileChannel;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.content.res.Resources;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -38,16 +34,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.ViewFlipper;
 
 import com.googlecode.andoku.db.AndokuDatabase;
-import com.googlecode.andoku.source.PuzzleIOException;
-import com.googlecode.andoku.source.PuzzleSource;
-import com.googlecode.andoku.source.PuzzleSourceIds;
-import com.googlecode.andoku.source.PuzzleSourceResolver;
 
 public class MainActivity extends Activity {
 	private static final String TAG = MainActivity.class.getName();
@@ -57,21 +47,12 @@ public class MainActivity extends Activity {
 	private static final String DATABASE_UPDATE_FILE = "database.update";
 
 	private static final int FLIP_IDX_MENU = 0;
-	private static final int FLIP_IDX_SELECT_LEVEL = 1;
-	private static final int FLIP_IDX_HELP = 2;
-	private static final int FLIP_IDX_ABOUT = 3;
-
-	private static final String PREF_KEY_PUZZLE_GRID = "puzzleGrid";
-	private static final String PREF_KEY_PUZZLE_EXTRA_REGION = "puzzleExtraRegions";
-	private static final String PREF_KEY_PUZZLE_DIFFICULTY = "puzzleDifficulty";
+	private static final int FLIP_IDX_HELP = 1;
+	private static final int FLIP_IDX_ABOUT = 2;
 
 	private static final String APP_STATE_FLIPPER = "flipper";
 
 	private ViewFlipper flipper;
-
-	private Spinner gridSpinner;
-	private Spinner extraRegionsSpinner;
-	private Spinner difficultySpinner;
 
 	private Button foldersButton;
 	private Button resumeGameButton;
@@ -105,6 +86,13 @@ public class MainActivity extends Activity {
 
 		importedPuzzlesFolderId = db.getOrCreateFolder(Constants.IMPORTED_PUZZLES_FOLDER);
 
+		resumeGameButton = (Button) findViewById(R.id.resumeGameButton);
+		resumeGameButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				onResumeGameButton();
+			}
+		});
+
 		Button newGameButton = (Button) findViewById(R.id.selectNewGameButton);
 		newGameButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -116,20 +104,6 @@ public class MainActivity extends Activity {
 		foldersButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				onSelectFoldersButton();
-			}
-		});
-
-		resumeGameButton = (Button) findViewById(R.id.resumeGameButton);
-		resumeGameButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				onResumeGameButton();
-			}
-		});
-
-		Button startNewGameButton = (Button) findViewById(R.id.startNewGameButton);
-		startNewGameButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				onStartNewGameButton();
 			}
 		});
 
@@ -163,24 +137,6 @@ public class MainActivity extends Activity {
 		Util.saveSetOnClickListener(findViewById(R.id.backButton2), backListener);
 		Util.saveSetOnClickListener(findViewById(R.id.backButton3), backListener);
 
-		gridSpinner = (Spinner) findViewById(R.id.gridSpinner);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-				R.array.grid_styles, android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		gridSpinner.setAdapter(adapter);
-
-		extraRegionsSpinner = (Spinner) findViewById(R.id.extraRegionsSpinner);
-		adapter = ArrayAdapter.createFromResource(this, R.array.extra_regions,
-				android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		extraRegionsSpinner.setAdapter(adapter);
-
-		difficultySpinner = (Spinner) findViewById(R.id.difficultySpinner);
-		adapter = ArrayAdapter.createFromResource(this, R.array.difficulties,
-				android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		difficultySpinner.setAdapter(adapter);
-
 		WebView helpWebView = (WebView) findViewById(R.id.helpWebView);
 		helpWebView.loadUrl("file:///android_asset/"
 				+ getResources().getString(R.string.html_page_help));
@@ -188,8 +144,6 @@ public class MainActivity extends Activity {
 		WebView aboutWebView = (WebView) findViewById(R.id.aboutWebView);
 		aboutWebView.loadUrl("file:///android_asset/"
 				+ getResources().getString(R.string.html_page_about));
-
-		loadPuzzlePreferences();
 	}
 
 	@Override
@@ -228,11 +182,20 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	void onResumeGameButton() {
+		if (Constants.LOG_V)
+			Log.v(TAG, "onResumeGameButton()");
+
+		Intent intent = new Intent(this, ResumeGameActivity.class);
+		startActivity(intent);
+	}
+
 	void onSelectNewGameButton() {
 		if (Constants.LOG_V)
 			Log.v(TAG, "onSelectNewGameButton()");
 
-		flipper.setDisplayedChild(FLIP_IDX_SELECT_LEVEL);
+		Intent intent = new Intent(this, NewGameActivity.class);
+		startActivity(intent);
 	}
 
 	void onSelectFoldersButton() {
@@ -242,23 +205,6 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(this, FolderListActivity.class);
 		intent.putExtra(Constants.EXTRA_FOLDER_ID, importedPuzzlesFolderId);
 		startActivity(intent);
-	}
-
-	void onResumeGameButton() {
-		if (Constants.LOG_V)
-			Log.v(TAG, "onResumeGameButton()");
-
-		Intent intent = new Intent(this, ResumeGameActivity.class);
-		startActivity(intent);
-//
-//		
-//		long now = System.currentTimeMillis();
-//		if (now - baseTime >= 60000) {
-//			baseTime = now;
-//			getListView().invalidateViews();
-//		}
-//
-//		flipper.setDisplayedChild(FLIP_IDX_OPEN_SAVED);
 	}
 
 	void onSettingsButton() {
@@ -290,46 +236,6 @@ public class MainActivity extends Activity {
 		flipper.setDisplayedChild(FLIP_IDX_MENU);
 	}
 
-	void onStartNewGameButton() {
-		if (Constants.LOG_V)
-			Log.v(TAG, "onStartNewGameButton()");
-
-		savePuzzlePreferences();
-
-		try {
-			String puzzleSourceId = getSelectedPuzzleSource();
-			int number = findAvailableGame(puzzleSourceId);
-
-			startGame(puzzleSourceId, number);
-		}
-		catch (PuzzleIOException e) {
-			handlePuzzleIOException(e);
-		}
-	}
-
-	private void startGame(String puzzleSourceId, int number) {
-		Intent intent = new Intent(this, AndokuActivity.class);
-		intent.putExtra(Constants.EXTRA_PUZZLE_SOURCE_ID, puzzleSourceId);
-		intent.putExtra(Constants.EXTRA_PUZZLE_NUMBER, number);
-		startActivity(intent);
-	}
-
-	private void handlePuzzleIOException(PuzzleIOException e) {
-		Log.e(TAG, "Error finding available games", e);
-
-		Resources resources = getResources();
-		String title = resources.getString(R.string.error_title_io_error);
-		String message = getResources().getString(R.string.error_message_finding_available);
-
-		Intent intent = new Intent(this, DisplayErrorActivity.class);
-		intent.putExtra(Constants.EXTRA_ERROR_TITLE, title);
-		intent.putExtra(Constants.EXTRA_ERROR_MESSAGE, message);
-		intent.putExtra(Constants.EXTRA_ERROR_THROWABLE, e);
-		startActivity(intent);
-
-		finish();
-	}
-
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -340,137 +246,6 @@ public class MainActivity extends Activity {
 		}
 
 		return super.onKeyDown(keyCode, event);
-	}
-
-	private String getSelectedPuzzleSource() {
-		String folderName = getSelectedAssetFolderName();
-		return PuzzleSourceIds.forAssetFolder(folderName);
-	}
-
-	private String getSelectedAssetFolderName() {
-		StringBuilder sb = new StringBuilder();
-
-		switch (gridSpinner.getSelectedItemPosition()) {
-			case 0:
-				sb.append("standard_");
-				break;
-			case 1:
-				sb.append("squiggly_");
-				break;
-			default:
-				throw new IllegalStateException();
-		}
-
-		switch (extraRegionsSpinner.getSelectedItemPosition()) {
-			case 0:
-				sb.append("n_");
-				break;
-			case 1:
-				sb.append("x_");
-				break;
-			case 2:
-				sb.append("h_");
-				break;
-			default:
-				throw new IllegalStateException();
-		}
-
-		int difficulty = difficultySpinner.getSelectedItemPosition() + 1;
-		if (difficulty < 1 || difficulty > 5)
-			throw new IllegalStateException();
-
-		sb.append(difficulty);
-
-		return sb.toString();
-	}
-
-	private int findAvailableGame(String puzzleSourceId) throws PuzzleIOException {
-		if (Constants.LOG_V)
-			Log.v(TAG, "findAvailableGame(" + puzzleSourceId + ")");
-
-		int numberOfPuzzles = getNumberOfPuzzles(puzzleSourceId);
-
-		int candidate = 0;
-		int fallback = -1; // use an unsolved game if no unplayed game found
-
-		Cursor c = db.findGamesBySource(puzzleSourceId);
-
-		try {
-			while (c.moveToNext()) {
-				int number = c.getInt(AndokuDatabase.IDX_GAME_BY_SOURCE_NUMBER);
-
-				// is there a gap and candidate number is available?
-				if (number > candidate) {
-					if (Constants.LOG_V)
-						Log.v(TAG, "found gap before save game " + number + "; returning " + candidate);
-
-					return candidate;
-				}
-
-				boolean solved = c.getInt(AndokuDatabase.IDX_GAME_BY_SOURCE_SOLVED) != 0;
-				if (!solved && fallback == -1)
-					fallback = number;
-
-				candidate++;
-			}
-
-			if (puzzleExists(candidate, numberOfPuzzles)) {
-				if (Constants.LOG_V)
-					Log.v(TAG, "returning next game after save games: " + candidate);
-
-				return candidate;
-			}
-
-			if (fallback != -1 && puzzleExists(fallback, numberOfPuzzles)) {
-				if (Constants.LOG_V)
-					Log.v(TAG, "all games played; returning first uncomplete: " + fallback);
-
-				return fallback;
-			}
-
-			if (Constants.LOG_V)
-				Log.v(TAG, "all games solved; returning 0");
-
-			return 0;
-		}
-		finally {
-			c.close();
-		}
-	}
-
-	private int getNumberOfPuzzles(String puzzleSourceId) throws PuzzleIOException {
-		PuzzleSource puzzleSource = PuzzleSourceResolver.resolveSource(this, puzzleSourceId);
-		try {
-			return puzzleSource.numberOfPuzzles();
-		}
-		finally {
-			puzzleSource.close();
-		}
-	}
-
-	private boolean puzzleExists(int number, int total) {
-		return number >= 0 && number < total;
-	}
-
-	private void savePuzzlePreferences() {
-		if (Constants.LOG_V)
-			Log.v(TAG, "savePuzzlePreferences()");
-
-		Editor editor = getPreferences(MODE_PRIVATE).edit();
-		editor.putInt(PREF_KEY_PUZZLE_GRID, gridSpinner.getSelectedItemPosition());
-		editor.putInt(PREF_KEY_PUZZLE_EXTRA_REGION, extraRegionsSpinner.getSelectedItemPosition());
-		editor.putInt(PREF_KEY_PUZZLE_DIFFICULTY, difficultySpinner.getSelectedItemPosition());
-		editor.commit();
-	}
-
-	private void loadPuzzlePreferences() {
-		if (Constants.LOG_V)
-			Log.v(TAG, "loadPuzzlePreferences()");
-
-		SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-		gridSpinner.setSelection(preferences.getInt(PREF_KEY_PUZZLE_GRID, 0));
-		extraRegionsSpinner.setSelection(preferences.getInt(PREF_KEY_PUZZLE_EXTRA_REGION, 0));
-		difficultySpinner.setSelection(preferences.getInt(PREF_KEY_PUZZLE_DIFFICULTY, 0));
 	}
 
 	private void restoreOrBackupDatabase() {
