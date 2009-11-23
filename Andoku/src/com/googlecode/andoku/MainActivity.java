@@ -47,8 +47,7 @@ public class MainActivity extends Activity {
 	private static final String DATABASE_UPDATE_FILE = "database.update";
 
 	private static final int FLIP_IDX_MENU = 0;
-	private static final int FLIP_IDX_HELP = 1;
-	private static final int FLIP_IDX_ABOUT = 2;
+	private static final int FLIP_IDX_ABOUT = 1;
 
 	private static final String APP_STATE_FLIPPER = "flipper";
 
@@ -134,12 +133,7 @@ public class MainActivity extends Activity {
 			}
 		};
 		Util.saveSetOnClickListener(findViewById(R.id.backButton1), backListener);
-		Util.saveSetOnClickListener(findViewById(R.id.backButton2), backListener);
 		Util.saveSetOnClickListener(findViewById(R.id.backButton3), backListener);
-
-		WebView helpWebView = (WebView) findViewById(R.id.helpWebView);
-		helpWebView.loadUrl("file:///android_asset/"
-				+ getResources().getString(R.string.html_page_help));
 
 		WebView aboutWebView = (WebView) findViewById(R.id.aboutWebView);
 		aboutWebView.loadUrl("file:///android_asset/"
@@ -219,7 +213,8 @@ public class MainActivity extends Activity {
 		if (Constants.LOG_V)
 			Log.v(TAG, "onHelpButton()");
 
-		flipper.setDisplayedChild(FLIP_IDX_HELP);
+		Intent intent = new Intent(this, HelpActivity.class);
+		startActivity(intent);
 	}
 
 	void onAboutButton() {

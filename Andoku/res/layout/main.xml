@@ -104,33 +104,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="@string/page_title_help"/>
-        <WebView
-            android:id="@+id/helpWebView"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:fadingEdge="vertical"/>
-        <Button
-            style="@style/NavigationButton"
-            android:id="@+id/backButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/button_nav_back"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="12dp">
-        <TextView
-            style="@style/NavigationTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:text="@string/page_title_about"/>
         <WebView
             android:id="@+id/aboutWebView"
