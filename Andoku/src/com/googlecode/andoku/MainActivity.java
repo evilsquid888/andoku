@@ -116,7 +116,7 @@ public class MainActivity extends Activity {
 		super.onResume();
 
 		final boolean hasPuzzleFolders = db.hasSubFolders(importedPuzzlesFolderId);
-		foldersButton.setEnabled(hasPuzzleFolders);
+		foldersButton.setVisibility(hasPuzzleFolders ? View.VISIBLE : View.GONE);
 
 		final boolean hasSavedGames = db.hasUnfinishedGames();
 		resumeGameButton.setEnabled(hasSavedGames);
