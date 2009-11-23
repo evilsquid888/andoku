@@ -481,6 +481,16 @@ public class AndokuDatabase {
 		return db.query(TABLE_GAMES, columns, null, null, null, null, null);
 	}
 
+	public boolean hasUnfinishedGames() {
+		Cursor cursor = findUnfinishedGames();
+		try {
+			return cursor.moveToNext();
+		}
+		finally {
+			cursor.close();
+		}
+	}
+
 	public Cursor findUnfinishedGames() {
 		if (Constants.LOG_V)
 			Log.v(TAG, "findUnfinishedGames()");

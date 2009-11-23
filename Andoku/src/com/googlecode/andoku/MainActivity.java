@@ -24,13 +24,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -39,24 +38,18 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.googlecode.andoku.db.AndokuDatabase;
-import com.googlecode.andoku.db.PuzzleId;
-import com.googlecode.andoku.model.PuzzleType;
 import com.googlecode.andoku.source.PuzzleIOException;
 import com.googlecode.andoku.source.PuzzleSource;
 import com.googlecode.andoku.source.PuzzleSourceIds;
 import com.googlecode.andoku.source.PuzzleSourceResolver;
 
-public class MainActivity extends ListActivity {
+public class MainActivity extends Activity {
 	private static final String TAG = MainActivity.class.getName();
 
 	private static final String ANDOKU_DIR = "Andoku";
@@ -65,9 +58,8 @@ public class MainActivity extends ListActivity {
 
 	private static final int FLIP_IDX_MENU = 0;
 	private static final int FLIP_IDX_SELECT_LEVEL = 1;
-	private static final int FLIP_IDX_OPEN_SAVED = 2;
-	private static final int FLIP_IDX_HELP = 3;
-	private static final int FLIP_IDX_ABOUT = 4;
+	private static final int FLIP_IDX_HELP = 2;
+	private static final int FLIP_IDX_ABOUT = 3;
 
 	private static final String PREF_KEY_PUZZLE_GRID = "puzzleGrid";
 	private static final String PREF_KEY_PUZZLE_EXTRA_REGION = "puzzleExtraRegions";
@@ -86,8 +78,6 @@ public class MainActivity extends ListActivity {
 
 	private AndokuDatabase db;
 	private long importedPuzzlesFolderId;
-
-	private long baseTime;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -114,24 +104,6 @@ public class MainActivity extends ListActivity {
 		db = new AndokuDatabase(this);
 
 		importedPuzzlesFolderId = db.getOrCreateFolder(Constants.IMPORTED_PUZZLES_FOLDER);
-
-		Cursor cursor = db.findUnfinishedGames();
-		startManagingCursor(cursor);
-
-		String[] from = { AndokuDatabase.COL_TYPE, AndokuDatabase.COL_SOURCE,
-				AndokuDatabase.COL_TYPE, AndokuDatabase.COL_TIMER, AndokuDatabase.COL_MODIFIED_DATE };
-		int[] to = { R.id.save_game_icon, R.id.save_game_difficulty, R.id.save_game_title,
-				R.id.save_game_timer, R.id.save_game_modified };
-		SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(this, R.layout.save_game_list_item,
-				cursor, from, to);
-		listAdapter.setViewBinder(new SaveGameViewBinder(getResources()));
-		setListAdapter(listAdapter);
-
-		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				onResumeGameItem(id);
-			}
-		});
 
 		Button newGameButton = (Button) findViewById(R.id.selectNewGameButton);
 		newGameButton.setOnClickListener(new OnClickListener() {
@@ -237,22 +209,11 @@ public class MainActivity extends ListActivity {
 
 		super.onResume();
 
-		baseTime = System.currentTimeMillis();
-
 		final boolean hasPuzzleFolders = db.hasSubFolders(importedPuzzlesFolderId);
 		foldersButton.setEnabled(hasPuzzleFolders);
 
-		final boolean hasSavedGames = getListAdapter().getCount() != 0;
-		if (hasSavedGames) {
-			resumeGameButton.setEnabled(true);
-		}
-		else {
-			resumeGameButton.setEnabled(false);
-
-			if (flipper.getDisplayedChild() == FLIP_IDX_OPEN_SAVED) {
-				flipper.setDisplayedChild(FLIP_IDX_MENU);
-			}
-		}
+		final boolean hasSavedGames = db.hasUnfinishedGames();
+		resumeGameButton.setEnabled(hasSavedGames);
 	}
 
 	@Override
@@ -287,13 +248,17 @@ public class MainActivity extends ListActivity {
 		if (Constants.LOG_V)
 			Log.v(TAG, "onResumeGameButton()");
 
-		long now = System.currentTimeMillis();
-		if (now - baseTime >= 60000) {
-			baseTime = now;
-			getListView().invalidateViews();
-		}
-
-		flipper.setDisplayedChild(FLIP_IDX_OPEN_SAVED);
+		Intent intent = new Intent(this, ResumeGameActivity.class);
+		startActivity(intent);
+//
+//		
+//		long now = System.currentTimeMillis();
+//		if (now - baseTime >= 60000) {
+//			baseTime = now;
+//			getListView().invalidateViews();
+//		}
+//
+//		flipper.setDisplayedChild(FLIP_IDX_OPEN_SAVED);
 	}
 
 	void onSettingsButton() {
@@ -363,19 +328,6 @@ public class MainActivity extends ListActivity {
 		startActivity(intent);
 
 		finish();
-	}
-
-	void onResumeGameItem(long rowId) {
-		if (Constants.LOG_V)
-			Log.v(TAG, "onResumeGameItem(" + rowId + ")");
-
-		PuzzleId puzzleId = db.puzzleIdByRowId(rowId);
-
-		Intent intent = new Intent(this, AndokuActivity.class);
-		intent.putExtra(Constants.EXTRA_PUZZLE_SOURCE_ID, puzzleId.puzzleSourceId);
-		intent.putExtra(Constants.EXTRA_PUZZLE_NUMBER, puzzleId.number);
-		intent.putExtra(Constants.EXTRA_START_PUZZLE, true);
-		startActivity(intent);
 	}
 
 	@Override
@@ -617,71 +569,6 @@ public class MainActivity extends ListActivity {
 			Log.w(TAG, "Could not copy " + source + " to " + target, e);
 
 			return false;
-		}
-	}
-
-	private final class SaveGameViewBinder implements SimpleCursorAdapter.ViewBinder {
-		private static final int IDX_SOURCE = AndokuDatabase.IDX_GAME_SOURCE;
-		private static final int IDX_NUMBER = AndokuDatabase.IDX_GAME_NUMBER;
-		private static final int IDX_TYPE = AndokuDatabase.IDX_GAME_TYPE;
-		private static final int IDX_TIMER = AndokuDatabase.IDX_GAME_TIMER;
-		private static final int IDX_DATE_MODIFIED = AndokuDatabase.IDX_GAME_MODIFIED_DATE;
-
-		public SaveGameViewBinder(Resources resources) {
-		}
-
-		public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-			if (view instanceof ImageView) {
-				assert columnIndex == IDX_TYPE;
-				PuzzleType puzzleType = PuzzleType.forOrdinal(cursor.getInt(IDX_TYPE));
-				Drawable drawable = Util.getPuzzleIcon(getResources(), puzzleType);
-				((ImageView) view).setImageDrawable(drawable);
-				return true;
-			}
-
-			if (!(view instanceof TextView))
-				return false;
-
-			TextView textView = (TextView) view;
-
-			switch (columnIndex) {
-				case IDX_TYPE:
-					PuzzleType puzzleType = PuzzleType.forOrdinal(cursor.getInt(columnIndex));
-					String name = Util.getPuzzleName(getResources(), puzzleType);
-					textView.setText(name);
-					return true;
-
-				case IDX_TIMER:
-					String time = DateUtil.formatTime(cursor.getLong(columnIndex));
-					textView.setText(time);
-					return true;
-
-				case IDX_DATE_MODIFIED:
-					String age = DateUtil.formatTimeSpan(getResources(), baseTime, cursor
-							.getLong(columnIndex));
-					textView.setText(age);
-					return true;
-
-				case IDX_SOURCE:
-					String difficultyAndNumber = parseDifficultyAndNumber(cursor.getString(IDX_SOURCE),
-							cursor.getInt(IDX_NUMBER));
-					textView.setText(difficultyAndNumber);
-					return true;
-			}
-
-			return false;
-		}
-
-		private String parseDifficultyAndNumber(String sourceId, int number) {
-			if (PuzzleSourceIds.isDbSource(sourceId)) {
-				String folderName = Util.getFolderName(db, sourceId);
-				return folderName + " #" + (number + 1);
-			}
-			else {
-				String[] difficulties = getResources().getStringArray(R.array.difficulties);
-				int difficulty = sourceId.charAt(sourceId.length() - 1) - '0' - 1;
-				return difficulties[difficulty] + " #" + (number + 1);
-			}
 		}
 	}
 }

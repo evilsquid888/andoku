@@ -170,33 +170,6 @@
             style="@style/NavigationTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/page_title_resume_game"
-            android:paddingBottom="8dp"/>
-        <ListView android:id="@id/android:list"
-            android:layout_width="fill_parent" 
-            android:layout_height="fill_parent"
-            android:background="#88fffeff"
-            android:cacheColorHint="#0000"
-            android:layout_weight="1"/>
-        <Button
-            style="@style/NavigationButton"
-            android:id="@+id/backButton1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="@string/button_nav_cancel"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="12dp">
-        <TextView
-            style="@style/NavigationTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="@string/page_title_help"/>
         <WebView
