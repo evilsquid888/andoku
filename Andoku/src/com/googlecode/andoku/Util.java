@@ -21,9 +21,7 @@ package com.googlecode.andoku;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.view.View;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
 
 import com.googlecode.andoku.db.AndokuDatabase;
 import com.googlecode.andoku.model.PuzzleType;
@@ -38,11 +36,6 @@ class Util {
 		// FLAG_LAYOUT_NO_LIMITS: allow window to extend outside of the screen.
 		activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
 				WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-	}
-
-	public static void saveSetOnClickListener(View view, OnClickListener onClickListener) {
-		if (view != null)
-			view.setOnClickListener(onClickListener);
 	}
 
 	public static String getFolderName(AndokuDatabase db, String sourceId) {

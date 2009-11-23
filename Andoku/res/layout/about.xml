@@ -29,9 +29,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="@string/page_title_help"/>
+        android:text="@string/page_title_about"/>
     <WebView
-        android:id="@+id/helpWebView"
+        android:id="@+id/aboutWebView"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_weight="1"

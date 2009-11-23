@@ -75,12 +75,12 @@ public class ResumeGameActivity extends ListActivity {
 			}
 		});
 
-		OnClickListener backListener = new OnClickListener() {
+		View backButton = findViewById(R.id.backButton);
+		backButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				finish();
 			}
-		};
-		Util.saveSetOnClickListener(findViewById(R.id.backButton1), backListener);
+		});
 	}
 
 	@Override

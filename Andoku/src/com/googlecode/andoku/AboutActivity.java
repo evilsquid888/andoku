@@ -25,8 +25,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
 
-public class HelpActivity extends Activity {
-	private static final String TAG = HelpActivity.class.getName();
+public class AboutActivity extends Activity {
+	private static final String TAG = AboutActivity.class.getName();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class HelpActivity extends Activity {
 
 		Util.setFullscreenWorkaround(this);
 
-		setContentView(R.layout.help);
+		setContentView(R.layout.about);
 
 		View backButton = findViewById(R.id.backButton);
 		backButton.setOnClickListener(new OnClickListener() {
@@ -46,8 +46,8 @@ public class HelpActivity extends Activity {
 			}
 		});
 
-		WebView helpWebView = (WebView) findViewById(R.id.helpWebView);
-		helpWebView.loadUrl("file:///android_asset/"
-				+ getResources().getString(R.string.html_page_help));
+		WebView aboutWebView = (WebView) findViewById(R.id.aboutWebView);
+		aboutWebView.loadUrl("file:///android_asset/"
+				+ getResources().getString(R.string.html_page_about));
 	}
 }

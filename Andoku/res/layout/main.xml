@@ -17,107 +17,73 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/flipper"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
     android:background="@drawable/bg">
-
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+    <TextView
+        style="@style/NavigationTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/page_title_welcome"/>
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-        <TextView
-            style="@style/NavigationTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/page_title_welcome"/>
-        <TextView 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <Button
-                style="@style/NavigationButton"
-                android:id="@+id/resumeGameButton"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/button_nav_resume_game"/>
-            <Button
-                style="@style/NavigationButton"
-                android:id="@+id/selectNewGameButton"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/button_nav_select_new_game"/>
-            <Button
-                style="@style/NavigationButton"
-                android:id="@+id/selectFoldersButton"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/button_nav_select_folders"/>
-            <Button
-                style="@style/NavigationButton"
-                android:id="@+id/settingsButton"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/button_nav_settings"/>
-            <Button
-                style="@style/NavigationButton"
-                android:id="@+id/helpButton"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/button_nav_help"/>
-            <Button
-                style="@style/NavigationButton"
-                android:id="@+id/aboutButton"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/button_nav_about"/>
-        </LinearLayout>
-        <TextView 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="12dp">
-        <TextView
-            style="@style/NavigationTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="@string/page_title_about"/>
-        <WebView
-            android:id="@+id/aboutWebView"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:fadingEdge="vertical"/>
         <Button
             style="@style/NavigationButton"
-            android:id="@+id/backButton3"
-            android:layout_width="wrap_content"
+            android:id="@+id/resumeGameButton"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/button_nav_back"/>
+            android:text="@string/button_nav_resume_game"/>
+        <Button
+            style="@style/NavigationButton"
+            android:id="@+id/selectNewGameButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/button_nav_select_new_game"/>
+        <Button
+            style="@style/NavigationButton"
+            android:id="@+id/selectFoldersButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/button_nav_select_folders"/>
+        <Button
+            style="@style/NavigationButton"
+            android:id="@+id/settingsButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/button_nav_settings"/>
+        <Button
+            style="@style/NavigationButton"
+            android:id="@+id/helpButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/button_nav_help"/>
+        <Button
+            style="@style/NavigationButton"
+            android:id="@+id/aboutButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/button_nav_about"/>
     </LinearLayout>
-
-</ViewFlipper>
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"/>
+</LinearLayout>

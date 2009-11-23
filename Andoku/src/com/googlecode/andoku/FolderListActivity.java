@@ -92,7 +92,8 @@ public class FolderListActivity extends ListActivity {
 
 		getListView().setOnCreateContextMenuListener(this);
 
-		Util.saveSetOnClickListener(findViewById(R.id.backButton), new OnClickListener() {
+		View backButton = findViewById(R.id.backButton);
+		backButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				finish();
 			}

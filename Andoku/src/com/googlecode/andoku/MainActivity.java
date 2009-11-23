@@ -29,13 +29,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.AnimationUtils;
-import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.ViewFlipper;
 
 import com.googlecode.andoku.db.AndokuDatabase;
 
@@ -45,13 +41,6 @@ public class MainActivity extends Activity {
 	private static final String ANDOKU_DIR = "Andoku";
 	private static final String DATABASE_BACKUP_FILE = "database.bak";
 	private static final String DATABASE_UPDATE_FILE = "database.update";
-
-	private static final int FLIP_IDX_MENU = 0;
-	private static final int FLIP_IDX_ABOUT = 1;
-
-	private static final String APP_STATE_FLIPPER = "flipper";
-
-	private ViewFlipper flipper;
 
 	private Button foldersButton;
 	private Button resumeGameButton;
@@ -71,15 +60,6 @@ public class MainActivity extends Activity {
 		Util.setFullscreenWorkaround(this);
 
 		setContentView(R.layout.main);
-
-		flipper = (ViewFlipper) findViewById(R.id.flipper);
-
-		if (savedInstanceState != null) {
-			flipper.setDisplayedChild(savedInstanceState.getInt(APP_STATE_FLIPPER, 0));
-		}
-
-		flipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_in));
-		flipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_out));
 
 		db = new AndokuDatabase(this);
 
@@ -126,28 +106,6 @@ public class MainActivity extends Activity {
 				onAboutButton();
 			}
 		});
-
-		OnClickListener backListener = new OnClickListener() {
-			public void onClick(View v) {
-				onBackButton();
-			}
-		};
-		Util.saveSetOnClickListener(findViewById(R.id.backButton1), backListener);
-		Util.saveSetOnClickListener(findViewById(R.id.backButton3), backListener);
-
-		WebView aboutWebView = (WebView) findViewById(R.id.aboutWebView);
-		aboutWebView.loadUrl("file:///android_asset/"
-				+ getResources().getString(R.string.html_page_about));
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		if (Constants.LOG_V)
-			Log.v(TAG, "onSaveInstanceState()");
-
-		super.onSaveInstanceState(outState);
-
-		outState.putInt(APP_STATE_FLIPPER, flipper.getDisplayedChild());
 	}
 
 	@Override
@@ -221,26 +179,8 @@ public class MainActivity extends Activity {
 		if (Constants.LOG_V)
 			Log.v(TAG, "onAboutButton()");
 
-		flipper.setDisplayedChild(FLIP_IDX_ABOUT);
-	}
-
-	void onBackButton() {
-		if (Constants.LOG_V)
-			Log.v(TAG, "onBackButton()");
-
-		flipper.setDisplayedChild(FLIP_IDX_MENU);
-	}
-
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if (flipper.getDisplayedChild() != 0) {
-				onBackButton();
-				return true;
-			}
-		}
-
-		return super.onKeyDown(keyCode, event);
+		Intent intent = new Intent(this, AboutActivity.class);
+		startActivity(intent);
 	}
 
 	private void restoreOrBackupDatabase() {
