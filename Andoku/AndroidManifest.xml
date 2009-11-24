@@ -28,10 +28,15 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
+    <permission-group android:name="com.googlecode.andoku.permission-group.ANDOKU"
+        android:label="@string/permgroup_label_andoku"
+        android:description="@string/permgroup_description_andoku"
+        android:icon="@drawable/icon"/>
+
     <permission android:name="com.googlecode.andoku.permission.IMPORT"
         android:label="@string/perm_label_import"
         android:description="@string/perm_description_import"
-        android:permissionGroup="android.permission-group.PERSONAL_INFO"
+        android:permissionGroup="com.googlecode.andoku.permission-group.ANDOKU"
         android:protectionLevel="normal"/>
 
     <application android:name=".Application" android:icon="@drawable/icon" android:label="@string/app_name">

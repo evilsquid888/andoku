@@ -87,6 +87,8 @@
     <string name="page_title_welcome">Welcome to Andoku</string>
     <string name="perm_description_import">Allows the application to create folders and import sudoku puzzles into Andoku.</string>
     <string name="perm_label_import">import sudoku puzzles into Andoku</string>
+    <string name="permgroup_description_andoku">Group of permissions to interact with Andoku.</string>
+    <string name="permgroup_label_andoku">Andoku</string>
     <string name="prompt_spinner_difficulty">Choose difficulty level</string>
     <string name="prompt_spinner_extra_regions">Choose extra regions</string>
     <string name="prompt_spinner_grid">Choose a grid style</string>
