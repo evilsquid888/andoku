@@ -349,11 +349,24 @@ public class AndokuDatabase {
 		if (Constants.LOG_V)
 			Log.v(TAG, "loadPuzzle(" + folderId + "," + number + ")");
 
-		Cursor cursor = loadPuzzles0(folderId);
+		SQLiteDatabase db = openHelper.getReadableDatabase();
 
+		String[] columns = { COL_NAME, COL_DIFFICULTY, COL_SIZE, COL_CLUES, COL_AREAS,
+				COL_EXTRA_REGIONS };
+		String selection = COL_FOLDER + "=?";
+		String[] selectionArgs = { String.valueOf(folderId) };
+		String limit = number + ",1";
+
+		Cursor cursor = db.query(TABLE_PUZZLES, columns, selection, selectionArgs, null, null, null,
+				limit);
 		try {
-			if (cursor.moveToPosition(number)) {
-				return toPuzzleInfo(cursor);
+			if (cursor.moveToNext()) {
+				PuzzleInfo.Builder builder = new PuzzleInfo.Builder(cursor.getString(3));
+				builder.setName(cursor.getString(0));
+				builder.setDifficulty(Difficulty.values()[cursor.getInt(1)]);
+				builder.setAreas(cursor.getString(4));
+				builder.setExtraRegions(cursor.getString(5));
+				return builder.build();
 			}
 			else {
 				return null;
@@ -362,22 +375,6 @@ public class AndokuDatabase {
 		finally {
 			cursor.close();
 		}
-	}
-
-	public Cursor loadPuzzles(long folderId) {
-		if (Constants.LOG_V)
-			Log.v(TAG, "loadPuzzles(" + folderId + ")");
-
-		return loadPuzzles0(folderId);
-	}
-
-	public PuzzleInfo toPuzzleInfo(Cursor cursor) {
-		PuzzleInfo.Builder builder = new PuzzleInfo.Builder(cursor.getString(3));
-		builder.setName(cursor.getString(0));
-		builder.setDifficulty(Difficulty.values()[cursor.getInt(1)]);
-		builder.setAreas(cursor.getString(4));
-		builder.setExtraRegions(cursor.getString(5));
-		return builder.build();
 	}
 
 	public void saveGame(PuzzleId puzzleId, AndokuPuzzle puzzle, TickTimer timer) {
@@ -695,17 +692,6 @@ public class AndokuDatabase {
 		finally {
 			cursor.close();
 		}
-	}
-
-	private Cursor loadPuzzles0(long folderId) {
-		SQLiteDatabase db = openHelper.getReadableDatabase();
-
-		String[] columns = { COL_NAME, COL_DIFFICULTY, COL_SIZE, COL_CLUES, COL_AREAS,
-				COL_EXTRA_REGIONS };
-		String selection = COL_FOLDER + "=?";
-		String[] selectionArgs = { String.valueOf(folderId) };
-
-		return db.query(TABLE_PUZZLES, columns, selection, selectionArgs, null, null, null, null);
 	}
 
 	private byte[] serialize(Serializable memento) {
