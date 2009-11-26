@@ -71,7 +71,7 @@ class ColorTheme implements Theme {
 	public static final class Builder {
 		private final Resources resources;
 
-		public int[] backgroudColors = { 0xffffffff, 0xffd0d0d0 };
+		public int[] backgroudColors = { 0xfff7f9f6, 0xfff7f9f6, 0xffb5ccdb };
 		public int puzzleBackgroundColor = 0xffffffff;
 		public int nameTextColor = 0xff222222;
 		public int difficultyTextColor = 0xff222222;
