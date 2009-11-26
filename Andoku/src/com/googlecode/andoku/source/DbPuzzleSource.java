@@ -18,6 +18,8 @@
 
 package com.googlecode.andoku.source;
 
+import android.database.Cursor;
+
 import com.googlecode.andoku.db.AndokuDatabase;
 import com.googlecode.andoku.db.PuzzleInfo;
 import com.googlecode.andoku.model.Difficulty;
@@ -28,6 +30,7 @@ class DbPuzzleSource implements PuzzleSource {
 	private final AndokuDatabase db;
 	private final long folderId;
 
+	private Cursor cursor;
 	private int numberOfPuzzles = -1;
 
 	public DbPuzzleSource(AndokuDatabase db, long folderId) {
@@ -40,9 +43,13 @@ class DbPuzzleSource implements PuzzleSource {
 	}
 
 	public PuzzleHolder load(int number) throws PuzzleIOException {
-		PuzzleInfo puzzleInfo = db.loadPuzzle(folderId, number);
-		if (puzzleInfo == null)
+		if (cursor == null)
+			cursor = db.loadPuzzles(folderId);
+
+		if (!cursor.moveToPosition(number))
 			throw new PuzzleIOException("Puzzle " + number + " not found in folder " + folderId);
+
+		PuzzleInfo puzzleInfo = db.toPuzzleInfo(cursor);
 
 		String name = puzzleInfo.getName();
 		Puzzle puzzle = createPuzzle(puzzleInfo);
@@ -59,6 +66,9 @@ class DbPuzzleSource implements PuzzleSource {
 	}
 
 	public void close() {
+		if (cursor != null)
+			cursor.close();
+
 		db.close();
 	}
 
