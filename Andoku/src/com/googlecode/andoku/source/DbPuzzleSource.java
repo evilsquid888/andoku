@@ -28,6 +28,8 @@ class DbPuzzleSource implements PuzzleSource {
 	private final AndokuDatabase db;
 	private final long folderId;
 
+	private int numberOfPuzzles = -1;
+
 	public DbPuzzleSource(AndokuDatabase db, long folderId) {
 		this.db = db;
 		this.folderId = folderId;
@@ -50,7 +52,10 @@ class DbPuzzleSource implements PuzzleSource {
 	}
 
 	public int numberOfPuzzles() {
-		return db.getNumberOfPuzzles(folderId);
+		if (numberOfPuzzles == -1)
+			numberOfPuzzles = db.getNumberOfPuzzles(folderId);
+
+		return numberOfPuzzles;
 	}
 
 	public void close() {
