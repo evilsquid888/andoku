@@ -167,13 +167,22 @@ public class AndokuContentProvider extends ContentProvider {
 
 		long parentId = db.getOrCreateFolder(Constants.IMPORTED_PUZZLES_FOLDER);
 
-		for (String segment : segments) {
+		for (int i = 0; i < segments.length - 1; i++) {
+			String segment = segments[i];
 			parentId = db.getOrCreateFolder(parentId, segment);
 		}
 
-		Uri folderUri = ContentUris.withAppendedId(uri, parentId);
-		getContext().getContentResolver().notifyChange(folderUri, null);
-		return folderUri;
+		String lastSegment = segments[segments.length - 1];
+		if (db.folderExists(parentId, lastSegment)) {
+			return null;
+		}
+		else {
+			parentId = db.createFolder(parentId, lastSegment);
+
+			Uri folderUri = ContentUris.withAppendedId(uri, parentId);
+			getContext().getContentResolver().notifyChange(folderUri, null);
+			return folderUri;
+		}
 	}
 
 	private boolean isValidPath(String[] segments) {
