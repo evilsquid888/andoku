@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!--
   Andoku - a sudoku puzzle game for Android.
   Copyright (C) 2009  Markus Wiederkehr
 
@@ -18,17 +18,20 @@
 -->
 
 <resources>
+    <!-- The possible grid styles (used by "Start New Game") -->
     <string-array name="grid_styles">
         <item>Standard</item>
         <item>Squiggly</item>
     </string-array>
 
+    <!-- The possible extra regions (used by "Start New Game") -->
     <string-array name="extra_regions">
         <item>Keine</item>
         <item>X-Sudoku</item>
         <item>Hyper-Sudoku</item>
     </string-array>
 
+    <!-- The possible difficulties (used by "Start New Game") -->
     <string-array name="difficulties">
         <item>Einfach</item>
         <item>Mittel</item>
@@ -37,6 +40,7 @@
         <item>Teuflisch</item>
     </string-array>
 
+    <!-- Values for "Colored Regions" (used by "Settings") -->
     <string-array name="pref_entries_colored_regions">
         <item>Niemals</item>
         <item>Für Standard und Squiggly</item>

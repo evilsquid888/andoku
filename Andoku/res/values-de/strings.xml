@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!--
   Andoku - a sudoku puzzle game for Android.
   Copyright (C) 2009  Markus Wiederkehr
 
@@ -18,6 +18,10 @@
 -->
 
 <resources>
+    <!-- Application name -->
+    <string name="app_name">Andoku</string>
+
+    <!-- When was a game last played (used by "Resume Game") -->
     <string name="age_0_minutes">vor 0 Minuten</string>
     <string name="age_1_day">Gestern</string>
     <string name="age_1_hour">vor 1 Stunde</string>
@@ -28,73 +32,105 @@
     <string name="age_n_hours">vor %d Stunden</string>
     <string name="age_n_minutes">vor %d Minuten</string>
     <string name="age_n_weeks">vor %d Wochen</string>
-    <string name="alert_dialog_cancel">Abbrechen</string>
+
+    <!-- Okay and cancel buttons for alert dialogs (reset puzzle, rename folder, ..) -->
     <string name="alert_dialog_ok">OK</string>
-    <string name="app_name">Andoku</string>
-    <string name="button_dismiss_congrats">Weiter</string>
+    <string name="alert_dialog_cancel">Abbrechen</string>
+
+    <!-- Navigation buttons (mostly used by main menu) -->
+    <string name="button_nav_resume_game">Spiel fortsetzen</string>
+    <string name="button_nav_select_new_game">Neues Spiel</string>
+    <string name="button_nav_select_folders">Ordner</string>
+    <string name="button_nav_settings">Einstellungen</string>
+    <string name="button_nav_help">Hilfe</string>
     <string name="button_nav_about">Über...</string>
+    <string name="button_nav_start_game">Spiel starten</string>
     <string name="button_nav_back">Zurück</string>
     <string name="button_nav_cancel">Abbrechen</string>
-    <string name="button_nav_help">Hilfe</string>
-    <string name="button_nav_resume_game">Spiel fortsetzen</string>
-    <string name="button_nav_select_folders">Ordner</string>
-    <string name="button_nav_select_new_game">Neues Spiel</string>
-    <string name="button_nav_settings">Einstellungen</string>
-    <string name="button_nav_start_game">Spiel starten</string>
+
+    <!-- Button to dismiss congratulations/statistics at the end of a game -->
+    <string name="button_dismiss_congrats">Weiter</string>
+
+    <!-- Different values for the button that starts/resumes/resets a game (when browsing through the list of puzzles) -->
     <string name="button_reset_game">Spiel zurücksetzen</string>
     <string name="button_resume_game">Spiel fortsetzen</string>
     <string name="button_start_game">Spiel starten</string>
+
+    <!-- Context menu entries for the "Imported Folders" activity -->
     <string name="context_menu_delete_folder">Ordner löschen</string>
     <string name="context_menu_rename_folder">Ordner umbenennen</string>
+
+    <!-- Captions and messages for confirmation dialogs -->
     <string name="dialog_delete_folder">Ordner löschen</string>
+    <string name="message_delete_folder">Der Ordner \'%s\' ist nicht leer. Wollen Sie ihn wirklich löschen?</string>
     <string name="dialog_rename_folder">Ordner umbenennen</string>
+    <string name="message_rename_folder">Neuer Name für \'%s\':</string>
+    <string name="message_folder_exists">Der Ordner konnte nicht umbenannt werden, da bereits an anderer Ordner namens \'%s\' existiert!</string>
     <string name="dialog_reset_puzzle">Rätsel zurücksetzen?</string>
+    <string name="message_reset_puzzle">Wollen Sie das aktuelle Sudoku-Rätsel und die Stoppuhr wirklich zurücksetzen?</string>
+
+    <!-- Captions for the error page -->
+    <string name="error_title_io_error">I/O-Fehler</string>
+
+    <!-- Messages for the error page -->
     <string name="error_message_finding_available">Beim Auffinden der verfügbaren Sudoku-Rätsel ist ein Fehler aufgetreten!</string>
     <string name="error_message_loading_puzzle">Beim Laden des Sudoku-Rätsels ist ein Fehler aufgetreten!</string>
     <string name="error_message_stack_trace">Stack-Trace:</string>
-    <string name="error_title_io_error">I/O-Fehler</string>
+
+    <!-- Names of the help and about pages for this language (under folder "assets") -->
     <string name="html_page_about">about-de.html</string>
     <string name="html_page_help">help-de.html</string>
+
+    <!-- Info/warning messages for "Check Puzzle" -->
+    <string name="message_computing_solution">Berechne die Lösung. Bitte warten...</string>
     <string name="info_puzzle_ok_1">Alles okay. Ein Feld ist noch auszufüllen.</string>
     <string name="info_puzzle_ok_n">Alles okay. %d Felder sind noch auszufüllen.</string>
+    <string name="warn_invalid_puzzle">Dieses Rätsel ist ungültig und kann nicht gelöst werden!</string>
+    <string name="warn_puzzle_errors">Das Sudoku-Rätsel hat leider einige Fehler!</string>
+
+    <!-- Options menu while playing -->
     <string name="menu_check_puzzle">Überprüfen</string>
     <string name="menu_pause">Pause</string>
     <string name="menu_reset_puzzle">Zurücksetzen</string>
     <string name="menu_resume">Fortfahren</string>
     <string name="menu_settings">Einstellungen</string>
-    <string name="message_computing_solution">Berechne die Lösung. Bitte warten...</string>
+
+    <!-- Messages for congratulations/statistics at end of game -->
     <string name="message_congrats">&lt;b&gt;Gratuliere, Sie haben das Sudoku-Rätsel gelöst!&lt;/b&gt;</string>
-    <string name="message_delete_folder">Der Ordner \'%s\' ist nicht leer. Wollen Sie ihn wirklich löschen?</string>
-    <string name="message_empty_folder">Der Ordner \'%s\' ist leer.</string>
-    <string name="message_folder_exists">Der Ordner konnte nicht umbenannt werden, da bereits an anderer Ordner namens \'%s\' existiert!</string>
-    <string name="message_rename_folder">Neuer Name für \'%s\':</string>
-    <string name="message_reset_puzzle">Wollen Sie das aktuelle Sudoku-Rätsel und die Stoppuhr wirklich zurücksetzen?</string>
-    <string name="message_statistics_details">Gelöste Rätsel: %d&lt;br/&gt;Durchschnittszeit: %s&lt;br/&gt;Bestzeit: %s</string>
     <string name="message_statistics_title_assets">Statistik für &lt;i&gt;%s (%s)&lt;/i&gt;:</string>
     <string name="message_statistics_title_db">Statistik für Ordner &lt;i&gt;%s&lt;/i&gt;:</string>
-    <string name="name_no_puzzle">Kein Sudoku-Rätsel verfügbar</string>
+    <string name="message_statistics_details">Gelöste Rätsel: %d&lt;br/&gt;Durchschnittszeit: %s&lt;br/&gt;Bestzeit: %s</string>
+
+    <!-- Folder cannot be opened because it's empty -->
+    <string name="message_empty_folder">Der Ordner \'%s\' ist leer.</string>
+
+    <!-- Puzzle names (displayed top-left when playing) -->
     <string name="name_sudoku_squiggly">Squiggly Sudoku</string>
     <string name="name_sudoku_squiggly_hyper">Squiggly Hyper-Sudoku</string>
     <string name="name_sudoku_squiggly_x">Squiggly X-Sudoku</string>
     <string name="name_sudoku_standard">Standard Sudoku</string>
     <string name="name_sudoku_standard_hyper">Hyper-Sudoku</string>
     <string name="name_sudoku_standard_x">X-Sudoku</string>
-    <string name="page_title_about">Über Andoku</string>
+
+    <!-- Captions for various activities -->
+    <string name="page_title_welcome">Willkommen zu Andoku</string>
+    <string name="page_title_resume_game">Spiel fortsetzen</string>
+    <string name="page_title_new_game">Neues Spiel starten</string>
     <string name="page_title_folder_list">Importierte Ordner</string>
     <string name="page_title_help">Hilfe zu Andoku</string>
-    <string name="page_title_new_game">Neues Spiel starten</string>
-    <string name="page_title_resume_game">Spiel fortsetzen</string>
-    <string name="page_title_welcome">Willkommen zu Andoku</string>
-    <string name="perm_description_import">Erlaubt es einer Anwendung, Ordner in Andoku zu erstellen und Sudoku-Rätsel zu importieren.</string>
-    <string name="perm_label_import">Sudoku-Rätsel in Andoku importieren</string>
-    <string name="permgroup_description_andoku">Gruppe von Rechten um mit Andoku zu interagieren.</string>
-    <string name="permgroup_label_andoku">Andoku</string>
-    <string name="prompt_spinner_difficulty">Schwierigkeitsgrad auswählen</string>
-    <string name="prompt_spinner_extra_regions">Zusatzbereiche auswählen</string>
-    <string name="prompt_spinner_grid">Raster auswählen</string>
-    <string name="spinner_difficulty">Schwierigkeitsgrad:</string>
-    <string name="spinner_extra_regions">Zusatzbereiche:</string>
+    <string name="page_title_about">Über Andoku</string>
+
+    <!-- Game type and difficulty selection (used by "Start New Game") -->
     <string name="spinner_grid">Raster:</string>
-    <string name="warn_invalid_puzzle">Dieses Rätsel ist ungültig und kann nicht gelöst werden!</string>
-    <string name="warn_puzzle_errors">Das Sudoku-Rätsel hat leider einige Fehler!</string>
+    <string name="prompt_spinner_grid">Raster auswählen</string>
+    <string name="spinner_extra_regions">Zusatzbereiche:</string>
+    <string name="prompt_spinner_extra_regions">Zusatzbereiche auswählen</string>
+    <string name="spinner_difficulty">Schwierigkeitsgrad:</string>
+    <string name="prompt_spinner_difficulty">Schwierigkeitsgrad auswählen</string>
+
+    <!-- Declares a permission group and a permission that allows external applications to import puzzles into Andoku -->
+    <string name="permgroup_label_andoku">Andoku</string>
+    <string name="permgroup_description_andoku">Gruppe von Rechten um mit Andoku zu interagieren.</string>
+    <string name="perm_label_import">Sudoku-Rätsel in Andoku importieren</string>
+    <string name="perm_description_import">Erlaubt es einer Anwendung, Ordner in Andoku zu erstellen und Sudoku-Rätsel zu importieren.</string>
  </resources>
