@@ -85,7 +85,8 @@ public class AndokuPuzzle {
 	}
 
 	public Serializable saveToMemento() {
-		return new PuzzleMemento(copyValues(values), hasErrors());
+		return new PuzzleMemento(copyValues(values), copyRegionErrors(regionErrors),
+				copyCellErrors(cellErrors));
 	}
 
 	public boolean restoreFromMemento(Object object) {
@@ -99,13 +100,8 @@ public class AndokuPuzzle {
 		this.values = copyValues(memento.values);
 		this.numValues = countValues(this.values);
 		this.solved = checkSolved();
-
-		if (memento.hasErrors) {
-			if (solution == null)
-				computeSolution();
-
-			checkForErrors();
-		}
+		this.regionErrors = copyRegionErrors(memento.regionErrors);
+		this.cellErrors = copyCellErrors(memento.cellErrors);
 
 		return true;
 	}
@@ -438,25 +434,37 @@ public class AndokuPuzzle {
 		return copy;
 	}
 
+	private static HashSet<RegionError> copyRegionErrors(HashSet<RegionError> orig) {
+		return new HashSet<RegionError>(orig);
+	}
+
+	private HashSet<Position> copyCellErrors(HashSet<Position> orig) {
+		return new HashSet<Position>(orig);
+	}
+
 	private static final class PuzzleMemento implements Externalizable {
 		private static final long serialVersionUID = -7495554868028722997L;
 
 		public ValueSet[][] values;
-		public boolean hasErrors;
+		public HashSet<RegionError> regionErrors;
+		public HashSet<Position> cellErrors;
 
 		public PuzzleMemento() {
 		}
 
-		public PuzzleMemento(ValueSet[][] values, boolean hasErrors) {
+		public PuzzleMemento(ValueSet[][] values, HashSet<RegionError> regionErrors,
+				HashSet<Position> cellErrors) {
 			this.values = values;
-			this.hasErrors = hasErrors;
+			this.regionErrors = regionErrors;
+			this.cellErrors = cellErrors;
 		}
 
 		public void writeExternal(ObjectOutput out) throws IOException {
 			out.writeByte(4); // version
 
-			writeValues(out);
-			writeHasErrors(out);
+			writeValues(out, values);
+			writeRegionErrors(out, regionErrors);
+			writeCellErrors(out, cellErrors);
 		}
 
 		public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
@@ -477,16 +485,17 @@ public class AndokuPuzzle {
 		private void readVersion3(ObjectInput in) throws IOException {
 			in.readInt(); // skip hash value
 			values = readValues(in);
-			hasErrors = hasOldRegionErrors(in);
-			hasErrors = hasOldCellErrors(in);
+			regionErrors = readRegionErrors(in);
+			cellErrors = readCellErrors(in);
 		}
 
 		private void readVersion4(ObjectInput in) throws IOException {
 			values = readValues(in);
-			hasErrors = readHasErrors(in);
+			regionErrors = readRegionErrors(in);
+			cellErrors = readCellErrors(in);
 		}
 
-		private void writeValues(ObjectOutput out) throws IOException {
+		private void writeValues(ObjectOutput out, ValueSet[][] values) throws IOException {
 			final int size = values.length;
 			out.writeChar(size);
 
@@ -512,28 +521,52 @@ public class AndokuPuzzle {
 			return values;
 		}
 
-		private void writeHasErrors(ObjectOutput out) throws IOException {
-			out.writeBoolean(hasErrors);
+		private void writeRegionErrors(ObjectOutput out, HashSet<RegionError> errors)
+				throws IOException {
+			final int numErrors = errors.size();
+			out.writeChar(numErrors);
+
+			for (RegionError error : errors) {
+				out.writeChar(error.p1.row);
+				out.writeChar(error.p1.col);
+				out.writeChar(error.p2.row);
+				out.writeChar(error.p2.col);
+			}
 		}
 
-		private boolean readHasErrors(ObjectInput in) throws IOException {
-			return in.readBoolean();
-		}
-
-		private boolean hasOldRegionErrors(ObjectInput in) throws IOException {
+		private HashSet<RegionError> readRegionErrors(ObjectInput in) throws IOException {
 			final int numErrors = in.readChar();
+			HashSet<RegionError> errors = new HashSet<RegionError>(numErrors);
 
-			in.readFully(new byte[8 * numErrors]); // 4 chars per error
+			for (int i = 0; i < numErrors; i++) {
+				Position p1 = new Position(in.readChar(), in.readChar());
+				Position p2 = new Position(in.readChar(), in.readChar());
+				errors.add(new RegionError(p1, p2));
+			}
 
-			return numErrors > 0;
+			return errors;
 		}
 
-		private boolean hasOldCellErrors(ObjectInput in) throws IOException {
+		private void writeCellErrors(ObjectOutput out, HashSet<Position> errors) throws IOException {
+			final int numErrors = errors.size();
+			out.writeChar(numErrors);
+
+			for (Position p : errors) {
+				out.writeChar(p.row);
+				out.writeChar(p.col);
+			}
+		}
+
+		private HashSet<Position> readCellErrors(ObjectInput in) throws IOException {
 			final int numErrors = in.readChar();
+			HashSet<Position> errors = new HashSet<Position>(numErrors);
 
-			in.readFully(new byte[4 * numErrors]); // 2 chars per error
+			for (int i = 0; i < numErrors; i++) {
+				Position p = new Position(in.readChar(), in.readChar());
+				errors.add(p);
+			}
 
-			return numErrors > 0;
+			return errors;
 		}
 	}
 }
