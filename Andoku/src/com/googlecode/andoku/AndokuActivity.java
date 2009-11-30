@@ -414,6 +414,23 @@ public class AndokuActivity extends Activity
 		cancelToast();
 	}
 
+	private void setCell(Position cell, ValueSet values) {
+		boolean sideEffects = puzzle.setValues(cell.row, cell.col, values);
+
+		if (puzzle.isSolved()) {
+			timer.stop();
+			autoSavePuzzle();
+
+			enterGameState(GAME_STATE_SOLVED);
+			return;
+		}
+
+		if (sideEffects)
+			andokuView.invalidate();
+		else
+			andokuView.invalidateCell(cell);
+	}
+
 	public boolean onKey(View view, int keyCode, KeyEvent event) {
 		if (gameState != GAME_STATE_PLAYING)
 			return false;
@@ -626,24 +643,6 @@ public class AndokuActivity extends Activity
 			Log.v(TAG, "onDismissCongratsButton()");
 
 		enterGameState(GAME_STATE_READY);
-	}
-
-	// callback from an input dialog - only when GAME_STATE_PLAYING
-	void setCell(Position cell, ValueSet values) {
-		boolean sideEffects = puzzle.setValues(cell.row, cell.col, values);
-
-		if (puzzle.isSolved()) {
-			timer.stop();
-			autoSavePuzzle();
-
-			enterGameState(GAME_STATE_SOLVED);
-			return;
-		}
-
-		if (sideEffects)
-			andokuView.invalidate();
-		else
-			andokuView.invalidateCell(cell);
 	}
 
 	// callback from reset puzzle dialog
