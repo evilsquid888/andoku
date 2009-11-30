@@ -34,7 +34,7 @@ import com.googlecode.andoku.transfer.StandardAreas;
 public class AndokuPuzzle {
 	private final String name;
 	private final int size;
-	private final Puzzle puzzle;
+	private final Puzzle problem;
 	private final PuzzleType puzzleType;
 	private final Difficulty difficulty;
 	private final boolean[][] extra;
@@ -63,7 +63,7 @@ public class AndokuPuzzle {
 
 		this.name = name;
 		this.size = puzzle.getSize();
-		this.puzzle = puzzle;
+		this.problem = puzzle;
 		this.puzzleType = determinePuzzleType(puzzle);
 		this.difficulty = difficulty;
 		this.extra = obtainExtra(puzzle);
@@ -135,7 +135,7 @@ public class AndokuPuzzle {
 
 		SingleSolutionReporter reporter = new SingleSolutionReporter();
 		PuzzleSolver solver = new DlxPuzzleSolver();
-		solver.solve(puzzle, reporter);
+		solver.solve(problem, reporter);
 
 		Puzzle solution = reporter.getSolution();
 		if (solution == null) {
@@ -175,7 +175,7 @@ public class AndokuPuzzle {
 	}
 
 	public boolean isClue(int row, int col) {
-		return puzzle.getValue(row, col) != Puzzle.UNDEFINED;
+		return problem.getValue(row, col) != Puzzle.UNDEFINED;
 	}
 
 	public boolean isExtraRegion(int row, int col) {
@@ -183,11 +183,11 @@ public class AndokuPuzzle {
 	}
 
 	public int getAreaCode(int row, int col) {
-		return puzzle.getAreaCode(row, col);
+		return problem.getAreaCode(row, col);
 	}
 
 	public int getAreaColor(int row, int col) {
-		return areaColors[puzzle.getAreaCode(row, col)];
+		return areaColors[problem.getAreaCode(row, col)];
 	}
 
 	public int getNumberOfAreaColors() {
@@ -226,7 +226,7 @@ public class AndokuPuzzle {
 
 		Position[] positionOfValue = new Position[size];
 
-		for (Region region : puzzle.getRegions()) {
+		for (Region region : problem.getRegions()) {
 			for (int value = 0; value < size; value++)
 				positionOfValue[value] = null;
 
@@ -249,7 +249,7 @@ public class AndokuPuzzle {
 
 		Position[] positionOf = new Position[size];
 
-		for (Region region : puzzle.getRegions()) {
+		for (Region region : problem.getRegions()) {
 			for (int value = 0; value < size; value++)
 				positionOf[value] = null;
 
