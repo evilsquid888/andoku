@@ -19,19 +19,27 @@
 package com.googlecode.andoku;
 
 import java.security.InvalidParameterException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.googlecode.andoku.db.AndokuDatabase;
 import com.googlecode.andoku.db.PuzzleInfo;
 import com.googlecode.andoku.model.Difficulty;
 
 public class AndokuContentProvider extends ContentProvider {
+	private static final String TAG = AndokuContentProvider.class.getName();
+
 	public static final String AUTHORITY = "com.googlecode.andoku.puzzlesprovider";
 	public static final String PATH_FOLDERS = "folders";
 	public static final String PATH_PUZZLES = "puzzles";
@@ -56,6 +64,15 @@ public class AndokuContentProvider extends ContentProvider {
 		MATCHER.addURI(AUTHORITY, PATH_FOLDERS + "/#", CODE_FOLDERS_ID);
 		MATCHER.addURI(AUTHORITY, PATH_FOLDERS + "/#/" + PATH_PUZZLES, CODE_PUZZLES);
 		MATCHER.addURI(AUTHORITY, PATH_FOLDERS + "/#/" + PATH_PUZZLES + "/#", CODE_PUZZLES_ID);
+	}
+
+	// projection map for queryFolder()
+	private static final Map<String, String> FOLDERS_PROJECTION_MAP;
+
+	static {
+		FOLDERS_PROJECTION_MAP = new HashMap<String, String>();
+		FOLDERS_PROJECTION_MAP.put(AndokuDatabase.COL_ID, AndokuDatabase.COL_ID);
+		FOLDERS_PROJECTION_MAP.put(AndokuDatabase.COL_FOLDER_NAME, AndokuDatabase.COL_FOLDER_NAME);
 	}
 
 	private AndokuDatabase db;
@@ -87,7 +104,27 @@ public class AndokuContentProvider extends ContentProvider {
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
 			String sortOrder) {
-		throw new UnsupportedOperationException();
+		if (Constants.LOG_V)
+			Log.v(TAG, "query(" + uri + ", " + Arrays.toString(projection) + ", " + selection + ", "
+					+ Arrays.toString(selectionArgs) + ", " + sortOrder + ")");
+
+		int match = MATCHER.match(uri);
+		switch (match) {
+			case CODE_FOLDERS: {
+				long parentId = db.getOrCreateFolder(Constants.IMPORTED_PUZZLES_FOLDER);
+				return queryFolder(parentId, projection, selection, selectionArgs, sortOrder);
+			}
+			case CODE_FOLDERS_ID: {
+				long parentId = Long.parseLong(uri.getPathSegments().get(1));
+				return queryFolder(parentId, projection, selection, selectionArgs, sortOrder);
+			}
+			case CODE_PUZZLES:
+				throw new UnsupportedOperationException();
+			case CODE_PUZZLES_ID:
+				throw new UnsupportedOperationException();
+			default:
+				throw new UnsupportedOperationException();
+		}
 	}
 
 	@Override
@@ -102,6 +139,9 @@ public class AndokuContentProvider extends ContentProvider {
 
 	@Override
 	public int bulkInsert(Uri uri, ContentValues[] valuesArray) {
+		if (Constants.LOG_V)
+			Log.v(TAG, "bulkInsert(" + uri + ", " + valuesArray.length + ")");
+
 		db.beginTransaction();
 		try {
 			bulkInsert0(uri, valuesArray);
@@ -117,6 +157,9 @@ public class AndokuContentProvider extends ContentProvider {
 
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
+		if (Constants.LOG_V)
+			Log.v(TAG, "insert(" + uri + ", " + values + ")");
+
 		int match = MATCHER.match(uri);
 		switch (match) {
 			case CODE_FOLDERS:
@@ -126,6 +169,20 @@ public class AndokuContentProvider extends ContentProvider {
 			default:
 				throw new InvalidParameterException("Invalid URI: " + uri);
 		}
+	}
+
+	private Cursor queryFolder(long parentId, String[] projection, String selection,
+			String[] selectionArgs, String sortOrder) {
+		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+		qb.setTables(AndokuDatabase.TABLE_FOLDERS);
+		qb.setProjectionMap(FOLDERS_PROJECTION_MAP);
+		qb.appendWhere(AndokuDatabase.COL_FOLDER_PARENT + "=" + parentId);
+
+		String orderBy = TextUtils.isEmpty(sortOrder)
+				? AndokuDatabase.COL_FOLDER_NAME + " asc"
+				: sortOrder;
+
+		return db.query(qb, projection, selection, selectionArgs, orderBy);
 	}
 
 	private void bulkInsert0(Uri uri, ContentValues[] valuesArray) {
@@ -193,10 +250,6 @@ public class AndokuContentProvider extends ContentProvider {
 			if (segment.length() == 0)
 				return false;
 		}
-
-		// TODO: remove restriction once sub-folders can be opened
-		if (segments.length != 1)
-			return false;
 
 		return true;
 	}

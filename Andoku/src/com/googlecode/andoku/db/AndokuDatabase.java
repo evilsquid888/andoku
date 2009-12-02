@@ -31,6 +31,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.database.sqlite.SQLiteStatement;
 import android.provider.BaseColumns;
 import android.util.Log;
@@ -53,7 +54,7 @@ public class AndokuDatabase {
 
 	public static final String COL_ID = BaseColumns._ID;
 
-	private static final String TABLE_FOLDERS = "folders";
+	public static final String TABLE_FOLDERS = "folders";
 	public static final String COL_FOLDER_NAME = "name";
 	public static final String COL_FOLDER_PARENT = "parent";
 
@@ -62,7 +63,7 @@ public class AndokuDatabase {
 	public static final int IDX_FOLDERS_NAME = 1;
 	public static final int IDX_FOLDERS_PARENT = 2;
 
-	private static final String TABLE_PUZZLES = "puzzles";
+	public static final String TABLE_PUZZLES = "puzzles";
 	public static final String COL_FOLDER = "folder";
 	public static final String COL_NAME = "name";
 	public static final String COL_DIFFICULTY = "difficulty"; // 0-4|-1
@@ -579,6 +580,14 @@ public class AndokuDatabase {
 	public void setTransactionSuccessful() {
 		openHelper.getWritableDatabase().setTransactionSuccessful();
 	}
+
+	public Cursor query(SQLiteQueryBuilder qb, String[] projection, String selection,
+			String[] selectionArgs, String orderBy) {
+		SQLiteDatabase db = openHelper.getReadableDatabase();
+
+		return qb.query(db, projection, selection, selectionArgs, null, null, orderBy);
+	}
+
 	private long createFolder(SQLiteDatabase db, long parentId, String name) {
 		ContentValues values = new ContentValues();
 		values.put(COL_FOLDER_NAME, name);
