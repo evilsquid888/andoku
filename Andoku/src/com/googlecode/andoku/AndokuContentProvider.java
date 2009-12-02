@@ -77,6 +77,24 @@ public class AndokuContentProvider extends ContentProvider {
 
 	private AndokuDatabase db;
 
+	public static long[] getFolderAndPuzzleIds(Uri puzzleUri) {
+		int match = MATCHER.match(puzzleUri);
+		switch (match) {
+			case CODE_FOLDERS:
+				return null;
+			case CODE_FOLDERS_ID:
+				return null;
+			case CODE_PUZZLES:
+				return null;
+			case CODE_PUZZLES_ID:
+				long folderId = Long.parseLong(puzzleUri.getPathSegments().get(1));
+				long puzzleId = Long.parseLong(puzzleUri.getPathSegments().get(3));
+				return new long[] { folderId, puzzleId };
+			default:
+				return null;
+		}
+	}
+
 	@Override
 	public boolean onCreate() {
 		db = new AndokuDatabase(getContext());
