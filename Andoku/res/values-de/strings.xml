@@ -128,11 +128,9 @@
     <string name="spinner_difficulty">Schwierigkeitsgrad:</string>
     <string name="prompt_spinner_difficulty">Schwierigkeitsgrad auswählen</string>
 
-    <!-- Declares a permission group and a permissions that allow external applications to read/write puzzles from/to Andoku -->
+    <!-- Declares a permission group and a permission that allows external applications to import puzzles into Andoku -->
     <string name="permgroup_label_andoku">Andoku</string>
     <string name="permgroup_description_andoku">Gruppe von Rechten um mit Andoku zu interagieren.</string>
     <string name="perm_label_import">Sudoku-Rätsel in Andoku importieren</string>
     <string name="perm_description_import">Erlaubt es einer Anwendung, Ordner in Andoku zu erstellen und Sudoku-Rätsel zu importieren.</string>
-    <string name="perm_label_export">Sudoku-Rätsel aus Andoku auslesen</string>
-    <string name="perm_description_export">Erlaubt es einer Anwendung, Andokus Ordner zu durchsuchen und Sudoku-Rätsel auszulesen.</string>
  </resources>
