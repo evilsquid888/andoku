@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.googlecode.andoku.db.AndokuDatabase;
 import com.googlecode.andoku.source.PuzzleSourceIds;
 
 public class OpenImportedPuzzleActivity extends Activity {
@@ -58,16 +59,34 @@ public class OpenImportedPuzzleActivity extends Activity {
 		}
 
 		long folderId = folderAndPuzzleIds[0];
-		// long puzzleId = folderAndPuzzleIds[1];
+		long puzzleId = folderAndPuzzleIds[1];
 
 		String puzzleSourceId = PuzzleSourceIds.forDbFolder(folderId);
-		int number = 0; // TODO: determine from puzzleId
+		int number = getPuzzleNumber(folderId, puzzleId);
+		if (number == -1) {
+			Log.e(TAG, "No such puzzle: " + puzzleId + " in folder: " + folderId);
+			finish();
+			return;
+		}
+
+		boolean start = intent.getBooleanExtra(Constants.EXTRA_START_PUZZLE, false);
 
 		intent = new Intent(this, AndokuActivity.class);
 		intent.putExtra(Constants.EXTRA_PUZZLE_SOURCE_ID, puzzleSourceId);
 		intent.putExtra(Constants.EXTRA_PUZZLE_NUMBER, number);
+		intent.putExtra(Constants.EXTRA_START_PUZZLE, start);
 		startActivity(intent);
 
 		finish();
+	}
+
+	private int getPuzzleNumber(long folderId, long puzzleId) {
+		AndokuDatabase db = new AndokuDatabase(this);
+		try {
+			return db.getPuzzleNumber(folderId, puzzleId);
+		}
+		finally {
+			db.close();
+		}
 	}
 }
