@@ -97,6 +97,33 @@ public class AndokuDatabasePuzzleTest extends AndroidTestCase {
 		assertEquals(clues5, db.loadPuzzle(folderId, 4).getClues());
 	}
 
+	public void testGetPuzzleNumber() throws Exception {
+		long folderId = db.createFolder("folder");
+
+		String clues1 = ".8.4.96536428...7.......8....7..5.42...7.1...85.6..1....6.......1...47362735.8.1.";
+		PuzzleInfo puzzle1 = new PuzzleInfo.Builder(clues1).build();
+		String clues2 = "63.2.8.1.2...5..891.9.6..3...8..6.5....187....6.5..9...9..7.1.681..2...5.2.4.3.97";
+		PuzzleInfo puzzle2 = new PuzzleInfo.Builder(clues2).build();
+		String clues3 = "...1...4.195..8...34..2.1.9...91.5..6.98.24.7..1.34...2.8.4..71...7..832.1...9...";
+		PuzzleInfo puzzle3 = new PuzzleInfo.Builder(clues3).build();
+		String clues4 = "..7....638.467.9...1..39..2..37..6..7..4.1..5..8..61..6..21..9...1.635.839....7..";
+		PuzzleInfo puzzle4 = new PuzzleInfo.Builder(clues4).build();
+		String clues5 = "981...7..3.719..8...4.82...7..6..39.2.......7.13..7..5...35.2...6..148.3..2...564";
+		PuzzleInfo puzzle5 = new PuzzleInfo.Builder(clues5).build();
+
+		long id1 = db.insertPuzzle(folderId, puzzle1);
+		long id2 = db.insertPuzzle(folderId, puzzle2);
+		long id3 = db.insertPuzzle(folderId, puzzle3);
+		long id4 = db.insertPuzzle(folderId, puzzle4);
+		long id5 = db.insertPuzzle(folderId, puzzle5);
+
+		assertEquals(0, db.getPuzzleNumber(folderId, id1));
+		assertEquals(1, db.getPuzzleNumber(folderId, id2));
+		assertEquals(2, db.getPuzzleNumber(folderId, id3));
+		assertEquals(3, db.getPuzzleNumber(folderId, id4));
+		assertEquals(4, db.getPuzzleNumber(folderId, id5));
+	}
+
 	public void testDeletePuzzle() throws Exception {
 		long folderId = db.createFolder("folder");
 

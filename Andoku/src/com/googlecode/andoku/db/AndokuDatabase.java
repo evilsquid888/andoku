@@ -346,6 +346,46 @@ public class AndokuDatabase {
 		}
 	}
 
+	public int getPuzzleNumber(long folderId, long puzzleId) {
+		if (Constants.LOG_V)
+			Log.v(TAG, "getPuzzleNumber(" + folderId + "," + puzzleId + ")");
+
+		SQLiteDatabase db = openHelper.getReadableDatabase();
+
+		String[] columns = { COL_ID };
+		String selection = COL_FOLDER + "=?";
+		String[] selectionArgs = { String.valueOf(folderId) };
+
+		Cursor cursor = db.query(TABLE_PUZZLES, columns, selection, selectionArgs, null, null, null,
+				null);
+
+		try {
+			int total = cursor.getCount();
+			return getPuzzleNumber(cursor, puzzleId, 0, total - 1);
+		}
+		finally {
+			cursor.close();
+		}
+	}
+
+	private int getPuzzleNumber(Cursor cursor, long puzzleId, int fromNumber, int toNumber) {
+		if (fromNumber > toNumber)
+			return -1;
+
+		int candidate = (fromNumber + toNumber) / 2;
+		if (!cursor.moveToPosition(candidate))
+			throw new IllegalStateException();
+
+		int id = cursor.getInt(0);
+		if (id == puzzleId)
+			return candidate;
+
+		if (id < puzzleId)
+			return getPuzzleNumber(cursor, puzzleId, candidate + 1, toNumber);
+		else
+			return getPuzzleNumber(cursor, puzzleId, fromNumber, candidate - 1);
+	}
+
 	public PuzzleInfo loadPuzzle(long folderId, int number) {
 		if (Constants.LOG_V)
 			Log.v(TAG, "loadPuzzle(" + folderId + "," + number + ")");
