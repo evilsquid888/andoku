@@ -220,8 +220,7 @@ public class AndokuPuzzleView extends View {
 		else if (paused)
 			drawPaused(canvas);
 		else {
-			if (theme.isHighlightDigits())
-				drawHighlightedCells(canvas, clipBounds);
+			drawHighlightedCells(canvas, clipBounds);
 
 			drawMarkedCell(canvas);
 		}
@@ -313,7 +312,8 @@ public class AndokuPuzzleView extends View {
 	}
 
 	private void drawHighlightedCells(Canvas canvas, Rect clipBounds) {
-		if (highlightedDigit == null)
+		if (highlightedDigit == null
+				|| theme.getHighlightDigitsPolicy() == HighlightDigitsPolicy.NEVER)
 			return;
 
 		for (int row = 0; row < size; row++) {
@@ -328,24 +328,28 @@ public class AndokuPuzzleView extends View {
 
 				final ValueSet values = puzzle.getValues(row, col);
 				if (values.contains(highlightedDigit)) {
-					canvas.save();
-					canvas.translate(x, y);
-
-					drawHighlightedcell(canvas, values);
-
-					canvas.restore();
+					drawHighlightedcell(canvas, values.size(), x, y);
 				}
 			}
 		}
 	}
 
-	private void drawHighlightedcell(Canvas canvas, ValueSet values) {
+	private void drawHighlightedcell(Canvas canvas, int numValues, float x, float y) {
+		if (numValues != 1
+				&& theme.getHighlightDigitsPolicy() == HighlightDigitsPolicy.ONLY_SINGLE_VALUES)
+			return;
+
+		canvas.save();
+		canvas.translate(x, y);
+
 		canvas.clipRect(0, 0, cellWidth, cellHeight);
 
-		if (values.size() == 1)
+		if (numValues == 1)
 			canvas.drawColor(theme.getHighlightedCellColorSingleDigit());
 		else
 			canvas.drawColor(theme.getHighlightedCellColorMultipleDigits());
+
+		canvas.restore();
 	}
 
 	private void drawMarkedCell(Canvas canvas) {

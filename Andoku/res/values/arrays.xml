@@ -47,4 +47,11 @@
         <item>For Standard, X, Hyper and Squiggly</item>
         <item>Always</item>
     </string-array>
+
+    <!-- Values for "Highlight Digits" (used by "Settings") -->
+    <string-array name="pref_entries_highlight_digits">
+        <item>Never</item>
+        <item>Only single values</item>
+        <item>Both single and multiple values</item>
+    </string-array>
 </resources>

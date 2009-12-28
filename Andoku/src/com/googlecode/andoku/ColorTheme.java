@@ -61,7 +61,7 @@ class ColorTheme implements Theme {
 	private final int[] areaColors3;
 	private final int[] areaColors4;
 
-	private final boolean highlightDigits;
+	private final HighlightDigitsPolicy highlightDigitsPolicy;
 	private final int highlightedCellColorSingleDigit;
 	private final int highlightedCellColorMultipleDigits;
 
@@ -89,7 +89,7 @@ class ColorTheme implements Theme {
 		public int[] areaColors2 = { 0xffffffff, 0xffe0e0e0 };
 		public int[] areaColors3 = { 0xffffd9d9, 0xffd9ffd9, 0xffd9d9ff }; // triad
 		public int[] areaColors4 = { 0xffffffd9, 0xffd9ffec, 0xffd9d9ff, 0xffffd9ec }; // tetrad
-		public boolean highlightDigits = true;
+		public HighlightDigitsPolicy highlightDigitsPolicy = HighlightDigitsPolicy.ONLY_SINGLE_VALUES;
 		public int highlightedCellColorSingleDigit = 0xe6ffff00;
 		public int highlightedCellColorMultipleDigits = 0xe6bebe00;
 
@@ -187,7 +187,7 @@ class ColorTheme implements Theme {
 		areaColors3 = copy(builder.areaColors3, 3);
 		areaColors4 = copy(builder.areaColors4, 4);
 
-		highlightDigits = builder.highlightDigits;
+		highlightDigitsPolicy = builder.highlightDigitsPolicy;
 		highlightedCellColorSingleDigit = builder.highlightedCellColorSingleDigit;
 		highlightedCellColorMultipleDigits = builder.highlightedCellColorMultipleDigits;
 
@@ -312,8 +312,8 @@ class ColorTheme implements Theme {
 		}
 	}
 
-	public boolean isHighlightDigits() {
-		return highlightDigits;
+	public HighlightDigitsPolicy getHighlightDigitsPolicy() {
+		return highlightDigitsPolicy;
 	}
 
 	public int getHighlightedCellColorSingleDigit() {

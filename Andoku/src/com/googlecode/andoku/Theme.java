@@ -53,7 +53,7 @@ interface Theme {
 	boolean isDrawAreaColors(PuzzleType puzzleType);
 	int getAreaColor(int colorNumber, int numberOfColors);
 
-	boolean isHighlightDigits();
+	HighlightDigitsPolicy getHighlightDigitsPolicy();
 	int getHighlightedCellColorSingleDigit();
 	int getHighlightedCellColorMultipleDigits();
 

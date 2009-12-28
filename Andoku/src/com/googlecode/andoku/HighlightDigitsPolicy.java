@@ -18,12 +18,6 @@
 
 package com.googlecode.andoku;
 
-// corresponds to res/xml/settings.xml
-public class Settings {
-	public static final String KEY_COLORED_REGIONS = "colored_regions";
-	public static final String KEY_HIGHLIGHT_DIGITS = "highlight_digits_2";
-	public static final String KEY_SHOW_TIMER = "show_timer";
-
-	private Settings() {
-	}
+public enum HighlightDigitsPolicy {
+	NEVER, ONLY_SINGLE_VALUES, ALL_VALUES
 }

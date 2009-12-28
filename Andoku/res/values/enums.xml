@@ -24,4 +24,10 @@
         <item>STANDARD_X_HYPER_SQUIGGLY</item>
         <item>ALWAYS</item>
     </string-array>
+
+    <string-array name="pref_entryvalues_highlight_digits">
+        <item>NEVER</item>
+        <item>ONLY_SINGLE_VALUES</item>
+        <item>ALL_VALUES</item>
+    </string-array>
 </resources>

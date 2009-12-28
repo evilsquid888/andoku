@@ -221,7 +221,8 @@ public class AndokuActivity extends Activity
 
 		builder.areaColorPolicy = AreaColorPolicy.valueOf(settings.getString(
 				Settings.KEY_COLORED_REGIONS, AreaColorPolicy.STANDARD_X_HYPER_SQUIGGLY.name()));
-		builder.highlightDigits = settings.getBoolean(Settings.KEY_HIGHLIGHT_DIGITS, false);
+		builder.highlightDigitsPolicy = HighlightDigitsPolicy.valueOf(settings.getString(
+				Settings.KEY_HIGHLIGHT_DIGITS, HighlightDigitsPolicy.ONLY_SINGLE_VALUES.name()));
 
 		// TODO: set colors
 
