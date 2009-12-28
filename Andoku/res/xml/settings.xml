@@ -33,7 +33,7 @@
 
         <CheckBoxPreference
             android:key="highlight_digits"
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:title="@string/pref_title_highlight_digits"
             android:summary="@string/pref_summary_highlight_digits"/>
 
