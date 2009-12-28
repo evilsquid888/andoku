@@ -27,4 +27,6 @@
     <string name="pref_summary_colored_regions">Verwende Farben zur Darstellung der Bereiche eines Sudoku-Rätsels.</string>
     <string name="pref_title_highlight_digits">Ziffern hervorheben</string>
     <string name="pref_summary_highlight_digits">Hebe die zuletzt eingegebene oder derzeit ausgewählte Ziffer hervor.</string>
+    <string name="pref_title_show_timer">Stoppuhr anzeigen</string>
+    <string name="pref_summary_show_timer">Zeigt eine Stoppuhr während des Spiels an.</string>
  </resources>

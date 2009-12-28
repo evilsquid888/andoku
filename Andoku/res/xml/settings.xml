@@ -37,6 +37,12 @@
             android:title="@string/pref_title_highlight_digits"
             android:summary="@string/pref_summary_highlight_digits"/>
 
+        <CheckBoxPreference
+            android:key="show_timer"
+            android:defaultValue="true"
+            android:title="@string/pref_title_show_timer"
+            android:summary="@string/pref_summary_show_timer"/>
+
     </PreferenceCategory>
 
 </PreferenceScreen>

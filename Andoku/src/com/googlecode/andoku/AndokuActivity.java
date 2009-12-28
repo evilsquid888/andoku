@@ -330,6 +330,9 @@ public class AndokuActivity extends Activity
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (Constants.LOG_V)
+			Log.v(TAG, "onActivityResult(" + requestCode + ", " + resultCode + ", " + data + ")");
+
 		switch (requestCode) {
 			case REQUEST_CODE_SETTINGS:
 				onReturnedFromSettings();
@@ -567,9 +570,6 @@ public class AndokuActivity extends Activity
 
 	// callback from tick timer
 	public void onTick(long time) {
-		if (timerView.getVisibility() != View.VISIBLE)
-			return;
-
 		timerView.setText(DateUtil.formatTime(time));
 	}
 
@@ -668,6 +668,8 @@ public class AndokuActivity extends Activity
 
 	private void onReturnedFromSettings() {
 		createThemeFromPreferences();
+
+		setTimerVisibility(gameState);
 
 		andokuView.invalidate();
 	}
@@ -875,10 +877,20 @@ public class AndokuActivity extends Activity
 				&& timer.getTime() > 0);
 		andokuView.setPreview(newGameState == GAME_STATE_READY);
 
+		setTimerVisibility(newGameState);
+
 		if (gameState != newGameState)
 			andokuView.invalidate();
 
 		this.gameState = newGameState;
+	}
+
+	private void setTimerVisibility(int forGameState) {
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+
+		boolean showTimerWhilePlaying = settings.getBoolean(Settings.KEY_SHOW_TIMER, true);
+		boolean showTimer = showTimerWhilePlaying || forGameState != GAME_STATE_PLAYING;
+		timerView.setVisibility(showTimer ? View.VISIBLE : View.INVISIBLE);
 	}
 
 	private void setWakeLock(boolean lock) {
