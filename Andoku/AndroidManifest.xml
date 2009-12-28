@@ -44,6 +44,15 @@
                   android:authorities="com.googlecode.andoku.puzzlesprovider"
                   android:writePermission="com.googlecode.andoku.permission.IMPORT"/>
 
+        <activity android:name=".Main"
+                  android:label="@string/app_name"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/Theme.NoBackground.Light">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
+        </activity>
+
         <activity android:name=".MainActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"
