@@ -127,6 +127,8 @@ public class PuzzleDecoder {
 			return ExtraRegions.x(size);
 		else if (extra.equalsIgnoreCase("H"))
 			return ExtraRegions.hyper(size);
+		else if (extra.equalsIgnoreCase("P"))
+			return ExtraRegions.percent(size);
 		else
 			throw new IllegalArgumentException("Unsupported extra regions: " + extra);
 	}

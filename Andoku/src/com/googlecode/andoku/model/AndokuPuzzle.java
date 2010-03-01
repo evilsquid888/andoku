@@ -320,12 +320,15 @@ public class AndokuPuzzle {
 		boolean squiggly = isSquiggly(puzzle);
 		boolean x = puzzle.getExtraRegions().length == 2;
 		boolean hyper = puzzle.getExtraRegions().length == 4;
+		boolean percent = puzzle.getExtraRegions().length == 3;
 
 		if (squiggly) {
 			if (x)
 				return PuzzleType.SQUIGGLY_X;
 			else if (hyper)
-				return PuzzleType.SQUIGGLY_H;
+				return PuzzleType.SQUIGGLY_HYPER;
+			else if (percent)
+				return PuzzleType.SQUIGGLY_PERCENT;
 			else
 				return PuzzleType.SQUIGGLY;
 		}
@@ -334,6 +337,8 @@ public class AndokuPuzzle {
 				return PuzzleType.STANDARD_X;
 			else if (hyper)
 				return PuzzleType.STANDARD_HYPER;
+			else if (percent)
+				return PuzzleType.STANDARD_PERCENT;
 			else
 				return PuzzleType.STANDARD;
 		}

@@ -58,12 +58,16 @@ class Util {
 				return R.string.name_sudoku_standard_x;
 			case STANDARD_HYPER:
 				return R.string.name_sudoku_standard_hyper;
+			case STANDARD_PERCENT:
+				return R.string.name_sudoku_standard_percent;
 			case SQUIGGLY:
 				return R.string.name_sudoku_squiggly;
 			case SQUIGGLY_X:
 				return R.string.name_sudoku_squiggly_x;
-			case SQUIGGLY_H:
+			case SQUIGGLY_HYPER:
 				return R.string.name_sudoku_squiggly_hyper;
+			case SQUIGGLY_PERCENT:
+				return R.string.name_sudoku_squiggly_percent;
 		}
 		throw new IllegalStateException();
 	}
@@ -76,12 +80,16 @@ class Util {
 				return R.drawable.standard_x;
 			case STANDARD_HYPER:
 				return R.drawable.standard_h;
+			case STANDARD_PERCENT:
+				return R.drawable.standard_p;
 			case SQUIGGLY:
 				return R.drawable.squiggly_n;
 			case SQUIGGLY_X:
 				return R.drawable.squiggly_x;
-			case SQUIGGLY_H:
+			case SQUIGGLY_HYPER:
 				return R.drawable.squiggly_h;
+			case SQUIGGLY_PERCENT:
+				return R.drawable.squiggly_p;
 		}
 		throw new IllegalStateException();
 	}

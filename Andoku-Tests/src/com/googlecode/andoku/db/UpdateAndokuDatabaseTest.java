@@ -60,7 +60,7 @@ public class UpdateAndokuDatabaseTest extends InstrumentationTestCase {
 		assertEquals(3, cursor.getLong(AndokuDatabase.IDX_GAME_ID));
 		assertEquals("asset:squiggly_h_2", cursor.getString(AndokuDatabase.IDX_GAME_SOURCE));
 		assertEquals(2, cursor.getInt(AndokuDatabase.IDX_GAME_NUMBER));
-		assertEquals(PuzzleType.SQUIGGLY_H.ordinal(), cursor.getInt(AndokuDatabase.IDX_GAME_TYPE));
+		assertEquals(PuzzleType.SQUIGGLY_HYPER.ordinal(), cursor.getInt(AndokuDatabase.IDX_GAME_TYPE));
 		assertEquals(856112, cursor.getLong(AndokuDatabase.IDX_GAME_TIMER));
 		assertEquals(1243210307153l, cursor.getLong(AndokuDatabase.IDX_GAME_CREATED_DATE));
 		assertEquals(1243552984498l, cursor.getLong(AndokuDatabase.IDX_GAME_MODIFIED_DATE));

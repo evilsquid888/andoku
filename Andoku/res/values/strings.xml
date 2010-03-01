@@ -108,9 +108,11 @@
     <string name="name_sudoku_squiggly">Squiggly Sudoku</string>
     <string name="name_sudoku_squiggly_hyper">Squiggly Hyper-Sudoku</string>
     <string name="name_sudoku_squiggly_x">Squiggly X-Sudoku</string>
+    <string name="name_sudoku_squiggly_percent">Squiggly Percent-Sudoku</string>
     <string name="name_sudoku_standard">Standard Sudoku</string>
     <string name="name_sudoku_standard_hyper">Hyper-Sudoku</string>
     <string name="name_sudoku_standard_x">X-Sudoku</string>
+    <string name="name_sudoku_standard_percent">Percent-Sudoku</string>
 
     <!-- Captions for various activities -->
     <string name="page_title_welcome">Welcome to Andoku</string>

@@ -29,6 +29,7 @@
         <item>No extra regions</item>
         <item>X-Sudoku</item>
         <item>Hyper-Sudoku</item>
+        <item>Percent-Sudoku</item>
     </string-array>
 
     <!-- The possible difficulties (used by "Start New Game") -->
@@ -43,8 +44,8 @@
     <!-- Values for "Colored Regions" (used by "Settings") -->
     <string-array name="pref_entries_colored_regions">
         <item>Never</item>
-        <item>For Standard and Squiggly</item>
-        <item>For Standard, X, Hyper and Squiggly</item>
+        <item>For Standard and Squiggly w/o extra</item>
+        <item>For all except Squiggly with extra regions</item>
         <item>Always</item>
     </string-array>
 

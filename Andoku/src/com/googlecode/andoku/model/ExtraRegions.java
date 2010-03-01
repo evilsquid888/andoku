@@ -32,15 +32,7 @@ public class ExtraRegions {
 	}
 
 	public static ExtraRegion[] x(int size) {
-		List<Position> diag1 = new ArrayList<Position>();
-		List<Position> diag2 = new ArrayList<Position>();
-
-		for (int i = 0; i < size; i++) {
-			diag1.add(new Position(i, i));
-			diag2.add(new Position(i, size - 1 - i));
-		}
-
-		return new ExtraRegion[] { new ExtraRegion(diag1), new ExtraRegion(diag2) };
+		return new ExtraRegion[] { diag1(size), diag2(size) };
 	}
 
 	public static int hyperCount(int size) {
@@ -52,6 +44,35 @@ public class ExtraRegions {
 			throw new IllegalArgumentException("Hyper restricted to 9x9 for now..");
 
 		return new ExtraRegion[] { square(1, 1), square(5, 1), square(1, 5), square(5, 5) };
+	}
+
+	public static int percentCount(int size) {
+		return size == 9 ? 3 : 0;
+	}
+
+	public static ExtraRegion[] percent(int size) {
+		if (size != 9)
+			throw new IllegalArgumentException("Percent restricted to 9x9 for now..");
+
+		return new ExtraRegion[] { square(1, 1), diag2(size), square(5, 5) };
+	}
+
+	private static ExtraRegion diag1(int size) {
+		List<Position> diag1 = new ArrayList<Position>();
+
+		for (int i = 0; i < size; i++)
+			diag1.add(new Position(i, i));
+
+		return new ExtraRegion(diag1);
+	}
+
+	private static ExtraRegion diag2(int size) {
+		List<Position> diag2 = new ArrayList<Position>();
+
+		for (int i = 0; i < size; i++)
+			diag2.add(new Position(i, size - 1 - i));
+
+		return new ExtraRegion(diag2);
 	}
 
 	private static ExtraRegion square(int rowOffset, int colOffset) {

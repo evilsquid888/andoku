@@ -25,8 +25,9 @@ import com.googlecode.andoku.model.PuzzleType;
 public enum AreaColorPolicy {
 	NEVER(EnumSet.noneOf(PuzzleType.class)), //
 	STANDARD_SQUIGGLY(EnumSet.of(PuzzleType.STANDARD, PuzzleType.SQUIGGLY)), //
+	// name does not include PERCENT but cannot be changed because it is used in existing user preferences
 	STANDARD_X_HYPER_SQUIGGLY(EnumSet.of(PuzzleType.STANDARD, PuzzleType.STANDARD_X,
-			PuzzleType.STANDARD_HYPER, PuzzleType.SQUIGGLY)), //
+			PuzzleType.STANDARD_HYPER, PuzzleType.STANDARD_PERCENT, PuzzleType.SQUIGGLY)), //
 	ALWAYS(EnumSet.allOf(PuzzleType.class));
 
 	private final EnumSet<PuzzleType> puzzleTypes;

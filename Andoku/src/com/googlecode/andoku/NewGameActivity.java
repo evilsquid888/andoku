@@ -159,6 +159,9 @@ public class NewGameActivity extends Activity {
 			case 2:
 				sb.append("h_");
 				break;
+			case 3:
+				sb.append("p_");
+				break;
 			default:
 				throw new IllegalStateException();
 		}
