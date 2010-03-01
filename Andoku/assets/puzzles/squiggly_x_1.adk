@@ -1,18 +1,20 @@
 # Andoku - a sudoku puzzle game for Android.
-# Copyright (C) 2009  Markus Wiederkehr
+# Copyright (C) 2009, 2010  Markus Wiederkehr
 #
-# This program is free software: you can redistribute it and/or modify
+# This file is part of Andoku.
+#
+# Andoku is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# This program is distributed in the hope that it will be useful,
+# Andoku is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with Andoku.  If not, see <http://www.gnu.org/licenses/>.
 
 .5..3.7..1.6.....8....128.64..5.1..3.1.6.9.4.2..4.8..19.534....5.....9.4..7.2..8.|111112233114442333144222533142225533444555666775588869775888669777866699778899999|X
 .17.4....78..14.36.3.7......63.81....91...42....46.71......9.7.15.32..68....3.85.|111112233411222233411225233444555633744456663774555666778588996778888996778899999|X
