@@ -46,6 +46,11 @@ public class CellThenValuesInputMethod implements InputMethod {
 			setMark(new Position(markedCell[0], markedCell[1]));
 	}
 
+	public void reset() {
+		target.highlightDigit(null);
+		setMark(null);
+	}
+
 	public void onMoveMark(int dy, int dx) {
 		final int size = target.getPuzzleSize();
 
@@ -85,6 +90,8 @@ public class CellThenValuesInputMethod implements InputMethod {
 		}
 
 		target.setCellValues(mark, values);
+
+		target.highlightDigit(digit);
 	}
 
 	public void onTap(Position cell, boolean editable) {
@@ -93,6 +100,13 @@ public class CellThenValuesInputMethod implements InputMethod {
 
 	private void setMark(Position cell) {
 		target.setMarkedCell(cell);
+
+		if (cell != null) {
+			ValueSet values = target.getCellValues(cell);
+			if (values.size() == 1) {
+				target.highlightDigit(values.nextValue(0));
+			}
+		}
 
 		final int size = target.getPuzzleSize();
 

@@ -28,6 +28,8 @@ public interface InputMethod {
 	void onSaveInstanceState(Bundle outState);
 	void onRestoreInstanceState(Bundle savedInstanceState);
 
+	void reset();
+
 	void onMoveMark(int dy, int dx);
 	void onKeypad(int digit);
 	void onTap(Position cell, boolean editable);

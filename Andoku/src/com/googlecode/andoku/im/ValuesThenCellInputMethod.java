@@ -34,7 +34,6 @@ public class ValuesThenCellInputMethod implements InputMethod {
 
 	public ValuesThenCellInputMethod(InputMethodTarget target) {
 		this.target = target;
-		target.setMarkedCell(null);
 	}
 
 	public void onSaveInstanceState(Bundle outState) {
@@ -46,6 +45,12 @@ public class ValuesThenCellInputMethod implements InputMethod {
 		setValues(v);
 	}
 
+	public void reset() {
+		target.setMarkedCell(null);
+		target.highlightDigit(null);
+		setValues(0);
+	}
+
 	public void onMoveMark(int dy, int dx) {
 	}
 
@@ -53,10 +58,12 @@ public class ValuesThenCellInputMethod implements InputMethod {
 		if (values.contains(digit)) {
 			values.remove(digit);
 			target.checkButton(digit, false);
+			target.highlightDigit(null);
 		}
 		else {
 			values.add(digit);
 			target.checkButton(digit, true);
+			target.highlightDigit(digit);
 		}
 	}
 
@@ -73,8 +80,6 @@ public class ValuesThenCellInputMethod implements InputMethod {
 			cellValues.addAll(values);
 			target.setCellValues(cell, cellValues);
 		}
-
-		// TODO: cell highlighting!!
 	}
 
 	private void setValues(int v) {

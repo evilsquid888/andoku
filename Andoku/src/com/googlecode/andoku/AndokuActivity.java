@@ -134,7 +134,8 @@ public class AndokuActivity extends Activity
 			return andokuView.getMarkedCell();
 		}
 		public void setMarkedCell(Position cell) {
-			setMark(cell);
+			andokuView.markCell(cell);
+			cancelToast();
 		}
 		public boolean isClue(Position cell) {
 			return puzzle.isClue(cell.row, cell.col);
@@ -150,6 +151,9 @@ public class AndokuActivity extends Activity
 		}
 		public void checkButton(int digit, boolean checked) {
 			keypadButtons[digit].setChecked(checked);
+		}
+		public void highlightDigit(Integer digit) {
+			andokuView.highlightDigit(digit);
 		}
 	};
 
@@ -242,22 +246,14 @@ public class AndokuActivity extends Activity
 			}
 		});
 
-		createInputMethod();
-
 		createThemeFromPreferences();
 
 		createPuzzle(savedInstanceState);
-	}
 
-	private void createInputMethod() {
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		createInputMethod();
 
-		InputMethodPolicy inputMethodPolicy = InputMethodPolicy.valueOf(settings.getString(
-				Settings.KEY_INPUT_METHOD, InputMethodPolicy.CELL_THEN_VALUES.name()));
-		if (inputMethodPolicy != this.inputMethodPolicy) {
-			this.inputMethodPolicy = inputMethodPolicy;
-			this.inputMethod = inputMethodPolicy.createInputMethod(inputMethodTarget);
-		}
+		if (isRestoreSavedInstanceState(savedInstanceState))
+			inputMethod.onRestoreInstanceState(savedInstanceState);
 	}
 
 	private void createThemeFromPreferences() {
@@ -305,6 +301,18 @@ public class AndokuActivity extends Activity
 		puzzleSourceView.setTextColor(theme.getSourceTextColor());
 		timerView.setTextColor(theme.getTimerTextColor());
 		andokuView.setTheme(theme);
+	}
+
+	private void createInputMethod() {
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+
+		InputMethodPolicy inputMethodPolicy = InputMethodPolicy.valueOf(settings.getString(
+				Settings.KEY_INPUT_METHOD, InputMethodPolicy.CELL_THEN_VALUES.name()));
+		if (inputMethodPolicy != this.inputMethodPolicy) {
+			this.inputMethodPolicy = inputMethodPolicy;
+			this.inputMethod = inputMethodPolicy.createInputMethod(inputMethodTarget);
+			this.inputMethod.reset();
+		}
 	}
 
 	@Override
@@ -435,11 +443,7 @@ public class AndokuActivity extends Activity
 		if (gameState != GAME_STATE_PLAYING)
 			return;
 
-		andokuView.highlightDigit(digit);
-
 		inputMethod.onKeypad(digit);
-
-		updateKeypadHighlighing();
 
 		cancelToast();
 	}
@@ -454,6 +458,8 @@ public class AndokuActivity extends Activity
 			enterGameState(GAME_STATE_SOLVED);
 			return;
 		}
+
+		updateKeypadHighlighing();
 
 		if (sideEffects)
 			andokuView.invalidate();
@@ -500,19 +506,6 @@ public class AndokuActivity extends Activity
 			default:
 				return false;
 		}
-	}
-
-	private void setMark(Position cell) {
-		andokuView.markCell(cell);
-
-		if (cell != null) {
-			ValueSet values = puzzle.getValues(cell.row, cell.col);
-			if (values.size() == 1) {
-				andokuView.highlightDigit(values.nextValue(0));
-			}
-		}
-
-		cancelToast();
 	}
 
 	public boolean onTouch(View view, MotionEvent event) {
@@ -583,6 +576,9 @@ public class AndokuActivity extends Activity
 	private void gotoPuzzle(int number) {
 		try {
 			setPuzzle(number);
+
+			inputMethod.reset();
+
 			enterGameState(GAME_STATE_READY);
 		}
 		catch (PuzzleIOException e) {
@@ -663,9 +659,9 @@ public class AndokuActivity extends Activity
 	}
 
 	private void onReturnedFromSettings() {
-		createInputMethod();
-
 		createThemeFromPreferences();
+
+		createInputMethod();
 
 		setTimerVisibility(gameState);
 
@@ -720,8 +716,6 @@ public class AndokuActivity extends Activity
 
 		if (savedInstanceState.containsKey(APP_STATE_HIGHLIGHTED_DIGIT))
 			andokuView.highlightDigit(savedInstanceState.getInt(APP_STATE_HIGHLIGHTED_DIGIT));
-
-		inputMethod.onRestoreInstanceState(savedInstanceState);
 	}
 
 	private void createPuzzleFromIntent() throws PuzzleIOException {
@@ -753,7 +747,6 @@ public class AndokuActivity extends Activity
 		puzzle = createAndokuPuzzle(number);
 
 		andokuView.setPuzzle(puzzle);
-		andokuView.highlightDigit(null);
 
 		puzzleNameView.setText(getPuzzleName());
 		puzzleDifficultyView.setText(getPuzzleDifficulty());

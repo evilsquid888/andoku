@@ -36,4 +36,6 @@ public interface InputMethodTarget {
 
 	int getNumberOfDigitButtons();
 	void checkButton(int digit, boolean checked);
+
+	void highlightDigit(Integer digit);
 }
