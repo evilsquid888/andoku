@@ -20,13 +20,24 @@
 
 package com.googlecode.andoku;
 
-// corresponds to res/xml/settings.xml
-public class Settings {
-	public static final String KEY_COLORED_REGIONS = "colored_regions";
-	public static final String KEY_HIGHLIGHT_DIGITS = "highlight_digits_2";
-	public static final String KEY_SHOW_TIMER = "show_timer";
-	public static final String KEY_INPUT_METHOD = "input_method";
+import com.googlecode.andoku.im.CellThenValuesInputMethod;
+import com.googlecode.andoku.im.InputMethod;
+import com.googlecode.andoku.im.InputMethodTarget;
+import com.googlecode.andoku.im.ValuesThenCellInputMethod;
 
-	private Settings() {
-	}
+public enum InputMethodPolicy {
+	CELL_THEN_VALUES {
+		@Override
+		public InputMethod createInputMethod(InputMethodTarget target) {
+			return new CellThenValuesInputMethod(target);
+		}
+	},
+	VALUES_THEN_CELL {
+		@Override
+		public InputMethod createInputMethod(InputMethodTarget target) {
+			return new ValuesThenCellInputMethod(target);
+		}
+	};
+
+	public abstract InputMethod createInputMethod(InputMethodTarget target);
 }

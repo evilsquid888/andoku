@@ -20,6 +20,7 @@
 -->
 
 <resources>
+    <!-- Corresponds with enum AreaColorPolicy -->
     <string-array name="pref_entryvalues_colored_regions">
         <item>NEVER</item>
         <item>STANDARD_SQUIGGLY</item>
@@ -27,9 +28,16 @@
         <item>ALWAYS</item>
     </string-array>
 
+    <!-- Corresponds with enum HighlightDigitsPolicy -->
     <string-array name="pref_entryvalues_highlight_digits">
         <item>NEVER</item>
         <item>ONLY_SINGLE_VALUES</item>
         <item>ALL_VALUES</item>
+    </string-array>
+
+    <!-- Corresponds with enum InputMethodPolicy -->
+    <string-array name="pref_entryvalues_input_method">
+        <item>CELL_THEN_VALUES</item>
+        <item>VALUES_THEN_CELL</item>
     </string-array>
 </resources>

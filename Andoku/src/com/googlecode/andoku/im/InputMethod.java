@@ -18,15 +18,17 @@
  * along with Andoku.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.googlecode.andoku;
+package com.googlecode.andoku.im;
 
-// corresponds to res/xml/settings.xml
-public class Settings {
-	public static final String KEY_COLORED_REGIONS = "colored_regions";
-	public static final String KEY_HIGHLIGHT_DIGITS = "highlight_digits_2";
-	public static final String KEY_SHOW_TIMER = "show_timer";
-	public static final String KEY_INPUT_METHOD = "input_method";
+import android.os.Bundle;
 
-	private Settings() {
-	}
+import com.googlecode.andoku.model.Position;
+
+public interface InputMethod {
+	void onSaveInstanceState(Bundle outState);
+	void onRestoreInstanceState(Bundle savedInstanceState);
+
+	void onMoveMark(int dy, int dx);
+	void onKeypad(int digit);
+	void onTap(Position cell, boolean editable);
 }

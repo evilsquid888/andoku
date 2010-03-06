@@ -18,15 +18,22 @@
  * along with Andoku.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.googlecode.andoku;
+package com.googlecode.andoku.im;
 
-// corresponds to res/xml/settings.xml
-public class Settings {
-	public static final String KEY_COLORED_REGIONS = "colored_regions";
-	public static final String KEY_HIGHLIGHT_DIGITS = "highlight_digits_2";
-	public static final String KEY_SHOW_TIMER = "show_timer";
-	public static final String KEY_INPUT_METHOD = "input_method";
+import com.googlecode.andoku.model.Position;
+import com.googlecode.andoku.model.ValueSet;
 
-	private Settings() {
-	}
+public interface InputMethodTarget {
+	int getPuzzleSize();
+
+	Position getMarkedCell();
+	void setMarkedCell(Position cell);
+
+	boolean isClue(Position cell);
+
+	ValueSet getCellValues(Position cell);
+	void setCellValues(Position cell, ValueSet values);
+
+	int getNumberOfDigitButtons();
+	void checkButton(int digit, boolean checked);
 }

@@ -55,6 +55,8 @@ import android.widget.Toast;
 import com.googlecode.andoku.db.AndokuDatabase;
 import com.googlecode.andoku.db.GameStatistics;
 import com.googlecode.andoku.db.PuzzleId;
+import com.googlecode.andoku.im.InputMethod;
+import com.googlecode.andoku.im.InputMethodTarget;
 import com.googlecode.andoku.model.AndokuPuzzle;
 import com.googlecode.andoku.model.Difficulty;
 import com.googlecode.andoku.model.Position;
@@ -80,7 +82,6 @@ public class AndokuActivity extends Activity
 	private static final String APP_STATE_PUZZLE_SOURCE_ID = "puzzleSourceId";
 	private static final String APP_STATE_PUZZLE_NUMBER = "puzzleNumber";
 	private static final String APP_STATE_GAME_STATE = "gameState";
-	private static final String APP_STATE_MARKED_CELL = "markedCell";
 	private static final String APP_STATE_HIGHLIGHTED_DIGIT = "highlightedDigit";
 
 	private static final int REQUEST_CODE_SETTINGS = 0;
@@ -124,6 +125,36 @@ public class AndokuActivity extends Activity
 
 	private final int[] andokuViewScreenLocation = new int[2];
 	private final int[] fingertipViewScreenLocation = new int[2];
+
+	private final InputMethodTarget inputMethodTarget = new InputMethodTarget() {
+		public int getPuzzleSize() {
+			return puzzle.getSize();
+		}
+		public Position getMarkedCell() {
+			return andokuView.getMarkedCell();
+		}
+		public void setMarkedCell(Position cell) {
+			setMark(cell);
+		}
+		public boolean isClue(Position cell) {
+			return puzzle.isClue(cell.row, cell.col);
+		}
+		public ValueSet getCellValues(Position cell) {
+			return puzzle.getValues(cell.row, cell.col);
+		}
+		public void setCellValues(Position cell, ValueSet values) {
+			setCell(cell, values);
+		}
+		public int getNumberOfDigitButtons() {
+			return keypadButtons.length;
+		}
+		public void checkButton(int digit, boolean checked) {
+			keypadButtons[digit].setChecked(checked);
+		}
+	};
+
+	private InputMethodPolicy inputMethodPolicy;
+	private InputMethod inputMethod;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -211,9 +242,22 @@ public class AndokuActivity extends Activity
 			}
 		});
 
+		createInputMethod();
+
 		createThemeFromPreferences();
 
 		createPuzzle(savedInstanceState);
+	}
+
+	private void createInputMethod() {
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+
+		InputMethodPolicy inputMethodPolicy = InputMethodPolicy.valueOf(settings.getString(
+				Settings.KEY_INPUT_METHOD, InputMethodPolicy.CELL_THEN_VALUES.name()));
+		if (inputMethodPolicy != this.inputMethodPolicy) {
+			this.inputMethodPolicy = inputMethodPolicy;
+			this.inputMethod = inputMethodPolicy.createInputMethod(inputMethodTarget);
+		}
 	}
 
 	private void createThemeFromPreferences() {
@@ -320,14 +364,11 @@ public class AndokuActivity extends Activity
 			outState.putInt(APP_STATE_PUZZLE_NUMBER, puzzleNumber);
 			outState.putInt(APP_STATE_GAME_STATE, gameState);
 
-			Position markedCell = andokuView.getMarkedCell();
-			if (markedCell != null)
-				outState.putIntArray(APP_STATE_MARKED_CELL,
-						new int[] { markedCell.row, markedCell.col });
-
 			Integer highlightedDigit = andokuView.getHighlightedDigit();
 			if (highlightedDigit != null)
 				outState.putInt(APP_STATE_HIGHLIGHTED_DIGIT, highlightedDigit);
+
+			inputMethod.onSaveInstanceState(outState);
 		}
 	}
 
@@ -394,28 +435,11 @@ public class AndokuActivity extends Activity
 		if (gameState != GAME_STATE_PLAYING)
 			return;
 
-		Position mark = andokuView.getMarkedCell();
-		if (mark == null)
-			return;
-
 		andokuView.highlightDigit(digit);
 
-		ValueSet values = puzzle.getValues(mark.row, mark.col);
+		inputMethod.onKeypad(digit);
 
-		if (!puzzle.isClue(mark.row, mark.col)) {
-			if (values.contains(digit)) {
-				values.remove(digit);
-				keypadButtons[digit].setChecked(false);
-			}
-			else {
-				values.add(digit);
-				keypadButtons[digit].setChecked(true);
-			}
-
-			setCell(mark, values);
-
-			updateKeypadHighlighing();
-		}
+		updateKeypadHighlighing();
 
 		cancelToast();
 	}
@@ -446,19 +470,19 @@ public class AndokuActivity extends Activity
 
 		switch (keyCode) {
 			case KeyEvent.KEYCODE_DPAD_UP:
-				moveMark(-1, 0);
+				inputMethod.onMoveMark(-1, 0);
 				return true;
 
 			case KeyEvent.KEYCODE_DPAD_DOWN:
-				moveMark(1, 0);
+				inputMethod.onMoveMark(1, 0);
 				return true;
 
 			case KeyEvent.KEYCODE_DPAD_LEFT:
-				moveMark(0, -1);
+				inputMethod.onMoveMark(0, -1);
 				return true;
 
 			case KeyEvent.KEYCODE_DPAD_RIGHT:
-				moveMark(0, 1);
+				inputMethod.onMoveMark(0, 1);
 				return true;
 
 			case KeyEvent.KEYCODE_1:
@@ -478,42 +502,11 @@ public class AndokuActivity extends Activity
 		}
 	}
 
-	private void moveMark(int dy, int dx) {
-		final int size = puzzle.getSize();
-
-		Position mark = andokuView.getMarkedCell();
-		int row = mark == null ? size / 2 : mark.row;
-		int col = mark == null ? size / 2 : mark.col;
-
-		row += dy;
-		if (row == -1)
-			row = size - 1;
-		if (row == size)
-			row = 0;
-
-		col += dx;
-		if (col == -1)
-			col = size - 1;
-		if (col == size)
-			col = 0;
-
-		setMark(new Position(row, col));
-	}
-
 	private void setMark(Position cell) {
 		andokuView.markCell(cell);
 
-		if (cell == null) {
-			for (int v = 0; v < puzzle.getSize(); v++) {
-				keypadButtons[v].setChecked(false);
-			}
-		}
-		else {
+		if (cell != null) {
 			ValueSet values = puzzle.getValues(cell.row, cell.col);
-			for (int v = 0; v < puzzle.getSize(); v++) {
-				keypadButtons[v].setChecked(values.contains(v));
-			}
-
 			if (values.size() == 1) {
 				andokuView.highlightDigit(values.nextValue(0));
 			}
@@ -555,17 +548,17 @@ public class AndokuActivity extends Activity
 				fingertipView.highlight(center, editable);
 			}
 
-			setMark(null);
+			inputMethod.onTap(null, false);
 		}
 		else if (action == MotionEvent.ACTION_UP) {
 			fingertipView.highlight(null, false);
 
-			setMark(cell);
+			inputMethod.onTap(cell, editable);
 		}
 		else { // MotionEvent.ACTION_CANCEL
 			fingertipView.highlight(null, false);
 
-			setMark(null);
+			inputMethod.onTap(null, false);
 		}
 
 		return true;
@@ -670,6 +663,8 @@ public class AndokuActivity extends Activity
 	}
 
 	private void onReturnedFromSettings() {
+		createInputMethod();
+
 		createThemeFromPreferences();
 
 		setTimerVisibility(gameState);
@@ -723,12 +718,10 @@ public class AndokuActivity extends Activity
 		gameState = GAME_STATE_ACTIVITY_STATE_RESTORED;
 		enterGameState(savedInstanceState.getInt(APP_STATE_GAME_STATE));
 
-		int[] markedCell = savedInstanceState.getIntArray(APP_STATE_MARKED_CELL);
-		if (markedCell != null)
-			setMark(new Position(markedCell[0], markedCell[1]));
-
 		if (savedInstanceState.containsKey(APP_STATE_HIGHLIGHTED_DIGIT))
 			andokuView.highlightDigit(savedInstanceState.getInt(APP_STATE_HIGHLIGHTED_DIGIT));
+
+		inputMethod.onRestoreInstanceState(savedInstanceState);
 	}
 
 	private void createPuzzleFromIntent() throws PuzzleIOException {
@@ -829,9 +822,6 @@ public class AndokuActivity extends Activity
 			Log.v(TAG, "enterGameState(" + newGameState + ")");
 
 		setWakeLock(newGameState == GAME_STATE_PLAYING);
-
-		if (newGameState != GAME_STATE_PLAYING)
-			setMark(null);
 
 		switch (newGameState) {
 			case GAME_STATE_READY:

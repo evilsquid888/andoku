@@ -57,4 +57,10 @@
         <item>Nur einfache Werte</item>
         <item>Sowohl einfache als auch mehrfache Werte</item>
     </string-array>
+
+    <!-- Values for "Input Method" (used by "Settings") -->
+    <string-array name="pref_entries_input_method">
+        <item>Feld dann Werte</item>
+        <item>Werte dann Feld</item>
+    </string-array>
 </resources>

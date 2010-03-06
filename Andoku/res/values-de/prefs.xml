@@ -31,4 +31,11 @@
     <string name="pref_summary_highlight_digits">Hebe die zuletzt eingegebene oder derzeit ausgewählte Ziffer hervor.</string>
     <string name="pref_title_show_timer">Stoppuhr anzeigen</string>
     <string name="pref_summary_show_timer">Zeigt eine Stoppuhr während des Spiels an.</string>
+
+    <!-- Category for "Behavior" related settings -->
+    <string name="pref_category_behavior">Verhalten</string>
+ 
+    <!-- Titles and summaries for "Behavior" related settings -->
+    <string name="pref_title_input_method">Eingabe-Methode</string>
+    <string name="pref_summary_input_method">Legt fest, wie Ziffern während des Spiels eingegeben werden.</string>
  </resources>
