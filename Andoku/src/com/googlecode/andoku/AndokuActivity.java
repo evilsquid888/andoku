@@ -114,7 +114,7 @@ public class AndokuActivity extends Activity
 	private FingertipView fingertipView;
 	private TextView timerView;
 	private ViewGroup keypad;
-	private KeypadButton[] keypadButtons;
+	private KeypadToggleButton[] keypadToggleButtons;
 	private TextView congratsView;
 	private Button dismissCongratsButton;
 	private ImageButton backButton;
@@ -147,10 +147,10 @@ public class AndokuActivity extends Activity
 			setCell(cell, values);
 		}
 		public int getNumberOfDigitButtons() {
-			return keypadButtons.length;
+			return keypadToggleButtons.length;
 		}
 		public void checkButton(int digit, boolean checked) {
-			keypadButtons[digit].setChecked(checked);
+			keypadToggleButtons[digit].setChecked(checked);
 		}
 		public void highlightDigit(Integer digit) {
 			andokuView.highlightDigit(digit);
@@ -196,20 +196,20 @@ public class AndokuActivity extends Activity
 
 		keypad = (ViewGroup) findViewById(R.id.keypad);
 
-		keypadButtons = new KeypadButton[9];
-		keypadButtons[0] = (KeypadButton) findViewById(R.id.input_1);
-		keypadButtons[1] = (KeypadButton) findViewById(R.id.input_2);
-		keypadButtons[2] = (KeypadButton) findViewById(R.id.input_3);
-		keypadButtons[3] = (KeypadButton) findViewById(R.id.input_4);
-		keypadButtons[4] = (KeypadButton) findViewById(R.id.input_5);
-		keypadButtons[5] = (KeypadButton) findViewById(R.id.input_6);
-		keypadButtons[6] = (KeypadButton) findViewById(R.id.input_7);
-		keypadButtons[7] = (KeypadButton) findViewById(R.id.input_8);
-		keypadButtons[8] = (KeypadButton) findViewById(R.id.input_9);
+		keypadToggleButtons = new KeypadToggleButton[9];
+		keypadToggleButtons[0] = (KeypadToggleButton) findViewById(R.id.input_1);
+		keypadToggleButtons[1] = (KeypadToggleButton) findViewById(R.id.input_2);
+		keypadToggleButtons[2] = (KeypadToggleButton) findViewById(R.id.input_3);
+		keypadToggleButtons[3] = (KeypadToggleButton) findViewById(R.id.input_4);
+		keypadToggleButtons[4] = (KeypadToggleButton) findViewById(R.id.input_5);
+		keypadToggleButtons[5] = (KeypadToggleButton) findViewById(R.id.input_6);
+		keypadToggleButtons[6] = (KeypadToggleButton) findViewById(R.id.input_7);
+		keypadToggleButtons[7] = (KeypadToggleButton) findViewById(R.id.input_8);
+		keypadToggleButtons[8] = (KeypadToggleButton) findViewById(R.id.input_9);
 
 		for (int i = 0; i < 9; i++) {
 			final int digit = i;
-			keypadButtons[i].setOnClickListener(new OnClickListener() {
+			keypadToggleButtons[i].setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
 					onKeypad(digit);
 				}
@@ -943,7 +943,7 @@ public class AndokuActivity extends Activity
 
 		for (int digit = 0; digit < size; digit++) {
 			final boolean digitCompleted = counter[digit] == size;
-			keypadButtons[digit].setHighlighted(digitCompleted);
+			keypadToggleButtons[digit].setHighlighted(digitCompleted);
 		}
 	}
 

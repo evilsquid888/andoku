@@ -25,27 +25,28 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.Button;
 
-public class KeypadButton extends Button {
+public class KeypadToggleButton extends Button {
 	private static final int[] CHECKED_STATE_SET = { R.attr.state_checked };
 	private static final int[] HIGHLIGHTED_STATE_SET = { R.attr.state_highlighted };
 
 	private boolean checked;
 	private boolean highlighted;
 
-	public KeypadButton(Context context) {
+	public KeypadToggleButton(Context context) {
 		this(context, null);
 	}
 
-	public KeypadButton(Context context, AttributeSet attrs) {
-		this(context, attrs, R.attr.buttonStyleKeypad);
+	public KeypadToggleButton(Context context, AttributeSet attrs) {
+		this(context, attrs, R.attr.buttonStyleKeypadToggle);
 	}
 
-	public KeypadButton(Context context, AttributeSet attrs, int defStyle) {
+	public KeypadToggleButton(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 
-		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.KeypadButton, defStyle, 0);
-		checked = a.getBoolean(R.styleable.KeypadButton_checked, false);
-		highlighted = a.getBoolean(R.styleable.KeypadButton_highlighted, false);
+		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.KeypadToggleButton,
+				defStyle, 0);
+		checked = a.getBoolean(R.styleable.KeypadToggleButton_checked, false);
+		highlighted = a.getBoolean(R.styleable.KeypadToggleButton_highlighted, false);
 
 		a.recycle();
 	}

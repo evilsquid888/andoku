@@ -22,10 +22,10 @@
 <resources>
 
     <declare-styleable name="Theme">
-        <attr name="buttonStyleKeypad" format="reference"/>
+        <attr name="buttonStyleKeypadToggle" format="reference"/>
     </declare-styleable>
 
-    <declare-styleable name="KeypadButton">
+    <declare-styleable name="KeypadToggleButton">
         <attr name="checked" format="boolean"/>
         <attr name="highlighted" format="boolean"/>
     </declare-styleable>
