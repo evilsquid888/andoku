@@ -37,6 +37,7 @@ import android.os.Vibrator;
 import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
 import android.text.Html;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -217,22 +218,18 @@ public class AndokuActivity extends Activity
 		}
 
 		KeypadButton clearButton = (KeypadButton) findViewById(R.id.input_clear);
-		if (clearButton != null) {
-			clearButton.setOnClickListener(new OnClickListener() {
-				public void onClick(View v) {
-					onClear();
-				}
-			});
-		}
+		clearButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				onClear();
+			}
+		});
 
 		KeypadButton invertButton = (KeypadButton) findViewById(R.id.input_invert);
-		if (invertButton != null) {
-			invertButton.setOnClickListener(new OnClickListener() {
-				public void onClick(View v) {
-					onInvert();
-				}
-			});
-		}
+		invertButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				onInvert();
+			}
+		});
 
 		congratsView = (TextView) findViewById(R.id.labelCongrats);
 
@@ -875,6 +872,11 @@ public class AndokuActivity extends Activity
 				throw new IllegalStateException();
 		}
 
+		boolean showNameAndDifficulty = newGameState != GAME_STATE_PLAYING
+				|| hasSufficientVerticalSpace();
+		puzzleNameView.setVisibility(showNameAndDifficulty ? View.VISIBLE : View.GONE);
+		puzzleDifficultyView.setVisibility(showNameAndDifficulty ? View.VISIBLE : View.GONE);
+
 		congratsView.setVisibility(newGameState == GAME_STATE_SOLVED ? View.VISIBLE : View.GONE);
 
 		dismissCongratsButton.setVisibility(newGameState == GAME_STATE_SOLVED
@@ -905,6 +907,13 @@ public class AndokuActivity extends Activity
 			andokuView.invalidate();
 
 		this.gameState = newGameState;
+	}
+
+	// 320x240 device (e.g. HTC Tattoo) does not have enough vertical space to display title and name) 
+	private boolean hasSufficientVerticalSpace() {
+		DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+		float aspect = ((float) displayMetrics.heightPixels) / displayMetrics.widthPixels;
+		return aspect >= 480f / 320;
 	}
 
 	private void setTimerVisibility(int forGameState) {
