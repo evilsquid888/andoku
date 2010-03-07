@@ -23,37 +23,37 @@ package com.googlecode.andoku;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.widget.Button;
 
-public class KeypadToggleButton extends KeypadButton {
-	private static final int[] CHECKED_STATE_SET = { R.attr.state_checked };
+public class KeypadButton extends Button {
+	private static final int[] HIGHLIGHTED_STATE_SET = { R.attr.state_highlighted };
 
-	private boolean checked;
+	private boolean highlighted;
 
-	public KeypadToggleButton(Context context) {
+	public KeypadButton(Context context) {
 		this(context, null);
 	}
 
-	public KeypadToggleButton(Context context, AttributeSet attrs) {
-		this(context, attrs, R.attr.buttonStyleKeypadToggle);
+	public KeypadButton(Context context, AttributeSet attrs) {
+		this(context, attrs, R.attr.buttonStyleKeypad);
 	}
 
-	public KeypadToggleButton(Context context, AttributeSet attrs, int defStyle) {
+	public KeypadButton(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 
-		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.KeypadToggleButton,
-				defStyle, 0);
-		checked = a.getBoolean(R.styleable.KeypadToggleButton_checked, false);
+		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.KeypadButton, defStyle, 0);
+		highlighted = a.getBoolean(R.styleable.KeypadButton_highlighted, false);
 
 		a.recycle();
 	}
 
-	public boolean isChecked() {
-		return checked;
+	public boolean isHighlighted() {
+		return highlighted;
 	}
 
-	public void setChecked(boolean checked) {
-		if (this.checked != checked) {
-			this.checked = checked;
+	public void setHighlighted(boolean highlighted) {
+		if (this.highlighted != highlighted) {
+			this.highlighted = highlighted;
 			refreshDrawableState();
 		}
 	}
@@ -61,8 +61,8 @@ public class KeypadToggleButton extends KeypadButton {
 	@Override
 	protected int[] onCreateDrawableState(int extraSpace) {
 		final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
-		if (checked)
-			mergeDrawableStates(drawableState, CHECKED_STATE_SET);
+		if (highlighted)
+			mergeDrawableStates(drawableState, HIGHLIGHTED_STATE_SET);
 		return drawableState;
 	}
 }
