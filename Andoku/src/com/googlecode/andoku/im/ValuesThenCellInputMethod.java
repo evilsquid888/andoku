@@ -58,13 +58,34 @@ public class ValuesThenCellInputMethod implements InputMethod {
 		if (values.contains(digit)) {
 			values.remove(digit);
 			target.checkButton(digit, false);
-			target.highlightDigit(null);
 		}
 		else {
 			values.add(digit);
 			target.checkButton(digit, true);
-			target.highlightDigit(digit);
 		}
+
+		if (values.isEmpty())
+			target.highlightDigit(null);
+		else
+			target.highlightDigit(digit);
+	}
+
+	public void onClear() {
+		setValues(0);
+
+		target.highlightDigit(null);
+	}
+
+	public void onInvert() {
+		final int nButtons = target.getNumberOfDigitButtons();
+		for (int digit = 0; digit < nButtons; digit++) {
+			if (values.contains(digit))
+				values.remove(digit);
+			else
+				values.add(digit);
+		}
+
+		checkButtons();
 	}
 
 	public void onTap(Position cell, boolean editable) {
@@ -85,6 +106,10 @@ public class ValuesThenCellInputMethod implements InputMethod {
 	private void setValues(int v) {
 		values.setFromInt(v);
 
+		checkButtons();
+	}
+
+	private void checkButtons() {
 		final int nButtons = target.getNumberOfDigitButtons();
 		for (int digit = 0; digit < nButtons; digit++)
 			target.checkButton(digit, values.contains(digit));

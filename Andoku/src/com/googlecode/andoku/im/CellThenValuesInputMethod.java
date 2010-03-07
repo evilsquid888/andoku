@@ -94,6 +94,41 @@ public class CellThenValuesInputMethod implements InputMethod {
 		target.highlightDigit(digit);
 	}
 
+	public void onClear() {
+		Position mark = target.getMarkedCell();
+		if (mark == null || target.isClue(mark))
+			return;
+
+		final int size = target.getPuzzleSize();
+		for (int digit = 0; digit < size; digit++)
+			target.checkButton(digit, false);
+
+		target.setCellValues(mark, new ValueSet());
+
+		target.highlightDigit(null);
+	}
+
+	public void onInvert() {
+		Position mark = target.getMarkedCell();
+		if (mark == null || target.isClue(mark))
+			return;
+
+		ValueSet values = target.getCellValues(mark);
+		final int size = target.getPuzzleSize();
+		for (int digit = 0; digit < size; digit++) {
+			if (values.contains(digit)) {
+				values.remove(digit);
+				target.checkButton(digit, false);
+			}
+			else {
+				values.add(digit);
+				target.checkButton(digit, true);
+			}
+		}
+
+		target.setCellValues(mark, values);
+	}
+
 	public void onTap(Position cell, boolean editable) {
 		setMark(cell);
 	}

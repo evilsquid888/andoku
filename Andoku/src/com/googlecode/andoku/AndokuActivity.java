@@ -216,6 +216,24 @@ public class AndokuActivity extends Activity
 			});
 		}
 
+		KeypadButton clearButton = (KeypadButton) findViewById(R.id.input_clear);
+		if (clearButton != null) {
+			clearButton.setOnClickListener(new OnClickListener() {
+				public void onClick(View v) {
+					onClear();
+				}
+			});
+		}
+
+		KeypadButton invertButton = (KeypadButton) findViewById(R.id.input_invert);
+		if (invertButton != null) {
+			invertButton.setOnClickListener(new OnClickListener() {
+				public void onClick(View v) {
+					onInvert();
+				}
+			});
+		}
+
 		congratsView = (TextView) findViewById(R.id.labelCongrats);
 
 		dismissCongratsButton = (Button) findViewById(R.id.buttonDismissCongrats);
@@ -444,6 +462,24 @@ public class AndokuActivity extends Activity
 			return;
 
 		inputMethod.onKeypad(digit);
+
+		cancelToast();
+	}
+
+	void onClear() {
+		if (gameState != GAME_STATE_PLAYING)
+			return;
+
+		inputMethod.onClear();
+
+		cancelToast();
+	}
+
+	void onInvert() {
+		if (gameState != GAME_STATE_PLAYING)
+			return;
+
+		inputMethod.onInvert();
 
 		cancelToast();
 	}

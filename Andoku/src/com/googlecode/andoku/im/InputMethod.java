@@ -32,5 +32,7 @@ public interface InputMethod {
 
 	void onMoveMark(int dy, int dx);
 	void onKeypad(int digit);
+	void onClear();
+	void onInvert();
 	void onTap(Position cell, boolean editable);
 }
