@@ -289,22 +289,6 @@ public class AndokuPuzzle {
 		return regionErrors;
 	}
 
-	public boolean isErrorPosition(int row, int col) {
-		for (RegionError error : regionErrors) {
-			if (error.p1.row == row && error.p1.col == col)
-				return true;
-			if (error.p2.row == row && error.p2.col == col)
-				return true;
-		}
-
-		for (Position p : cellErrors) {
-			if (p.row == row && p.col == col)
-				return true;
-		}
-
-		return false;
-	}
-
 	public HashSet<Position> getErrorPositions() {
 		HashSet<Position> positions = new HashSet<Position>();
 
