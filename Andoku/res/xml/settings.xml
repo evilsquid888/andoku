@@ -62,6 +62,12 @@
             android:entryValues="@array/pref_entryvalues_input_method"
             android:dialogTitle="@string/pref_title_input_method"/>
 
+        <CheckBoxPreference
+            android:key="check_against_solution"
+            android:defaultValue="true"
+            android:title="@string/pref_title_check_against_solution"
+            android:summary="@string/pref_summary_check_against_solution"/>
+
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -38,4 +38,6 @@
     <!-- Titles and summaries for "Behavior" related settings -->
     <string name="pref_title_input_method">Eingabe-Methode</string>
     <string name="pref_summary_input_method">Legt fest, wie Ziffern während des Spiels eingegeben werden.</string>
+    <string name="pref_title_check_against_solution">Strikte Fehlerprüfung</string>
+    <string name="pref_summary_check_against_solution">Eingaben mit der Lösung des Rätsels vergleichen.</string>
  </resources>

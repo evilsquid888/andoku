@@ -47,7 +47,7 @@ public class AndokuPuzzleTest extends TestCase {
 		p1.setValues(0, 4, ValueSet.of(3, 4));
 		// set incorrect values
 		p1.setValues(0, 5, ValueSet.of(8));
-		p1.checkForErrors();
+		p1.checkForErrors(true);
 
 		assertEquals(2, p1.getRegionErrors().size());
 		assertEquals(1, p1.getCellErrors().size());

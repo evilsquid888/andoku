@@ -623,16 +623,24 @@ public class AndokuActivity extends Activity
 		if (Constants.LOG_V)
 			Log.v(TAG, "onCheckPuzzle()");
 
-		if (puzzle.hasSolution()) {
-			checkPuzzle();
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		boolean checkAgainstSolution = settings.getBoolean(Settings.KEY_CHECK_AGAINST_SOLUTION, true);
+
+		if (checkAgainstSolution) {
+			if (puzzle.hasSolution()) {
+				checkPuzzle(true);
+			}
+			else {
+				new ComputeSolutionAndCheckPuzzleTask().execute();
+			}
 		}
 		else {
-			new ComputeSolutionAndCheckPuzzleTask().execute();
+			checkPuzzle(false);
 		}
 	}
 
-	private void checkPuzzle() {
-		boolean errors = puzzle.checkForErrors();
+	private void checkPuzzle(boolean checkAgainstSolution) {
+		boolean errors = puzzle.checkForErrors(checkAgainstSolution);
 
 		if (errors) {
 			showWarning(R.string.warn_puzzle_errors);
@@ -1105,7 +1113,7 @@ public class AndokuActivity extends Activity
 				timer.start();
 
 			if (solved)
-				checkPuzzle();
+				checkPuzzle(true);
 			else
 				showWarning(R.string.warn_invalid_puzzle);
 		}

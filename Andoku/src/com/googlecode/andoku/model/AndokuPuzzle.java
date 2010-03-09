@@ -240,7 +240,7 @@ public class AndokuPuzzle {
 		return true;
 	}
 
-	public boolean checkForErrors() {
+	public boolean checkForErrors(boolean checkAgainstSolution) {
 		clearErrors();
 
 		// check for duplicate values within a region
@@ -267,7 +267,7 @@ public class AndokuPuzzle {
 
 		// compare values to actual solution (if we have a solution)
 
-		if (solution != null) {
+		if (checkAgainstSolution && solution != null) {
 			for (int row = 0; row < size; row++) {
 				for (int col = 0; col < size; col++) {
 					ValueSet values = this.values[row][col];
