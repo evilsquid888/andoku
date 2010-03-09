@@ -45,4 +45,9 @@ public class RegionError {
 		RegionError other = (RegionError) obj;
 		return p1.equals(other.p1) && p2.equals(other.p2);
 	}
+
+	@Override
+	public String toString() {
+		return p1 + "-" + p2;
+	}
 }
