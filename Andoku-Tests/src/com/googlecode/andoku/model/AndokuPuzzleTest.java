@@ -29,10 +29,18 @@ import com.googlecode.andoku.util.SerializableUtil;
 
 public class AndokuPuzzleTest extends TestCase {
 	public void testSaveAndRestoreMemento() throws Exception {
-		// "9..1........9.23.612.....89.............6.............71.....252.96.7........5..7|112222334112222334111552334116553334666654444677755488677955888677999988677999988|H";
-		// "987153264574982316123576489461829753395468172642731598718394625259647831836215947";
+		// 9..1.....  987153264  112222334
+		// ...9.23.6  574982316  112222334
+		// 12.....89  123576489  111552334
+		// .........  461829753  116553334
+		// ....6....  395468172  666654444
+		// .........  642731598  677755488
+		// 71.....25  718394625  677955888
+		// 2.96.7...  259647831  677999988
+		// .....5..7  836215947  677999988
 
 		AndokuPuzzle p1 = MockPuzzleSource.createPuzzle(0);
+		p1.computeSolution();
 		// set correct values
 		p1.setValues(0, 1, ValueSet.of(7));
 		p1.setValues(0, 2, ValueSet.of(6));
@@ -42,7 +50,7 @@ public class AndokuPuzzleTest extends TestCase {
 		p1.checkForErrors();
 
 		assertEquals(2, p1.getRegionErrors().size());
-		assertEquals(3, p1.getErrorPositions().size());
+		assertEquals(1, p1.getCellErrors().size());
 
 		Serializable memento = p1.saveToMemento();
 
@@ -56,7 +64,7 @@ public class AndokuPuzzleTest extends TestCase {
 		assertEquals(ValueSet.none(), p2.getValues(0, 5));
 
 		assertTrue(p2.getRegionErrors().isEmpty());
-		assertTrue(p2.getErrorPositions().isEmpty());
+		assertTrue(p2.getCellErrors().isEmpty());
 
 		p2.restoreFromMemento(memento);
 
@@ -66,9 +74,9 @@ public class AndokuPuzzleTest extends TestCase {
 		assertEquals(ValueSet.of(8), p2.getValues(0, 5));
 
 		assertEquals(2, p2.getRegionErrors().size());
-		assertEquals(3, p2.getErrorPositions().size());
+		assertEquals(1, p2.getCellErrors().size());
 
 		assertEquals(p1.getRegionErrors(), p2.getRegionErrors());
-		assertEquals(p1.getErrorPositions(), p2.getErrorPositions());
+		assertEquals(p1.getCellErrors(), p2.getCellErrors());
 	}
 }
