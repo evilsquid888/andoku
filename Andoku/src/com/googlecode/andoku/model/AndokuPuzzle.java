@@ -289,17 +289,8 @@ public class AndokuPuzzle {
 		return regionErrors;
 	}
 
-	public HashSet<Position> getErrorPositions() {
-		HashSet<Position> positions = new HashSet<Position>();
-
-		for (RegionError error : regionErrors) {
-			positions.add(error.p1);
-			positions.add(error.p2);
-		}
-
-		positions.addAll(cellErrors);
-
-		return positions;
+	public HashSet<Position> getCellErrors() {
+		return cellErrors;
 	}
 
 	private static PuzzleType determinePuzzleType(Puzzle puzzle) {

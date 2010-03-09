@@ -20,6 +20,8 @@
 
 package com.googlecode.andoku;
 
+import java.util.HashSet;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -378,7 +380,10 @@ public class AndokuPuzzleView extends View {
 
 		float radius = Math.min(cellWidth, cellHeight) * 0.4f;
 
-		for (Position p : puzzle.getErrorPositions()) {
+		final HashSet<RegionError> regionErrors = puzzle.getRegionErrors();
+
+		final HashSet<Position> regionErrorPositions = getUniquePositions(regionErrors);
+		for (Position p : regionErrorPositions) {
 			float x = p.col * cellWidth;
 			if (x > clipBounds.right || x + cellWidth < clipBounds.left)
 				continue;
@@ -391,9 +396,7 @@ public class AndokuPuzzleView extends View {
 			canvas.drawCircle(cx, cy, radius, errorPaint);
 		}
 
-		// radius += errorPaint.getStrokeWidth() / 2;
-
-		for (RegionError error : puzzle.getRegionErrors()) {
+		for (RegionError error : regionErrors) {
 			float cx1 = error.p1.col * cellWidth + cellWidth / 2;
 			float cy1 = error.p1.row * cellHeight + cellHeight / 2;
 
@@ -424,6 +427,32 @@ public class AndokuPuzzleView extends View {
 				canvas.drawLine(cx1 + vx, cy1 + vy, cx2 - vx, cy2 - vy, errorPaint);
 			}
 		}
+
+		for (Position p : puzzle.getCellErrors()) {
+			float x = p.col * cellWidth;
+			if (x > clipBounds.right || x + cellWidth < clipBounds.left)
+				continue;
+			float y = p.row * cellHeight;
+			if (y > clipBounds.bottom || y + cellHeight < clipBounds.top)
+				continue;
+
+			float cx = x + cellWidth / 2;
+			float cy = y + cellHeight / 2;
+			float delta = radius / 1.41421356f;
+			canvas.drawLine(cx - delta, cy - delta, cx + delta, cy + delta, errorPaint);
+			canvas.drawLine(cx + delta, cy - delta, cx - delta, cy + delta, errorPaint);
+		}
+	}
+
+	private HashSet<Position> getUniquePositions(final HashSet<RegionError> regionErrors) {
+		HashSet<Position> positions = new HashSet<Position>();
+
+		for (RegionError error : regionErrors) {
+			positions.add(error.p1);
+			positions.add(error.p2);
+		}
+
+		return positions;
 	}
 
 	private void drawValues(Canvas canvas, Rect clipBounds) {
