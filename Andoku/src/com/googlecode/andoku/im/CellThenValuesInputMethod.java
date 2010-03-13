@@ -91,7 +91,10 @@ public class CellThenValuesInputMethod implements InputMethod {
 
 		target.setCellValues(mark, values);
 
-		target.highlightDigit(digit);
+		if (values.isEmpty())
+			target.highlightDigit(null);
+		else
+			target.highlightDigit(digit);
 	}
 
 	public void onClear() {
@@ -136,7 +139,10 @@ public class CellThenValuesInputMethod implements InputMethod {
 	private void setMark(Position cell) {
 		target.setMarkedCell(cell);
 
-		if (cell != null) {
+		if (cell == null) {
+			target.highlightDigit(null);
+		}
+		else {
 			ValueSet values = target.getCellValues(cell);
 			if (values.size() == 1) {
 				target.highlightDigit(values.nextValue(0));
