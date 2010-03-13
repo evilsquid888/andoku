@@ -267,8 +267,12 @@ public class AndokuActivity extends Activity
 
 		createInputMethod();
 
-		if (isRestoreSavedInstanceState(savedInstanceState))
+		if (isRestoreSavedInstanceState(savedInstanceState)) {
 			inputMethod.onRestoreInstanceState(savedInstanceState);
+
+			if (savedInstanceState.containsKey(APP_STATE_HIGHLIGHTED_DIGIT))
+				andokuView.highlightDigit(savedInstanceState.getInt(APP_STATE_HIGHLIGHTED_DIGIT));
+		}
 	}
 
 	private void createThemeFromPreferences() {
@@ -754,9 +758,6 @@ public class AndokuActivity extends Activity
 
 		gameState = GAME_STATE_ACTIVITY_STATE_RESTORED;
 		enterGameState(savedInstanceState.getInt(APP_STATE_GAME_STATE));
-
-		if (savedInstanceState.containsKey(APP_STATE_HIGHLIGHTED_DIGIT))
-			andokuView.highlightDigit(savedInstanceState.getInt(APP_STATE_HIGHLIGHTED_DIGIT));
 	}
 
 	private void createPuzzleFromIntent() throws PuzzleIOException {
