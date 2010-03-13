@@ -39,5 +39,6 @@
     <string-array name="pref_entryvalues_input_method">
         <item>CELL_THEN_VALUES</item>
         <item>VALUES_THEN_CELL</item>
+        <item>HYBRID</item>
     </string-array>
 </resources>

@@ -36,6 +36,10 @@ public class ValuesThenCellInputMethod implements InputMethod {
 		this.target = target;
 	}
 
+	public boolean isValuesEmpty() {
+		return values.isEmpty();
+	}
+
 	public void onSaveInstanceState(Bundle outState) {
 		outState.putInt(APP_STATE_KEYPAD_VALUES, values.toInt());
 	}
