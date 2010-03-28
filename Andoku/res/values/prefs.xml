@@ -37,7 +37,7 @@
 
     <!-- Titles and summaries for "Behavior" related settings -->
     <string name="pref_title_input_method">Input Method</string>
-    <string name="pref_summary_input_method">Choose how to enter digits in the game.</string>
+    <string name="pref_summary_input_method">Choose how to enter digits during the game.</string>
     <string name="pref_title_check_against_solution">Strict Error Checking</string>
     <string name="pref_summary_check_against_solution">Check input against the solution of the puzzle.</string>
  </resources>
