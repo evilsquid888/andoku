@@ -62,6 +62,6 @@
     <string-array name="pref_entries_input_method">
         <item>Cell Then Values</item>
         <item>Values Then Cell</item>
-        <item>Hybrid</item>
+        <item>Automatic</item>
     </string-array>
 </resources>

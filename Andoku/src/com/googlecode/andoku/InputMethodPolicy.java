@@ -21,7 +21,7 @@
 package com.googlecode.andoku;
 
 import com.googlecode.andoku.im.CellThenValuesInputMethod;
-import com.googlecode.andoku.im.HybridInputMethod;
+import com.googlecode.andoku.im.AutomaticInputMethod;
 import com.googlecode.andoku.im.InputMethod;
 import com.googlecode.andoku.im.InputMethodTarget;
 import com.googlecode.andoku.im.ValuesThenCellInputMethod;
@@ -39,10 +39,10 @@ public enum InputMethodPolicy {
 			return new ValuesThenCellInputMethod(target);
 		}
 	},
-	HYBRID {
+	AUTOMATIC {
 		@Override
 		public InputMethod createInputMethod(InputMethodTarget target) {
-			return new HybridInputMethod(target);
+			return new AutomaticInputMethod(target);
 		}
 	};
 

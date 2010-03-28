@@ -24,8 +24,8 @@ import android.os.Bundle;
 
 import com.googlecode.andoku.model.Position;
 
-public class HybridInputMethod implements InputMethod {
-	private static final String APP_STATE_ACTIVE_INPUT_METHOD = "hybridInputMethod";
+public class AutomaticInputMethod implements InputMethod {
+	private static final String APP_STATE_ACTIVE_INPUT_METHOD = "automaticInputMethod";
 	private static final String IM_UNDECIDED = "undecided";
 	private static final String IM_CELL_THEN_VALUES = "cellThenValues";
 	private static final String IM_VALUES_THEN_CELL = "valuesThenCell";
@@ -36,7 +36,7 @@ public class HybridInputMethod implements InputMethod {
 	private InputMethod activeInputMethod = null;
 	private Position lastMarkedCell;
 
-	public HybridInputMethod(InputMethodTarget target) {
+	public AutomaticInputMethod(InputMethodTarget target) {
 		this.target = target;
 		cellThenValues = new CellThenValuesInputMethod(target);
 		valuesThenCell = new ValuesThenCellInputMethod(target);

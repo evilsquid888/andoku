@@ -55,7 +55,7 @@
 
         <ListPreference
             android:key="input_method"
-            android:defaultValue="HYBRID"
+            android:defaultValue="AUTOMATIC"
             android:title="@string/pref_title_input_method"
             android:summary="@string/pref_summary_input_method"
             android:entries="@array/pref_entries_input_method"
