@@ -60,7 +60,7 @@
 
     <!-- Additional keypad buttons -->
     <string name="button_clear">C</string>
-    <string name="button_invert">+/-</string>
+    <string name="button_invert">Inv</string>
 
     <!-- Context menu entries for the "Imported Folders" activity -->
     <string name="context_menu_delete_folder">Delete Folder</string>
