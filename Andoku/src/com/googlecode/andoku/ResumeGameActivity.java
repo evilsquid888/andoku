@@ -53,7 +53,7 @@ public class ResumeGameActivity extends ListActivity {
 
 		super.onCreate(savedInstanceState);
 
-		Util.setFullscreenWorkaround(this);
+		Util.setFullscreenMode(this);
 
 		setContentView(R.layout.resume_game);
 

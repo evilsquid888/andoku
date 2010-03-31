@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
 
 		BackupUtil.restoreOrBackupDatabase(this);
 
-		Util.setFullscreenWorkaround(this);
+		Util.setFullscreenMode(this);
 
 		setContentView(R.layout.main);
 

@@ -21,7 +21,7 @@
 
 <resources>
 
-    <style name="Theme.NoBackground.Light" parent="android:Theme.Light.NoTitleBar.Fullscreen">
+    <style name="Theme.NoBackground.Light" parent="android:Theme.Light.NoTitleBar">
         <item name="android:windowBackground">@null</item>
         <item name="buttonStyleKeypad">@style/KeypadButton</item>
         <item name="buttonStyleKeypadToggle">@style/KeypadToggleButton</item>

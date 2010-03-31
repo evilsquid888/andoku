@@ -21,8 +21,11 @@
 package com.googlecode.andoku;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.preference.PreferenceManager;
+import android.view.Window;
 import android.view.WindowManager;
 
 import com.googlecode.andoku.db.AndokuDatabase;
@@ -33,11 +36,23 @@ class Util {
 	private Util() {
 	}
 
-	public static void setFullscreenWorkaround(Activity activity) {
-		// Workaround for issue #1
-		// FLAG_LAYOUT_NO_LIMITS: allow window to extend outside of the screen.
-		activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-				WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+	public static void setFullscreenMode(Activity activity) {
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(activity);
+		boolean fullscreenMode = settings.getBoolean(Settings.KEY_FULLSCREEN_MODE, true);
+		if (fullscreenMode) {
+			// FEATURE_PROGRESS seems to suppress the tiny drop shadow at the top of the screen
+			activity.requestWindowFeature(Window.FEATURE_PROGRESS);
+
+			final Window window = activity.getWindow();
+
+			window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+					WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+			// Workaround for issue #1
+			// FLAG_LAYOUT_NO_LIMITS: allow window to extend outside of the screen.
+			window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+					WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+		}
 	}
 
 	public static String getFolderName(AndokuDatabase db, String sourceId) {

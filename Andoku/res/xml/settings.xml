@@ -48,6 +48,12 @@
             android:title="@string/pref_title_show_timer"
             android:summary="@string/pref_summary_show_timer"/>
 
+        <CheckBoxPreference
+            android:key="fullscreen_mode"
+            android:defaultValue="true"
+            android:title="@string/pref_title_fullscreen_mode"
+            android:summary="@string/pref_summary_fullscreen_mode"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory

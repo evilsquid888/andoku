@@ -28,6 +28,8 @@ public class SettingsActivity extends PreferenceActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		Util.setFullscreenMode(this);
+
 		addPreferencesFromResource(R.xml.settings);
 
 		getListView().setBackgroundResource(R.drawable.bg);
