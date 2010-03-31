@@ -68,9 +68,9 @@ public class FolderListActivity extends ListActivity {
 		if (Constants.LOG_V)
 			Log.v(TAG, "onCreate(" + savedInstanceState + ")");
 
-		super.onCreate(savedInstanceState);
-
 		Util.setFullscreenMode(this);
+
+		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.folders);
 

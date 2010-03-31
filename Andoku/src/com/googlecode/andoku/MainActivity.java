@@ -44,11 +44,11 @@ public class MainActivity extends Activity {
 		if (Constants.LOG_V)
 			Log.v(TAG, "onCreate(" + savedInstanceState + ")");
 
+		Util.setFullscreenMode(this);
+
 		super.onCreate(savedInstanceState);
 
 		BackupUtil.restoreOrBackupDatabase(this);
-
-		Util.setFullscreenMode(this);
 
 		setContentView(R.layout.main);
 

@@ -31,9 +31,9 @@ import android.widget.TextView;
 public class DisplayErrorActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
 		Util.setFullscreenMode(this);
+
+		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.error);
 

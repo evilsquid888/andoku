@@ -26,9 +26,9 @@ import android.preference.PreferenceActivity;
 public class SettingsActivity extends PreferenceActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
 		Util.setFullscreenMode(this);
+
+		super.onCreate(savedInstanceState);
 
 		addPreferencesFromResource(R.xml.settings);
 
