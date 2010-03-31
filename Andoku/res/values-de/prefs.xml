@@ -32,7 +32,7 @@
     <string name="pref_title_show_timer">Stoppuhr anzeigen</string>
     <string name="pref_summary_show_timer">Zeigt eine Stoppuhr während des Spiels an.</string>
     <string name="pref_title_fullscreen_mode">Vollbildmodus</string>
-    <string name="pref_summary_fullscreen_mode">Versteckt die Statusleiste und lässt das Spiel im Vollbildmodus laufen.</string>
+    <string name="pref_summary_fullscreen_mode">Blendet die Statusleiste während des Spiels aus. Neustart erforderlich.</string>
 
     <!-- Category for "Behavior" related settings -->
     <string name="pref_category_behavior">Verhalten</string>

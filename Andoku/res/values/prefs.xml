@@ -32,7 +32,7 @@
     <string name="pref_title_show_timer">Show Timer</string>
     <string name="pref_summary_show_timer">Displays a stopwatch during the game.</string>
     <string name="pref_title_fullscreen_mode">Fullscreen Mode</string>
-    <string name="pref_summary_fullscreen_mode">Hides the status bar and runs the game in fullscreen mode.</string>
+    <string name="pref_summary_fullscreen_mode">Hides the status bar during the game. Restart required.</string>
 
     <!-- Category for "Behavior" related settings -->
     <string name="pref_category_behavior">Behavior</string>
