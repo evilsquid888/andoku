@@ -33,6 +33,8 @@ public class DisplayErrorActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		Util.setFullscreenMode(this);
+
 		setContentView(R.layout.error);
 
 		TextView titleView = (TextView) findViewById(R.id.errorTitle);
