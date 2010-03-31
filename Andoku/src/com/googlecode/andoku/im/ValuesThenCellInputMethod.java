@@ -92,6 +92,9 @@ public class ValuesThenCellInputMethod implements InputMethod {
 		checkButtons();
 	}
 
+	public void onSweep() {
+	}
+
 	public void onTap(Position cell, boolean editable) {
 		if (!editable)
 			return;

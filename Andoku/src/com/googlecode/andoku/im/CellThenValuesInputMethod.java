@@ -132,6 +132,10 @@ public class CellThenValuesInputMethod implements InputMethod {
 		target.setCellValues(mark, values);
 	}
 
+	public void onSweep() {
+		setMark(null);
+	}
+
 	public void onTap(Position cell, boolean editable) {
 		setMark(cell);
 	}

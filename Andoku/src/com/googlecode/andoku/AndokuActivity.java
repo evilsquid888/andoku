@@ -578,7 +578,7 @@ public class AndokuActivity extends Activity
 				fingertipView.highlight(center, editable);
 			}
 
-			inputMethod.onTap(null, false);
+			inputMethod.onSweep();
 		}
 		else if (action == MotionEvent.ACTION_UP) {
 			fingertipView.highlight(null, false);
@@ -588,7 +588,7 @@ public class AndokuActivity extends Activity
 		else { // MotionEvent.ACTION_CANCEL
 			fingertipView.highlight(null, false);
 
-			inputMethod.onTap(null, false);
+			inputMethod.onSweep();
 		}
 
 		return true;

@@ -34,5 +34,6 @@ public interface InputMethod {
 	void onKeypad(int digit);
 	void onClear();
 	void onInvert();
+	void onSweep();
 	void onTap(Position cell, boolean editable);
 }
