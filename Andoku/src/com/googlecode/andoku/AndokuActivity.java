@@ -73,12 +73,15 @@ public class AndokuActivity extends Activity
 		implements OnTouchListener, OnKeyListener, TickListener {
 	private static final String TAG = AndokuActivity.class.getName();
 
+	private static final long TIME_PENALTY_PER_ELIMINATED_VALUE = 1000;
+
 	private static final int DIALOG_CONFIRM_RESET_PUZZLE = 0;
 
 	private static final int MENU_CHECK_PUZZLE = 0;
 	private static final int MENU_PAUSE_RESUME_PUZZLE = 1;
-	private static final int MENU_RESET_PUZZLE = 2;
-	private static final int MENU_SETTINGS = 3;
+	private static final int MENU_ELIMINATE_VALUES = 2;
+	private static final int MENU_RESET_PUZZLE = 3;
+	private static final int MENU_SETTINGS = 4;
 
 	private static final String APP_STATE_PUZZLE_SOURCE_ID = "puzzleSourceId";
 	private static final String APP_STATE_PUZZLE_NUMBER = "puzzleNumber";
@@ -416,6 +419,8 @@ public class AndokuActivity extends Activity
 		menu.add(0, MENU_CHECK_PUZZLE, 0, R.string.menu_check_puzzle).setIcon(
 				android.R.drawable.ic_menu_help);
 		menu.add(0, MENU_PAUSE_RESUME_PUZZLE, 0, "");
+		menu.add(0, MENU_ELIMINATE_VALUES, 0, R.string.menu_eliminate_values).setIcon(
+				R.drawable.eliminate);
 		menu.add(0, MENU_RESET_PUZZLE, 0, R.string.menu_reset_puzzle).setIcon(
 				android.R.drawable.ic_menu_close_clear_cancel);
 		menu.add(0, MENU_SETTINGS, 0, R.string.menu_settings).setIcon(
@@ -433,6 +438,9 @@ public class AndokuActivity extends Activity
 				paused ? R.drawable.resume : R.drawable.pause).setEnabled(
 				gameState == GAME_STATE_PLAYING || paused);
 
+		menu.findItem(MENU_ELIMINATE_VALUES).setEnabled(
+				gameState == GAME_STATE_PLAYING && puzzle.canEliminateValues());
+
 		menu.findItem(MENU_RESET_PUZZLE).setEnabled(gameState == GAME_STATE_PLAYING);
 
 		return super.onPrepareOptionsMenu(menu);
@@ -446,6 +454,9 @@ public class AndokuActivity extends Activity
 				return true;
 			case MENU_PAUSE_RESUME_PUZZLE:
 				onPauseResumeGame();
+				return true;
+			case MENU_ELIMINATE_VALUES:
+				onEliminateValues();
 				return true;
 			case MENU_RESET_PUZZLE:
 				onResetPuzzle(false);
@@ -696,6 +707,24 @@ public class AndokuActivity extends Activity
 
 			gotoPuzzle(puzzleNumber);
 		}
+	}
+
+	void onEliminateValues() {
+		int numberValuesEliminated = puzzle.eliminateValues();
+		long penalty = TIME_PENALTY_PER_ELIMINATED_VALUE * numberValuesEliminated;
+		timer.setTime(timer.getTime() + penalty);
+
+		if (puzzle.isSolved()) {
+			timer.stop();
+			autoSavePuzzle();
+
+			enterGameState(GAME_STATE_SOLVED);
+			return;
+		}
+
+		updateKeypadHighlighing();
+
+		andokuView.invalidate();
 	}
 
 	void onSettings() {

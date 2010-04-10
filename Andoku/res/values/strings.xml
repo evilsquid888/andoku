@@ -99,6 +99,7 @@
     <string name="menu_pause">Pause</string>
     <string name="menu_reset_puzzle">Reset Puzzle</string>
     <string name="menu_resume">Resume</string>
+    <string name="menu_eliminate_values">Eliminate Values</string>
     <string name="menu_settings">Settings</string>
 
     <!-- Messages for congratulations/statistics at end of game -->

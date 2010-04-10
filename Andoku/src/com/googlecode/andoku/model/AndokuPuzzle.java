@@ -27,6 +27,7 @@ import java.io.ObjectOutput;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import com.googlecode.andoku.solver.DlxPuzzleSolver;
 import com.googlecode.andoku.solver.PuzzleSolver;
@@ -291,6 +292,94 @@ public class AndokuPuzzle {
 
 	public HashSet<Position> getCellErrors() {
 		return cellErrors;
+	}
+
+	public boolean canEliminateValues() {
+		Set<Position> cells = getAllCellsWithASingleValue();
+
+		return canEliminateValues(cells);
+	}
+
+	private Set<Position> getAllCellsWithASingleValue() {
+		Set<Position> cells = new HashSet<Position>();
+
+		for (int row = 0; row < size; row++)
+			for (int col = 0; col < size; col++)
+				if (values[row][col].size() == 1)
+					cells.add(new Position(row, col));
+
+		return cells;
+	}
+
+	private boolean canEliminateValues(Set<Position> cells) {
+		for (Position cell : cells) {
+			int value = values[cell.row][cell.col].nextValue(0);
+
+			Region[] regions = problem.getRegionsAt(cell.row, cell.col);
+			for (Region region : regions) {
+				for (Position p : region.positions) {
+					if (!p.equals(cell) && !isClue(p.row, p.col)) {
+						if (canEliminateValue(p, value))
+							return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private boolean canEliminateValue(Position cell, int value) {
+		ValueSet currentValues = values[cell.row][cell.col];
+		return currentValues.isEmpty() || currentValues.contains(value);
+	}
+
+	public int eliminateValues() {
+		setAllValuesOnEmptyCells();
+
+		Set<Position> cells = getAllCellsWithASingleValue();
+
+		return eliminateValues(cells);
+	}
+
+	private void setAllValuesOnEmptyCells() {
+		for (int row = 0; row < size; row++)
+			for (int col = 0; col < size; col++)
+				if (values[row][col].isEmpty())
+					setValues(row, col, ValueSet.all(size));
+	}
+
+	private int eliminateValues(Set<Position> cells) {
+		int numberValuesEliminated = 0;
+
+		for (Position cell : cells) {
+			int value = values[cell.row][cell.col].nextValue(0);
+
+			Region[] regions = problem.getRegionsAt(cell.row, cell.col);
+			for (Region region : regions) {
+				for (Position p : region.positions) {
+					if (!p.equals(cell) && !isClue(p.row, p.col)) {
+						if (eliminate(p, value))
+							numberValuesEliminated++;
+					}
+				}
+			}
+		}
+
+		return numberValuesEliminated;
+	}
+
+	private boolean eliminate(Position cell, int value) {
+		ValueSet currentValues = values[cell.row][cell.col];
+		if (currentValues.contains(value)) {
+			ValueSet newValues = new ValueSet(currentValues);
+			newValues.remove(value);
+
+			setValues(cell.row, cell.col, newValues);
+			return true;
+		}
+
+		return false;
 	}
 
 	private static PuzzleType determinePuzzleType(Puzzle puzzle) {
