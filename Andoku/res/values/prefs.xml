@@ -49,4 +49,6 @@
     <string name="pref_summary_highlight_digits">Highlights the digit that was last entered or is currently selected.</string>
     <string name="pref_title_show_timer">Show Timer</string>
     <string name="pref_summary_show_timer">Displays a stopwatch during the game.</string>
+    <string name="pref_title_enable_eliminate_values">Enable \'Eliminate Values\'</string>
+    <string name="pref_summary_enable_eliminate_values">Unlocks the menu entry \'Eliminate Values\' in the game.</string>
  </resources>

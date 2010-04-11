@@ -88,6 +88,12 @@
             android:title="@string/pref_title_show_timer"
             android:summary="@string/pref_summary_show_timer"/>
 
+        <CheckBoxPreference
+            android:key="enable_eliminate_values"
+            android:defaultValue="false"
+            android:title="@string/pref_title_enable_eliminate_values"
+            android:summary="@string/pref_summary_enable_eliminate_values"/>
+
     </PreferenceCategory>
 
 </PreferenceScreen>

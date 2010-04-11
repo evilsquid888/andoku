@@ -419,7 +419,9 @@ public class AndokuActivity extends Activity
 				paused ? R.drawable.resume : R.drawable.pause).setEnabled(
 				gameState == GAME_STATE_PLAYING || paused);
 
-		menu.findItem(MENU_ELIMINATE_VALUES).setEnabled(
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		menu.findItem(MENU_ELIMINATE_VALUES).setVisible(
+				settings.getBoolean(Settings.KEY_ENABLE_ELIMINATE_VALUES, false)).setEnabled(
 				gameState == GAME_STATE_PLAYING && puzzle.canEliminateValues());
 
 		menu.findItem(MENU_RESET_PUZZLE).setEnabled(gameState == GAME_STATE_PLAYING);

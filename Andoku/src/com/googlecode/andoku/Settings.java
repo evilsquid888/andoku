@@ -29,6 +29,7 @@ public class Settings {
 	public static final String KEY_FULLSCREEN_MODE = "fullscreen_mode";
 	public static final String KEY_INPUT_METHOD = "input_method";
 	public static final String KEY_CHECK_AGAINST_SOLUTION = "check_against_solution";
+	public static final String KEY_ENABLE_ELIMINATE_VALUES = "enable_eliminate_values";
 
 	private Settings() {
 	}

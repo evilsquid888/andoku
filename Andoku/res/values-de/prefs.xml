@@ -49,4 +49,6 @@
     <string name="pref_summary_highlight_digits">Hebe die zuletzt eingegebene oder derzeit ausgewählte Ziffer hervor.</string>
     <string name="pref_title_show_timer">Stoppuhr anzeigen</string>
     <string name="pref_summary_show_timer">Zeigt eine Stoppuhr während des Spiels an.</string>
+    <string name="pref_title_enable_eliminate_values">Werte eliminieren aktiv</string>
+    <string name="pref_summary_enable_eliminate_values">Schaltet den Menüeintrag \'Werte eliminieren\' im Spiel frei.</string>
  </resources>
