@@ -318,7 +318,7 @@ public class AndokuPuzzle {
 			Region[] regions = problem.getRegionsAt(cell.row, cell.col);
 			for (Region region : regions) {
 				for (Position p : region.positions) {
-					if (!p.equals(cell) && !isClue(p.row, p.col)) {
+					if (!cells.contains(p) && !isClue(p.row, p.col)) {
 						if (canEliminateValue(p, value))
 							return true;
 					}
@@ -358,7 +358,7 @@ public class AndokuPuzzle {
 			Region[] regions = problem.getRegionsAt(cell.row, cell.col);
 			for (Region region : regions) {
 				for (Position p : region.positions) {
-					if (!p.equals(cell) && !isClue(p.row, p.col)) {
+					if (!cells.contains(p) && !isClue(p.row, p.col)) {
 						if (eliminate(p, value))
 							numberValuesEliminated++;
 					}
