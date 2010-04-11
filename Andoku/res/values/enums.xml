@@ -35,6 +35,12 @@
         <item>ALL_VALUES</item>
     </string-array>
 
+    <!-- Corresponds with enum ColorThemePolicy -->
+    <string-array name="pref_entryvalues_color_theme">
+        <item>CLASSIC</item>
+        <item>DARK</item>
+    </string-array>
+
     <!-- Corresponds with enum InputMethodPolicy -->
     <string-array name="pref_entryvalues_input_method">
         <item>CELL_THEN_VALUES</item>

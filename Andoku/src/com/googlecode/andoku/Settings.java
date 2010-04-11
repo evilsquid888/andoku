@@ -24,6 +24,7 @@ package com.googlecode.andoku;
 public class Settings {
 	public static final String KEY_COLORED_REGIONS = "colored_regions";
 	public static final String KEY_HIGHLIGHT_DIGITS = "highlight_digits_2";
+	public static final String KEY_COLOR_THEME = "color_theme";
 	public static final String KEY_SHOW_TIMER = "show_timer";
 	public static final String KEY_FULLSCREEN_MODE = "fullscreen_mode";
 	public static final String KEY_INPUT_METHOD = "input_method";

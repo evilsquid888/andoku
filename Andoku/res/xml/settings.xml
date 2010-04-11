@@ -42,6 +42,15 @@
             android:entryValues="@array/pref_entryvalues_highlight_digits"
             android:dialogTitle="@string/pref_title_highlight_digits"/>
 
+        <ListPreference
+            android:key="color_theme"
+            android:defaultValue="CLASSIC"
+            android:title="@string/pref_title_color_theme"
+            android:summary="@string/pref_summary_color_theme"
+            android:entries="@array/pref_entries_color_theme"
+            android:entryValues="@array/pref_entryvalues_color_theme"
+            android:dialogTitle="@string/pref_title_color_theme"/>
+
         <CheckBoxPreference
             android:key="show_timer"
             android:defaultValue="true"

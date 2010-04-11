@@ -58,6 +58,12 @@
         <item>Both single and multiple values</item>
     </string-array>
 
+    <!-- Values for "Color Theme" (used by "Settings") -->
+    <string-array name="pref_entries_color_theme">
+        <item>Classic</item>
+        <item>Dark</item>
+    </string-array>
+
     <!-- Values for "Input Method" (used by "Settings") -->
     <string-array name="pref_entries_input_method">
         <item>Cell Then Values</item>

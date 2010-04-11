@@ -288,28 +288,9 @@ public class AndokuActivity extends Activity
 		builder.highlightDigitsPolicy = HighlightDigitsPolicy.valueOf(settings.getString(
 				Settings.KEY_HIGHLIGHT_DIGITS, HighlightDigitsPolicy.ONLY_SINGLE_VALUES.name()));
 
-		// TODO: set colors
-
-//		// example for a sandy theme
-//		builder.backgroudColors = new int[] { 0xffefefef };
-//		builder.puzzleBackgroundColor = 0xffffffea;
-//		builder.nameTextColor = 0xff000000;
-//		builder.difficultyTextColor = 0xff000000;
-//		builder.sourceTextColor = 0xff000000;
-//		builder.timerTextColor = 0xff000000;
-//		builder.gridColor = 0x5a000000;
-//		builder.borderColor = 0xff000000;
-//		builder.extraRegionColor = 0x4d00ff00;
-//		builder.valueColor = 0xff0e4772;
-//		builder.clueColor = 0xff000000;
-//		builder.errorColor = 0xffff4a4a;
-//		builder.markedCellColor = 0x9affa600;
-//		builder.markedClueColor = 0x9aff0000;
-//		builder.areaColors2 = new int[] { 0xffffffff, 0xffe0e0e0 };
-//		builder.areaColors3 = new int[] { 0xffffd9d9, 0xffd9ffd9, 0xffd9d9ff };
-//		builder.areaColors4 = new int[] { 0xffffffd9, 0xffd9ffec, 0xffd9d9ff, 0xffffd9ec };
-//		builder.highlightedCellColorSingleDigit = 0xe6ffff00;
-//		builder.highlightedCellColorMultipleDigits = 0xe6bebe00;
+		ColorThemePolicy colorThemePolicy = ColorThemePolicy.valueOf(settings.getString(
+				Settings.KEY_COLOR_THEME, ColorThemePolicy.CLASSIC.name()));
+		colorThemePolicy.customize(builder);
 
 		Theme theme = builder.build();
 
