@@ -25,16 +25,12 @@
     <string name="pref_category_display">Display</string>
 
     <!-- Titles and summaries for "Display" related settings -->
-    <string name="pref_title_colored_regions">Colored Regions</string>
-    <string name="pref_summary_colored_regions">Use colors to display the regions of a sudoku puzzle.</string>
-    <string name="pref_title_highlight_digits">Highlight Digits</string>
-    <string name="pref_summary_highlight_digits">Highlights the digit that was last entered or is currently selected.</string>
-    <string name="pref_title_color_theme">Color Theme</string>
-    <string name="pref_summary_color_theme">Choose which color theme to use.</string>
-    <string name="pref_title_show_timer">Show Timer</string>
-    <string name="pref_summary_show_timer">Displays a stopwatch during the game.</string>
     <string name="pref_title_fullscreen_mode">Fullscreen Mode</string>
     <string name="pref_summary_fullscreen_mode">Hides the status bar during the game. Restart required.</string>
+    <string name="pref_title_color_theme">Color Theme</string>
+    <string name="pref_summary_color_theme">Choose which color theme to use.</string>
+    <string name="pref_title_colored_regions">Colored Regions</string>
+    <string name="pref_summary_colored_regions">Use colors to display the regions of a sudoku puzzle.</string>
 
     <!-- Category for "Behavior" related settings -->
     <string name="pref_category_behavior">Behavior</string>
@@ -44,4 +40,13 @@
     <string name="pref_summary_input_method">Choose how to enter digits during the game.</string>
     <string name="pref_title_check_against_solution">Strict Error Checking</string>
     <string name="pref_summary_check_against_solution">Check input against the solution of the puzzle.</string>
+
+    <!-- Category for in-game features -->
+    <string name="pref_category_game_features">In-Game Features</string>
+
+    <!-- Titles and summaries for in-game features -->
+    <string name="pref_title_highlight_digits">Highlight Digits</string>
+    <string name="pref_summary_highlight_digits">Highlights the digit that was last entered or is currently selected.</string>
+    <string name="pref_title_show_timer">Show Timer</string>
+    <string name="pref_summary_show_timer">Displays a stopwatch during the game.</string>
  </resources>

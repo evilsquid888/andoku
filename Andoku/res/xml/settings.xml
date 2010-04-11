@@ -24,23 +24,11 @@
     <PreferenceCategory
         android:title="@string/pref_category_display">
 
-        <ListPreference
-            android:key="colored_regions"
-            android:defaultValue="STANDARD_X_HYPER_SQUIGGLY"
-            android:title="@string/pref_title_colored_regions"
-            android:summary="@string/pref_summary_colored_regions"
-            android:entries="@array/pref_entries_colored_regions"
-            android:entryValues="@array/pref_entryvalues_colored_regions"
-            android:dialogTitle="@string/pref_title_colored_regions"/>
-
-        <ListPreference
-            android:key="highlight_digits_2"
-            android:defaultValue="ONLY_SINGLE_VALUES"
-            android:title="@string/pref_title_highlight_digits"
-            android:summary="@string/pref_summary_highlight_digits"
-            android:entries="@array/pref_entries_highlight_digits"
-            android:entryValues="@array/pref_entryvalues_highlight_digits"
-            android:dialogTitle="@string/pref_title_highlight_digits"/>
+        <CheckBoxPreference
+            android:key="fullscreen_mode"
+            android:defaultValue="true"
+            android:title="@string/pref_title_fullscreen_mode"
+            android:summary="@string/pref_summary_fullscreen_mode"/>
 
         <ListPreference
             android:key="color_theme"
@@ -51,17 +39,14 @@
             android:entryValues="@array/pref_entryvalues_color_theme"
             android:dialogTitle="@string/pref_title_color_theme"/>
 
-        <CheckBoxPreference
-            android:key="show_timer"
-            android:defaultValue="true"
-            android:title="@string/pref_title_show_timer"
-            android:summary="@string/pref_summary_show_timer"/>
-
-        <CheckBoxPreference
-            android:key="fullscreen_mode"
-            android:defaultValue="true"
-            android:title="@string/pref_title_fullscreen_mode"
-            android:summary="@string/pref_summary_fullscreen_mode"/>
+        <ListPreference
+            android:key="colored_regions"
+            android:defaultValue="STANDARD_X_HYPER_SQUIGGLY"
+            android:title="@string/pref_title_colored_regions"
+            android:summary="@string/pref_summary_colored_regions"
+            android:entries="@array/pref_entries_colored_regions"
+            android:entryValues="@array/pref_entryvalues_colored_regions"
+            android:dialogTitle="@string/pref_title_colored_regions"/>
 
     </PreferenceCategory>
 
@@ -82,6 +67,26 @@
             android:defaultValue="true"
             android:title="@string/pref_title_check_against_solution"
             android:summary="@string/pref_summary_check_against_solution"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_game_features">
+
+        <ListPreference
+            android:key="highlight_digits_2"
+            android:defaultValue="ONLY_SINGLE_VALUES"
+            android:title="@string/pref_title_highlight_digits"
+            android:summary="@string/pref_summary_highlight_digits"
+            android:entries="@array/pref_entries_highlight_digits"
+            android:entryValues="@array/pref_entryvalues_highlight_digits"
+            android:dialogTitle="@string/pref_title_highlight_digits"/>
+
+        <CheckBoxPreference
+            android:key="show_timer"
+            android:defaultValue="true"
+            android:title="@string/pref_title_show_timer"
+            android:summary="@string/pref_summary_show_timer"/>
 
     </PreferenceCategory>
 

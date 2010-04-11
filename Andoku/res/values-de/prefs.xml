@@ -25,16 +25,12 @@
     <string name="pref_category_display">Anzeige</string>
 
     <!-- Titles and summaries for "Display" related settings -->
-    <string name="pref_title_colored_regions">Farbige Bereiche</string>
-    <string name="pref_summary_colored_regions">Verwende Farben zur Darstellung der Bereiche eines Sudoku-Rätsels.</string>
-    <string name="pref_title_highlight_digits">Ziffern hervorheben</string>
-    <string name="pref_summary_highlight_digits">Hebe die zuletzt eingegebene oder derzeit ausgewählte Ziffer hervor.</string>
-    <string name="pref_title_color_theme">Farbschema</string>
-    <string name="pref_summary_color_theme">Legt fest, welches Farbschema verwendet werden soll.</string>
-    <string name="pref_title_show_timer">Stoppuhr anzeigen</string>
-    <string name="pref_summary_show_timer">Zeigt eine Stoppuhr während des Spiels an.</string>
     <string name="pref_title_fullscreen_mode">Vollbildmodus</string>
     <string name="pref_summary_fullscreen_mode">Blendet die Statusleiste während des Spiels aus. Neustart erforderlich.</string>
+    <string name="pref_title_color_theme">Farbschema</string>
+    <string name="pref_summary_color_theme">Legt fest, welches Farbschema verwendet werden soll.</string>
+    <string name="pref_title_colored_regions">Farbige Bereiche</string>
+    <string name="pref_summary_colored_regions">Verwende Farben zur Darstellung der Bereiche eines Sudoku-Rätsels.</string>
 
     <!-- Category for "Behavior" related settings -->
     <string name="pref_category_behavior">Verhalten</string>
@@ -44,4 +40,13 @@
     <string name="pref_summary_input_method">Legt fest, wie Ziffern während des Spiels eingegeben werden.</string>
     <string name="pref_title_check_against_solution">Strikte Fehlerprüfung</string>
     <string name="pref_summary_check_against_solution">Eingaben mit der Lösung des Rätsels vergleichen.</string>
+
+    <!-- Category for in-game features -->
+    <string name="pref_category_game_features">Spiel-Features</string>
+
+    <!-- Titles and summaries for in-game features -->
+    <string name="pref_title_highlight_digits">Ziffern hervorheben</string>
+    <string name="pref_summary_highlight_digits">Hebe die zuletzt eingegebene oder derzeit ausgewählte Ziffer hervor.</string>
+    <string name="pref_title_show_timer">Stoppuhr anzeigen</string>
+    <string name="pref_summary_show_timer">Zeigt eine Stoppuhr während des Spiels an.</string>
  </resources>
