@@ -329,7 +329,7 @@ public class AndokuActivity extends Activity
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 
 		InputMethodPolicy inputMethodPolicy = InputMethodPolicy.valueOf(settings.getString(
-				Settings.KEY_INPUT_METHOD, InputMethodPolicy.AUTOMATIC.name()));
+				Settings.KEY_INPUT_METHOD, InputMethodPolicy.CELL_THEN_VALUES.name()));
 		if (inputMethodPolicy != this.inputMethodPolicy) {
 			this.inputMethodPolicy = inputMethodPolicy;
 			this.inputMethod = inputMethodPolicy.createInputMethod(inputMethodTarget);
