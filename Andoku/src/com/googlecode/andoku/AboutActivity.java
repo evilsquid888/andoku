@@ -1,6 +1,6 @@
 /*
  * Andoku - a sudoku puzzle game for Android.
- * Copyright (C) 2009  Markus Wiederkehr
+ * Copyright (C) 2009, 2010  Markus Wiederkehr
  *
  * This file is part of Andoku.
  *
