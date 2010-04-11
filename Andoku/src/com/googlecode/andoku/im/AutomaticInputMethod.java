@@ -135,6 +135,11 @@ public class AutomaticInputMethod implements InputMethod {
 		}
 	}
 
+	public void onValuesChanged() {
+		if (activeInputMethod != null)
+			activeInputMethod.onValuesChanged();
+	}
+
 	private void setUndecided() {
 		activeInputMethod = null;
 		target.setMarkedCell(null);

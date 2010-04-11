@@ -140,6 +140,10 @@ public class CellThenValuesInputMethod implements InputMethod {
 		setMark(cell);
 	}
 
+	public void onValuesChanged() {
+		checkButtons(target.getMarkedCell());
+	}
+
 	private void setMark(Position cell) {
 		target.setMarkedCell(cell);
 
@@ -153,6 +157,10 @@ public class CellThenValuesInputMethod implements InputMethod {
 			}
 		}
 
+		checkButtons(cell);
+	}
+
+	private void checkButtons(Position cell) {
 		final int size = target.getPuzzleSize();
 
 		if (cell == null) {

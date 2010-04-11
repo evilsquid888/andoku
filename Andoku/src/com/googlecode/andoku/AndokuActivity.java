@@ -722,6 +722,8 @@ public class AndokuActivity extends Activity
 			return;
 		}
 
+		inputMethod.onValuesChanged();
+
 		updateKeypadHighlighing();
 
 		andokuView.invalidate();

@@ -110,6 +110,9 @@ public class ValuesThenCellInputMethod implements InputMethod {
 		}
 	}
 
+	public void onValuesChanged() {
+	}
+
 	private void setValues(int v) {
 		values.setFromInt(v);
 
