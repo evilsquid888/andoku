@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Andoku - a sudoku puzzle game for Android.
+  Copyright (C) 2009, 2010  Markus Wiederkehr
+
+  This file is part of Andoku.
+
+  Andoku is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  Andoku is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with Andoku.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- Contains strings for the "Settings" activity -->
+<resources>
+    <!-- Category for "Display" related settings -->
+    <string name="pref_category_display">Affichage</string>
+
+    <!-- Titles and summaries for "Display" related settings -->
+    <string name="pref_title_fullscreen_mode">Plein écran</string>
+    <string name="pref_summary_fullscreen_mode">Cacher la barre de status pendant le jeu. Redémarrage nécessaire.</string>
+    <string name="pref_title_color_theme">Thème</string>
+    <string name="pref_summary_color_theme">Choix du thème de couleurs.</string>
+    <string name="pref_title_colored_regions">Zones colorées</string>
+    <string name="pref_summary_colored_regions">Utiliser des couleurs pour visualiser les différentes zones des grilles.</string>
+
+    <!-- Category for "Behavior" related settings -->
+    <string name="pref_category_behavior">Validation</string>
+
+    <!-- Titles and summaries for "Behavior" related settings -->
+    <string name="pref_title_input_method">Méthode de validation</string>
+    <string name="pref_summary_input_method">Choisir comment l'on insère les chiffres dans la grille pendant le jeu.</string>
+    <string name="pref_title_check_against_solution">Vérification des erreurs</string>
+    <string name="pref_summary_check_against_solution">Vérifier la grille en fonction de la solution.</string>
+
+    <!-- Category for in-game features -->
+    <string name="pref_category_game_features">Particularités du jeu</string>
+
+    <!-- Titles and summaries for in-game features -->
+    <string name="pref_title_highlight_digits">Surlignage des chiffres</string>
+    <string name="pref_summary_highlight_digits">Mise en valeur du dernier chiffre entré ou de la case sélectionnée.</string>
+    <string name="pref_title_show_timer">Chronomètre</string>
+    <string name="pref_summary_show_timer">Afficher un chronomètre pendant le jeu.</string>
+    <string name="pref_title_enable_eliminate_values"> \'Effacer un chiffre\'</string>
+    <string name="pref_summary_enable_eliminate_values">Authoriser l'option \'Effacer un chiffre\' au cours du jeu.</string>
+ </resources>

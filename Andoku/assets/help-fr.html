@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html>
+<head>
+<title>Aide Andoku</title>
+<link rel="stylesheet" type="text/css"
+	href="file:///android_asset/andoku.css">
+</head>
+<body>
+
+<h1>Sommaire</h1>
+
+<ul>
+	<li><a href="#objective">Objectif</a></li>
+	<li><a href="#variants">Variantes</a></li>
+	<ul>
+		<li><a href="#grids">Types de grilles</a></li>
+		<li><a href="#extras">Zones supplémentaires</a></li>
+	</ul>
+	<li><a href="#difficulties">Niveaux de difficulté</a></li>
+	<li><a href="#inputmethods">Méthodes de validation</a></li>
+	<ul>
+		<li><a href="#im_ctv">Cellule - chiffre</a></li>
+		<li><a href="#im_vtc">Chiffre - cellule</a></li>
+		<li><a href="#im_auto">Automatique</a></li>
+	</ul>
+	<li><a href="#links">Liens externes</a></li>
+</ul>
+
+<h1 id="objective">Objectif</h1>
+
+<p>L'objectif de ce jeu est de remplir entièrement la grille afin
+que les chiffres de 1 à 9 soient présents une seule fois par <i>zone</i>.
+Dans un sudoku standard, une <i>zone</i> est un rang, une colonne ou
+l'un des 9 blocs de 3x3 cellules.</p>
+
+<h1 id="variants">Variantes</h1>
+
+<p>Andoku propose différentes variantes de jeu en plus du modèle
+classique. Dans le menu <i>Nouveau jeu</i>, vous pouvez choisir entre 2
+styles de grille et 4 styles de zones supplémentaires.</p>
+
+<h2 id="grids">Types de grilles</h2>
+
+<p>Voici les différents types de grilles:</p>
+<dl>
+	<dt>Standard</dt>
+	<dd>La grille est faite de blocs de 3x3 cellules.</dd>
+	<dt>Serpentart</dt>
+	<dd>À la place de 9 blocs carrés, la grille est constituée de
+	zones non carrées. Les chiffres de 1 à 9 doivent apparaitre une seule
+	fois dans chaque zone (non carrée).</dd>
+</dl>
+
+<h2 id="extras">Zones supplémentaires</h2>
+
+<p>Les zones supplémentaires imposent des contraintes
+supplémentaires. En plus du modèle classique de grille, il y a trois
+sortes de zones supplémentaires disponibles :</p>
+<dl>
+	<dt>Aucune</dt>
+	<dd>Modèle classique. Vous n'avez pas de contraintes autres que
+	les 9 rangs, 9 colonnes et 9 blocs (carrés ou Serpentarts).</dd>
+	<dt>X-Sudoku</dt>
+	<dd>Les chiffres de 1 à 9 doivent n'apparaitre qu'une seule fois
+	dans les deux diagonales de la grille dont le fond est bleuté, en plus
+	des contraintes classiques</dd>
+	<dt>Hyper-Sudoku</dt>
+	<dd>Ce modèle de grille comporte 4 blocs de 3x3 cellules, dont le
+	fond est bleuté, incrustées dans la grille classique. Les chiffres de 1
+	à 9 ne doivent apparaitre qu'une seule fois dans ces quatre nouveaux
+	blocs en plus des contraintes classiques.</dd>
+	<dt>Pourcent-Doku</dt>
+	<dd>La grille présente trois zones supplémentaires où ne peuvent
+	apparaitre qu'une fois les chiffres de 1 à 9, en plus des contraintes
+	classiques.</dd>
+</dl>
+
+<h1 id="difficulties">Niveaux de difficulté</h1>
+
+<p>Andoku propose cinq niveaux de difficulté par type de jeu, allant
+de <i>Facile</i> à <i>Diabolique</i>. Les sudokus Serpentart ou avec des
+zones supplémentaires sont plus difficiles que les grilles classiques.</p>
+
+<p>Les niveaux <i>Difficile</i> et <i>Diabolique</i> proposent des
+grilles plus difficiles que celles que l'ont peut trouver dans les
+journaux et magazines.</p>
+
+<p>Avec huit différents types de jeu, cinq niveaux de difficulté et
+100 grilles par type et difficulté, Andoku propose un total de 4000
+grilles.</p>
+
+<h1 id="inputmethods">Méthodes de validation</h1>
+
+<p>Andoku propose trois différentes façon d'entrer un chiffre dans
+une cellule. Le choix se fait dans les paramètres.</p>
+
+<h2 id="im_ctv">Cellule - chiffre</h2>
+
+<p>Avec cette méthode, vous sélectionnez d'abord la cellule avec
+votre doigt puis vous utilisez le pavé numérique situé en dessous de la
+grille pour choisir le chiffre pour cette cellule. La cellule
+sélectionnée sera visible grâce à un fond de couleur différente des
+autres.</p>
+
+<p>Appuyez sur <tt>C</tt> pour effacer le chiffre inséré dans cette
+cellule si vous en avez déjà mis un.</p>
+
+<p>Le bouton <tt>Inv</tt> sert à inverser la valeur de la cellule,
+ce qui permet d'indiquer facilement que certains chiffres <i>ne sont
+pas</i> possible dans cette cellule. Par exemple, si vous entrez <tt>3</tt>,
+<tt>7</tt>, puis <tt>Inv</tt>, les possibilités restantes seront 1, 2,
+4, 5, 6, 8 et 9 (soit tous les chiffres sauf 3 et 7).</p>
+
+<p>Si votre appareil a un trackball, il peut être utilisé pour
+déplacer la sélection vers l'une des cellules voisines.</p>
+
+<h2 id="im_vtc">Chiffre - cellule</h2>
+
+<p>Cette méthode de validation fonctionne dans le sens inverse de la
+précédente. Vous sélectionnez d'abord le chiffre sur le pavé numérique
+en bas de l'écran puis vous choisissez la cellule à remplir avec ce
+chiffre.</p>
+
+<p>Cette méthode peut être beaucoup plus rapide puisqu'il est
+possible de valider plusieurs cellules avec un seul chiffre, en
+sélectionnant plusieurs cellules à la suite.</p>
+
+<p>Que se passe-t-il quand vous sélectionnez une cellule qui n'est
+pas vide ? Cela dépend si la cellule contient déjà l'un des chiffres
+sélectionnés ou pas. Si ce n'est pas le cas, les chiffres sont
+simplement ajoutés (comme quand la cellule est vide). Si la cellule
+contien l'un des chiffres sélectionnés, tous les chiffres sélectionnés
+seront effacés.</p>
+
+<p>Exemple : si vous avez sélectionné <tt>5</tt> et <tt>7</tt> sur
+le pavé numérique et que vous sélectionnez ensuite une cellule qui
+contient déjà le chiffre <tt>3</tt>, les chiffres 3, 5 et 7 seront
+inscrits dans la cellule.</p>
+
+<p>Exemple : si vous avez sélectionné les chiffres <tt>3</tt> et <tt>5</tt>
+sur le pavé numérique et que vous sélectionnez ensuite une cellule qui
+contient déjà les chiffres <tt>3</tt>, <tt>5</tt> et <tt>7</tt>, la
+cellule ne contiendra plus que le chiffre 7.</p>
+
+<p>Exemple : si vous avez sélectionné les chiffres <tt>5</tt> et <tt>8</tt>
+sur le pavé numérique et que vous sélectionnez ensuite une cellule qui
+contient déjà les chiffres <tt>3</tt> et <tt>5</tt>, la cellule ne
+contiendra plus que le chiffre 3 car le chiffre 5 sera effacé et le
+chiffre 8 ne sera pas inscrit.</p>
+
+<p>Le bouton <tt>C</tt> sert à effacer tous les chiffres
+sélectionnés sur le pavé numérique. Le bouton <tt>Inv</tt> sert à
+inverser la sélection des chiffres sur le pavé numérique.</p>
+
+<h2 id="im_auto">Automatique</h2>
+
+<p>Choisissez cette méthode si vous voulez changer facilement de
+méthode de validation entre <i>Cellule - chiffre</i> et <i>Chiffre -
+cellule</i>.</p>
+
+<p>Cela rend les deux méthodes disponibles en même temps. Ainsi, si
+vous sélectionnez d'abord une cellule puis un chiffre, la méthode <i>Cellule
+- chiffre</i> sera utilisée, alors que si vous sélectionnez d'abord un
+chiffre puis une cellule, c'est la méthode <i>Chiffre - cellule</i> qui
+sera utilisée.</p>
+
+<p>Si vous voulez retourner à un état neutre depuis <i>Cellule -
+chiffre</i>, cliquez sur la cellule sélectionnée une seconde fois.</p>
+
+<p>Pour annuler <i>Chiffre - cellule</i>, déselectionnez tous les
+chiffres sur le pavé numérique. Vous pouvez aussi simplement cliquer sur
+le bouton <tt>C</tt>.</p>
+
+<h1 id="links">Liens externes</h1>
+
+<p>Andoku est un projet open source. La page du projet se trouve à
+cet endroit sur <a href="http://code.google.com/p/andoku">Google
+Code</a>.</p>
+
+<p>Pour de plus amples informations sur le jeu de Sudoku en général,
+veuillez visiter <a href="http://fr.m.wikipedia.org/wiki/Sudoku">Wikipedia:
+Sudoku</a>.</p>
+
+</body>
+</html>
