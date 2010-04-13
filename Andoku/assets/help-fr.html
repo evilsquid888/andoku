@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <html>
 <head>
 <title>Aide Andoku</title>
@@ -28,7 +28,7 @@
 
 <h1 id="objective">Objectif</h1>
 
-<p>L'objectif de ce jeu est de remplir entièrement la grille afin
+<p>L'objectif de ce jeu est de remplir chaque case de la grille afin
 que les chiffres de 1 à 9 soient présents une seule fois par <i>zone</i>.
 Dans un sudoku standard, une <i>zone</i> est un rang, une colonne ou
 l'un des 9 blocs de 3x3 cellules.</p>
@@ -41,7 +41,7 @@ styles de grille et 4 styles de zones supplémentaires.</p>
 
 <h2 id="grids">Types de grilles</h2>
 
-<p>Voici les différents types de grilles:</p>
+<p>Voici les deux types de grilles disponibles :</p>
 <dl>
 	<dt>Standard</dt>
 	<dd>La grille est faite de blocs de 3x3 cellules.</dd>
@@ -57,18 +57,18 @@ styles de grille et 4 styles de zones supplémentaires.</p>
 supplémentaires. En plus du modèle classique de grille, il y a trois
 sortes de zones supplémentaires disponibles :</p>
 <dl>
-	<dt>Aucune</dt>
+	<dt>Standard</dt>
 	<dd>Modèle classique. Vous n'avez pas de contraintes autres que
 	les 9 rangs, 9 colonnes et 9 blocs (carrés ou Serpentarts).</dd>
 	<dt>X-Sudoku</dt>
-	<dd>Les chiffres de 1 à 9 doivent n'apparaitre qu'une seule fois
+	<dd>Les chiffres de 1 à 9 ne doivent apparaitre qu'une seule fois
 	dans les deux diagonales de la grille dont le fond est bleuté, en plus
-	des contraintes classiques</dd>
+	des contraintes classiques.</dd>
 	<dt>Hyper-Sudoku</dt>
-	<dd>Ce modèle de grille comporte 4 blocs de 3x3 cellules, dont le
-	fond est bleuté, incrustées dans la grille classique. Les chiffres de 1
-	à 9 ne doivent apparaitre qu'une seule fois dans ces quatre nouveaux
-	blocs en plus des contraintes classiques.</dd>
+	<dd>Ce modèle de grille comporte 4 blocs supplémentaires de 3x3
+	cellules, dont le fond est bleuté, incrustées dans la grille classique.
+	Les chiffres de 1 à 9 ne doivent apparaitre qu'une seule fois dans ces
+	quatre nouveaux blocs en plus des contraintes classiques.</dd>
 	<dt>Pourcent-Doku</dt>
 	<dd>La grille présente trois zones supplémentaires où ne peuvent
 	apparaitre qu'une fois les chiffres de 1 à 9, en plus des contraintes
@@ -96,14 +96,13 @@ une cellule. Le choix se fait dans les paramètres.</p>
 
 <h2 id="im_ctv">Cellule - chiffre</h2>
 
-<p>Avec cette méthode, vous sélectionnez d'abord la cellule avec
-votre doigt puis vous utilisez le pavé numérique situé en dessous de la
-grille pour choisir le chiffre pour cette cellule. La cellule
-sélectionnée sera visible grâce à un fond de couleur différente des
-autres.</p>
+<p>Avec cette méthode, vous sélectionnez d'abord la cellule puis
+utilisez le pavé numérique situé en dessous de la grille afin de choisir
+le chiffre que vous voulez insérer. La cellule sélectionnée est visible
+grâce à un fond de couleur différente des autres.</p>
 
-<p>Appuyez sur <tt>C</tt> pour effacer le chiffre inséré dans cette
-cellule si vous en avez déjà mis un.</p>
+<p>Appuyez sur <tt>C</tt> si vous souhaitez effacer le chiffre
+présent dans la cellule sélectionnée.</p>
 
 <p>Le bouton <tt>Inv</tt> sert à inverser la valeur de la cellule,
 ce qui permet d'indiquer facilement que certains chiffres <i>ne sont
@@ -117,9 +116,8 @@ déplacer la sélection vers l'une des cellules voisines.</p>
 <h2 id="im_vtc">Chiffre - cellule</h2>
 
 <p>Cette méthode de validation fonctionne dans le sens inverse de la
-précédente. Vous sélectionnez d'abord le chiffre sur le pavé numérique
-en bas de l'écran puis vous choisissez la cellule à remplir avec ce
-chiffre.</p>
+précédente. Vous sélectionnez d'abord le chiffre puis choisissez la
+cellule à remplir avec ce chiffre.</p>
 
 <p>Cette méthode peut être beaucoup plus rapide puisqu'il est
 possible de valider plusieurs cellules avec un seul chiffre, en
@@ -129,20 +127,20 @@ sélectionnant plusieurs cellules à la suite.</p>
 pas vide ? Cela dépend si la cellule contient déjà l'un des chiffres
 sélectionnés ou pas. Si ce n'est pas le cas, les chiffres sont
 simplement ajoutés (comme quand la cellule est vide). Si la cellule
-contien l'un des chiffres sélectionnés, tous les chiffres sélectionnés
+contient l'un des chiffres sélectionnés, tous les chiffres sélectionnés
 seront effacés.</p>
 
-<p>Exemple : si vous avez sélectionné <tt>5</tt> et <tt>7</tt> sur
+<p>Exemple 1 : si vous avez sélectionné <tt>5</tt> et <tt>7</tt> sur
 le pavé numérique et que vous sélectionnez ensuite une cellule qui
 contient déjà le chiffre <tt>3</tt>, les chiffres 3, 5 et 7 seront
 inscrits dans la cellule.</p>
 
-<p>Exemple : si vous avez sélectionné les chiffres <tt>3</tt> et <tt>5</tt>
+<p>Exemple 2 : si vous avez sélectionné les chiffres <tt>3</tt> et <tt>5</tt>
 sur le pavé numérique et que vous sélectionnez ensuite une cellule qui
 contient déjà les chiffres <tt>3</tt>, <tt>5</tt> et <tt>7</tt>, la
 cellule ne contiendra plus que le chiffre 7.</p>
 
-<p>Exemple : si vous avez sélectionné les chiffres <tt>5</tt> et <tt>8</tt>
+<p>Exemple 3 : si vous avez sélectionné les chiffres <tt>5</tt> et <tt>8</tt>
 sur le pavé numérique et que vous sélectionnez ensuite une cellule qui
 contient déjà les chiffres <tt>3</tt> et <tt>5</tt>, la cellule ne
 contiendra plus que le chiffre 3 car le chiffre 5 sera effacé et le

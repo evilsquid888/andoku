@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!--
   Andoku - a sudoku puzzle game for Android.
   Copyright (C) 2009, 2010  Markus Wiederkehr
 
@@ -24,7 +24,7 @@
     <string name="app_name">Andoku</string>
 
     <!-- When was a game last played (used by "Resume Game") -->
-    <string name="age_0_minutes">Il y a moins d'une minute</string>
+    <string name="age_0_minutes">Il y a moins d\'une minute</string>
     <string name="age_1_day">Hier</string>
     <string name="age_1_hour">Il y a une heure</string>
     <string name="age_1_minute">Il y a une minute</string>
@@ -56,7 +56,7 @@
     <!-- Different values for the button that starts/resumes/resets a game (when browsing through the list of puzzles) -->
     <string name="button_reset_game">Réinitialiser</string>
     <string name="button_resume_game">Reprendre le jeu</string>
-    <string name="button_start_game">Nouvelle grille</string>
+    <string name="button_start_game">Commencer</string>
 
     <!-- Additional keypad buttons -->
     <string name="button_clear">C</string>
@@ -68,9 +68,9 @@
 
     <!-- Captions and messages for confirmation dialogs -->
     <string name="dialog_delete_folder">Effacer le dossier</string>
-    <string name="message_delete_folder">Le dossier \'%s\' n'est pas vide. Confirmez-vous sa suppression ?</string>
+    <string name="message_delete_folder">Le dossier \'%s\' n\'est pas vide. Confirmez-vous sa suppression ?</string>
     <string name="dialog_rename_folder">Renommer le dossier</string>
-    <string name="message_rename_folder">Nouveau nom pour \'%s\':</string>
+    <string name="message_rename_folder">Nouveau nom pour \'%s\' :</string>
     <string name="message_folder_exists">Impossible de renommer le dossier car un dossier \'%s\' existe déjà !</string>
     <string name="dialog_reset_puzzle">Réinitialiser la grille ?</string>
     <string name="message_reset_puzzle">Confirmez-vous la réinitialisation de la grille et de son chrono ?</string>
@@ -81,7 +81,7 @@
     <!-- Messages for the error page -->
     <string name="error_message_finding_available">Erreur lors de la recherche de nouvelles grilles.</string>
     <string name="error_message_loading_puzzle">Erreur lors du chargement de la grille.</string>
-    <string name="error_message_stack_trace">Stack trace:</string>
+    <string name="error_message_stack_trace">Stack trace :</string>
 
     <!-- Names of the help and about pages for this language (under folder "assets") -->
     <string name="html_page_about">about-fr.html</string>
@@ -89,9 +89,9 @@
 
     <!-- Info/warning messages for "Check Puzzle" -->
     <string name="message_computing_solution">Calcul de la solution. Veuillez patienter...</string>
-    <string name="info_puzzle_ok_1">Pas d'erreurs. Plus qu'une cellule.</string>
-    <string name="info_puzzle_ok_n">Pas d'erreurs. Plus que %d cellules.</string>
-    <string name="warn_invalid_puzzle">Cette grille est invalide et ne peut êtree résolue.</string>
+    <string name="info_puzzle_ok_1">Pas d\'erreurs. Plus qu\'une cellule.</string>
+    <string name="info_puzzle_ok_n">Pas d\'erreurs. Plus que %d cellules.</string>
+    <string name="warn_invalid_puzzle">Cette grille est invalide et ne peut être résolue.</string>
     <string name="warn_puzzle_errors">Vous avez fait des erreurs.</string>
 
     <!-- Options menu while playing -->
@@ -104,9 +104,9 @@
 
     <!-- Messages for congratulations/statistics at end of game -->
     <string name="message_congrats">&lt;b&gt;Félicitations, vous avez résolu cette grille !&lt;/b&gt;</string>
-    <string name="message_statistics_title_assets">Statistiques pour &lt;i&gt;%s (%s)&lt;/i&gt;:</string>
-    <string name="message_statistics_title_db">Statistiques pour le dossier &lt;i&gt;%s&lt;/i&gt;:</string>
-    <string name="message_statistics_details">Grilles résolues: %d&lt;br/&gt;Temps moyen: %s&lt;br/&gt;Meilleur temps: %s</string>
+    <string name="message_statistics_title_assets">Statistiques pour &lt;i&gt;%s (%s)&lt;/i&gt; :</string>
+    <string name="message_statistics_title_db">Statistiques pour le dossier &lt;i&gt;%s&lt;/i&gt; :</string>
+    <string name="message_statistics_details">Grilles résolues : %d&lt;br/&gt;Temps moyen : %s&lt;br/&gt;Meilleur temps : %s</string>
 
     <!-- Folder cannot be opened because it's empty -->
     <string name="message_empty_folder">Le dossier \'%s\' est vide.</string>
@@ -124,22 +124,22 @@
     <!-- Captions for various activities -->
     <string name="page_title_welcome">Bienvenue sur Andoku</string>
     <string name="page_title_resume_game">Reprendre le jeu</string>
-    <string name="page_title_new_game">Commencer une nouvelle grille</string>
+    <string name="page_title_new_game">Nouvelle grille</string>
     <string name="page_title_folder_list">Dossiers importés</string>
     <string name="page_title_help">Aide</string>
     <string name="page_title_about">À propos</string>
 
     <!-- Game type and difficulty selection (used by "Start New Game") -->
-    <string name="spinner_grid">Type de grille:</string>
+    <string name="spinner_grid">Type de grille :</string>
     <string name="prompt_spinner_grid">Choisir un type de grille</string>
-    <string name="spinner_extra_regions">Zones supplémentaires:</string>
+    <string name="spinner_extra_regions">Zones supplémentaires :</string>
     <string name="prompt_spinner_extra_regions">Choisir des zones supplémentaires</string>
-    <string name="spinner_difficulty">Niveau de difficulté:</string>
+    <string name="spinner_difficulty">Niveau de difficulté :</string>
     <string name="prompt_spinner_difficulty">Choisir un niveau de difficulté</string>
 
     <!-- Declares a permission group and a permission that allows external applications to import puzzles into Andoku -->
     <string name="permgroup_label_andoku">Andoku</string>
     <string name="permgroup_description_andoku">Permissions pour interagir avec Andoku.</string>
     <string name="perm_label_import">Importer des grilles de Sudoku</string>
-    <string name="perm_description_import">Autoriser l'application à créer des dossiers et importer des grilles dans Andoku.</string>
+    <string name="perm_description_import">Autoriser l\'application à créer des dossiers et importer des grilles dans Andoku.</string>
  </resources>

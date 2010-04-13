@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!--
   Andoku - a sudoku puzzle game for Android.
   Copyright (C) 2009, 2010  Markus Wiederkehr
 
@@ -28,7 +28,7 @@
 
     <!-- The possible extra regions (used by "Start New Game") -->
     <string-array name="extra_regions">
-        <item>Standard</item>
+        <item>Grille classique</item>
         <item>X-Sudoku</item>
         <item>Hyper-Sudoku</item>
         <item>Pourcent-Doku</item>
@@ -46,8 +46,8 @@
     <!-- Values for "Colored Regions" (used by "Settings") -->
     <string-array name="pref_entries_colored_regions">
         <item>Jamais</item>
-        <item>Pour Standard et Serpentart sans zones supp</item>
-        <item>Pour tous sauf Serpentart avec zones supp</item>
+        <item>Standard, Serpentart sauf zones supp</item>
+        <item>Sauf Serpentart, avec zones supp</item>
         <item>Toujours</item>
     </string-array>
 
