@@ -137,6 +137,10 @@ public class CellThenValuesInputMethod implements InputMethod {
 	}
 
 	public void onTap(Position cell, boolean editable) {
+		if (cell == null) {
+			target.highlightDigit(null);
+		}
+
 		setMark(cell);
 	}
 
@@ -147,10 +151,7 @@ public class CellThenValuesInputMethod implements InputMethod {
 	private void setMark(Position cell) {
 		target.setMarkedCell(cell);
 
-		if (cell == null) {
-			target.highlightDigit(null);
-		}
-		else {
+		if (cell != null) {
 			ValueSet values = target.getCellValues(cell);
 			if (values.size() == 1) {
 				target.highlightDigit(values.nextValue(0));
