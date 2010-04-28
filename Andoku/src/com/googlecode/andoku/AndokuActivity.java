@@ -32,9 +32,7 @@ import android.content.res.Resources;
 import android.graphics.PointF;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.os.Vibrator;
-import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.DisplayMetrics;
@@ -101,8 +99,6 @@ public class AndokuActivity extends Activity
 	private AndokuDatabase db;
 
 	private Vibrator vibrator;
-
-	private WakeLock wakeLock;
 
 	private PuzzleSource source;
 	private int puzzleNumber;
@@ -179,10 +175,6 @@ public class AndokuActivity extends Activity
 		db = new AndokuDatabase(this);
 
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-
-		// TODO: preferences for wakelock
-		PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-		wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, TAG);
 
 		background = (ViewGroup) findViewById(R.id.background);
 
@@ -330,7 +322,7 @@ public class AndokuActivity extends Activity
 			autoSavePuzzle();
 		}
 
-		setWakeLock(false);
+		setKeepScreenOn(false);
 	}
 
 	@Override
@@ -341,7 +333,7 @@ public class AndokuActivity extends Activity
 		super.onResume();
 
 		if (gameState == GAME_STATE_PLAYING) {
-			setWakeLock(true);
+			setKeepScreenOn(true);
 
 			timer.start();
 		}
@@ -870,7 +862,7 @@ public class AndokuActivity extends Activity
 		if (Constants.LOG_V)
 			Log.v(TAG, "enterGameState(" + newGameState + ")");
 
-		setWakeLock(newGameState == GAME_STATE_PLAYING);
+		setKeepScreenOn(newGameState == GAME_STATE_PLAYING);
 
 		switch (newGameState) {
 			case GAME_STATE_READY:
@@ -947,23 +939,8 @@ public class AndokuActivity extends Activity
 		timerView.setVisibility(showTimer ? View.VISIBLE : View.INVISIBLE);
 	}
 
-	private void setWakeLock(boolean lock) {
-		if (lock) {
-			if (!wakeLock.isHeld()) {
-				if (Constants.LOG_V)
-					Log.v(TAG, "acquire wakeLock");
-
-				wakeLock.acquire();
-			}
-		}
-		else {
-			if (wakeLock.isHeld()) {
-				if (Constants.LOG_V)
-					Log.v(TAG, "release wakeLock");
-
-				wakeLock.release();
-			}
-		}
+	private void setKeepScreenOn(boolean keepScreenOn) {
+		andokuView.setKeepScreenOn(keepScreenOn);
 	}
 
 	private void updateCongrats() {
