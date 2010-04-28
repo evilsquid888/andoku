@@ -134,8 +134,8 @@
     <string name="prompt_spinner_grid">Choose a grid style</string>
     <string name="spinner_extra_regions">Extra regions:</string>
     <string name="prompt_spinner_extra_regions">Choose extra regions</string>
-    <string name="spinner_difficulty">Difficulty level:</string>
-    <string name="prompt_spinner_difficulty">Choose difficulty level</string>
+    <string name="spinner_difficulty">Level of difficulty:</string>
+    <string name="prompt_spinner_difficulty">Choose level of difficulty</string>
 
     <!-- Declares a permission group and a permission that allows external applications to import puzzles into Andoku -->
     <string name="permgroup_label_andoku">Andoku</string>
