@@ -116,10 +116,12 @@
     <string name="name_sudoku_squiggly_hyper">Squiggly Hyper-Sudoku</string>
     <string name="name_sudoku_squiggly_x">Squiggly X-Sudoku</string>
     <string name="name_sudoku_squiggly_percent">Squiggly Prozent-Sudoku</string>
+    <string name="name_sudoku_squiggly_color">Squiggly Farb-Sudoku</string>
     <string name="name_sudoku_standard">Standard Sudoku</string>
     <string name="name_sudoku_standard_hyper">Hyper-Sudoku</string>
     <string name="name_sudoku_standard_x">X-Sudoku</string>
     <string name="name_sudoku_standard_percent">Prozent-Sudoku</string>
+    <string name="name_sudoku_standard_color">Farb-Sudoku</string>
 
     <!-- Captions for various activities -->
     <string name="page_title_welcome">Willkommen zu Andoku</string>

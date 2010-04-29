@@ -30,7 +30,10 @@ public enum AreaColorPolicy {
 	// name does not include PERCENT but cannot be changed because it is used in existing user preferences
 	STANDARD_X_HYPER_SQUIGGLY(EnumSet.of(PuzzleType.STANDARD, PuzzleType.STANDARD_X,
 			PuzzleType.STANDARD_HYPER, PuzzleType.STANDARD_PERCENT, PuzzleType.SQUIGGLY)), //
-	ALWAYS(EnumSet.allOf(PuzzleType.class));
+	// all except color sudoku
+	ALWAYS(EnumSet.of(PuzzleType.STANDARD, PuzzleType.STANDARD_X, PuzzleType.STANDARD_HYPER,
+			PuzzleType.STANDARD_PERCENT, PuzzleType.SQUIGGLY, PuzzleType.SQUIGGLY_X,
+			PuzzleType.SQUIGGLY_HYPER, PuzzleType.SQUIGGLY_PERCENT));
 
 	private final EnumSet<PuzzleType> puzzleTypes;
 

@@ -41,14 +41,16 @@ public enum ColorThemePolicy {
 			builder.gridColor = 0x66bfbfbf;
 			builder.borderColor = 0xffffffff;
 			builder.extraRegionColor = 0xcd7b89cd;
+			builder.colorSudokuExtraRegionColors = new int[] { 0x77ff0000, 0x77000000, 0x7700ff00,
+					0x77808080, 0x7700ffff, 0x770000ff, 0x77ffff00, 0x77ff00ff, 0x77ffffff };
 			builder.valueColor = 0xffddffdd;
 			builder.clueColor = 0xffffffdd;
 			builder.errorColor = 0xffe60000;
 			builder.markedCellColor = 0xb300ff00;
 			builder.markedClueColor = 0xb3ff0000;
 			builder.areaColors2 = new int[] { 0xff000000, 0xff333333 };
-			builder.areaColors3 = new int[] { 0xff000033, 0xff330000, 0xff003300 };
-			builder.areaColors4 = new int[] { 0xff000033, 0xff33001a, 0xff333300, 0xff00331a };
+			builder.areaColors3 = Util.colorRing(0xff000033, 3);
+			builder.areaColors4 = Util.colorRing(0xff000033, 4);
 			builder.highlightedCellColorSingleDigit = 0xe6e6e600;
 			builder.highlightedCellColorMultipleDigits = 0xe6a6a600;
 		}

@@ -23,6 +23,7 @@ package com.googlecode.andoku;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.view.Window;
@@ -34,6 +35,31 @@ import com.googlecode.andoku.source.PuzzleSourceIds;
 
 class Util {
 	private Util() {
+	}
+
+	public static int[] colorRing(int color, int nColors) {
+		return colorRing(color, nColors, 360f / nColors);
+	}
+
+	public static int[] colorRing(int color, int nColors, float hueIncrement) {
+		if (nColors < 2)
+			throw new IllegalArgumentException();
+
+		int alpha = Color.alpha(color);
+		float[] hsv = new float[3];
+		Color.colorToHSV(color, hsv);
+
+		int[] colors = new int[nColors];
+
+		for (int i = 0; i < nColors; i++) {
+			colors[i] = Color.HSVToColor(alpha, hsv);
+
+			hsv[0] += hueIncrement;
+			if (hsv[0] >= 360f)
+				hsv[0] -= 360f;
+		}
+
+		return colors;
 	}
 
 	public static void setFullscreenMode(Activity activity) {
@@ -77,6 +103,8 @@ class Util {
 				return R.string.name_sudoku_standard_hyper;
 			case STANDARD_PERCENT:
 				return R.string.name_sudoku_standard_percent;
+			case STANDARD_COLOR:
+				return R.string.name_sudoku_standard_color;
 			case SQUIGGLY:
 				return R.string.name_sudoku_squiggly;
 			case SQUIGGLY_X:
@@ -85,6 +113,8 @@ class Util {
 				return R.string.name_sudoku_squiggly_hyper;
 			case SQUIGGLY_PERCENT:
 				return R.string.name_sudoku_squiggly_percent;
+			case SQUIGGLY_COLOR:
+				return R.string.name_sudoku_squiggly_color;
 		}
 		throw new IllegalStateException();
 	}
@@ -99,6 +129,8 @@ class Util {
 				return R.drawable.standard_h;
 			case STANDARD_PERCENT:
 				return R.drawable.standard_p;
+			case STANDARD_COLOR:
+				return R.drawable.standard_c;
 			case SQUIGGLY:
 				return R.drawable.squiggly_n;
 			case SQUIGGLY_X:
@@ -107,6 +139,8 @@ class Util {
 				return R.drawable.squiggly_h;
 			case SQUIGGLY_PERCENT:
 				return R.drawable.squiggly_p;
+			case SQUIGGLY_COLOR:
+				return R.drawable.squiggly_c;
 		}
 		throw new IllegalStateException();
 	}

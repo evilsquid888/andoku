@@ -116,10 +116,12 @@
     <string name="name_sudoku_squiggly_hyper">Hyper-Sudoku Serpentart</string>
     <string name="name_sudoku_squiggly_x">X-Sudoku Serpentart</string>
     <string name="name_sudoku_squiggly_percent">Pourcent-Doku Serpentart</string>
+    <string name="name_sudoku_squiggly_color">Sodoku-lor Serpentart</string>
     <string name="name_sudoku_standard">Sudoku Standard</string>
     <string name="name_sudoku_standard_hyper">Hyper-Sudoku</string>
     <string name="name_sudoku_standard_x">X-Sudoku</string>
     <string name="name_sudoku_standard_percent">Pourcent-Doku</string>
+    <string name="name_sudoku_standard_color">Sodoku-lor</string>
 
     <!-- Captions for various activities -->
     <string name="page_title_welcome">Bienvenue sur Andoku</string>

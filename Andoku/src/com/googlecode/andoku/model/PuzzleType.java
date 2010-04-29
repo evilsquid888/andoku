@@ -29,7 +29,9 @@ public enum PuzzleType {
 	SQUIGGLY_X,
 	SQUIGGLY_HYPER,
 	STANDARD_PERCENT,
-	SQUIGGLY_PERCENT;
+	SQUIGGLY_PERCENT,
+	STANDARD_COLOR,
+	SQUIGGLY_COLOR;
 
 	public static PuzzleType forOrdinal(int ordinal) {
 		return PuzzleType.values()[ordinal];

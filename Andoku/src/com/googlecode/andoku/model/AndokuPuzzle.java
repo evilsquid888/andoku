@@ -40,7 +40,7 @@ public class AndokuPuzzle {
 	private final Puzzle problem;
 	private final PuzzleType puzzleType;
 	private final Difficulty difficulty;
-	private final boolean[][] extra;
+	private final int[][] extra;
 	private boolean solved;
 
 	private ValueSet[][] values;
@@ -178,6 +178,10 @@ public class AndokuPuzzle {
 	}
 
 	public boolean isExtraRegion(int row, int col) {
+		return extra[row][col] != -1;
+	}
+
+	public int getExtraRegionCode(int row, int col) {
 		return extra[row][col];
 	}
 
@@ -387,6 +391,7 @@ public class AndokuPuzzle {
 		boolean x = puzzle.getExtraRegions().length == 2;
 		boolean hyper = puzzle.getExtraRegions().length == 4;
 		boolean percent = puzzle.getExtraRegions().length == 3;
+		boolean color = puzzle.getExtraRegions().length == 9;
 
 		if (squiggly) {
 			if (x)
@@ -395,6 +400,8 @@ public class AndokuPuzzle {
 				return PuzzleType.SQUIGGLY_HYPER;
 			else if (percent)
 				return PuzzleType.SQUIGGLY_PERCENT;
+			else if (color)
+				return PuzzleType.SQUIGGLY_COLOR;
 			else
 				return PuzzleType.SQUIGGLY;
 		}
@@ -405,6 +412,8 @@ public class AndokuPuzzle {
 				return PuzzleType.STANDARD_HYPER;
 			else if (percent)
 				return PuzzleType.STANDARD_PERCENT;
+			else if (color)
+				return PuzzleType.STANDARD_COLOR;
 			else
 				return PuzzleType.STANDARD;
 		}
@@ -450,14 +459,21 @@ public class AndokuPuzzle {
 		cellErrors.clear();
 	}
 
-	private static boolean[][] obtainExtra(Puzzle puzzle) {
+	private static int[][] obtainExtra(Puzzle puzzle) {
 		final int size = puzzle.getSize();
 
-		boolean[][] extra = new boolean[size][size];
+		int[][] extra = new int[size][size];
+		for (int row = 0; row < size; row++)
+			for (int col = 0; col < size; col++)
+				extra[row][col] = -1;
+
+		int regionNumber = 0;
 		for (ExtraRegion extraRegion : puzzle.getExtraRegions()) {
 			for (Position position : extraRegion.positions) {
-				extra[position.row][position.col] = true;
+				extra[position.row][position.col] = regionNumber;
 			}
+
+			regionNumber++;
 		}
 
 		return extra;

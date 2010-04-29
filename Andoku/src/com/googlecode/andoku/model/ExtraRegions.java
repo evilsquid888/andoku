@@ -59,6 +59,18 @@ public class ExtraRegions {
 		return new ExtraRegion[] { square(1, 1), diag2(size), square(5, 5) };
 	}
 
+	public static int colorCount(int size) {
+		return size == 9 ? 9 : 0;
+	}
+
+	public static ExtraRegion[] color(int size) {
+		if (size != 9)
+			throw new IllegalArgumentException("Color restricted to 9x9 for now..");
+
+		return new ExtraRegion[] { col(0), col(1), col(2), col(3), col(4), col(5), col(6), col(7),
+				col(8) };
+	}
+
 	private static ExtraRegion diag1(int size) {
 		List<Position> diag1 = new ArrayList<Position>();
 
@@ -87,5 +99,18 @@ public class ExtraRegions {
 		}
 
 		return new ExtraRegion(positions);
+	}
+
+	private static ExtraRegion col(int i) {
+		int row = i / 3;
+		int col = i % 3;
+
+		List<Position> color = new ArrayList<Position>();
+
+		for (int r = 0; r < 9; r += 3)
+			for (int c = 0; c < 9; c += 3)
+				color.add(new Position(row + r, col + c));
+
+		return new ExtraRegion(color);
 	}
 }

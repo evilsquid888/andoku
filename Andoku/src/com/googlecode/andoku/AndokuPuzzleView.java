@@ -299,7 +299,8 @@ public class AndokuPuzzleView extends View {
 
 	private void drawExtraRegions(Canvas canvas, int row, int col) {
 		if (puzzle.isExtraRegion(row, col)) {
-			canvas.drawRect(0, 0, cellWidth, cellHeight, theme.getExtraRegionPaint());
+			canvas.drawRect(0, 0, cellWidth, cellHeight, theme.getExtraRegionPaint(puzzle
+					.getPuzzleType(), puzzle.getExtraRegionCode(row, col)));
 		}
 	}
 

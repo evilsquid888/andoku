@@ -47,6 +47,7 @@ class ColorTheme implements Theme {
 	private final Paint gridPaint;
 	private final Paint regionBorderPaint;
 	private final Paint extraRegionPaint;
+	private final Paint[] colorSudokuExtraRegionPaints;
 	private final Paint valuePaint;
 	private final Paint digitPaint;
 	private final Paint cluePaint;
@@ -82,6 +83,8 @@ class ColorTheme implements Theme {
 		public int gridColor = 0x66000000;
 		public int borderColor = 0xff000000;
 		public int extraRegionColor = 0xcd99abff;
+		public int[] colorSudokuExtraRegionColors = { 0x55ff0000, 0x55000000, 0x5500ff00, 0x55808080,
+				0x5500ffff, 0x550000ff, 0x55ffff00, 0x55ff00ff, 0x55ffffff };
 		public int valueColor = 0xff003000;
 		public int clueColor = 0xff000000;
 		public int errorColor = 0xffff0000;
@@ -89,8 +92,8 @@ class ColorTheme implements Theme {
 		public int markedClueColor = 0xb0ff0000;
 		public AreaColorPolicy areaColorPolicy = AreaColorPolicy.STANDARD_X_HYPER_SQUIGGLY;
 		public int[] areaColors2 = { 0xffffffff, 0xffe0e0e0 };
-		public int[] areaColors3 = { 0xffffd9d9, 0xffd9ffd9, 0xffd9d9ff }; // triad
-		public int[] areaColors4 = { 0xffffffd9, 0xffd9ffec, 0xffd9d9ff, 0xffffd9ec }; // tetrad
+		public int[] areaColors3 = Util.colorRing(0xffffd9d9, 3);
+		public int[] areaColors4 = Util.colorRing(0xffffffd9, 4);
 		public HighlightDigitsPolicy highlightDigitsPolicy = HighlightDigitsPolicy.ONLY_SINGLE_VALUES;
 		public int highlightedCellColorSingleDigit = 0xe6ffff00;
 		public int highlightedCellColorMultipleDigits = 0xe6bebe00;
@@ -137,6 +140,13 @@ class ColorTheme implements Theme {
 		extraRegionPaint = new Paint();
 		extraRegionPaint.setAntiAlias(false);
 		extraRegionPaint.setColor(builder.extraRegionColor);
+
+		colorSudokuExtraRegionPaints = new Paint[builder.colorSudokuExtraRegionColors.length];
+		for (int i = 0; i < builder.colorSudokuExtraRegionColors.length; i++) {
+			colorSudokuExtraRegionPaints[i] = new Paint();
+			colorSudokuExtraRegionPaints[i].setAntiAlias(false);
+			colorSudokuExtraRegionPaints[i].setColor(builder.colorSudokuExtraRegionColors[i]);
+		}
 
 		Typeface typeface = Typeface.SANS_SERIF;
 		valuePaint = new Paint();
@@ -261,8 +271,11 @@ class ColorTheme implements Theme {
 		return regionBorderPaint;
 	}
 
-	public Paint getExtraRegionPaint() {
-		return extraRegionPaint;
+	public Paint getExtraRegionPaint(PuzzleType puzzleType, int extraRegionCode) {
+		if (puzzleType == PuzzleType.STANDARD_COLOR || puzzleType == PuzzleType.SQUIGGLY_COLOR)
+			return colorSudokuExtraRegionPaints[extraRegionCode % colorSudokuExtraRegionPaints.length];
+		else
+			return extraRegionPaint;
 	}
 
 	public Paint getValuePaint() {

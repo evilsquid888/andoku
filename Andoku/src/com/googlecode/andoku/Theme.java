@@ -41,7 +41,7 @@ interface Theme {
 
 	Paint getGridPaint();
 	Paint getRegionBorderPaint();
-	Paint getExtraRegionPaint();
+	Paint getExtraRegionPaint(PuzzleType puzzleType, int extraRegionCode);
 	Paint getValuePaint();
 	Paint getDigitPaint();
 	Paint getCluePaint(boolean preview);

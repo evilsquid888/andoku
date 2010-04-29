@@ -32,6 +32,7 @@
         <item>X-Sudoku</item>
         <item>Hyper-Sudoku</item>
         <item>Percent-Sudoku</item>
+        <item>Color-Sudoku</item>
     </string-array>
 
     <!-- The possible difficulties (used by "Start New Game") -->
