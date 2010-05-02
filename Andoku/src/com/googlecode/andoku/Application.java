@@ -33,6 +33,12 @@ public class Application extends android.app.Application {
 	public void onCreate() {
 		super.onCreate();
 
+		provideDefaultValueForFullscreenMode();
+
+		PreferenceManager.setDefaultValues(this, R.xml.settings, true);
+	}
+
+	private void provideDefaultValueForFullscreenMode() {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		if (preferences.contains(Settings.KEY_FULLSCREEN_MODE)) {
 			Log.d(TAG, "Fullscreen mode has already been set");
@@ -43,8 +49,6 @@ public class Application extends android.app.Application {
 			editor.putBoolean(Settings.KEY_FULLSCREEN_MODE, isDefaultFullscreenMode());
 			editor.commit();
 		}
-
-		PreferenceManager.setDefaultValues(this, R.xml.settings, true);
 	}
 
 	private boolean isDefaultFullscreenMode() {
