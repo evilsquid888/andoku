@@ -111,9 +111,9 @@ class ColorTheme implements Theme {
 		Resources resources = builder.resources;
 
 		float displayDensity = resources.getDisplayMetrics().density;
-		float gridWidth = Math.max(1, displayDensity);
+		float gridWidth = Math.max(1, Math.round(displayDensity));
 
-		borderStrokeWidth = Math.max(2, 3 * displayDensity);
+		borderStrokeWidth = Math.max(2, Math.round(3 * displayDensity));
 
 		background = createBackgroundDrawable(builder);
 
