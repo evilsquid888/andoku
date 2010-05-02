@@ -596,6 +596,9 @@ public class AndokuPuzzleView extends View {
 	}
 
 	private void setSize(int width, int height) {
+		if (Constants.LOG_V)
+			Log.v(TAG, "setSize(" + width + ", " + height + ")");
+
 		setMeasuredDimension(width, height);
 
 		int gridWidth = width - getPaddingLeft() - getPaddingRight();
@@ -605,7 +608,7 @@ public class AndokuPuzzleView extends View {
 		offsetX = getPaddingLeft();
 		offsetY = getPaddingTop();
 
-		textSize = cellHeight * 0.8f;
+		textSize = Math.min(cellWidth, cellHeight) * 0.8f;
 		setCurrentTextSizeOnTheme();
 		calcTextOffset();
 
