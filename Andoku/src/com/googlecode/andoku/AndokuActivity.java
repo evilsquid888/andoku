@@ -393,7 +393,7 @@ public class AndokuActivity extends Activity
 				android.R.drawable.ic_menu_help);
 		menu.add(0, MENU_PAUSE_RESUME_PUZZLE, 0, "");
 		menu.add(0, MENU_ELIMINATE_VALUES, 0, R.string.menu_eliminate_values).setIcon(
-				R.drawable.eliminate);
+				R.drawable.ic_menu_eliminate);
 		menu.add(0, MENU_RESET_PUZZLE, 0, R.string.menu_reset_puzzle).setIcon(
 				android.R.drawable.ic_menu_close_clear_cancel);
 		menu.add(0, MENU_SETTINGS, 0, R.string.menu_settings).setIcon(
@@ -408,7 +408,7 @@ public class AndokuActivity extends Activity
 		boolean paused = gameState == GAME_STATE_READY && !puzzle.isSolved() && timer.getTime() > 0;
 		menu.findItem(MENU_PAUSE_RESUME_PUZZLE).setTitle(
 				paused ? R.string.menu_resume : R.string.menu_pause).setIcon(
-				paused ? R.drawable.resume : R.drawable.pause).setEnabled(
+				paused ? R.drawable.ic_menu_resume : R.drawable.ic_menu_pause).setEnabled(
 				gameState == GAME_STATE_PLAYING || paused);
 
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
