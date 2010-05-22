@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 
   Andoku - a sudoku puzzle game for Android.
-  Copyright (C) 2009  Markus Wiederkehr
+  Copyright (C) 2009, 2010  Markus Wiederkehr
 
   This file is part of Andoku.
 
@@ -21,6 +21,8 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:andoku="http://schemas.android.com/apk/res/com.googlecode.andoku">
+    <item android:state_enabled="false"
+        android:drawable="@drawable/button_disabled"/>
     <item android:state_pressed="true"
         android:drawable="@drawable/button_pressed"/>
     <item andoku:state_highlighted="true"
