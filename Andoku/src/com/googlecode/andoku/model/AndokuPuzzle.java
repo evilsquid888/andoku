@@ -536,6 +536,7 @@ public class AndokuPuzzle {
 		public HashSet<RegionError> regionErrors;
 		public HashSet<Position> cellErrors;
 
+		@SuppressWarnings("unused")
 		public PuzzleMemento() {
 		}
 
