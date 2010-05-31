@@ -54,6 +54,10 @@ import android.widget.Toast;
 import com.googlecode.andoku.db.AndokuDatabase;
 import com.googlecode.andoku.db.GameStatistics;
 import com.googlecode.andoku.db.PuzzleId;
+import com.googlecode.andoku.history.Command;
+import com.googlecode.andoku.history.EliminateValuesCommand;
+import com.googlecode.andoku.history.History;
+import com.googlecode.andoku.history.SetValuesCommand;
 import com.googlecode.andoku.im.InputMethod;
 import com.googlecode.andoku.im.InputMethodTarget;
 import com.googlecode.andoku.model.AndokuPuzzle;
@@ -70,8 +74,6 @@ import com.googlecode.andoku.source.PuzzleSourceResolver;
 public class AndokuActivity extends Activity
 		implements OnTouchListener, OnKeyListener, TickListener {
 	private static final String TAG = AndokuActivity.class.getName();
-
-	private static final long TIME_PENALTY_PER_ELIMINATED_VALUE = 1000;
 
 	private static final int DIALOG_CONFIRM_RESET_PUZZLE = 0;
 
@@ -103,6 +105,7 @@ public class AndokuActivity extends Activity
 	private PuzzleSource source;
 	private int puzzleNumber;
 	private AndokuPuzzle puzzle;
+	private History history = new History();
 
 	private TickTimer timer = new TickTimer(this);
 
@@ -120,6 +123,8 @@ public class AndokuActivity extends Activity
 	private ImageButton backButton;
 	private ImageButton nextButton;
 	private Button startOrResetButton;
+	private ImageButton undoButton;
+	private ImageButton redoButton;
 
 	private Toast toast;
 
@@ -223,6 +228,20 @@ public class AndokuActivity extends Activity
 		invertButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				onInvert();
+			}
+		});
+
+		undoButton = (ImageButton) findViewById(R.id.input_undo);
+		undoButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				onUndo();
+			}
+		});
+
+		redoButton = (ImageButton) findViewById(R.id.input_redo);
+		redoButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				onRedo();
 			}
 		});
 
@@ -471,8 +490,28 @@ public class AndokuActivity extends Activity
 		cancelToast();
 	}
 
+	void onUndo() {
+		if (history.undo())
+			onCommandExecuted();
+	}
+
+	void onRedo() {
+		if (history.redo())
+			onCommandExecuted();
+	}
+
 	private void setCell(Position cell, ValueSet values) {
-		boolean sideEffects = puzzle.setValues(cell.row, cell.col, values);
+		execute(new SetValuesCommand(puzzle, cell, values));
+	}
+
+	private void execute(Command command) {
+		if (history.execute(command))
+			onCommandExecuted();
+	}
+
+	private void onCommandExecuted() {
+		undoButton.setEnabled(history.canUndo());
+		redoButton.setEnabled(history.canRedo());
 
 		if (puzzle.isSolved()) {
 			timer.stop();
@@ -484,10 +523,9 @@ public class AndokuActivity extends Activity
 
 		updateKeypadHighlighing();
 
-		if (sideEffects)
-			andokuView.invalidate();
-		else
-			andokuView.invalidateCell(cell);
+		andokuView.invalidate();
+
+		inputMethod.onValuesChanged();
 	}
 
 	public boolean onKey(View view, int keyCode, KeyEvent event) {
@@ -685,23 +723,7 @@ public class AndokuActivity extends Activity
 	}
 
 	void onEliminateValues() {
-		int numberValuesEliminated = puzzle.eliminateValues();
-		long penalty = TIME_PENALTY_PER_ELIMINATED_VALUE * numberValuesEliminated;
-		timer.setTime(timer.getTime() + penalty);
-
-		if (puzzle.isSolved()) {
-			timer.stop();
-			autoSavePuzzle();
-
-			enterGameState(GAME_STATE_SOLVED);
-			return;
-		}
-
-		inputMethod.onValuesChanged();
-
-		updateKeypadHighlighing();
-
-		andokuView.invalidate();
+		execute(new EliminateValuesCommand(puzzle, timer));
 	}
 
 	void onSettings() {
@@ -793,6 +815,9 @@ public class AndokuActivity extends Activity
 		puzzleNumber = number;
 
 		puzzle = createAndokuPuzzle(number);
+		history.clear();
+		undoButton.setEnabled(false);
+		redoButton.setEnabled(false);
 
 		andokuView.setPuzzle(puzzle);
 

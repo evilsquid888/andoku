@@ -92,13 +92,15 @@
         android:layout_height="wrap_content">
 
         <TableRow>
-            <com.googlecode.andoku.KeypadToggleButton android:id="@+id/input_1" android:text="1" android:layout_column="1"/>
+            <ImageButton android:id="@+id/input_undo" android:src="@drawable/undo" style="@style/KeypadButton" android:layout_gravity="center_vertical" android:layout_height="fill_parent"/>
+            <com.googlecode.andoku.KeypadToggleButton android:id="@+id/input_1" android:text="1"/>
             <com.googlecode.andoku.KeypadToggleButton android:id="@+id/input_2" android:text="2"/>
             <com.googlecode.andoku.KeypadToggleButton android:id="@+id/input_3" android:text="3"/>
         </TableRow>
 
         <TableRow>
-            <com.googlecode.andoku.KeypadToggleButton android:id="@+id/input_4" android:text="4" android:layout_column="1"/>
+            <ImageButton android:id="@+id/input_redo" android:src="@drawable/redo" style="@style/KeypadButton" android:layout_gravity="center_vertical" android:layout_height="fill_parent"/>
+            <com.googlecode.andoku.KeypadToggleButton android:id="@+id/input_4" android:text="4"/>
             <com.googlecode.andoku.KeypadToggleButton android:id="@+id/input_5" android:text="5"/>
             <com.googlecode.andoku.KeypadToggleButton android:id="@+id/input_6" android:text="6"/>
         </TableRow>
