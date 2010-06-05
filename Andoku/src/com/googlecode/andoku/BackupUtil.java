@@ -1,6 +1,6 @@
 /*
  * Andoku - a sudoku puzzle game for Android.
- * Copyright (C) 2009  Markus Wiederkehr
+ * Copyright (C) 2009, 2010  Markus Wiederkehr
  *
  * This file is part of Andoku.
  *
@@ -20,11 +20,20 @@
 
 package com.googlecode.andoku;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
+import java.util.Arrays;
+
+import javax.crypto.Mac;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 import android.app.Activity;
 import android.content.Context;
@@ -38,7 +47,10 @@ class BackupUtil extends Activity {
 
 	private static final String ANDOKU_DIR = "Andoku";
 	private static final String DATABASE_BACKUP_FILE = "database.bak";
+	private static final String DATABASE_BACKUP_FILE_SIGNATURE = "database.bak.sig";
 	private static final String DATABASE_UPDATE_FILE = "database.update";
+
+	private static final String MAC_NAME = "HmacSHA1";
 
 	private BackupUtil() {
 	}
@@ -53,43 +65,57 @@ class BackupUtil extends Activity {
 		File sdcard = Environment.getExternalStorageDirectory();
 		File andokuDir = new File(sdcard, ANDOKU_DIR);
 		if (!andokuDir.isDirectory() && !andokuDir.mkdirs()) {
-			Log.w(TAG, "Could not create root directory \"" + ANDOKU_DIR + "\" on external storage");
+			Log.e(TAG, "Could not create root directory \"" + ANDOKU_DIR + "\" on external storage");
 			return;
 		}
 
+		// If this line does not compile it is because you have to specify a secret app key in the
+		// resources first! Create res/values/secret.xml and add a random string named secret_key.
+		String secretKey = context.getString(R.string.secret_key);
+
 		File backupFile = new File(andokuDir, DATABASE_BACKUP_FILE);
+		File backupFileSignature = new File(andokuDir, DATABASE_BACKUP_FILE_SIGNATURE);
 		File updateFile = new File(andokuDir, DATABASE_UPDATE_FILE);
 
 		// database can be overwritten by manually placing an update-file on the sd card
 		if (updateFile.isFile()) {
-			if (Constants.LOG_V) {
-				Log.v(TAG, "Updating database from " + updateFile.getAbsolutePath());
+			if (createDir(dbFile.getParentFile())) {
+				Log.i(TAG, "Updating database from " + updateFile.getAbsolutePath());
 
 				if (dbFile.isFile())
-					Log.v(TAG, "Overwriting existing database!");
-			}
+					Log.i(TAG, "Overwriting existing database!");
 
-			if (createDir(dbFile.getParentFile()))
 				if (copyFile(updateFile, dbFile))
 					updateFile.delete();
+			}
 		}
 		// restore from backup in case installation was wiped (i.e. andoku was uninstalled and reinstalled)
 		else if (backupFile.isFile() && !dbFile.isFile()) {
-			if (Constants.LOG_V)
-				Log.v(TAG, "Restoring database from backup " + backupFile.getAbsolutePath());
+			if (createDir(dbFile.getParentFile())) {
+				Log.i(TAG, "Verifying database signature " + backupFileSignature.getAbsolutePath());
 
-			if (createDir(dbFile.getParentFile()))
-				copyFile(backupFile, dbFile);
+				if (verifySignature(secretKey, backupFile, backupFileSignature)) {
+					Log.i(TAG, "Restoring database from backup " + backupFile.getAbsolutePath());
+
+					copyFile(backupFile, dbFile);
+				}
+				else {
+					Log.w(TAG, "Signature broken; ignoring database backup!");
+				}
+			}
 
 			return; // no need to back up
 		}
 
 		// copy current database to backup file
 		if (dbFile.isFile()) {
-			if (Constants.LOG_V)
-				Log.v(TAG, "Backing up database to " + backupFile.getAbsolutePath());
+			Log.i(TAG, "Writing database signature to " + backupFileSignature.getAbsolutePath());
 
-			copyFile(dbFile, backupFile);
+			if (createSignature(secretKey, dbFile, backupFileSignature)) {
+				Log.i(TAG, "Backing up database to " + backupFile.getAbsolutePath());
+
+				copyFile(dbFile, backupFile);
+			}
 		}
 	}
 
@@ -99,46 +125,113 @@ class BackupUtil extends Activity {
 
 		final boolean created = dir.mkdirs();
 		if (!created)
-			Log.w(TAG, "Could not create directory " + dir);
+			Log.e(TAG, "Could not create directory " + dir);
 
 		return created;
 	}
 
 	private static boolean copyFile(File source, File target) {
 		try {
-			FileChannel in = null;
-			FileChannel out = null;
+			copy(new FileInputStream(source), new FileOutputStream(target));
+			return true;
+		}
+		catch (IOException e) {
+			Log.e(TAG, "Could not copy " + source + " to " + target, e);
+			return false;
+		}
+	}
 
-			try {
-				in = new FileInputStream(source).getChannel();
-				out = new FileOutputStream(target).getChannel();
+	private static boolean createSignature(String keyString, File input, File signatureFile) {
+		try {
+			byte[] message = load(input);
+			byte[] signature = sign(keyString, message);
 
-				long written = 0;
-				long total = in.size();
-
-				while (written < total) {
-					long bytes = out.transferFrom(in, written, total - written);
-
-					written += bytes;
-				}
-			}
-			finally {
-				try {
-					if (in != null)
-						in.close();
-				}
-				finally {
-					if (out != null)
-						out.close();
-				}
-			}
+			OutputStream out = new FileOutputStream(signatureFile);
+			out.write(signature);
+			out.close();
 
 			return true;
 		}
 		catch (IOException e) {
-			Log.w(TAG, "Could not copy " + source + " to " + target, e);
-
+			Log.e(TAG, "Could not sign database", e);
 			return false;
+		}
+		catch (GeneralSecurityException e) {
+			Log.e(TAG, "Could not sign database", e);
+			return false;
+		}
+	}
+
+	private static boolean verifySignature(String keyString, File input, File signatureFile) {
+		if (!signatureFile.isFile()) {
+			// for now just ignore if not signed; future versions may behave differently
+			Log.w(TAG, "Database backup not signed!");
+			return true;
+		}
+
+		try {
+			byte[] message = load(input);
+			byte[] expectedSignature = sign(keyString, message);
+			byte[] actualSignature = load(signatureFile);
+
+			return Arrays.equals(expectedSignature, actualSignature);
+		}
+		catch (IOException e) {
+			Log.e(TAG, "Could not verify database signature", e);
+			return false;
+		}
+		catch (GeneralSecurityException e) {
+			Log.e(TAG, "Could not verify database signature", e);
+			return false;
+		}
+	}
+
+	private static byte[] sign(String keyString, byte[] message) throws GeneralSecurityException {
+		byte[] keyBytes = utf8(keyString);
+
+		SecretKey key = new SecretKeySpec(keyBytes, MAC_NAME);
+		Mac mac = Mac.getInstance(MAC_NAME);
+		mac.init(key);
+
+		return mac.doFinal(message);
+	}
+
+	private static byte[] utf8(String keyString) {
+		try {
+			return keyString.getBytes("utf-8");
+		}
+		catch (UnsupportedEncodingException e) {
+			throw new IllegalStateException(e); // utf-8 is supported!
+		}
+	}
+
+	private static byte[] load(File file) throws IOException {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		copy(new FileInputStream(file), baos);
+		return baos.toByteArray();
+	}
+
+	private static void copy(InputStream in, OutputStream out) throws IOException {
+		byte[] buffer = new byte[4096];
+
+		try {
+			while (true) {
+				int bytes = in.read(buffer);
+				if (bytes == -1)
+					break;
+
+				out.write(buffer, 0, bytes);
+			}
+
+			out.flush();
+		}
+		finally {
+			try {
+				in.close();
+			}
+			finally {
+				out.close();
+			}
 		}
 	}
 }
