@@ -20,14 +20,22 @@
 
 package com.googlecode.andoku.model;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInput;
+import java.io.DataInputStream;
+import java.io.DataOutput;
+import java.io.DataOutputStream;
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+
+import android.util.Log;
 
 import com.googlecode.andoku.solver.DlxPuzzleSolver;
 import com.googlecode.andoku.solver.PuzzleSolver;
@@ -35,6 +43,11 @@ import com.googlecode.andoku.solver.SingleSolutionReporter;
 import com.googlecode.andoku.transfer.StandardAreas;
 
 public class AndokuPuzzle {
+	private static final String TAG = AndokuPuzzle.class.getName();
+
+	private static final short MAGIC_BYTE_ARRAY = (short) 0xaa2b;
+	private static final short MAGIC_SERIALIZABLE = (short) 0xaced;
+
 	private final String name;
 	private final int size;
 	private final Puzzle problem;
@@ -87,24 +100,120 @@ public class AndokuPuzzle {
 		return maxColor + 1;
 	}
 
-	public Serializable saveToMemento() {
-		return new PuzzleMemento(copyValues(values), copyRegionErrors(regionErrors),
-				copyCellErrors(cellErrors));
+	public byte[] saveToMemento() {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		DataOutputStream out = new DataOutputStream(baos);
+
+		try {
+			out.writeShort(MAGIC_BYTE_ARRAY);
+			saveVersion5(out);
+			out.close();
+		}
+		catch (IOException e) {
+			// should not happen when writing to byte array
+			throw new IllegalStateException(e);
+		}
+
+		return baos.toByteArray();
 	}
 
-	public boolean restoreFromMemento(Object object) {
-		if (!(object instanceof PuzzleMemento))
+	private void saveVersion5(DataOutputStream out) throws IOException {
+		out.writeShort(5); // version
+
+		writeValues(out, values);
+		writeRegionErrors(out, regionErrors);
+		writeCellErrors(out, cellErrors);
+	}
+
+	public boolean restoreFromMemento(byte[] b) {
+		DataInput in = new DataInputStream(new ByteArrayInputStream(b));
+		try {
+			short magic = in.readShort();
+
+			switch (magic) {
+				case MAGIC_BYTE_ARRAY:
+					return restoreFromByteArray(in);
+				case MAGIC_SERIALIZABLE:
+					return restoreFromSerializable(b);
+				default:
+					Log.e(TAG, "Unrecognized memento magic: " + magic);
+					return false;
+			}
+		}
+		catch (IOException e) {
+			Log.e(TAG, "Error restoring memento", e);
 			return false;
+		}
+	}
+
+	private boolean restoreFromByteArray(DataInput in) throws IOException {
+		Log.d(TAG, "Restoring memento from byte array (Andoku 1.2.2 and later)");
+
+		short version = in.readShort();
+
+		switch (version) {
+			case 5:
+				return restoreFromVersion5(in); // Andoku 1.2.2 and later
+			default:
+				Log.e(TAG, "Invalid memento version: " + version);
+				return false;
+		}
+	}
+
+	private boolean restoreFromVersion5(DataInput in) throws IOException {
+		final ValueSet[][] values = readValues(in);
+		final HashSet<RegionError> regionErrors = readRegionErrors(in);
+		final HashSet<Position> cellErrors = readCellErrors(in);
+
+		return restoreFrom(values, regionErrors, cellErrors);
+	}
+
+	private boolean restoreFromSerializable(byte[] b) {
+		Log.d(TAG, "Restoring memento from Serializable (Andoku 1.0.0 - 1.2.1)");
+
+		Object object = deserialize(b);
+
+		if (!(object instanceof PuzzleMemento)) {
+			Log.e(TAG, "Not a PuzzleMemento");
+			return false;
+		}
 
 		PuzzleMemento memento = (PuzzleMemento) object;
-		if (memento.values.length != values.length)
-			return false;
+		return restoreFrom(memento.values, memento.regionErrors, memento.cellErrors);
+	}
 
-		this.values = copyValues(memento.values);
+	private Object deserialize(byte[] blob) {
+		blob = Issue30.workaround(blob);
+
+		try {
+			ByteArrayInputStream bais = new ByteArrayInputStream(blob);
+			ObjectInputStream oin = new ObjectInputStream(bais);
+			Object object = oin.readObject();
+			oin.close();
+			return object;
+		}
+		catch (IOException e) {
+			Log.e(TAG, "Error deserializing memento", e);
+			return null;
+		}
+		catch (ClassNotFoundException e) {
+			Log.e(TAG, "Error deserializing memento", e);
+			return null;
+		}
+	}
+
+	private boolean restoreFrom(final ValueSet[][] values, final HashSet<RegionError> regionErrors,
+			final HashSet<Position> cellErrors) {
+		if (values.length != this.values.length) {
+			Log.e(TAG, "Memento values length incorrect");
+			return false;
+		}
+
+		this.values = values;
 		this.numValues = countValues(this.values);
 		this.solved = checkSolved();
-		this.regionErrors = copyRegionErrors(memento.regionErrors);
-		this.cellErrors = copyCellErrors(memento.cellErrors);
+		this.regionErrors = regionErrors;
+		this.cellErrors = cellErrors;
 
 		return true;
 	}
@@ -508,27 +617,10 @@ public class AndokuPuzzle {
 		return count;
 	}
 
-	private static ValueSet[][] copyValues(ValueSet[][] orig) {
-		int size = orig.length;
-
-		ValueSet[][] copy = new ValueSet[size][size];
-		for (int row = 0; row < size; row++) {
-			for (int col = 0; col < size; col++) {
-				copy[row][col] = new ValueSet(orig[row][col]);
-			}
-		}
-
-		return copy;
-	}
-
-	private static HashSet<RegionError> copyRegionErrors(HashSet<RegionError> orig) {
-		return new HashSet<RegionError>(orig);
-	}
-
-	private HashSet<Position> copyCellErrors(HashSet<Position> orig) {
-		return new HashSet<Position>(orig);
-	}
-
+	/**
+	 * Only maintained for backward compatibility. Andoku 1.0.0 - 1.2.1 used this class to save the
+	 * state of a puzzle. Andoku 1.2.2 and later directly write to a byte array instead.
+	 */
 	private static final class PuzzleMemento implements Externalizable {
 		private static final long serialVersionUID = -7495554868028722997L;
 
@@ -540,19 +632,8 @@ public class AndokuPuzzle {
 		public PuzzleMemento() {
 		}
 
-		public PuzzleMemento(ValueSet[][] values, HashSet<RegionError> regionErrors,
-				HashSet<Position> cellErrors) {
-			this.values = values;
-			this.regionErrors = regionErrors;
-			this.cellErrors = cellErrors;
-		}
-
 		public void writeExternal(ObjectOutput out) throws IOException {
-			out.writeByte(4); // version
-
-			writeValues(out, values);
-			writeRegionErrors(out, regionErrors);
-			writeCellErrors(out, cellErrors);
+			throw new UnsupportedOperationException();
 		}
 
 		public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
@@ -563,7 +644,7 @@ public class AndokuPuzzle {
 					readVersion3(in); // Andoku 1.0.0 - 1.0.2
 					break;
 				case 4:
-					readVersion4(in);
+					readVersion4(in); // Andoku 1.1.0 - 1.2.1
 					break;
 				default:
 					throw new IOException("invalid version: " + version);
@@ -582,79 +663,79 @@ public class AndokuPuzzle {
 			regionErrors = readRegionErrors(in);
 			cellErrors = readCellErrors(in);
 		}
+	}
 
-		private void writeValues(ObjectOutput out, ValueSet[][] values) throws IOException {
-			final int size = values.length;
-			out.writeChar(size);
+	private static void writeValues(DataOutput out, ValueSet[][] values) throws IOException {
+		final int size = values.length;
+		out.writeChar(size);
 
-			for (int row = 0; row < size; row++) {
-				final ValueSet[] v = values[row];
-				for (int col = 0; col < size; col++) {
-					out.writeChar(v[col].toInt());
-				}
+		for (int row = 0; row < size; row++) {
+			final ValueSet[] v = values[row];
+			for (int col = 0; col < size; col++) {
+				out.writeChar(v[col].toInt());
+			}
+		}
+	}
+
+	private static ValueSet[][] readValues(DataInput in) throws IOException {
+		final int size = in.readChar();
+		ValueSet[][] values = new ValueSet[size][size];
+
+		for (int row = 0; row < size; row++) {
+			final ValueSet[] v = values[row];
+			for (int col = 0; col < size; col++) {
+				v[col] = new ValueSet(in.readChar());
 			}
 		}
 
-		private ValueSet[][] readValues(ObjectInput in) throws IOException {
-			final int size = in.readChar();
-			ValueSet[][] values = new ValueSet[size][size];
+		return values;
+	}
 
-			for (int row = 0; row < size; row++) {
-				final ValueSet[] v = values[row];
-				for (int col = 0; col < size; col++) {
-					v[col] = new ValueSet(in.readChar());
-				}
-			}
+	private static void writeRegionErrors(DataOutput out, HashSet<RegionError> errors)
+			throws IOException {
+		final int numErrors = errors.size();
+		out.writeChar(numErrors);
 
-			return values;
+		for (RegionError error : errors) {
+			out.writeChar(error.p1.row);
+			out.writeChar(error.p1.col);
+			out.writeChar(error.p2.row);
+			out.writeChar(error.p2.col);
+		}
+	}
+
+	private static HashSet<RegionError> readRegionErrors(DataInput in) throws IOException {
+		final int numErrors = in.readChar();
+		HashSet<RegionError> errors = new HashSet<RegionError>(numErrors);
+
+		for (int i = 0; i < numErrors; i++) {
+			Position p1 = new Position(in.readChar(), in.readChar());
+			Position p2 = new Position(in.readChar(), in.readChar());
+			errors.add(new RegionError(p1, p2));
 		}
 
-		private void writeRegionErrors(ObjectOutput out, HashSet<RegionError> errors)
-				throws IOException {
-			final int numErrors = errors.size();
-			out.writeChar(numErrors);
+		return errors;
+	}
 
-			for (RegionError error : errors) {
-				out.writeChar(error.p1.row);
-				out.writeChar(error.p1.col);
-				out.writeChar(error.p2.row);
-				out.writeChar(error.p2.col);
-			}
+	private static void writeCellErrors(DataOutput out, HashSet<Position> errors) throws IOException {
+		final int numErrors = errors.size();
+		out.writeChar(numErrors);
+
+		for (Position p : errors) {
+			out.writeChar(p.row);
+			out.writeChar(p.col);
+		}
+	}
+
+	private static HashSet<Position> readCellErrors(DataInput in) throws IOException {
+		final int numErrors = in.readChar();
+		HashSet<Position> errors = new HashSet<Position>(numErrors);
+
+		for (int i = 0; i < numErrors; i++) {
+			Position p = new Position(in.readChar(), in.readChar());
+			errors.add(p);
 		}
 
-		private HashSet<RegionError> readRegionErrors(ObjectInput in) throws IOException {
-			final int numErrors = in.readChar();
-			HashSet<RegionError> errors = new HashSet<RegionError>(numErrors);
-
-			for (int i = 0; i < numErrors; i++) {
-				Position p1 = new Position(in.readChar(), in.readChar());
-				Position p2 = new Position(in.readChar(), in.readChar());
-				errors.add(new RegionError(p1, p2));
-			}
-
-			return errors;
-		}
-
-		private void writeCellErrors(ObjectOutput out, HashSet<Position> errors) throws IOException {
-			final int numErrors = errors.size();
-			out.writeChar(numErrors);
-
-			for (Position p : errors) {
-				out.writeChar(p.row);
-				out.writeChar(p.col);
-			}
-		}
-
-		private HashSet<Position> readCellErrors(ObjectInput in) throws IOException {
-			final int numErrors = in.readChar();
-			HashSet<Position> errors = new HashSet<Position>(numErrors);
-
-			for (int i = 0; i < numErrors; i++) {
-				Position p = new Position(in.readChar(), in.readChar());
-				errors.add(p);
-			}
-
-			return errors;
-		}
+		return errors;
 	}
 }

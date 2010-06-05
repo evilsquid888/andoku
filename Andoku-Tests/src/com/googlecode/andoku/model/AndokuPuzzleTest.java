@@ -20,12 +20,9 @@
 
 package com.googlecode.andoku.model;
 
-import java.io.Serializable;
-
 import junit.framework.TestCase;
 
 import com.googlecode.andoku.util.MockPuzzleSource;
-import com.googlecode.andoku.util.SerializableUtil;
 
 public class AndokuPuzzleTest extends TestCase {
 	public void testSaveAndRestoreMemento() throws Exception {
@@ -52,9 +49,7 @@ public class AndokuPuzzleTest extends TestCase {
 		assertEquals(2, p1.getRegionErrors().size());
 		assertEquals(1, p1.getCellErrors().size());
 
-		Serializable memento = p1.saveToMemento();
-
-		memento = SerializableUtil.roundTrip(memento);
+		byte[] memento = p1.saveToMemento();
 
 		AndokuPuzzle p2 = MockPuzzleSource.createPuzzle(0);
 

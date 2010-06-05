@@ -1,6 +1,6 @@
 /*
  * Andoku - a sudoku puzzle game for Android.
- * Copyright (C) 2009  Markus Wiederkehr
+ * Copyright (C) 2009, 2010  Markus Wiederkehr
  *
  * This file is part of Andoku.
  *
@@ -19,13 +19,6 @@
  */
 
 package com.googlecode.andoku.db;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -443,7 +436,7 @@ public class AndokuDatabase {
 			cursor.close();
 
 			ContentValues values = new ContentValues();
-			values.put(COL_PUZZLE, serialize(puzzle.saveToMemento()));
+			values.put(COL_PUZZLE, puzzle.saveToMemento());
 			values.put(COL_TIMER, timer.getTime());
 			values.put(COL_SOLVED, puzzle.isSolved());
 			values.put(COL_MODIFIED_DATE, now);
@@ -486,7 +479,7 @@ public class AndokuDatabase {
 				return false;
 			}
 
-			Object memento = deserialize(cursor.getBlob(0));
+			byte[] memento = cursor.getBlob(0);
 			long time = cursor.getLong(1);
 
 			if (!puzzle.restoreFromMemento(memento)) {
@@ -742,35 +735,6 @@ public class AndokuDatabase {
 		}
 		finally {
 			cursor.close();
-		}
-	}
-
-	private byte[] serialize(Serializable memento) {
-		try {
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ObjectOutputStream oout = new ObjectOutputStream(baos);
-			oout.writeObject(memento);
-			oout.close();
-			return baos.toByteArray();
-		}
-		catch (IOException e) {
-			throw new IllegalStateException(e);
-		}
-	}
-
-	private Object deserialize(byte[] blob) {
-		try {
-			ByteArrayInputStream bais = new ByteArrayInputStream(blob);
-			ObjectInputStream oin = new ObjectInputStream(bais);
-			Object object = oin.readObject();
-			oin.close();
-			return object;
-		}
-		catch (IOException e) {
-			throw new IllegalStateException(e);
-		}
-		catch (ClassNotFoundException e) {
-			throw new IllegalStateException(e);
 		}
 	}
 
