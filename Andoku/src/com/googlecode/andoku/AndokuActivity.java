@@ -51,13 +51,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.googlecode.andoku.commands.AndokuContext;
+import com.googlecode.andoku.commands.EliminateValuesCommand;
+import com.googlecode.andoku.commands.SetValuesCommand;
 import com.googlecode.andoku.db.AndokuDatabase;
 import com.googlecode.andoku.db.GameStatistics;
 import com.googlecode.andoku.db.PuzzleId;
 import com.googlecode.andoku.history.Command;
-import com.googlecode.andoku.history.EliminateValuesCommand;
 import com.googlecode.andoku.history.History;
-import com.googlecode.andoku.history.SetValuesCommand;
 import com.googlecode.andoku.im.InputMethod;
 import com.googlecode.andoku.im.InputMethodTarget;
 import com.googlecode.andoku.model.AndokuPuzzle;
@@ -87,6 +88,7 @@ public class AndokuActivity extends Activity
 	private static final String APP_STATE_PUZZLE_NUMBER = "puzzleNumber";
 	private static final String APP_STATE_GAME_STATE = "gameState";
 	private static final String APP_STATE_HIGHLIGHTED_DIGIT = "highlightedDigit";
+	private static final String APP_STATE_HISTORY = "history";
 
 	private static final int REQUEST_CODE_SETTINGS = 0;
 
@@ -105,9 +107,17 @@ public class AndokuActivity extends Activity
 	private PuzzleSource source;
 	private int puzzleNumber;
 	private AndokuPuzzle puzzle;
-	private History history = new History();
-
 	private TickTimer timer = new TickTimer(this);
+
+	private History<AndokuContext> history = new History<AndokuContext>(new AndokuContext() {
+		public TickTimer getTimer() {
+			return timer;
+		}
+
+		public AndokuPuzzle getPuzzle() {
+			return puzzle;
+		}
+	});
 
 	private ViewGroup background;
 	private TextView puzzleNameView;
@@ -286,6 +296,10 @@ public class AndokuActivity extends Activity
 
 			if (savedInstanceState.containsKey(APP_STATE_HIGHLIGHTED_DIGIT))
 				andokuView.highlightDigit(savedInstanceState.getInt(APP_STATE_HIGHLIGHTED_DIGIT));
+
+			history.restoreInstanceState(savedInstanceState.getBundle(APP_STATE_HISTORY));
+			undoButton.setEnabled(history.canUndo());
+			redoButton.setEnabled(history.canRedo());
 		}
 	}
 
@@ -389,6 +403,8 @@ public class AndokuActivity extends Activity
 			Integer highlightedDigit = andokuView.getHighlightedDigit();
 			if (highlightedDigit != null)
 				outState.putInt(APP_STATE_HIGHLIGHTED_DIGIT, highlightedDigit);
+
+			outState.putBundle(APP_STATE_HISTORY, history.saveInstanceState());
 
 			inputMethod.onSaveInstanceState(outState);
 		}
@@ -501,10 +517,10 @@ public class AndokuActivity extends Activity
 	}
 
 	private void setCell(Position cell, ValueSet values) {
-		execute(new SetValuesCommand(puzzle, cell, values));
+		execute(new SetValuesCommand(cell, values));
 	}
 
-	private void execute(Command command) {
+	private void execute(Command<AndokuContext> command) {
 		if (history.execute(command))
 			onCommandExecuted();
 	}
@@ -723,7 +739,7 @@ public class AndokuActivity extends Activity
 	}
 
 	void onEliminateValues() {
-		execute(new EliminateValuesCommand(puzzle, timer));
+		execute(new EliminateValuesCommand());
 	}
 
 	void onSettings() {

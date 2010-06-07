@@ -20,14 +20,16 @@
 
 package com.googlecode.andoku.history;
 
-public interface Command {
-	void execute();
+import android.os.Parcelable;
 
-	void undo();
+public interface Command<C> extends Parcelable {
+	void execute(C context);
 
-	void redo();
+	void undo(C context);
 
-	Command mergeWith(Command last);
+	void redo(C context);
+
+	Command<C> mergeDown(Command<C> last);
 
 	boolean isEffective();
 }

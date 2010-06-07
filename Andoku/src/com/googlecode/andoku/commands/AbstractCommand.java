@@ -18,25 +18,26 @@
  * along with Andoku.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.googlecode.andoku.history;
+package com.googlecode.andoku.commands;
 
+import com.googlecode.andoku.history.Command;
 import com.googlecode.andoku.model.AndokuPuzzle;
 import com.googlecode.andoku.model.ValueSet;
 
-public abstract class AbstractCommand implements Command {
+public abstract class AbstractCommand implements Command<AndokuContext> {
 	protected AbstractCommand() {
-	}
-
-	public void redo() {
-		execute();
 	}
 
 	public boolean isEffective() {
 		return true;
 	}
 
-	public Command mergeWith(Command last) {
+	public Command<AndokuContext> mergeDown(Command<AndokuContext> last) {
 		return null;
+	}
+
+	public int describeContents() {
+		return 0;
 	}
 
 	protected ValueSet[][] saveValues(AndokuPuzzle puzzle) {

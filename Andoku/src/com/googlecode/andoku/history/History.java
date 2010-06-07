@@ -23,25 +23,30 @@ package com.googlecode.andoku.history;
 import java.util.ArrayList;
 import java.util.List;
 
-public class History {
-	private CommandStack undoStack = new CommandStack();
-	private CommandStack redoStack = new CommandStack();
+import android.os.Bundle;
+
+public class History<C> {
+	private CommandStack<C> undoStack = new CommandStack<C>();
+	private CommandStack<C> redoStack = new CommandStack<C>();
+
+	private C context;
+
+	public History(C context) {
+		this.context = context;
+	}
 
 	public void clear() {
 		undoStack.clear();
 		redoStack.clear();
 	}
 
-	public boolean execute(Command command) {
-		if (!command.isEffective())
-			return false;
-
+	public boolean execute(Command<C> command) {
 		if (undoStack.isEmpty()) {
 			undoStack.push(command);
 		}
 		else {
-			Command last = undoStack.peek();
-			Command merged = command.mergeWith(last);
+			Command<C> last = undoStack.peek();
+			Command<C> merged = command.mergeDown(last);
 			if (merged == null) {
 				undoStack.push(command);
 			}
@@ -54,7 +59,7 @@ public class History {
 
 		redoStack.clear();
 
-		command.execute();
+		command.execute(context);
 		return true;
 	}
 
@@ -67,10 +72,10 @@ public class History {
 			return false;
 		}
 		else {
-			Command command = undoStack.pop();
+			Command<C> command = undoStack.pop();
 			redoStack.push(command);
 
-			command.undo();
+			command.undo(context);
 			return true;
 		}
 	}
@@ -84,16 +89,28 @@ public class History {
 			return false;
 		}
 		else {
-			Command command = redoStack.pop();
+			Command<C> command = redoStack.pop();
 			undoStack.push(command);
 
-			command.redo();
+			command.redo(context);
 			return true;
 		}
 	}
 
-	private static class CommandStack {
-		private List<Command> stack = new ArrayList<Command>();
+	public Bundle saveInstanceState() {
+		Bundle bundle = new Bundle();
+		bundle.putBundle("undoStack", undoStack.saveInstanceState());
+		bundle.putBundle("redoStack", redoStack.saveInstanceState());
+		return bundle;
+	}
+
+	public void restoreInstanceState(Bundle bundle) {
+		undoStack.restoreInstanceState(bundle.getBundle("undoStack"));
+		redoStack.restoreInstanceState(bundle.getBundle("redoStack"));
+	}
+
+	private static class CommandStack<C> {
+		private List<Command<C>> stack = new ArrayList<Command<C>>();
 
 		public void clear() {
 			stack.clear();
@@ -103,16 +120,41 @@ public class History {
 			return stack.isEmpty();
 		}
 
-		public void push(Command command) {
+		public void push(Command<C> command) {
 			stack.add(command);
 		}
 
-		public Command peek() {
+		public Command<C> peek() {
 			return stack.get(stack.size() - 1);
 		}
 
-		public Command pop() {
+		public Command<C> pop() {
 			return stack.remove(stack.size() - 1);
+		}
+
+		public Bundle saveInstanceState() {
+			Bundle bundle = new Bundle();
+
+			final int size = stack.size();
+			bundle.putInt("size", size);
+
+			for (int i = 0; i < size; i++) {
+				Command<C> command = stack.get(i);
+				bundle.putParcelable("cmd." + i, command);
+			}
+
+			return bundle;
+		}
+
+		public void restoreInstanceState(Bundle bundle) {
+			stack.clear();
+
+			final int size = bundle.getInt("size");
+
+			for (int i = 0; i < size; i++) {
+				Command<C> command = bundle.getParcelable("cmd." + i);
+				stack.add(command);
+			}
 		}
 	}
 }
