@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 public class History<C> {
 	private CommandStack<C> undoStack = new CommandStack<C>();
@@ -99,18 +101,26 @@ public class History<C> {
 
 	public Bundle saveInstanceState() {
 		Bundle bundle = new Bundle();
-		bundle.putBundle("undoStack", undoStack.saveInstanceState());
-		bundle.putBundle("redoStack", redoStack.saveInstanceState());
+		bundle.putParcelable("undoStack", undoStack);
+		bundle.putParcelable("redoStack", redoStack);
 		return bundle;
 	}
 
 	public void restoreInstanceState(Bundle bundle) {
-		undoStack.restoreInstanceState(bundle.getBundle("undoStack"));
-		redoStack.restoreInstanceState(bundle.getBundle("redoStack"));
+		undoStack = bundle.getParcelable("undoStack");
+		redoStack = bundle.getParcelable("redoStack");
 	}
 
-	private static class CommandStack<C> {
-		private List<Command<C>> stack = new ArrayList<Command<C>>();
+	private static class CommandStack<C> implements Parcelable {
+		private final List<Command<C>> stack;
+
+		private CommandStack(List<Command<C>> stack) {
+			this.stack = stack;
+		}
+
+		public CommandStack() {
+			stack = new ArrayList<Command<C>>();
+		}
 
 		public void clear() {
 			stack.clear();
@@ -132,29 +142,34 @@ public class History<C> {
 			return stack.remove(stack.size() - 1);
 		}
 
-		public Bundle saveInstanceState() {
-			Bundle bundle = new Bundle();
+		public int describeContents() {
+			return 0;
+		}
 
+		public void writeToParcel(Parcel dest, int flags) {
 			final int size = stack.size();
-			bundle.putInt("size", size);
-
+			dest.writeInt(size);
 			for (int i = 0; i < size; i++) {
 				Command<C> command = stack.get(i);
-				bundle.putParcelable("cmd." + i, command);
-			}
-
-			return bundle;
-		}
-
-		public void restoreInstanceState(Bundle bundle) {
-			stack.clear();
-
-			final int size = bundle.getInt("size");
-
-			for (int i = 0; i < size; i++) {
-				Command<C> command = bundle.getParcelable("cmd." + i);
-				stack.add(command);
+				dest.writeParcelable(command, flags);
 			}
 		}
+
+		@SuppressWarnings( { "unused", "unchecked" })
+		public static final Parcelable.Creator<CommandStack<?>> CREATOR = new Parcelable.Creator<CommandStack<?>>() {
+			public CommandStack<?> createFromParcel(Parcel in) {
+				final int size = in.readInt();
+				List<Command<?>> stack = new ArrayList<Command<?>>();
+				for (int i = 0; i < size; i++) {
+					Command<?> command = in.readParcelable(null);
+					stack.add(command);
+				}
+				return new CommandStack(stack);
+			}
+
+			public CommandStack<?>[] newArray(int size) {
+				return new CommandStack<?>[size];
+			}
+		};
 	}
 }
