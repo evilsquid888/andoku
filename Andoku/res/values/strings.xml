@@ -87,12 +87,13 @@
     <string name="html_page_about">about.html</string>
     <string name="html_page_help">help.html</string>
 
-    <!-- Info/warning messages for "Check Puzzle" -->
+    <!-- Info/warning messages for "Check Puzzle" or when all cells are filled in -->
     <string name="message_computing_solution">Computing solution. Please wait...</string>
     <string name="info_puzzle_ok_1">Everything is okay. One cell to go.</string>
     <string name="info_puzzle_ok_n">Everything is okay. %d cells to go.</string>
     <string name="warn_invalid_puzzle">This puzzle is invalid and cannot be solved!</string>
     <string name="warn_puzzle_errors">Sorry, you have made some mistakes!</string>
+    <string name="info_invalid_solution">Sorry, that is not the correct solution! Try \'Check Puzzle\' from the menu to see where the problem lies.</string>
 
     <!-- Options menu while playing -->
     <string name="menu_check_puzzle">Check Puzzle</string>

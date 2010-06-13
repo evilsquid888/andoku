@@ -87,12 +87,13 @@
     <string name="html_page_about">about-fr.html</string>
     <string name="html_page_help">help-fr.html</string>
 
-    <!-- Info/warning messages for "Check Puzzle" -->
+    <!-- Info/warning messages for "Check Puzzle" or when all cells are filled in -->
     <string name="message_computing_solution">Calcul de la solution. Veuillez patienter...</string>
     <string name="info_puzzle_ok_1">Pas d\'erreurs. Plus qu\'une cellule.</string>
     <string name="info_puzzle_ok_n">Pas d\'erreurs. Plus que %d cellules.</string>
     <string name="warn_invalid_puzzle">Cette grille est invalide et ne peut être résolue.</string>
     <string name="warn_puzzle_errors">Vous avez fait des erreurs.</string>
+    <string name="info_invalid_solution">TODO: Sorry, that is not the correct solution! Try \'Check Puzzle\' from the menu to see where the problem lies.</string>
 
     <!-- Options menu while playing -->
     <string name="menu_check_puzzle">Vérifier la grille</string>

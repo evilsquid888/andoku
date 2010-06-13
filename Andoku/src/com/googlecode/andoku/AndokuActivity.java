@@ -529,12 +529,17 @@ public class AndokuActivity extends Activity
 		undoButton.setEnabled(history.canUndo());
 		redoButton.setEnabled(history.canRedo());
 
-		if (puzzle.isSolved()) {
-			timer.stop();
-			autoSavePuzzle();
+		if (puzzle.isCompletelyFilled()) {
+			if (puzzle.isSolved()) {
+				timer.stop();
+				autoSavePuzzle();
 
-			enterGameState(GAME_STATE_SOLVED);
-			return;
+				enterGameState(GAME_STATE_SOLVED);
+				return;
+			}
+			else {
+				showInfo(R.string.info_invalid_solution);
+			}
 		}
 
 		updateKeypadHighlighing();
