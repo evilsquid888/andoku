@@ -109,8 +109,8 @@ public class MainActivity extends Activity {
 		final boolean hasPuzzleFolders = db.hasSubFolders(importedPuzzlesFolderId);
 		foldersButton.setVisibility(hasPuzzleFolders ? View.VISIBLE : View.GONE);
 
-		final boolean hasSavedGames = db.hasUnfinishedGames();
-		resumeGameButton.setEnabled(hasSavedGames);
+		final boolean hasGamesInProgress = db.hasGamesInProgress();
+		resumeGameButton.setEnabled(hasGamesInProgress);
 	}
 
 	@Override

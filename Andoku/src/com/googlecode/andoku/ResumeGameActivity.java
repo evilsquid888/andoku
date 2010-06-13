@@ -59,7 +59,7 @@ public class ResumeGameActivity extends ListActivity {
 
 		db = new AndokuDatabase(this);
 
-		Cursor cursor = db.findUnfinishedGames();
+		Cursor cursor = db.findGamesInProgress();
 		startManagingCursor(cursor);
 
 		String[] from = { AndokuDatabase.COL_TYPE, AndokuDatabase.COL_SOURCE,

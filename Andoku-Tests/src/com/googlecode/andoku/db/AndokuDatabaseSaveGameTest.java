@@ -154,7 +154,7 @@ public class AndokuDatabaseSaveGameTest extends AndroidTestCase {
 		db.saveGame(new PuzzleId("mock:17", 3), puzzle3, timer3);
 		long t4 = System.currentTimeMillis();
 
-		Cursor cursor = db.findUnfinishedGames();
+		Cursor cursor = db.findGamesInProgress();
 		// cursor: ID, SOURCE, NUMBER, TYPE, TIMER, CREATED_DATE, MODIFIED_DATE
 
 		assertTrue(cursor.moveToNext());

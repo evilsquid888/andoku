@@ -79,7 +79,7 @@ public class AndokuDatabase {
 	public static final String COL_CREATED_DATE = "created";
 	public static final String COL_MODIFIED_DATE = "modified";
 
-	// indexes for findAllGames() and findUnfinishedGames();
+	// indexes for findAllGames() and findGamesInProgress();
 	public static final int IDX_GAME_ID = 0;
 	public static final int IDX_GAME_SOURCE = 1;
 	public static final int IDX_GAME_NUMBER = 2;
@@ -517,8 +517,8 @@ public class AndokuDatabase {
 		return db.query(TABLE_GAMES, columns, null, null, null, null, null);
 	}
 
-	public boolean hasUnfinishedGames() {
-		Cursor cursor = findUnfinishedGames();
+	public boolean hasGamesInProgress() {
+		Cursor cursor = findGamesInProgress();
 		try {
 			return cursor.moveToNext();
 		}
@@ -527,9 +527,9 @@ public class AndokuDatabase {
 		}
 	}
 
-	public Cursor findUnfinishedGames() {
+	public Cursor findGamesInProgress() {
 		if (Constants.LOG_V)
-			Log.v(TAG, "findUnfinishedGames()");
+			Log.v(TAG, "findGamesInProgress()");
 
 		SQLiteDatabase db = openHelper.getReadableDatabase();
 
