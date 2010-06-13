@@ -124,24 +124,35 @@ public class NewGameActivity extends Activity {
 		}
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		updateMiniStats(getSelectedPuzzleSource());
+	}
+
 	void onSelectionChanged() {
 		String puzzleSourceId = getSelectedPuzzleSource();
 		if (selectedPuzzleSourceId == null || !selectedPuzzleSourceId.equals(puzzleSourceId)) {
-			selectedPuzzleSourceId = puzzleSourceId;
+			updateMiniStats(puzzleSourceId);
+		}
+	}
 
-			GameStatistics statistics = db.getStatistics(puzzleSourceId);
-			int solved = statistics.numGamesSolved;
+	private void updateMiniStats(String puzzleSourceId) {
+		selectedPuzzleSourceId = puzzleSourceId;
 
-			final Resources resources = getResources();
-			if (solved == 0) {
-				miniStats.setText(resources.getString(R.string.mini_stats_0));
-			}
-			else {
-				String averageTime = DateUtil.formatTime(statistics.getAverageTime());
-				String fastestTime = DateUtil.formatTime(statistics.minTime);
-				miniStats.setText(resources.getString(R.string.mini_stats_n, solved, averageTime,
-						fastestTime));
-			}
+		GameStatistics statistics = db.getStatistics(puzzleSourceId);
+		int solved = statistics.numGamesSolved;
+
+		final Resources resources = getResources();
+		if (solved == 0) {
+			miniStats.setText(resources.getString(R.string.mini_stats_0));
+		}
+		else {
+			String averageTime = DateUtil.formatTime(statistics.getAverageTime());
+			String fastestTime = DateUtil.formatTime(statistics.minTime);
+			miniStats.setText(resources.getString(R.string.mini_stats_n, solved, averageTime,
+					fastestTime));
 		}
 	}
 
