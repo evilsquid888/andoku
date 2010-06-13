@@ -93,7 +93,7 @@
     <string name="info_puzzle_ok_n">Pas d\'erreurs. Plus que %d cellules.</string>
     <string name="warn_invalid_puzzle">Cette grille est invalide et ne peut être résolue.</string>
     <string name="warn_puzzle_errors">Vous avez fait des erreurs.</string>
-    <string name="info_invalid_solution">TODO: Sorry, that is not the correct solution! Try \'Check Puzzle\' from the menu to see where the problem lies.</string>
+    <string name="info_invalid_solution">Désolé, vous n\'avez pas trouvé la solution ! Vérifiez la grille (dans le menu) pour voir d\'où vient le problème.</string>
 
     <!-- Options menu while playing -->
     <string name="menu_check_puzzle">Vérifier la grille</string>
