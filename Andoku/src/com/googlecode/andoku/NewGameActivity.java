@@ -23,15 +23,20 @@ package com.googlecode.andoku;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.googlecode.andoku.db.AndokuDatabase;
+import com.googlecode.andoku.db.GameStatistics;
 import com.googlecode.andoku.source.PuzzleSourceIds;
 
 public class NewGameActivity extends Activity {
@@ -46,6 +51,9 @@ public class NewGameActivity extends Activity {
 	private Spinner gridSpinner;
 	private Spinner extraRegionsSpinner;
 	private Spinner difficultySpinner;
+	private TextView miniStats;
+
+	private String selectedPuzzleSourceId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +93,23 @@ public class NewGameActivity extends Activity {
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		difficultySpinner.setAdapter(adapter);
 
+		miniStats = (TextView) findViewById(R.id.miniStats);
+
 		loadPuzzlePreferences();
+
+		final OnItemSelectedListener itemSelectedListener = new OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				onSelectionChanged();
+			}
+
+			public void onNothingSelected(AdapterView<?> parent) {
+				onSelectionChanged();
+			}
+		};
+
+		gridSpinner.setOnItemSelectedListener(itemSelectedListener);
+		extraRegionsSpinner.setOnItemSelectedListener(itemSelectedListener);
+		difficultySpinner.setOnItemSelectedListener(itemSelectedListener);
 	}
 
 	@Override
@@ -97,6 +121,27 @@ public class NewGameActivity extends Activity {
 
 		if (db != null) {
 			db.close();
+		}
+	}
+
+	void onSelectionChanged() {
+		String puzzleSourceId = getSelectedPuzzleSource();
+		if (selectedPuzzleSourceId == null || !selectedPuzzleSourceId.equals(puzzleSourceId)) {
+			selectedPuzzleSourceId = puzzleSourceId;
+
+			GameStatistics statistics = db.getStatistics(puzzleSourceId);
+			int solved = statistics.numGamesSolved;
+
+			final Resources resources = getResources();
+			if (solved == 0) {
+				miniStats.setText(resources.getString(R.string.mini_stats_0));
+			}
+			else {
+				String averageTime = DateUtil.formatTime(statistics.getAverageTime());
+				String fastestTime = DateUtil.formatTime(statistics.minTime);
+				miniStats.setText(resources.getString(R.string.mini_stats_n, solved, averageTime,
+						fastestTime));
+			}
 		}
 	}
 

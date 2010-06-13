@@ -139,6 +139,9 @@
     <string name="prompt_spinner_extra_regions">Choisir des zones supplémentaires</string>
     <string name="spinner_difficulty">Niveau de difficulté :</string>
     <string name="prompt_spinner_difficulty">Choisir un niveau de difficulté</string>
+    <string name="mini_stats_0">(Aucun grilles à résoudre.)</string>
+    <!-- next line uses 'NO-BREAK SPACE' (U+00A0) to avoid undesired line breaks -->
+    <string name="mini_stats_n">(Grilles résolues : %d, temps moyen : %s, meilleur temps : %s)</string>
 
     <!-- Declares a permission group and a permission that allows external applications to import puzzles into Andoku -->
     <string name="permgroup_label_andoku">Andoku</string>

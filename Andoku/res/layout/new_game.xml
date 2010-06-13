@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 
   Andoku - a sudoku puzzle game for Android.
-  Copyright (C) 2009  Markus Wiederkehr
+  Copyright (C) 2009, 2010  Markus Wiederkehr
 
   This file is part of Andoku.
 
@@ -72,6 +72,13 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:prompt="@string/prompt_spinner_difficulty"/>
+        <TextView android:id="@+id/miniStats"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:text=""/>
         <Button
             style="@style/NavigationButton"
             android:id="@+id/startNewGameButton"
