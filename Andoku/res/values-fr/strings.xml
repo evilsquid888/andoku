@@ -93,7 +93,7 @@
     <string name="info_puzzle_ok_n">Pas d\'erreurs. Plus que %d cellules.</string>
     <string name="warn_invalid_puzzle">Cette grille est invalide et ne peut être résolue.</string>
     <string name="warn_puzzle_errors">Vous avez fait des erreurs.</string>
-    <string name="info_invalid_solution">Désolé, vous n\'avez pas trouvé la solution ! Vérifiez la grille (dans le menu) pour voir d\'où vient le problème.</string>
+    <string name="info_invalid_solution">Votre solution est incorrecte.\n\nVérifiez votre grille (dans le menu).</string>
 
     <!-- Options menu while playing -->
     <string name="menu_check_puzzle">Vérifier la grille</string>
@@ -139,9 +139,9 @@
     <string name="prompt_spinner_extra_regions">Choisir des zones supplémentaires</string>
     <string name="spinner_difficulty">Niveau de difficulté :</string>
     <string name="prompt_spinner_difficulty">Choisir un niveau de difficulté</string>
-    <string name="mini_stats_0">(Vous n\'avez pas encore résolu de grille.)</string>
+    <string name="mini_stats_0">(Vous n\'avez pas encore résolu de grille dans ce niveau de difficulté.)</string>
     <!-- next line uses 'NO-BREAK SPACE' (U+00A0) to avoid undesired line breaks -->
-    <string name="mini_stats_n">(Grilles résolues : %d, Temps moyen : %s, Meilleur temps : %s)</string>
+    <string name="mini_stats_n">(Grilles résolues : %d, temps moyen : %s, meilleur temps : %s)</string>
 
     <!-- Declares a permission group and a permission that allows external applications to import puzzles into Andoku -->
     <string name="permgroup_label_andoku">Andoku</string>
