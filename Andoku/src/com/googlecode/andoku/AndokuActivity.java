@@ -120,11 +120,11 @@ public class AndokuActivity extends Activity
 	});
 
 	private ViewGroup background;
+	private FingertipPopup fingertipPopup;
 	private TextView puzzleNameView;
 	private TextView puzzleDifficultyView;
 	private TextView puzzleSourceView;
 	private AndokuPuzzleView andokuView;
-	private FingertipView fingertipView;
 	private TextView timerView;
 	private ViewGroup keypad;
 	private KeypadToggleButton[] keypadToggleButtons;
@@ -138,8 +138,8 @@ public class AndokuActivity extends Activity
 
 	private Toast toast;
 
+	private final int[] backgroundScreenLocation = new int[2];
 	private final int[] andokuViewScreenLocation = new int[2];
-	private final int[] fingertipViewScreenLocation = new int[2];
 
 	private final InputMethodTarget inputMethodTarget = new InputMethodTarget() {
 		public int getPuzzleSize() {
@@ -192,6 +192,9 @@ public class AndokuActivity extends Activity
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
 		background = (ViewGroup) findViewById(R.id.background);
+		background.setOnTouchListener(this);
+
+		fingertipPopup = new FingertipPopup(background);
 
 		puzzleNameView = (TextView) findViewById(R.id.labelPuzzleName);
 		puzzleDifficultyView = (TextView) findViewById(R.id.labelPuzzleDifficulty);
@@ -199,9 +202,6 @@ public class AndokuActivity extends Activity
 
 		andokuView = (AndokuPuzzleView) findViewById(R.id.viewPuzzle);
 		andokuView.setOnKeyListener(this);
-
-		fingertipView = (FingertipView) findViewById(R.id.viewFingertip);
-		fingertipView.setOnTouchListener(this);
 
 		timerView = (TextView) findViewById(R.id.labelTimer);
 
@@ -594,14 +594,13 @@ public class AndokuActivity extends Activity
 		if (gameState != GAME_STATE_PLAYING)
 			return false;
 
-		// TODO: avoid calling getLocationOnScreen every time..
-		fingertipView.getLocationOnScreen(fingertipViewScreenLocation);
+		background.getLocationOnScreen(backgroundScreenLocation);
 		andokuView.getLocationOnScreen(andokuViewScreenLocation);
 
-		// translate event x/y from fingertipView to andokuView coordinates
-		float x = event.getX() + fingertipViewScreenLocation[0] - andokuViewScreenLocation[0];
-		float y = event.getY() + fingertipViewScreenLocation[1] - andokuViewScreenLocation[1];
-		Position cell = andokuView.getCell(x, y, 0.2f);
+		// translate event x/y from background coordinates to andokuView coordinates
+		float x = event.getX() + backgroundScreenLocation[0] - andokuViewScreenLocation[0];
+		float y = event.getY() + backgroundScreenLocation[1] - andokuViewScreenLocation[1];
+		Position cell = andokuView.getCell(x, y, 0.5f);
 
 		int action = event.getAction();
 
@@ -612,26 +611,26 @@ public class AndokuActivity extends Activity
 
 		if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
 			if (cell == null) {
-				fingertipView.highlight(null, editable);
+				fingertipPopup.hide();
 			}
 			else {
 				PointF center = andokuView.getCellCenterPoint(cell);
-				// translate center from andokuView to fingertipView coordinates
-				center.x += andokuViewScreenLocation[0] - fingertipViewScreenLocation[0];
-				center.y += andokuViewScreenLocation[1] - fingertipViewScreenLocation[1];
+				// translate center from andokuView coordinates to screen coordinates
+				center.x += andokuViewScreenLocation[0];
+				center.y += andokuViewScreenLocation[1];
 
-				fingertipView.highlight(center, editable);
+				fingertipPopup.show(center, editable);
 			}
 
 			inputMethod.onSweep();
 		}
 		else if (action == MotionEvent.ACTION_UP) {
-			fingertipView.highlight(null, false);
+			fingertipPopup.hide();
 
 			inputMethod.onTap(cell, editable);
 		}
 		else { // MotionEvent.ACTION_CANCEL
-			fingertipView.highlight(null, false);
+			fingertipPopup.hide();
 
 			inputMethod.onSweep();
 		}
