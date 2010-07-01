@@ -438,20 +438,21 @@ public class AndokuActivity extends Activity
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		menu.findItem(MENU_CHECK_PUZZLE).setEnabled(gameState == GAME_STATE_PLAYING);
+		menu.findItem(MENU_CHECK_PUZZLE).setVisible(gameState == GAME_STATE_PLAYING);
 
 		boolean paused = gameState == GAME_STATE_READY && !puzzle.isSolved() && timer.getTime() > 0;
 		menu.findItem(MENU_PAUSE_RESUME_PUZZLE).setTitle(
 				paused ? R.string.menu_resume : R.string.menu_pause).setIcon(
-				paused ? R.drawable.ic_menu_resume : R.drawable.ic_menu_pause).setEnabled(
+				paused ? R.drawable.ic_menu_resume : R.drawable.ic_menu_pause).setVisible(
 				gameState == GAME_STATE_PLAYING || paused);
 
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 		menu.findItem(MENU_ELIMINATE_VALUES).setVisible(
-				settings.getBoolean(Settings.KEY_ENABLE_ELIMINATE_VALUES, false)).setEnabled(
-				gameState == GAME_STATE_PLAYING && puzzle.canEliminateValues());
+				gameState == GAME_STATE_PLAYING
+						&& settings.getBoolean(Settings.KEY_ENABLE_ELIMINATE_VALUES, false)).setEnabled(
+				puzzle.canEliminateValues());
 
-		menu.findItem(MENU_RESET_PUZZLE).setEnabled(gameState == GAME_STATE_PLAYING);
+		menu.findItem(MENU_RESET_PUZZLE).setVisible(gameState == GAME_STATE_PLAYING);
 
 		return super.onPrepareOptionsMenu(menu);
 	}
