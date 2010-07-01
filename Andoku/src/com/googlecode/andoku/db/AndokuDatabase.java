@@ -506,6 +506,17 @@ public class AndokuDatabase {
 		db.delete(TABLE_GAMES, whereClause, whereArgs);
 	}
 
+	public void deleteAll(String sourceId) {
+		if (Constants.LOG_V)
+			Log.v(TAG, "deleteAll(" + sourceId + ")");
+
+		SQLiteDatabase db = openHelper.getWritableDatabase();
+
+		String whereClause = COL_SOURCE + "=?";
+		String[] whereArgs = { sourceId };
+		db.delete(TABLE_GAMES, whereClause, whereArgs);
+	}
+
 	public Cursor findAllGames() {
 		if (Constants.LOG_V)
 			Log.v(TAG, "findAllGames()");

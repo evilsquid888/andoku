@@ -78,6 +78,47 @@ public class AndokuDatabaseSaveGameTest extends AndroidTestCase {
 		assertFalse(db.loadGame(puzzleId, puzzle, timer));
 	}
 
+	public void testDeleteAllGame() throws Exception {
+		AndokuPuzzle puzzle1 = MockPuzzleSource.createPuzzle(1);
+		TickTimer timer1 = new TickTimer(new MockTickListener());
+		timer1.setTime(700);
+		AndokuPuzzle puzzle2 = MockPuzzleSource.createSolvedPuzzle(4);
+		TickTimer timer2 = new TickTimer(new MockTickListener());
+		timer2.setTime(800);
+		AndokuPuzzle puzzle3 = MockPuzzleSource.createPuzzle(7);
+		TickTimer timer3 = new TickTimer(new MockTickListener());
+		timer3.setTime(900);
+
+		final String source1 = "mock:1";
+		final String source2 = "mock:2";
+		db.saveGame(new PuzzleId(source1, 1), puzzle1, timer1);
+		db.saveGame(new PuzzleId(source1, 2), puzzle2, timer2);
+		db.saveGame(new PuzzleId(source2, 3), puzzle3, timer3);
+
+		assertEquals(2, countGames(source1));
+		assertEquals(1, countGames(source2));
+
+		db.deleteAll(source1);
+
+		assertEquals(0, countGames(source1));
+		assertEquals(1, countGames(source2));
+
+		db.deleteAll(source2);
+
+		assertEquals(0, countGames(source1));
+		assertEquals(0, countGames(source2));
+	}
+
+	private int countGames(String sourceId) {
+		Cursor cursor = db.findGamesBySource(sourceId);
+		try {
+			return cursor.getCount();
+		}
+		finally {
+			cursor.close();
+		}
+	}
+
 	public void testFindAllGames() throws Exception {
 		AndokuPuzzle puzzle1 = MockPuzzleSource.createPuzzle(1);
 		TickTimer timer1 = new TickTimer(new MockTickListener());
