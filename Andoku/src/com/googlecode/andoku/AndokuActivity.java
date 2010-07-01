@@ -77,12 +77,14 @@ public class AndokuActivity extends Activity
 	private static final String TAG = AndokuActivity.class.getName();
 
 	private static final int DIALOG_CONFIRM_RESET_PUZZLE = 0;
+	private static final int DIALOG_CONFIRM_RESET_ALL_PUZZLES = 1;
 
 	private static final int MENU_CHECK_PUZZLE = 0;
 	private static final int MENU_PAUSE_RESUME_PUZZLE = 1;
 	private static final int MENU_ELIMINATE_VALUES = 2;
 	private static final int MENU_RESET_PUZZLE = 3;
-	private static final int MENU_SETTINGS = 4;
+	private static final int MENU_RESET_ALL_PUZZLES = 4;
+	private static final int MENU_SETTINGS = 5;
 
 	private static final String APP_STATE_PUZZLE_SOURCE_ID = "puzzleSourceId";
 	private static final String APP_STATE_PUZZLE_NUMBER = "puzzleNumber";
@@ -431,6 +433,8 @@ public class AndokuActivity extends Activity
 				R.drawable.ic_menu_eliminate);
 		menu.add(0, MENU_RESET_PUZZLE, 0, R.string.menu_reset_puzzle).setIcon(
 				android.R.drawable.ic_menu_close_clear_cancel);
+		menu.add(0, MENU_RESET_ALL_PUZZLES, 0, R.string.menu_reset_all_puzzles).setIcon(
+				android.R.drawable.ic_menu_delete);
 		menu.add(0, MENU_SETTINGS, 0, R.string.menu_settings).setIcon(
 				android.R.drawable.ic_menu_preferences);
 		return super.onCreateOptionsMenu(menu);
@@ -454,6 +458,8 @@ public class AndokuActivity extends Activity
 
 		menu.findItem(MENU_RESET_PUZZLE).setVisible(gameState == GAME_STATE_PLAYING);
 
+		menu.findItem(MENU_RESET_ALL_PUZZLES).setVisible(gameState == GAME_STATE_READY);
+
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -471,6 +477,9 @@ public class AndokuActivity extends Activity
 				return true;
 			case MENU_RESET_PUZZLE:
 				onResetPuzzle(false);
+				return true;
+			case MENU_RESET_ALL_PUZZLES:
+				onResetAllPuzzles(false);
 				return true;
 			case MENU_SETTINGS:
 				onSettings();
@@ -741,6 +750,27 @@ public class AndokuActivity extends Activity
 
 			gotoPuzzle(puzzleNumber);
 		}
+	}
+
+	// callback from reset all puzzles dialog
+	void onResetAllPuzzles(boolean confirmed) {
+		if (!confirmed) {
+			showDialog(DIALOG_CONFIRM_RESET_ALL_PUZZLES);
+		}
+		else {
+			resetAllPuzzles();
+		}
+	}
+
+	private void resetAllPuzzles() {
+		String sourceId = source.getSourceId();
+
+		if (Constants.LOG_V)
+			Log.v(TAG, "deleting all puzzles for " + sourceId);
+
+		db.deleteAll(sourceId);
+
+		gotoPuzzle(0);
 	}
 
 	void onEliminateValues() {
@@ -1074,6 +1104,8 @@ public class AndokuActivity extends Activity
 		switch (id) {
 			case DIALOG_CONFIRM_RESET_PUZZLE:
 				return createConfirmResetPuzzleDialog();
+			case DIALOG_CONFIRM_RESET_ALL_PUZZLES:
+				return createConfirmResetAllPuzzlesDialog();
 			default:
 				return null;
 		}
@@ -1091,6 +1123,25 @@ public class AndokuActivity extends Activity
 							public void onClick(DialogInterface dialog, int whichButton) {
 							}
 						}).create();
+	}
+
+	private Dialog createConfirmResetAllPuzzlesDialog() {
+		final String sourceId = source.getSourceId();
+		int messageId = PuzzleSourceIds.isDbSource(sourceId)
+				? R.string.message_reset_all_puzzles_in_folder
+				: R.string.message_reset_all_puzzles_in_variation;
+
+		return new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle(
+				R.string.dialog_reset_all_puzzles).setMessage(messageId).setPositiveButton(
+				R.string.alert_dialog_ok, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						onResetAllPuzzles(true);
+					}
+				}).setNegativeButton(R.string.alert_dialog_cancel,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+					}
+				}).create();
 	}
 
 	private void showInfo(int resId) {

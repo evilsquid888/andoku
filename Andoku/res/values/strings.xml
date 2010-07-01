@@ -74,6 +74,9 @@
     <string name="message_folder_exists">Could not rename folder because another folder named \'%s\' already exists!</string>
     <string name="dialog_reset_puzzle">Reset Puzzle?</string>
     <string name="message_reset_puzzle">Do you really want to clear the current puzzle and reset the timer?</string>
+    <string name="dialog_reset_all_puzzles">Reset All Puzzles?</string>
+    <string name="message_reset_all_puzzles_in_variation">Do you really want to reset ALL PUZZLES in the current game variation?</string>
+    <string name="message_reset_all_puzzles_in_folder">Do you really want to reset ALL PUZZLES in this folder?</string>
 
     <!-- Captions for the error page -->
     <string name="error_title_io_error">I/O Error</string>
@@ -99,6 +102,7 @@
     <string name="menu_check_puzzle">Check Puzzle</string>
     <string name="menu_pause">Pause</string>
     <string name="menu_reset_puzzle">Reset Puzzle</string>
+    <string name="menu_reset_all_puzzles">Reset All Puzzles</string>
     <string name="menu_resume">Resume</string>
     <string name="menu_eliminate_values">Eliminate Values</string>
     <string name="menu_settings">Settings</string>

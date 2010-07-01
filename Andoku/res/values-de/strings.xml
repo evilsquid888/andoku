@@ -74,6 +74,9 @@
     <string name="message_folder_exists">Der Ordner konnte nicht umbenannt werden, da bereits an anderer Ordner namens \'%s\' existiert!</string>
     <string name="dialog_reset_puzzle">Rätsel zurücksetzen?</string>
     <string name="message_reset_puzzle">Wollen Sie das aktuelle Sudoku-Rätsel und die Stoppuhr wirklich zurücksetzen?</string>
+    <string name="dialog_reset_all_puzzles">Alle Rätsel zurücksetzen?</string>
+    <string name="message_reset_all_puzzles_in_variation">Wollen Sie wirklich SÄMTLICHE RÄTSEL in der aktuellen Spielvariante zurücksetzen?</string>
+    <string name="message_reset_all_puzzles_in_folder">Wollen Sie wirklich SÄMTLICHE RÄTSEL in diesem Ordner zurücksetzen?</string>
 
     <!-- Captions for the error page -->
     <string name="error_title_io_error">I/O-Fehler</string>
@@ -99,6 +102,7 @@
     <string name="menu_check_puzzle">Überprüfen</string>
     <string name="menu_pause">Pause</string>
     <string name="menu_reset_puzzle">Zurücksetzen</string>
+    <string name="menu_reset_all_puzzles">Alle Rätsel zurücksetzen</string>
     <string name="menu_resume">Fortfahren</string>
     <string name="menu_eliminate_values">Werte eliminieren</string>
     <string name="menu_settings">Einstellungen</string>
