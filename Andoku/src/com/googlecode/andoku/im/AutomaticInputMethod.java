@@ -125,7 +125,8 @@ public class AutomaticInputMethod implements InputMethod {
 	}
 
 	public void onTap(Position cell, boolean editable) {
-		if (activeInputMethod == cellThenValues && (cell == null || cell.equals(lastMarkedCell))) {
+		if ((activeInputMethod == null || activeInputMethod == cellThenValues)
+				&& (cell == null || cell.equals(lastMarkedCell))) {
 			setUndecided();
 		}
 		else {
