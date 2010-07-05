@@ -104,7 +104,7 @@
     <string name="menu_reset_puzzle">Réinitialisation de la grille</string>
     <string name="menu_reset_all_puzzles">Réinitialiser toutes les grilles</string>
     <string name="menu_resume">Reprendre</string>
-    <string name="menu_eliminate_values">Effacer ce chiffre</string>
+    <string name="menu_eliminate_values">Effacer des chiffres</string>
     <string name="menu_settings">Paramètres</string>
 
     <!-- Messages for congratulations/statistics at end of game -->

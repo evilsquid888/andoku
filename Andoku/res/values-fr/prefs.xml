@@ -49,6 +49,6 @@
     <string name="pref_summary_highlight_digits">Mise en valeur du dernier chiffre entré ou de la case sélectionnée.</string>
     <string name="pref_title_show_timer">Chronomètre</string>
     <string name="pref_summary_show_timer">Afficher un chronomètre pendant le jeu.</string>
-    <string name="pref_title_enable_eliminate_values">\'Effacer un chiffre\'</string>
-    <string name="pref_summary_enable_eliminate_values">Autoriser l\'option \'Effacer un chiffre\' au cours du jeu.</string>
+    <string name="pref_title_enable_eliminate_values">\'Effacer des chiffres\'</string>
+    <string name="pref_summary_enable_eliminate_values">Autoriser l\'option \'Effacer des chiffres\' au cours du jeu.</string>
  </resources>
