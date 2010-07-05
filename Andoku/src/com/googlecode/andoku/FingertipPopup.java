@@ -83,7 +83,7 @@ public class FingertipPopup {
 			super(context);
 
 			redFingertip = createRadialGradient(0xff0000, radius);
-			greenFingertip = createRadialGradient(0x00cc00, radius);
+			greenFingertip = createRadialGradient(0x00ff00, radius);
 		}
 
 		@Override
