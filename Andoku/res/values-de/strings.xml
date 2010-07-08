@@ -145,7 +145,7 @@
     <string name="prompt_spinner_difficulty">Schwierigkeitsgrad auswählen</string>
     <string name="mini_stats_0">(Noch kein Rätsel gelöst.)</string>
     <!-- next line uses 'NO-BREAK SPACE' (U+00A0) to avoid undesired line breaks -->
-    <string name="mini_stats_n">(Gelöste Rätsel: %d, Durchschnittszeit: %s, Bestzeit: %s)</string>
+    <string name="mini_stats_n">(Gelöste\u00A0Rätsel:\u00A0%d, Durchschnittszeit:\u00A0%s, Bestzeit:\u00A0%s)</string>
 
     <!-- Declares a permission group and a permission that allows external applications to import puzzles into Andoku -->
     <string name="permgroup_label_andoku">Andoku</string>
