@@ -161,7 +161,7 @@ public class History<C> {
 				final int size = in.readInt();
 				List<Command<?>> stack = new ArrayList<Command<?>>();
 				for (int i = 0; i < size; i++) {
-					Command<?> command = in.readParcelable(null);
+					Command<?> command = in.readParcelable(CommandStack.class.getClassLoader());
 					stack.add(command);
 				}
 				return new CommandStack(stack);
