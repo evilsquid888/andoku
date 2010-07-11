@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Andoku - a sudoku puzzle game for Android.
+  Copyright (C) 2010  Markus Wiederkehr
+
+  This file is part of Andoku.
+
+  Andoku is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  Andoku is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with Andoku.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- TRANSLATON BY Anddev Translation Team Version: 0.6 for Andoku 1.3.1 -->
+
+<!-- Contains strings for the "Settings" activity -->
+<resources>
+    <!-- Category for "Display" related settings -->
+    <string name="pref_category_display">Schermo</string>
+
+    <!-- Titles and summaries for "Display" related settings -->
+    <string name="pref_title_fullscreen_mode">Modalità Tutto Schermo</string>
+    <string name="pref_summary_fullscreen_mode">Nascondi la barra di stato durante il gioco. E\' richiesto il riavvio del gioco.</string>
+    <string name="pref_title_color_theme">Colore Tema</string>
+    <string name="pref_summary_color_theme">Scegli il colore da usare per il tema.</string>
+    <string name="pref_title_colored_regions">Regioni Colorate</string>
+    <string name="pref_summary_colored_regions">Usa i colori per visualizzare le regioni del puzzle sudoku.</string>
+
+    <!-- Category for "Behavior" related settings -->
+    <string name="pref_category_behavior">Funzionamento</string>
+
+    <!-- Titles and summaries for "Behavior" related settings -->
+    <string name="pref_title_input_method">Metodo Input</string>
+    <string name="pref_summary_input_method">Scegli il metodo di inserimento cifre durante il gioco.</string>
+    <string name="pref_title_check_against_solution">Verifica Rigorosa Errori</string>
+    <string name="pref_summary_check_against_solution">Controlla l\' input durante la soluzione del puzzle.</string>
+
+    <!-- Category for in-game features -->
+    <string name="pref_category_game_features">Caratteristiche partita</string>
+
+    <!-- Titles and summaries for in-game features -->
+    <string name="pref_title_highlight_digits">Cifre Evidenziate</string>
+    <string name="pref_summary_highlight_digits">Evidenzia le cifre inserite per ultime o attualmente selezionate.</string>
+    <string name="pref_title_show_timer">Visualizza Timer</string>
+    <string name="pref_summary_show_timer">Visualizza cronometro durante il gioco.</string>
+    <string name="pref_title_enable_eliminate_values">Abilita \'Valori Eliminati\'</string>
+    <string name="pref_summary_enable_eliminate_values">Sblocca menù \'Valori Eliminati\' nel gioco.</string>
+ </resources>

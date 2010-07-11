@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html>
+<head>
+<title>Manuale di Andoku</title>
+<link rel="stylesheet" type="text/css"
+	href="file:///android_asset/andoku.css">
+</head>
+<body>
+
+<h1>Indice</h1>
+
+<ul>
+	<li><a href="#objective">Obiettivo</a></li>
+	<li><a href="#variations">Variazioni Gioco</a></li>
+	<ul>
+		<li><a href="#grids">Stili Griglia</a></li>
+		<li><a href="#extras">Regioni Extra</a></li>
+	</ul>
+	<li><a href="#difficulties">Livelli di difficoltà</a></li>
+	<li><a href="#inputmethods">Metodi di inserimento</a></li>
+	<ul>
+		<li><a href="#im_ctv">Prima Cella poi Valori</a></li>
+		<li><a href="#im_vtc">Prima Valori poi Celle</a></li>
+		<li><a href="#im_auto">Automatico</a></li>
+	</ul>
+	<li><a href="#links">Collegamenti Esterni</a></li>
+</ul>
+
+<h1 id="objective">Obiettivo</h1>
+
+<p>L'obiettivo del gioco è riempire interamente la griglia gioco 
+in modo che le cifre da 1 a 9 appaiano esattamente una volta in ogni<i>regione</i>. 
+Per lo standard sudoku una <i>regione</i> è una riga, una colonna o uno dei 
+nove quadrati dei 3x3 blocchi.</p>
+
+<h1 id="variations">Variazioni Gioco</h1>
+
+<p>Andoku offre varianti di sudoku aggiuntivi oltre alla griglia classica. 
+Nel menù <i>Nuovo Gioco</i> è possibile scegliere dallo stile a 2 griglie a
+cinque tipi di regioni extra.</p>
+
+<h2 id="grids">Stili Griglia</h2>
+
+<p>Gli stili griglia disponibili sono:</p>
+<dl>
+	<dt>Standard</dt>
+	<dd>La griglia è formata da quadrati di 3x3 blocchi.</dd>
+	<dt>Squiggly (chiamato anche jigsaw)</dt>
+	<dd>Invece di 9 blocchi di quadrati la griglia gioco è formata da 9
+	regioni non-quadrate. Le regioni sono delineate con una spessa linea e le cifre
+	da 1 a 9 devono apparire esattamente una volta in ogni regione.</dd>
+</dl>
+
+<h2 id="extras">Regioni Extra</h2>
+
+<p>Le regioni extra impongono ulteriori vincoli al puzzle.
+Oltre alla versione classica ci sono quattro tipi di regioni extra:</p>
+<dl>
+	<dt>Nessuna</dt>
+	<dd>Hai solo nove righe, nove colonne, e nove blocchi nel formato 
+	quadrato o squiggly.</dd>
+	<dt>X-Sudoku</dt>
+	<dd>Le cifre da 1 a 9 devono apparire esattamente una volta nelle 2
+	diagonali del puzzle. Per indicare le diagonali del puzzle
+	sono usati due colori diversi.</dd>
+	<dt>Hyper-Sudoku</dt>
+	<dd>Questo sudoku ha quattro regioni aggiuntive evidenziate con colori
+	di sfondo diversi. In aggiunta alle righe, colonne e blocchi le cifre
+	da 1 a 9 devono apparire esattamente una volta in ogni regione extra.</dd>
+	<dt>Percent-Sudoku</dt>
+	<dd>Questo sudoku ha tre regioni aggiuntive che assomigliano ad un segno
+	percentuale.</dd>
+	<dt>Color-Sudoku</dt>
+	<dd>Questo sudoku ha nove regioni aggiuntive. Ognuna di queste regioni
+	è evidenziata da un colore differente quindi ci sono nove differenti colori
+	di sfondo. Le cifre da 1 a 9 devono comparire esattamente una sola volta
+	in tutte le celle che hanno lo stesso colore di sfondo.</dd>
+</dl>
+
+<h1 id="difficulties">Livelli di difficoltà</h1>
+
+<p>Andoku offre cinque livelli di difficoltà per ogni tipo di gioco. Le difficoltà
+variano da <i>Facile</i> a <i>Diabolico</i>. Gli Squiggly sudoku
+o i sudoku con regioni extra sono generalmente più difficili rispetto al sudoku
+standard.</p>
+
+<p>I livelli di difficoltà <i>Difficile</i> e <i>Diabolico</i> dovrebbero
+contenere puzzle più difficili di quelli che si potrebbero trovare
+sui giornali.</p>
+
+<p>Con dieci tipi differenti di giochi, cinque livelli di difficoltà e 100
+puzzle per tipo e difficoltà Andoku offre un totale di 5000 puzzle.</p>
+
+<h1 id="inputmethods">Metodi di inserimento</h1>
+
+<p>Andoku offre tre diversi metodi di input per inserire le cifre
+nelle celle del puzzle durante il gioco. Vai in Impostazioni per scegliere
+tra i diversi metodi di input.</p>
+
+<h2 id="im_ctv">Prima Cella poi Valori</h2>
+
+<p>Con questo metodo di input selezionare prima una cella toccando su di essa con 
+un dito e poi usare la tastiera numerica sulla parte inferiore dello schermo
+per inserire uno o più possibili valori per quella cella. La cella selezionata
+verrà evidenziata con uno sfondo colorato.</p>
+
+<p>Premi il pulsante <tt>C</tt> per cancellare i valori delle celle 
+selezionate.</p>
+
+<p>Il pulsante <tt>Inv</tt> (Inverti) è usato per invertire i valori della
+cella corrente. Questo rende possibile specificare facilmente che certi valori
+<i>non</i> sono possibili in una determinata cella. Per esempio se inserisci
+<tt>3</tt>, <tt>7</tt>, <tt>Inv</tt> il risultato sarà 1, 2, 4,
+5, 6, 8 e 9 (tutte le cifre tranne 3 e 7).</p>
+
+<p>Se il tuo terminale ha una trackball puoi usarla per muovere il cursore
+in uno dei campi vicini.</p>
+
+<h2 id="im_vtc">Prima Valori poi Cella</h2>
+
+<p>Questo metodo di input lavora al contrario. In primo luogo selezionare uno o più
+valori dalla tastiera numerica nella parte inferiore dello schermo. Solo allora 
+si potrà toccare una cella per assegnare questi valori.</p>
+
+<p>Questo metodo di input può far risparmiare un sacco di tempo perchè è possibile
+assegnare lo stesso valore o valori a celle multiple toccando celle 
+diverse una dopo l'altra.</p>
+
+<p>Ma cosa succede se si tocca una cella non vuota? Il risultato dipende 
+dal fatto che la cella contenga o meno uno dei valori selezionati.
+Se la cella non contiene già uno dei valori selezionati, i valori verranno
+semplicemente aggiunti (stesso comportamente come se la cella fosse vuota). 
+Se, invece, la cella contiene già uno dei valori selezionati, tutti i valori
+selezionati saranno resettati.</p>
+
+<p>Esempio 1: se il valore della cella è <tt>3</tt>, la tastiera numerica contiene 
+<tt>5</tt> e <tt>7</tt>, ciò si traduce in 3, 5 e 7.</p>
+
+<p>Esempio 2: se i valori della cella sono <tt>3</tt>, <tt>5</tt> e <tt>7</tt>,
+la tastiera numerica contiene <tt>3</tt> e <tt>5</tt>, ciò si traduce in 7.</p>
+
+<p>Esempio 3: se i valori della cella sono <tt>3</tt> e <tt>5</tt>, la tastiera numerica
+contine <tt>5</tt> e <tt>8</tt>, ciò si traduce in 3. I.e. 5 è
+cancellato, ma 8 <i>non</i> è (fissato??) set.</p>
+
+<p>Il pulsante <tt>C</tt> è usato per cancellare tutti i valori nella tastiera
+numerica. Il pulsante <tt>Inv</tt> è usato per invertire i valori nella tastiera
+numerica.</p>
+
+<p>Esempio 4: se i valori della cella sono <tt>3</tt>, <tt>5</tt> e <tt>7</tt>,
+si supponga che il valore corretto sia 5. Un metodo facile per rimuove
+tutti i valori tranne 5 è premere <tt>5</tt> seguito da <tt>Inv</tt> e poi
+toccare la cella.</p>
+
+<h2 id="im_auto">Automatico</h2>
+
+<p>Utilizzare questo metodi di input se si desidera passare facilmente avanti e indietro
+tra <i>Prima Cella poi Valori</i> e <i>Prima Valori poi Cella</i>.</p>
+
+<p>Questo significa che inizialmente entrambi i metodi di input sono possibili. Se si
+tocca prima una cella allora <i>Prima Cella poi Valori</i> sarà usato 
+automaticamente. Invece se si tocca prima una cifra nella tastiera numerica verrà usato 
+<i>Prima Valori poi Cella</i>.</p>
+
+<p>Se si vuole tornare alla stato iniziale da <i>Prima Cella
+poi Valori</i> si deve toccare la cella selezionata una seconda volta.</p>
+
+<p>Per tornare da <i>Prima Valori poi Cella</i> devi cancellare tutti i valori
+sulla tastiera numerica. Il modo più semplice per farlo è premere il pulsante
+<tt>C</tt>.</p>
+
+<h1 id="links">Collegamenti Esterni</h1>
+
+<p>Andoku è un progetto open source. La pagina del progetto è situata su
+ <a href="http://code.google.com/p/andoku">Google Code</a>.</p>
+
+<p>Per ulteriori informazioni sui puzzle Sudoku in generale visita <a
+	href="http://it.m.wikipedia.org/wiki/Sudoku">Wikipedia: Sudoku</a>.</p>
+
+</body>
+</html>

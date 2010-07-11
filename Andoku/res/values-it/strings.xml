@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Andoku - a sudoku puzzle game for Android.
+  Copyright (C) 2010  Markus Wiederkehr
+
+  This file is part of Andoku.
+
+  Andoku is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  Andoku is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with Andoku.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- TRANSLATON BY Anddev Translation Team Version: 0.6 for Andoku 1.3.1 -->
+
+<resources>
+    <!-- Application name -->
+    <string name="app_name">Andoku</string>
+
+    <!-- When was a game last played (used by "Resume Game") -->
+    <string name="age_0_minutes">0 minuti fa</string>
+    <string name="age_1_day">ieri</string>
+    <string name="age_1_hour">1 ora fa</string>
+    <string name="age_1_minute">1 minuto fa</string>
+    <string name="age_1_week">1 settimana fa</string>
+    <string name="age_2_days">2 giorni fa</string>
+    <string name="age_n_days">%d giorni fa</string>
+    <string name="age_n_hours">%d ore fa</string>
+    <string name="age_n_minutes">%d minuti fa</string>
+    <string name="age_n_weeks">%d settimane fa</string>
+
+    <!-- Okay and cancel buttons for alert dialogs (reset puzzle, rename folder, ..) -->
+    <string name="alert_dialog_ok">OK</string>
+    <string name="alert_dialog_cancel">Cancella</string>
+
+    <!-- Navigation buttons (mostly used by main menu) -->
+    <string name="button_nav_resume_game">Riprendi Gioco</string>
+    <string name="button_nav_select_new_game">Nuovo Gioco</string>
+    <string name="button_nav_select_folders">Cartelle</string>
+    <string name="button_nav_settings">Impostazioni</string>
+    <string name="button_nav_help">Aiuto</string>
+    <string name="button_nav_about">Credits</string>
+    <string name="button_nav_start_game">Continua</string>
+    <string name="button_nav_back">Indietro</string>
+    <string name="button_nav_cancel">Cancella</string>
+
+    <!-- Button to dismiss congratulations/statistics at the end of a game -->
+    <string name="button_dismiss_congrats">Continua</string>
+
+    <!-- Different values for the button that starts/resumes/resets a game (when browsing through the list of puzzles) -->
+    <string name="button_reset_game">Resetta Gioco</string>
+    <string name="button_resume_game">Riprendi Gioco</string>
+    <string name="button_start_game">Inizia Gioco</string>
+
+    <!-- Additional keypad buttons -->
+    <string name="button_clear">C</string>
+    <string name="button_invert">Inv</string>
+
+    <!-- Context menu entries for the "Imported Folders" activity -->
+    <string name="context_menu_delete_folder">Cancella Cartella</string>
+    <string name="context_menu_rename_folder">Rinomina Cartella</string>
+
+    <!-- Captions and messages for confirmation dialogs -->
+    <string name="dialog_delete_folder">Cartella Cartella</string>
+    <string name="message_delete_folder">La cartella  \'%s\' non è vuota. Vuoi davvero cancellarla?</string>
+    <string name="dialog_rename_folder">Rinomiana Cartella</string>
+    <string name="message_rename_folder">Nuovo nome per \'%s\':</string>
+    <string name="message_folder_exists">Non puoi rinominare la cartella perchè il nome \'%s\' è già usato da un altra cartella!</string>
+    <string name="dialog_reset_puzzle">Resetta Puzzle?</string>
+    <string name="message_reset_puzzle">Vuoi davvero cancellare il puzzle corrente e resettare il timer?</string>
+    <string name="dialog_reset_all_puzzles">Resetta Tutti i Puzzle?</string>
+    <string name="message_reset_all_puzzles_in_variation">Vuoi davvero resettare TUTTI I PUZZLE nel gioco corrente?</string>
+    <string name="message_reset_all_puzzles_in_folder">Vuoi davvero resettare TUTTI I PUZZLE in questa cartella?</string>
+
+    <!-- Captions for the error page -->
+    <string name="error_title_io_error">Erorre I/O</string>
+
+    <!-- Messages for the error page -->
+    <string name="error_message_finding_available">Errore durante la ricerca dei puzzle disponibili!</string>
+    <string name="error_message_loading_puzzle">Errore durante il caricamento del puzzle!</string>
+    <string name="error_message_stack_trace">Stack trace:</string>
+
+    <!-- Names of the help and about pages for this language (under folder "assets") -->
+    <string name="html_page_about">about-it.html</string>
+    <string name="html_page_help">help-it.html</string>
+
+    <!-- Info/warning messages for "Check Puzzle" or when all cells are filled in -->
+    <string name="message_computing_solution">Calcolo soluzione. Attendere prego...</string>
+    <string name="info_puzzle_ok_1">Nessun errore. Una cella rimanente.</string>
+    <string name="info_puzzle_ok_n">Nessun errore. %d celle rimanenti.</string>
+    <string name="warn_invalid_puzzle">Questo puzzle non è valido e non può essere risolto!</string>
+    <string name="warn_puzzle_errors">Spiacente, hai fatto troppi errori!</string>
+    <string name="info_invalid_solution">Spiacente, questa non è la soluzione corretta!\n\nProva \'Controlla Puzzle\' dal menù per controllare dove si trovano gli errori.</string>
+
+    <!-- Options menu while playing -->
+    <string name="menu_check_puzzle">Controlla Puzzle</string>
+    <string name="menu_pause">Pausa</string>
+    <string name="menu_reset_puzzle">Resetta Puzzle</string>
+    <string name="menu_reset_all_puzzles">Resetta Tutti i Puzzle</string>
+    <string name="menu_resume">Riprendi</string>
+    <string name="menu_eliminate_values">Elimina Valori</string>
+    <string name="menu_settings">Impostazioni</string>
+
+    <!-- Messages for congratulations/statistics at end of game -->
+    <string name="message_congrats">&lt;b&gt;Congratulazioni, hai risolto questo puzzle!&lt;/b&gt;</string>
+    <string name="message_statistics_title_assets">Statistiche per &lt;i&gt;%s (%s)&lt;/i&gt;:</string>
+    <string name="message_statistics_title_db">Statistiche per cartella &lt;i&gt;%s&lt;/i&gt;:</string>
+    <string name="message_statistics_details">Puzzle risolti: %d&lt;br/&gt;Tempo medio: %s&lt;br/&gt;Miglior tempo: %s</string>
+
+    <!-- Folder cannot be opened because it's empty -->
+    <string name="message_empty_folder">La cartella \'%s\' è vuota.</string>
+
+    <!-- Puzzle names (displayed top-left when playing) -->
+    <string name="name_sudoku_squiggly">Squiggly Sudoku</string>
+    <string name="name_sudoku_squiggly_hyper">Squiggly Hyper-Sudoku</string>
+    <string name="name_sudoku_squiggly_x">Squiggly X-Sudoku</string>
+    <string name="name_sudoku_squiggly_percent">Squiggly Percent-Sudoku</string>
+    <string name="name_sudoku_squiggly_color">Squiggly Color-Sudoku</string>
+    <string name="name_sudoku_standard">Standard Sudoku</string>
+    <string name="name_sudoku_standard_hyper">Hyper-Sudoku</string>
+    <string name="name_sudoku_standard_x">X-Sudoku</string>
+    <string name="name_sudoku_standard_percent">Percent-Sudoku</string>
+    <string name="name_sudoku_standard_color">Color-Sudoku</string>
+
+    <!-- Captions for various activities -->
+    <string name="page_title_welcome">Benvenuto in Andoku</string>
+    <string name="page_title_resume_game">Riprendi Gioco</string>
+    <string name="page_title_new_game">Inizia Nuovo Gioco</string>
+    <string name="page_title_folder_list">Importa Cartelle</string>
+    <string name="page_title_help">Aiuto per Andoku</string>
+    <string name="page_title_about">Crediti Andoku</string>
+
+    <!-- Game type and difficulty selection (used by "Start New Game") -->
+    <string name="spinner_grid">Stile griglia:</string>
+    <string name="prompt_spinner_grid">Scegli stile griglia:</string>
+    <string name="spinner_extra_regions">Regioni Extra:</string>
+    <string name="prompt_spinner_extra_regions">Scegli regioni extra</string>
+    <string name="spinner_difficulty">Livello di difficoltà:</string>
+    <string name="prompt_spinner_difficulty">Scegli livello di difficoltà</string>
+    <string name="mini_stats_0">(Nessun puzzle già risolto.)</string>
+    <!-- next line uses 'NO-BREAK SPACE' (U+00A0) to avoid undesired line breaks -->
+    <string name="mini_stats_n">(Puzzle\u00A0risolti:\u00A0%d, tempo\u00A0medio:\u00A0%s, tempo\u00A0migliore:\u00A0%s)</string>
+
+    <!-- Declares a permission group and a permission that allows external applications to import puzzles into Andoku -->
+    <string name="permgroup_label_andoku">Andoku</string>
+    <string name="permgroup_description_andoku">Gruppo di permessi per interagire con Andoku.</string>
+    <string name="perm_label_import">importa puzzle sudoku in Andoku</string>
+    <string name="perm_description_import">Permetti all\'applicazione di creare cartelle e importare puzzle sudoku in Andoku.</string>
+ </resources>
