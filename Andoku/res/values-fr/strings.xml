@@ -19,6 +19,8 @@
   along with Andoku.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
+<!-- Translation by Guillaume Semichon -->
+
 <resources>
     <!-- Application name -->
     <string name="app_name">Andoku</string>

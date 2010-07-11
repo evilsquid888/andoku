@@ -19,6 +19,8 @@
   along with Andoku.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
+<!-- Translation by Guillaume Semichon -->
+
 <resources>
     <!-- The possible grid styles (used by "Start New Game") -->
     <string-array name="grid_styles">
