@@ -45,7 +45,7 @@ import com.googlecode.andoku.db.AndokuDatabase;
 class BackupUtil extends Activity {
 	private static final String TAG = BackupUtil.class.getName();
 
-	private static final String ANDOKU_DIR = "Andoku";
+	private static final String SD_CARD_BACKUP_DIR = "Andoku";
 	private static final String DATABASE_BACKUP_FILE = "database.bak";
 	private static final String DATABASE_BACKUP_FILE_SIGNATURE = "database.bak.sig";
 	private static final String DATABASE_UPDATE_FILE = "database.update";
@@ -63,14 +63,17 @@ class BackupUtil extends Activity {
 
 		File dbFile = context.getDatabasePath(AndokuDatabase.DATABASE_NAME);
 		File sdcard = Environment.getExternalStorageDirectory();
-		File andokuDir = new File(sdcard, ANDOKU_DIR);
+		File andokuDir = new File(sdcard, SD_CARD_BACKUP_DIR);
 		if (!andokuDir.isDirectory() && !andokuDir.mkdirs()) {
-			Log.e(TAG, "Could not create root directory \"" + ANDOKU_DIR + "\" on external storage");
+			Log.e(TAG, "Could not create root directory \"" + SD_CARD_BACKUP_DIR
+					+ "\" on external storage");
 			return;
 		}
 
 		// If this line does not compile it is because you have to specify a secret app key in the
 		// resources first! Create res/values/secret.xml and add a random string named secret_key.
+		// Please also adjust the value of SD_CARD_BACKUP_DIR so that the backup files of your mod
+		// and the backup files of the original Andoku do not conflict.
 		String secretKey = context.getString(R.string.secret_key);
 
 		File backupFile = new File(andokuDir, DATABASE_BACKUP_FILE);
