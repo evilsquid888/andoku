@@ -163,9 +163,4 @@
 
 </LinearLayout>
 
-<com.googlecode.andoku.FingertipView
-        android:id="@+id/viewFingertip"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>
-
 </merge>

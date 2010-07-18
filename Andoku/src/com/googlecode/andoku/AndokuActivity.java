@@ -46,6 +46,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -126,17 +127,17 @@ public class AndokuActivity extends Activity
 	private TextView puzzleDifficultyView;
 	private TextView puzzleSourceView;
 	private AndokuPuzzleView andokuView;
-	private FingertipView fingertipView;
 	private TextView timerView;
 	private ViewGroup keypad;
 	private KeypadToggleButton[] keypadToggleButtons;
+	private ImageButton undoButton;
+	private ImageButton redoButton;
 	private TextView congratsView;
 	private Button dismissCongratsButton;
 	private ImageButton backButton;
 	private ImageButton nextButton;
 	private Button startOrResetButton;
-	private ImageButton undoButton;
-	private ImageButton redoButton;
+	private FingertipView fingertipView;
 
 	private Toast toast;
 
@@ -201,9 +202,6 @@ public class AndokuActivity extends Activity
 
 		andokuView = (AndokuPuzzleView) findViewById(R.id.viewPuzzle);
 		andokuView.setOnKeyListener(this);
-
-		fingertipView = (FingertipView) findViewById(R.id.viewFingertip);
-		fingertipView.setOnTouchListener(this);
 
 		timerView = (TextView) findViewById(R.id.labelTimer);
 
@@ -286,6 +284,11 @@ public class AndokuActivity extends Activity
 				onStartOrResetButton();
 			}
 		});
+
+		fingertipView = new FingertipView(this);
+		fingertipView.setOnTouchListener(this);
+		addContentView(fingertipView, new LayoutParams(LayoutParams.FILL_PARENT,
+				LayoutParams.FILL_PARENT));
 
 		createThemeFromPreferences();
 

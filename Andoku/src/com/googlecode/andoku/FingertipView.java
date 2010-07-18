@@ -26,7 +26,6 @@ import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.GradientDrawable.Orientation;
-import android.util.AttributeSet;
 import android.view.View;
 
 public class FingertipView extends View {
@@ -39,8 +38,8 @@ public class FingertipView extends View {
 	private Drawable redFingertip;
 	private Drawable greenFingertip;
 
-	public FingertipView(Context context, AttributeSet attrs) {
-		super(context, attrs);
+	public FingertipView(Context context) {
+		super(context);
 
 		float displayDensity = getResources().getDisplayMetrics().density;
 		int radius = Math.round(75 * displayDensity);
