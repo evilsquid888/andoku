@@ -73,6 +73,7 @@
     <string name="message_delete_folder">La cartella  \'%s\' non è vuota. Vuoi davvero cancellarla?</string>
     <string name="dialog_rename_folder">Rinomiana Cartella</string>
     <string name="message_rename_folder">Nuovo nome per \'%s\':</string>
+    <string name="message_invalid_folder_name">TBD: Sorry, a folder name may not contain a slash character or be empty!</string>
     <string name="message_folder_exists">Non puoi rinominare la cartella perchè il nome \'%s\' è già usato da un altra cartella!</string>
     <string name="dialog_reset_puzzle">Resetta Puzzle?</string>
     <string name="message_reset_puzzle">Vuoi davvero cancellare il puzzle corrente e resettare il timer?</string>

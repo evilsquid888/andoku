@@ -241,7 +241,12 @@ public class FolderListActivity extends ListActivity {
 		if (name.equals(oldName))
 			return;
 
-		if (db.folderExists(parentFolderId, name)) {
+		if (!AndokuDatabase.isValidFolderName(name)) {
+			String message = getResources().getString(R.string.message_invalid_folder_name, name);
+			toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+			toast.show();
+		}
+		else if (db.folderExists(parentFolderId, name)) {
 			String message = getResources().getString(R.string.message_folder_exists, name);
 			toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
 			toast.show();

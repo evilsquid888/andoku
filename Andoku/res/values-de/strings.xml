@@ -71,6 +71,7 @@
     <string name="message_delete_folder">Der Ordner \'%s\' ist nicht leer. Wollen Sie ihn wirklich löschen?</string>
     <string name="dialog_rename_folder">Ordner umbenennen</string>
     <string name="message_rename_folder">Neuer Name für \'%s\':</string>
+    <string name="message_invalid_folder_name">Sorry, ein Ordername darf keinen Schrägstrich enthalten oder leer sein!</string>
     <string name="message_folder_exists">Der Ordner konnte nicht umbenannt werden, da bereits an anderer Ordner namens \'%s\' existiert!</string>
     <string name="dialog_reset_puzzle">Rätsel zurücksetzen?</string>
     <string name="message_reset_puzzle">Wollen Sie das aktuelle Sudoku-Rätsel und die Stoppuhr wirklich zurücksetzen?</string>

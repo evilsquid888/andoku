@@ -112,6 +112,14 @@ public class AndokuDatabase {
 		db.delete(TABLE_GAMES, null, null);
 	}
 
+	public static boolean isValidFolderName(String folderName) {
+		if (folderName == null || folderName.length() == 0)
+			return false;
+		if (folderName.indexOf(PATH_SEPARATOR_CHAR) != -1)
+			return false;
+		return true;
+	}
+
 	public long createFolder(String name) {
 		return createFolder(ROOT_FOLDER_ID, name);
 	}
@@ -713,9 +721,7 @@ public class AndokuDatabase {
 	}
 
 	private void checkValidFolderName(String folderName) {
-		if (folderName == null || folderName.length() == 0)
-			throw new IllegalArgumentException();
-		if (folderName.indexOf(PATH_SEPARATOR_CHAR) != -1)
+		if (!isValidFolderName(folderName))
 			throw new IllegalArgumentException();
 	}
 
