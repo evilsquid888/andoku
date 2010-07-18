@@ -80,12 +80,12 @@ public class AndokuActivity extends Activity
 	private static final int DIALOG_CONFIRM_RESET_PUZZLE = 0;
 	private static final int DIALOG_CONFIRM_RESET_ALL_PUZZLES = 1;
 
-	private static final int MENU_CHECK_PUZZLE = 0;
-	private static final int MENU_PAUSE_RESUME_PUZZLE = 1;
-	private static final int MENU_ELIMINATE_VALUES = 2;
-	private static final int MENU_RESET_PUZZLE = 3;
-	private static final int MENU_RESET_ALL_PUZZLES = 4;
-	private static final int MENU_SETTINGS = 5;
+	private static final int MENU_CHECK_PUZZLE = Menu.FIRST;
+	private static final int MENU_PAUSE_RESUME_PUZZLE = Menu.FIRST + 1;
+	private static final int MENU_ELIMINATE_VALUES = Menu.FIRST + 2;
+	private static final int MENU_RESET_PUZZLE = Menu.FIRST + 3;
+	private static final int MENU_RESET_ALL_PUZZLES = Menu.FIRST + 4;
+	private static final int MENU_SETTINGS = Menu.FIRST + 5;
 
 	private static final String APP_STATE_PUZZLE_SOURCE_ID = "puzzleSourceId";
 	private static final String APP_STATE_PUZZLE_NUMBER = "puzzleNumber";
@@ -429,16 +429,16 @@ public class AndokuActivity extends Activity
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(0, MENU_CHECK_PUZZLE, 0, R.string.menu_check_puzzle).setIcon(
+		menu.add(Menu.NONE, MENU_CHECK_PUZZLE, Menu.NONE, R.string.menu_check_puzzle).setIcon(
 				android.R.drawable.ic_menu_help);
-		menu.add(0, MENU_PAUSE_RESUME_PUZZLE, 0, "");
-		menu.add(0, MENU_ELIMINATE_VALUES, 0, R.string.menu_eliminate_values).setIcon(
-				R.drawable.ic_menu_eliminate);
-		menu.add(0, MENU_RESET_PUZZLE, 0, R.string.menu_reset_puzzle).setIcon(
+		menu.add(Menu.NONE, MENU_PAUSE_RESUME_PUZZLE, Menu.NONE, "");
+		menu.add(Menu.NONE, MENU_ELIMINATE_VALUES, Menu.NONE, R.string.menu_eliminate_values)
+				.setIcon(R.drawable.ic_menu_eliminate);
+		menu.add(Menu.NONE, MENU_RESET_PUZZLE, Menu.NONE, R.string.menu_reset_puzzle).setIcon(
 				android.R.drawable.ic_menu_close_clear_cancel);
-		menu.add(0, MENU_RESET_ALL_PUZZLES, 0, R.string.menu_reset_all_puzzles).setIcon(
-				android.R.drawable.ic_menu_delete);
-		menu.add(0, MENU_SETTINGS, 0, R.string.menu_settings).setIcon(
+		menu.add(Menu.NONE, MENU_RESET_ALL_PUZZLES, Menu.NONE, R.string.menu_reset_all_puzzles)
+				.setIcon(android.R.drawable.ic_menu_delete);
+		menu.add(Menu.NONE, MENU_SETTINGS, Menu.NONE, R.string.menu_settings).setIcon(
 				android.R.drawable.ic_menu_preferences);
 		return super.onCreateOptionsMenu(menu);
 	}
