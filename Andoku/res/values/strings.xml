@@ -62,17 +62,22 @@
     <string name="button_clear">C</string>
     <string name="button_invert">Inv</string>
 
+    <!-- Menu entries for the "Imported Folders" activity -->
+    <string name="menu_create_folder">Create New Folder</string>
+
     <!-- Context menu entries for the "Imported Folders" activity -->
     <string name="context_menu_delete_folder">Delete Folder</string>
     <string name="context_menu_rename_folder">Rename Folder</string>
 
     <!-- Captions and messages for confirmation dialogs -->
+    <string name="dialog_create_folder">Create New Folder</string>
+    <string name="message_create_folder">New folder name:</string>
     <string name="dialog_delete_folder">Delete Folder</string>
     <string name="message_delete_folder">Folder \'%s\' is not empty. Do you really want to delete it?</string>
     <string name="dialog_rename_folder">Rename Folder</string>
     <string name="message_rename_folder">New name for \'%s\':</string>
     <string name="message_invalid_folder_name">Sorry, a folder name may not contain a slash character or be empty!</string>
-    <string name="message_folder_exists">Could not rename folder because another folder named \'%s\' already exists!</string>
+    <string name="message_folder_exists">Could not create or rename folder because another folder named \'%s\' already exists!</string>
     <string name="dialog_reset_puzzle">Reset Puzzle?</string>
     <string name="message_reset_puzzle">Do you really want to clear the current puzzle and reset the timer?</string>
     <string name="dialog_reset_all_puzzles">Reset All Puzzles?</string>

@@ -49,11 +49,14 @@ public class FolderListActivity extends ListActivity {
 
 	private static final String APP_STATE_SELECTED_FOLDER_ID = "selectedFolderId";
 
+	private static final int MENU_CREATE_FOLDER = Menu.FIRST;
+
 	private static final int MENU_ITEM_RENAME = Menu.FIRST;
 	private static final int MENU_ITEM_DELETE = Menu.FIRST + 1;
 
-	private static final int DIALOG_RENAME_FOLDER = 0;
-	private static final int DIALOG_CONFIRM_DELETE_FOLDER = 1;
+	private static final int DIALOG_CREATE_FOLDER = 0;
+	private static final int DIALOG_RENAME_FOLDER = 1;
+	private static final int DIALOG_CONFIRM_DELETE_FOLDER = 2;
 
 	private long parentFolderId;
 	private AndokuDatabase db;
@@ -134,6 +137,24 @@ public class FolderListActivity extends ListActivity {
 	}
 
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(Menu.NONE, MENU_CREATE_FOLDER, Menu.NONE, R.string.menu_create_folder).setIcon(
+				android.R.drawable.ic_menu_add);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case MENU_CREATE_FOLDER:
+				onCreateFolder();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+
+	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		if (!(menuInfo instanceof AdapterView.AdapterContextMenuInfo)) {
 			Log.e(TAG, "bad menuInfo");
@@ -183,6 +204,8 @@ public class FolderListActivity extends ListActivity {
 			Log.v(TAG, "onCreateDialog(" + id + ")");
 
 		switch (id) {
+			case DIALOG_CREATE_FOLDER:
+				return createCreateFolderDialog();
 			case DIALOG_RENAME_FOLDER:
 				return createRenameFolderDialog();
 			case DIALOG_CONFIRM_DELETE_FOLDER:
@@ -200,6 +223,9 @@ public class FolderListActivity extends ListActivity {
 		super.onPrepareDialog(id, dialog);
 
 		switch (id) {
+			case DIALOG_CREATE_FOLDER:
+				prepareCreateFolderDialog((AlertDialog) dialog);
+				break;
 			case DIALOG_RENAME_FOLDER:
 				prepareRenameFolderDialog((AlertDialog) dialog);
 				break;
@@ -230,6 +256,54 @@ public class FolderListActivity extends ListActivity {
 		String puzzleSourceId = PuzzleSourceIds.forDbFolder(folderId);
 
 		new GameLauncher(this, db).startNewGame(puzzleSourceId);
+	}
+
+	private void onCreateFolder() {
+		showDialog(DIALOG_CREATE_FOLDER);
+	}
+
+	private void createFolder(String name) {
+		if (!AndokuDatabase.isValidFolderName(name)) {
+			String message = getResources().getString(R.string.message_invalid_folder_name, name);
+			toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+			toast.show();
+		}
+		else if (db.folderExists(parentFolderId, name)) {
+			String message = getResources().getString(R.string.message_folder_exists, name);
+			toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+			toast.show();
+		}
+		else {
+			db.createFolder(parentFolderId, name);
+			cursor.requery();
+		}
+	}
+
+	private Dialog createCreateFolderDialog() {
+		final ContextThemeWrapper context = new ContextThemeWrapper(this,
+				android.R.style.Theme_Dialog);
+		final View layout = View.inflate(context, R.layout.dialog_edit, null);
+		final EditText nameText = (EditText) layout.findViewById(R.id.name);
+
+		TextView label = (TextView) layout.findViewById(R.id.label);
+		label.setText(getResources().getString(R.string.message_create_folder));
+
+		return new AlertDialog.Builder(this).setView(layout).setIcon(R.drawable.edit_dialog_icon)
+				.setTitle(R.string.dialog_create_folder).setPositiveButton(R.string.alert_dialog_ok,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int whichButton) {
+								createFolder(nameText.getText().toString());
+							}
+						}).setNegativeButton(R.string.alert_dialog_cancel,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int whichButton) {
+							}
+						}).create();
+	}
+
+	private void prepareCreateFolderDialog(AlertDialog dialog) {
+		EditText nameText = (EditText) dialog.findViewById(R.id.name);
+		nameText.setText("");
 	}
 
 	private void onRenameFolder() {

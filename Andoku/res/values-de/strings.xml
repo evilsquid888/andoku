@@ -62,17 +62,22 @@
     <string name="button_clear">C</string>
     <string name="button_invert">Inv</string>
 
+    <!-- Menu entries for the "Imported Folders" activity -->
+    <string name="menu_create_folder">Neuen Ordner erstellen</string>
+
     <!-- Context menu entries for the "Imported Folders" activity -->
     <string name="context_menu_delete_folder">Ordner löschen</string>
     <string name="context_menu_rename_folder">Ordner umbenennen</string>
 
     <!-- Captions and messages for confirmation dialogs -->
+    <string name="dialog_create_folder">Neuen Ordner erstellen</string>
+    <string name="message_create_folder">Name des neuen Ordners:</string>
     <string name="dialog_delete_folder">Ordner löschen</string>
     <string name="message_delete_folder">Der Ordner \'%s\' ist nicht leer. Wollen Sie ihn wirklich löschen?</string>
     <string name="dialog_rename_folder">Ordner umbenennen</string>
     <string name="message_rename_folder">Neuer Name für \'%s\':</string>
     <string name="message_invalid_folder_name">Sorry, ein Ordername darf keinen Schrägstrich enthalten oder leer sein!</string>
-    <string name="message_folder_exists">Der Ordner konnte nicht umbenannt werden, da bereits an anderer Ordner namens \'%s\' existiert!</string>
+    <string name="message_folder_exists">Der Ordner konnte nicht erstellt oder umbenannt werden, da bereits an anderer Ordner namens \'%s\' existiert!</string>
     <string name="dialog_reset_puzzle">Rätsel zurücksetzen?</string>
     <string name="message_reset_puzzle">Wollen Sie das aktuelle Sudoku-Rätsel und die Stoppuhr wirklich zurücksetzen?</string>
     <string name="dialog_reset_all_puzzles">Alle Rätsel zurücksetzen?</string>

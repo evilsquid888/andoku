@@ -64,17 +64,22 @@
     <string name="button_clear">C</string>
     <string name="button_invert">Inv</string>
 
+    <!-- Menu entries for the "Imported Folders" activity -->
+    <string name="menu_create_folder">TBD: Create New Folder</string>
+
     <!-- Context menu entries for the "Imported Folders" activity -->
     <string name="context_menu_delete_folder">Effacer le dossier</string>
     <string name="context_menu_rename_folder">Renommer le dossier</string>
 
     <!-- Captions and messages for confirmation dialogs -->
+    <string name="dialog_create_folder">TBD: Create New Folder</string>
+    <string name="message_create_folder">TBD: New folder name:</string>
     <string name="dialog_delete_folder">Effacer le dossier</string>
     <string name="message_delete_folder">Le dossier \'%s\' n\'est pas vide. Confirmez-vous sa suppression ?</string>
     <string name="dialog_rename_folder">Renommer le dossier</string>
     <string name="message_rename_folder">Nouveau nom pour \'%s\' :</string>
     <string name="message_invalid_folder_name">TBD: Sorry, a folder name may not contain a slash character or be empty!</string>
-    <string name="message_folder_exists">Impossible de renommer le dossier car un dossier \'%s\' existe déjà !</string>
+    <string name="message_folder_exists">TBD: Could not create or rename folder because another folder named \'%s\' already exists!</string>
     <string name="dialog_reset_puzzle">Réinitialiser la grille ?</string>
     <string name="message_reset_puzzle">Confirmez-vous la réinitialisation de la grille et de son chrono ?</string>
     <string name="dialog_reset_all_puzzles">Réinitialiser toutes les grilles ?</string>
