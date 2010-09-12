@@ -54,16 +54,20 @@ public class AndokuPuzzle {
 	private final PuzzleType puzzleType;
 	private final Difficulty difficulty;
 	private final int[][] extra;
-	private boolean solved;
 
 	private ValueSet[][] values;
-	private int numValues;
 
 	private final int[] areaColors;
 	private final int numberOfAreaColors;
 
 	private Solution solution;
 	private boolean computeSolutionFailed = false;
+
+	private int numValuesSet;
+	private boolean numValuesSetValid = false;
+
+	private boolean solved;
+	private boolean solvedValid = false;
 
 	// multiple identical values within a single region
 	private HashSet<RegionError> regionErrors;
@@ -84,8 +88,6 @@ public class AndokuPuzzle {
 		this.difficulty = difficulty;
 		this.extra = obtainExtra(puzzle);
 		this.values = obtainValues(puzzle);
-		this.numValues = countValues(this.values);
-		this.solved = checkSolved();
 		this.areaColors = new AreaColorGenerator().generate(puzzle);
 		this.numberOfAreaColors = countNumberOfAreaColors();
 		this.regionErrors = new HashSet<RegionError>();
@@ -210,10 +212,10 @@ public class AndokuPuzzle {
 		}
 
 		this.values = values;
-		this.numValues = countValues(this.values);
-		this.solved = checkSolved();
 		this.regionErrors = regionErrors;
 		this.cellErrors = cellErrors;
+
+		invalidateSolved();
 
 		return true;
 	}
@@ -256,6 +258,11 @@ public class AndokuPuzzle {
 	}
 
 	public boolean isSolved() {
+		if (!solvedValid) {
+			solved = checkSolved();
+			solvedValid = true;
+		}
+
 		return solved;
 	}
 
@@ -275,11 +282,16 @@ public class AndokuPuzzle {
 	}
 
 	public boolean isCompletelyFilled() {
-		return numValues == size * size;
+		return getMissingValuesCount() == 0;
 	}
 
 	public int getMissingValuesCount() {
-		return size * size - numValues;
+		if (!numValuesSetValid) {
+			numValuesSet = countValuesSet();
+			numValuesSetValid = true;
+		}
+
+		return size * size - numValuesSet;
 	}
 
 	public boolean isClue(int row, int col) {
@@ -314,16 +326,9 @@ public class AndokuPuzzle {
 		if (values[row][col].equals(valueSet))
 			return false;
 
-		boolean singleValueBefore = values[row][col].size() == 1;
 		values[row][col].setFromInt(valueSet.toInt());
-		boolean singleValueAfter = values[row][col].size() == 1;
 
-		if (singleValueBefore && !singleValueAfter)
-			numValues--;
-		if (!singleValueBefore && singleValueAfter)
-			numValues++;
-
-		solved = checkSolved();
+		invalidateSolved();
 
 		Position p = new Position(row, col);
 		if (removeError(p))
@@ -333,7 +338,7 @@ public class AndokuPuzzle {
 	}
 
 	private boolean checkSolved() {
-		if (!isCompletelyFilled())
+		if (getMissingValuesCount() != 0)
 			return false;
 
 		Position[] positionOfValue = new Position[size];
@@ -352,6 +357,11 @@ public class AndokuPuzzle {
 		}
 
 		return true;
+	}
+
+	private void invalidateSolved() {
+		solvedValid = false;
+		numValuesSetValid = false;
 	}
 
 	public boolean checkForErrors(boolean checkAgainstSolution) {
@@ -604,7 +614,7 @@ public class AndokuPuzzle {
 		return values;
 	}
 
-	private static int countValues(ValueSet[][] values) {
+	private int countValuesSet() {
 		final int size = values.length;
 
 		int count = 0;
