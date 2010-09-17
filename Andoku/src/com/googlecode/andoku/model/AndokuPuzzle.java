@@ -418,30 +418,30 @@ public class AndokuPuzzle {
 	}
 
 	public boolean canEliminateValues() {
-		Set<Position> cells = getAllCellsWithASingleValue();
+		Set<Position> positions = getAllPositionsWithASingleValue();
 
-		return canEliminateValues(cells);
+		return canEliminateValues(positions);
 	}
 
-	private Set<Position> getAllCellsWithASingleValue() {
-		Set<Position> cells = new HashSet<Position>();
+	private Set<Position> getAllPositionsWithASingleValue() {
+		Set<Position> positions = new HashSet<Position>();
 
 		for (int row = 0; row < size; row++)
 			for (int col = 0; col < size; col++)
 				if (values[row][col].size() == 1)
-					cells.add(new Position(row, col));
+					positions.add(new Position(row, col));
 
-		return cells;
+		return positions;
 	}
 
-	private boolean canEliminateValues(Set<Position> cells) {
-		for (Position cell : cells) {
-			int value = values[cell.row][cell.col].nextValue(0);
+	private boolean canEliminateValues(Set<Position> positions) {
+		for (Position position : positions) {
+			int value = values[position.row][position.col].nextValue(0);
 
-			Region[] regions = problem.getRegionsAt(cell.row, cell.col);
+			Region[] regions = problem.getRegionsAt(position.row, position.col);
 			for (Region region : regions) {
 				for (Position p : region.positions) {
-					if (!cells.contains(p) && !isClue(p.row, p.col)) {
+					if (!positions.contains(p) && !isClue(p.row, p.col)) {
 						if (canEliminateValue(p, value))
 							return true;
 					}
@@ -452,36 +452,36 @@ public class AndokuPuzzle {
 		return false;
 	}
 
-	private boolean canEliminateValue(Position cell, int value) {
-		ValueSet currentValues = values[cell.row][cell.col];
+	private boolean canEliminateValue(Position position, int value) {
+		ValueSet currentValues = values[position.row][position.col];
 		return currentValues.isEmpty() || currentValues.contains(value);
 	}
 
 	public int eliminateValues() {
-		setAllValuesOnEmptyCells();
+		setAllValuesOnEmptyPositions();
 
-		Set<Position> cells = getAllCellsWithASingleValue();
+		Set<Position> positions = getAllPositionsWithASingleValue();
 
-		return eliminateValues(cells);
+		return eliminateValues(positions);
 	}
 
-	private void setAllValuesOnEmptyCells() {
+	private void setAllValuesOnEmptyPositions() {
 		for (int row = 0; row < size; row++)
 			for (int col = 0; col < size; col++)
 				if (values[row][col].isEmpty())
 					setValues(row, col, ValueSet.all(size));
 	}
 
-	private int eliminateValues(Set<Position> cells) {
+	private int eliminateValues(Set<Position> positions) {
 		int numberValuesEliminated = 0;
 
-		for (Position cell : cells) {
-			int value = values[cell.row][cell.col].nextValue(0);
+		for (Position position : positions) {
+			int value = values[position.row][position.col].nextValue(0);
 
-			Region[] regions = problem.getRegionsAt(cell.row, cell.col);
+			Region[] regions = problem.getRegionsAt(position.row, position.col);
 			for (Region region : regions) {
 				for (Position p : region.positions) {
-					if (!cells.contains(p) && !isClue(p.row, p.col)) {
+					if (!positions.contains(p) && !isClue(p.row, p.col)) {
 						if (eliminate(p, value))
 							numberValuesEliminated++;
 					}
@@ -492,13 +492,13 @@ public class AndokuPuzzle {
 		return numberValuesEliminated;
 	}
 
-	private boolean eliminate(Position cell, int value) {
-		ValueSet currentValues = values[cell.row][cell.col];
+	private boolean eliminate(Position position, int value) {
+		ValueSet currentValues = values[position.row][position.col];
 		if (currentValues.contains(value)) {
 			ValueSet newValues = new ValueSet(currentValues);
 			newValues.remove(value);
 
-			setValues(cell.row, cell.col, newValues);
+			setValues(position.row, position.col, newValues);
 			return true;
 		}
 

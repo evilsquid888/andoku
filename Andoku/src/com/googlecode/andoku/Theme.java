@@ -46,8 +46,8 @@ interface Theme {
 	Paint getDigitPaint();
 	Paint getCluePaint(boolean preview);
 	Paint getErrorPaint();
-	Paint getMarkedCellPaint();
-	Paint getMarkedCluePaint();
+	Paint getMarkedPositionPaint();
+	Paint getMarkedPositionCluePaint();
 	Paint getOuterBorderPaint();
 
 	float getOuterBorderRadius();

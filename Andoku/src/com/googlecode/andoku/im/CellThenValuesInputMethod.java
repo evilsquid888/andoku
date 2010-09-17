@@ -26,7 +26,7 @@ import com.googlecode.andoku.model.Position;
 import com.googlecode.andoku.model.ValueSet;
 
 public class CellThenValuesInputMethod implements InputMethod {
-	private static final String APP_STATE_MARKED_CELL = "markedCell";
+	private static final String APP_STATE_MARKED_POSITION = "markedPosition";
 
 	private final InputMethodTarget target;
 
@@ -35,15 +35,16 @@ public class CellThenValuesInputMethod implements InputMethod {
 	}
 
 	public void onSaveInstanceState(Bundle outState) {
-		Position markedCell = target.getMarkedCell();
-		if (markedCell != null)
-			outState.putIntArray(APP_STATE_MARKED_CELL, new int[] { markedCell.row, markedCell.col });
+		Position markedPosition = target.getMarkedPosition();
+		if (markedPosition != null)
+			outState.putIntArray(APP_STATE_MARKED_POSITION, new int[] { markedPosition.row,
+					markedPosition.col });
 	}
 
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
-		int[] markedCell = savedInstanceState.getIntArray(APP_STATE_MARKED_CELL);
-		if (markedCell != null)
-			setMark(new Position(markedCell[0], markedCell[1]));
+		int[] markedPosition = savedInstanceState.getIntArray(APP_STATE_MARKED_POSITION);
+		if (markedPosition != null)
+			setMark(new Position(markedPosition[0], markedPosition[1]));
 	}
 
 	public void reset() {
@@ -54,7 +55,7 @@ public class CellThenValuesInputMethod implements InputMethod {
 	public void onMoveMark(int dy, int dx) {
 		final int size = target.getPuzzleSize();
 
-		Position mark = target.getMarkedCell();
+		Position mark = target.getMarkedPosition();
 		int row = mark == null ? size / 2 : mark.row;
 		int col = mark == null ? size / 2 : mark.col;
 
@@ -74,7 +75,7 @@ public class CellThenValuesInputMethod implements InputMethod {
 	}
 
 	public void onKeypad(int digit) {
-		Position mark = target.getMarkedCell();
+		Position mark = target.getMarkedPosition();
 		if (mark == null || target.isClue(mark))
 			return;
 
@@ -98,7 +99,7 @@ public class CellThenValuesInputMethod implements InputMethod {
 	}
 
 	public void onClear() {
-		Position mark = target.getMarkedCell();
+		Position mark = target.getMarkedPosition();
 		if (mark == null || target.isClue(mark))
 			return;
 
@@ -112,7 +113,7 @@ public class CellThenValuesInputMethod implements InputMethod {
 	}
 
 	public void onInvert() {
-		Position mark = target.getMarkedCell();
+		Position mark = target.getMarkedPosition();
 		if (mark == null || target.isClue(mark))
 			return;
 
@@ -136,41 +137,41 @@ public class CellThenValuesInputMethod implements InputMethod {
 		setMark(null);
 	}
 
-	public void onTap(Position cell, boolean editable) {
-		if (cell == null) {
+	public void onTap(Position position, boolean editable) {
+		if (position == null) {
 			target.highlightDigit(null);
 		}
 
-		setMark(cell);
+		setMark(position);
 	}
 
 	public void onValuesChanged() {
-		checkButtons(target.getMarkedCell());
+		checkButtons(target.getMarkedPosition());
 	}
 
-	private void setMark(Position cell) {
-		target.setMarkedCell(cell);
+	private void setMark(Position position) {
+		target.setMarkedPosition(position);
 
-		if (cell != null) {
-			ValueSet values = target.getCellValues(cell);
+		if (position != null) {
+			ValueSet values = target.getCellValues(position);
 			if (values.size() == 1) {
 				target.highlightDigit(values.nextValue(0));
 			}
 		}
 
-		checkButtons(cell);
+		checkButtons(position);
 	}
 
-	private void checkButtons(Position cell) {
+	private void checkButtons(Position position) {
 		final int size = target.getPuzzleSize();
 
-		if (cell == null) {
+		if (position == null) {
 			for (int v = 0; v < size; v++) {
 				target.checkButton(v, false);
 			}
 		}
 		else {
-			ValueSet values = target.getCellValues(cell);
+			ValueSet values = target.getCellValues(position);
 			for (int v = 0; v < size; v++) {
 				target.checkButton(v, values.contains(v));
 			}

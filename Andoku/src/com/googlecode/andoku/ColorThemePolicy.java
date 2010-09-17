@@ -46,8 +46,8 @@ public enum ColorThemePolicy {
 			builder.valueColor = 0xffddffdd;
 			builder.clueColor = 0xffffffdd;
 			builder.errorColor = 0xffe60000;
-			builder.markedCellColor = 0xb300ff00;
-			builder.markedClueColor = 0xb3ff0000;
+			builder.markedPositionColor = 0xb300ff00;
+			builder.markedPositionClueColor = 0xb3ff0000;
 			builder.areaColors2 = new int[] { 0xff000000, 0xff333333 };
 			builder.areaColors3 = Util.colorRing(0xff000033, 3);
 			builder.areaColors4 = Util.colorRing(0xff000033, 4);

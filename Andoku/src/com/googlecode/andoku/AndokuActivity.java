@@ -148,21 +148,21 @@ public class AndokuActivity extends Activity
 		public int getPuzzleSize() {
 			return puzzle.getSize();
 		}
-		public Position getMarkedCell() {
-			return andokuView.getMarkedCell();
+		public Position getMarkedPosition() {
+			return andokuView.getMarkedPosition();
 		}
-		public void setMarkedCell(Position cell) {
-			andokuView.markCell(cell);
+		public void setMarkedPosition(Position position) {
+			andokuView.markPosition(position);
 			cancelToast();
 		}
-		public boolean isClue(Position cell) {
-			return puzzle.isClue(cell.row, cell.col);
+		public boolean isClue(Position position) {
+			return puzzle.isClue(position.row, position.col);
 		}
-		public ValueSet getCellValues(Position cell) {
-			return puzzle.getValues(cell.row, cell.col);
+		public ValueSet getCellValues(Position position) {
+			return puzzle.getValues(position.row, position.col);
 		}
-		public void setCellValues(Position cell, ValueSet values) {
-			setCell(cell, values);
+		public void setCellValues(Position position, ValueSet values) {
+			AndokuActivity.this.setCellValues(position, values);
 		}
 		public int getNumberOfDigitButtons() {
 			return keypadToggleButtons.length;
@@ -529,8 +529,8 @@ public class AndokuActivity extends Activity
 			onCommandExecuted();
 	}
 
-	private void setCell(Position cell, ValueSet values) {
-		execute(new SetValuesCommand(cell, values));
+	private void setCellValues(Position position, ValueSet values) {
+		execute(new SetValuesCommand(position, values));
 	}
 
 	private void execute(Command<AndokuContext> command) {
@@ -613,21 +613,21 @@ public class AndokuActivity extends Activity
 		// translate event x/y from fingertipView to andokuView coordinates
 		float x = event.getX() + fingertipViewScreenLocation[0] - andokuViewScreenLocation[0];
 		float y = event.getY() + fingertipViewScreenLocation[1] - andokuViewScreenLocation[1];
-		Position cell = andokuView.getCell(x, y, 0.5f);
+		Position position = andokuView.getPositionAt(x, y, 0.5f);
 
 		int action = event.getAction();
 
-		if (cell == null && action == MotionEvent.ACTION_DOWN)
+		if (position == null && action == MotionEvent.ACTION_DOWN)
 			return false;
 
-		boolean editable = cell != null && !puzzle.isClue(cell.row, cell.col);
+		boolean editable = position != null && !puzzle.isClue(position.row, position.col);
 
 		if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
-			if (cell == null) {
+			if (position == null) {
 				fingertipView.hide();
 			}
 			else {
-				PointF center = andokuView.getCellCenterPoint(cell);
+				PointF center = andokuView.getPositionCenterPoint(position);
 				// translate center from andokuView coordinates to fingertipView coordinates
 				center.x += andokuViewScreenLocation[0] - fingertipViewScreenLocation[0];
 				center.y += andokuViewScreenLocation[1] - fingertipViewScreenLocation[1];
@@ -640,7 +640,7 @@ public class AndokuActivity extends Activity
 		else if (action == MotionEvent.ACTION_UP) {
 			fingertipView.hide();
 
-			inputMethod.onTap(cell, editable);
+			inputMethod.onTap(position, editable);
 		}
 		else { // MotionEvent.ACTION_CANCEL
 			fingertipView.hide();

@@ -66,7 +66,7 @@ public class AndokuPuzzleView extends View {
 
 	private Integer highlightedDigit;
 
-	private Position markedCell;
+	private Position markedPosition;
 
 	public AndokuPuzzleView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -98,7 +98,7 @@ public class AndokuPuzzleView extends View {
 		return puzzle;
 	}
 
-	public Position getCell(float px, float py, float fuzzy) {
+	public Position getPositionAt(float px, float py, float fuzzy) {
 		if (puzzle == null)
 			return null;
 
@@ -125,9 +125,9 @@ public class AndokuPuzzleView extends View {
 		return new Position(cy, cx);
 	}
 
-	public PointF getCellCenterPoint(Position cell) {
-		float x = cell.col * cellWidth + cellWidth / 2 + offsetX;
-		float y = cell.row * cellHeight + cellHeight / 2 + offsetY;
+	public PointF getPositionCenterPoint(Position position) {
+		float x = position.col * cellWidth + cellWidth / 2 + offsetX;
+		float y = position.row * cellHeight + cellHeight / 2 + offsetY;
 		return new PointF(x, y);
 	}
 
@@ -144,30 +144,30 @@ public class AndokuPuzzleView extends View {
 		return highlightedDigit;
 	}
 
-	public void markCell(Position cell) {
-		if (eq(cell, markedCell))
+	public void markPosition(Position position) {
+		if (eq(position, markedPosition))
 			return;
 
-		invalidateCell(cell);
-		invalidateCell(markedCell);
+		invalidatePosition(position);
+		invalidatePosition(markedPosition);
 
-		markedCell = cell;
+		markedPosition = position;
 	}
 
-	public Position getMarkedCell() {
-		return markedCell;
+	public Position getMarkedPosition() {
+		return markedPosition;
 	}
 
-	public void invalidateCell(Position cell) {
-		if (cell == null || puzzle == null)
+	public void invalidatePosition(Position position) {
+		if (position == null || puzzle == null)
 			return;
 
 		if (Constants.LOG_V)
-			Log.v(TAG, "invalidateCell(" + cell + ")");
+			Log.v(TAG, "invalidatePosition(" + position + ")");
 
-		float x0 = offsetX + cell.col * cellWidth;
+		float x0 = offsetX + position.col * cellWidth;
 		float x1 = x0 + cellWidth;
-		float y0 = offsetY + cell.row * cellHeight;
+		float y0 = offsetY + position.row * cellHeight;
 		float y1 = y0 + cellHeight;
 		invalidate((int) Math.floor(x0), (int) Math.floor(y0), (int) Math.ceil(x1), (int) Math
 				.ceil(y1));
@@ -226,7 +226,7 @@ public class AndokuPuzzleView extends View {
 		else {
 			drawHighlightedCells(canvas, clipBounds);
 
-			drawMarkedCell(canvas);
+			drawMarkedPosition(canvas);
 		}
 
 		if (!preview && puzzle.hasErrors())
@@ -357,19 +357,18 @@ public class AndokuPuzzleView extends View {
 		canvas.restore();
 	}
 
-	private void drawMarkedCell(Canvas canvas) {
-		if (markedCell == null)
+	private void drawMarkedPosition(Canvas canvas) {
+		if (markedPosition == null)
 			return;
 
 		canvas.save();
 
-		float x = markedCell.col * cellWidth;
-		float y = markedCell.row * cellHeight;
+		float x = markedPosition.col * cellWidth;
+		float y = markedPosition.row * cellHeight;
 		canvas.translate(x, y);
 
-		Paint paint = puzzle.isClue(markedCell.row, markedCell.col)
-				? theme.getMarkedCluePaint()
-				: theme.getMarkedCellPaint();
+		Paint paint = puzzle.isClue(markedPosition.row, markedPosition.col) ? theme
+				.getMarkedPositionCluePaint() : theme.getMarkedPositionPaint();
 		canvas.clipRect(0, 0, cellWidth, cellHeight);
 		canvas.drawPaint(paint);
 

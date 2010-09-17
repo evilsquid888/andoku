@@ -34,7 +34,7 @@ public class AutomaticInputMethod implements InputMethod {
 	private final CellThenValuesInputMethod cellThenValues;
 	private final ValuesThenCellInputMethod valuesThenCell;
 	private InputMethod activeInputMethod = null;
-	private Position lastMarkedCell;
+	private Position lastMarkedPosition;
 
 	public AutomaticInputMethod(InputMethodTarget target) {
 		this.target = target;
@@ -102,7 +102,7 @@ public class AutomaticInputMethod implements InputMethod {
 	}
 
 	public void onInvert() {
-		if (target.getMarkedCell() == null)
+		if (target.getMarkedPosition() == null)
 			ifUndecidedUseValuesThenCells();
 		else
 			ifUndecidedUseCellThenValues();
@@ -115,8 +115,8 @@ public class AutomaticInputMethod implements InputMethod {
 	}
 
 	public void onSweep() {
-		if (target.getMarkedCell() != null) {
-			lastMarkedCell = target.getMarkedCell();
+		if (target.getMarkedPosition() != null) {
+			lastMarkedPosition = target.getMarkedPosition();
 		}
 
 		if (activeInputMethod != null) {
@@ -124,15 +124,15 @@ public class AutomaticInputMethod implements InputMethod {
 		}
 	}
 
-	public void onTap(Position cell, boolean editable) {
+	public void onTap(Position position, boolean editable) {
 		if ((activeInputMethod == null || activeInputMethod == cellThenValues)
-				&& (cell == null || cell.equals(lastMarkedCell))) {
+				&& (position == null || position.equals(lastMarkedPosition))) {
 			setUndecided();
 		}
 		else {
 			ifUndecidedUseCellThenValues();
 
-			activeInputMethod.onTap(cell, editable);
+			activeInputMethod.onTap(position, editable);
 		}
 	}
 
@@ -143,9 +143,9 @@ public class AutomaticInputMethod implements InputMethod {
 
 	private void setUndecided() {
 		activeInputMethod = null;
-		target.setMarkedCell(null);
+		target.setMarkedPosition(null);
 		target.highlightDigit(null);
-		lastMarkedCell = null;
+		lastMarkedPosition = null;
 	}
 
 	private void ifUndecidedUseValuesThenCells() {

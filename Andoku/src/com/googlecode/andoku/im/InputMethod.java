@@ -35,7 +35,7 @@ public interface InputMethod {
 	void onClear();
 	void onInvert();
 	void onSweep();
-	void onTap(Position cell, boolean editable);
+	void onTap(Position position, boolean editable);
 
 	void onValuesChanged();
 }

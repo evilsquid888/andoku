@@ -28,32 +28,32 @@ import com.googlecode.andoku.model.Position;
 import com.googlecode.andoku.model.ValueSet;
 
 public class SetValuesCommand extends AbstractCommand {
-	private final Position cell;
+	private final Position position;
 	private final ValueSet values;
 	private ValueSet originalValues;
 
-	public SetValuesCommand(Position cell, ValueSet values) {
-		this.cell = cell;
+	public SetValuesCommand(Position position, ValueSet values) {
+		this.position = position;
 		this.values = values;
 	}
 
-	private SetValuesCommand(Position cell, ValueSet values, ValueSet originalValues) {
-		this.cell = cell;
+	private SetValuesCommand(Position position, ValueSet values, ValueSet originalValues) {
+		this.position = position;
 		this.values = values;
 		this.originalValues = originalValues;
 	}
 
 	public void execute(AndokuContext context) {
-		originalValues = context.getPuzzle().getValues(cell.row, cell.col);
+		originalValues = context.getPuzzle().getValues(position.row, position.col);
 		redo(context);
 	}
 
 	public void undo(AndokuContext context) {
-		context.getPuzzle().setValues(cell.row, cell.col, originalValues);
+		context.getPuzzle().setValues(position.row, position.col, originalValues);
 	}
 
 	public void redo(AndokuContext context) {
-		context.getPuzzle().setValues(cell.row, cell.col, values);
+		context.getPuzzle().setValues(position.row, position.col, values);
 	}
 
 	@Override
@@ -62,10 +62,10 @@ public class SetValuesCommand extends AbstractCommand {
 			return null;
 
 		SetValuesCommand other = (SetValuesCommand) last;
-		if (!cell.equals(other.cell))
+		if (!position.equals(other.position))
 			return null;
 
-		return new SetValuesCommand(cell, values, other.originalValues);
+		return new SetValuesCommand(position, values, other.originalValues);
 	}
 
 	@Override
@@ -74,8 +74,8 @@ public class SetValuesCommand extends AbstractCommand {
 	}
 
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeInt(cell.row);
-		dest.writeInt(cell.col);
+		dest.writeInt(position.row);
+		dest.writeInt(position.col);
 		dest.writeInt(values.toInt());
 		if (originalValues != null)
 			dest.writeInt(originalValues.toInt());
@@ -85,10 +85,10 @@ public class SetValuesCommand extends AbstractCommand {
 		public SetValuesCommand createFromParcel(Parcel in) {
 			int row = in.readInt();
 			int col = in.readInt();
-			Position cell = new Position(row, col);
+			Position position = new Position(row, col);
 			ValueSet values = new ValueSet(in.readInt());
 			ValueSet originalValues = in.dataAvail() > 0 ? new ValueSet(in.readInt()) : null;
-			return new SetValuesCommand(cell, values, originalValues);
+			return new SetValuesCommand(position, values, originalValues);
 		}
 
 		public SetValuesCommand[] newArray(int size) {

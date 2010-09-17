@@ -50,7 +50,7 @@ public class ValuesThenCellInputMethod implements InputMethod {
 	}
 
 	public void reset() {
-		target.setMarkedCell(null);
+		target.setMarkedPosition(null);
 		target.highlightDigit(null);
 		setValues(0);
 	}
@@ -95,18 +95,18 @@ public class ValuesThenCellInputMethod implements InputMethod {
 	public void onSweep() {
 	}
 
-	public void onTap(Position cell, boolean editable) {
+	public void onTap(Position position, boolean editable) {
 		if (!editable)
 			return;
 
-		ValueSet cellValues = target.getCellValues(cell);
+		ValueSet cellValues = target.getCellValues(position);
 		if (cellValues.containsAny(values)) {
 			cellValues.removeAll(values);
-			target.setCellValues(cell, cellValues);
+			target.setCellValues(position, cellValues);
 		}
 		else {
 			cellValues.addAll(values);
-			target.setCellValues(cell, cellValues);
+			target.setCellValues(position, cellValues);
 		}
 	}
 

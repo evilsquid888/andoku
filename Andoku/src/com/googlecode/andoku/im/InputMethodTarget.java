@@ -26,13 +26,13 @@ import com.googlecode.andoku.model.ValueSet;
 public interface InputMethodTarget {
 	int getPuzzleSize();
 
-	Position getMarkedCell();
-	void setMarkedCell(Position cell);
+	Position getMarkedPosition();
+	void setMarkedPosition(Position position);
 
-	boolean isClue(Position cell);
+	boolean isClue(Position position);
 
-	ValueSet getCellValues(Position cell);
-	void setCellValues(Position cell, ValueSet values);
+	ValueSet getCellValues(Position position);
+	void setCellValues(Position position, ValueSet values);
 
 	int getNumberOfDigitButtons();
 	void checkButton(int digit, boolean checked);

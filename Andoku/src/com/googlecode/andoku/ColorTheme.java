@@ -53,8 +53,8 @@ class ColorTheme implements Theme {
 	private final Paint cluePaint;
 	private final Paint previewCluePaint;
 	private final Paint errorPaint;
-	private final Paint markedCellPaint;
-	private final Paint markedCluePaint;
+	private final Paint markedPositionPaint;
+	private final Paint markedPositionCluePaint;
 	private final Paint outerBorderPaint;
 
 	private final float outerBorderRadius;
@@ -88,8 +88,8 @@ class ColorTheme implements Theme {
 		public int valueColor = 0xff003000;
 		public int clueColor = 0xff000000;
 		public int errorColor = 0xffff0000;
-		public int markedCellColor = 0xff00ff00;
-		public int markedClueColor = 0xb0ff0000;
+		public int markedPositionColor = 0xff00ff00;
+		public int markedPositionClueColor = 0xb0ff0000;
 		public AreaColorPolicy areaColorPolicy = AreaColorPolicy.STANDARD_X_HYPER_SQUIGGLY;
 		public int[] areaColors2 = { 0xffffffff, 0xffe0e0e0 };
 		public int[] areaColors3 = Util.colorRing(0xffffd9d9, 3);
@@ -178,13 +178,13 @@ class ColorTheme implements Theme {
 		errorPaint.setStyle(Style.STROKE);
 		errorPaint.setStrokeCap(Cap.BUTT);
 
-		markedCellPaint = new Paint();
-		markedCellPaint.setAntiAlias(false);
-		markedCellPaint.setColor(builder.markedCellColor);
+		markedPositionPaint = new Paint();
+		markedPositionPaint.setAntiAlias(false);
+		markedPositionPaint.setColor(builder.markedPositionColor);
 
-		markedCluePaint = new Paint();
-		markedCluePaint.setAntiAlias(false);
-		markedCluePaint.setColor(builder.markedClueColor);
+		markedPositionCluePaint = new Paint();
+		markedPositionCluePaint.setAntiAlias(false);
+		markedPositionCluePaint.setColor(builder.markedPositionClueColor);
 
 		outerBorderPaint = new Paint();
 		outerBorderPaint.setStrokeWidth(Math.round(borderStrokeWidth));
@@ -294,12 +294,12 @@ class ColorTheme implements Theme {
 		return errorPaint;
 	}
 
-	public Paint getMarkedCellPaint() {
-		return markedCellPaint;
+	public Paint getMarkedPositionPaint() {
+		return markedPositionPaint;
 	}
 
-	public Paint getMarkedCluePaint() {
-		return markedCluePaint;
+	public Paint getMarkedPositionCluePaint() {
+		return markedPositionCluePaint;
 	}
 
 	public Paint getOuterBorderPaint() {
