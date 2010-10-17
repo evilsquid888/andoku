@@ -63,11 +63,9 @@ public class AndokuPuzzle {
 	private Solution solution;
 	private boolean computeSolutionFailed = false;
 
-	private int numValuesSet;
-	private boolean numValuesSetValid = false;
+	private Integer numValuesSet;
 
-	private boolean solved;
-	private boolean solvedValid = false;
+	private Boolean solved;
 
 	// multiple identical values within a single region
 	private HashSet<RegionError> regionErrors;
@@ -258,9 +256,8 @@ public class AndokuPuzzle {
 	}
 
 	public boolean isSolved() {
-		if (!solvedValid) {
+		if (solved == null) {
 			solved = checkSolved();
-			solvedValid = true;
 		}
 
 		return solved;
@@ -286,9 +283,8 @@ public class AndokuPuzzle {
 	}
 
 	public int getMissingValuesCount() {
-		if (!numValuesSetValid) {
+		if (numValuesSet == null) {
 			numValuesSet = countValuesSet();
-			numValuesSetValid = true;
 		}
 
 		return size * size - numValuesSet;
@@ -360,8 +356,8 @@ public class AndokuPuzzle {
 	}
 
 	private void invalidateSolved() {
-		solvedValid = false;
-		numValuesSetValid = false;
+		solved = null;
+		numValuesSet = null;
 	}
 
 	public boolean checkForErrors(boolean checkAgainstSolution) {
