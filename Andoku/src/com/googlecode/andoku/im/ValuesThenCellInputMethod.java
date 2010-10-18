@@ -96,7 +96,7 @@ public class ValuesThenCellInputMethod implements InputMethod {
 	}
 
 	public void onTap(Position position, boolean editable) {
-		if (!editable)
+		if (!editable || values.isEmpty())
 			return;
 
 		ValueSet cellValues = target.getCellValues(position);
