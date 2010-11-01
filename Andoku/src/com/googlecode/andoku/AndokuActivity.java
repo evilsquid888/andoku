@@ -287,8 +287,8 @@ public class AndokuActivity extends Activity
 
 		fingertipView = new FingertipView(this);
 		fingertipView.setOnTouchListener(this);
-		addContentView(fingertipView, new LayoutParams(LayoutParams.FILL_PARENT,
-				LayoutParams.FILL_PARENT));
+		addContentView(fingertipView, new LayoutParams(LayoutParams.MATCH_PARENT,
+				LayoutParams.MATCH_PARENT));
 
 		createThemeFromPreferences();
 

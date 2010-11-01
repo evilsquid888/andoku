@@ -20,8 +20,8 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:background="@drawable/bg">
@@ -39,37 +39,37 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"/>
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="left"
         android:paddingLeft="12dp"
         android:paddingRight="12dp">
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="@string/spinner_grid"/>
         <Spinner android:id="@+id/gridSpinner"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:prompt="@string/prompt_spinner_grid"/>
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="@string/spinner_extra_regions"/>
         <Spinner android:id="@+id/extraRegionsSpinner"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:prompt="@string/prompt_spinner_extra_regions"/>
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="@string/spinner_difficulty"/>
         <Spinner android:id="@+id/difficultySpinner"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:prompt="@string/prompt_spinner_difficulty"/>
         <TextView android:id="@+id/miniStats"

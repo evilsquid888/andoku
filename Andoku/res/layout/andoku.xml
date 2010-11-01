@@ -23,15 +23,15 @@
 
 <LinearLayout
     android:id="@+id/background"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingBottom="1dp">
@@ -62,7 +62,7 @@
         android:layout_weight="1"/>
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingTop="1dp"
@@ -92,32 +92,32 @@
         android:layout_height="wrap_content">
 
         <TableRow>
-            <ImageButton android:id="@+id/input_undo" android:src="@drawable/undo" style="@style/KeypadButton" android:layout_gravity="center_vertical" android:layout_height="fill_parent"/>
+            <ImageButton android:id="@+id/input_undo" android:src="@drawable/undo" style="@style/KeypadButton" android:layout_gravity="center_vertical" android:layout_height="match_parent"/>
             <com.googlecode.andoku.KeypadToggleButton android:id="@+id/input_1" android:text="1"/>
             <com.googlecode.andoku.KeypadToggleButton android:id="@+id/input_2" android:text="2"/>
             <com.googlecode.andoku.KeypadToggleButton android:id="@+id/input_3" android:text="3"/>
         </TableRow>
 
         <TableRow>
-            <ImageButton android:id="@+id/input_redo" android:src="@drawable/redo" style="@style/KeypadButton" android:layout_gravity="center_vertical" android:layout_height="fill_parent"/>
+            <ImageButton android:id="@+id/input_redo" android:src="@drawable/redo" style="@style/KeypadButton" android:layout_gravity="center_vertical" android:layout_height="match_parent"/>
             <com.googlecode.andoku.KeypadToggleButton android:id="@+id/input_4" android:text="4"/>
             <com.googlecode.andoku.KeypadToggleButton android:id="@+id/input_5" android:text="5"/>
             <com.googlecode.andoku.KeypadToggleButton android:id="@+id/input_6" android:text="6"/>
         </TableRow>
 
         <TableRow>
-            <com.googlecode.andoku.KeypadButton android:id="@+id/input_invert" android:text="@string/button_invert" android:layout_gravity="center_vertical" android:layout_height="fill_parent"/>
+            <com.googlecode.andoku.KeypadButton android:id="@+id/input_invert" android:text="@string/button_invert" android:layout_gravity="center_vertical" android:layout_height="match_parent"/>
             <com.googlecode.andoku.KeypadToggleButton android:id="@+id/input_7" android:text="7" android:layout_gravity="center_vertical"/>
             <com.googlecode.andoku.KeypadToggleButton android:id="@+id/input_8" android:text="8" android:layout_gravity="center_vertical"/>
             <com.googlecode.andoku.KeypadToggleButton android:id="@+id/input_9" android:text="9" android:layout_gravity="center_vertical"/>
-            <com.googlecode.andoku.KeypadButton android:id="@+id/input_clear" android:text="@string/button_clear" android:layout_gravity="center_vertical" android:layout_height="fill_parent"/>
+            <com.googlecode.andoku.KeypadButton android:id="@+id/input_clear" android:text="@string/button_clear" android:layout_gravity="center_vertical" android:layout_height="match_parent"/>
         </TableRow>
 
     </TableLayout>
 
     <TextView
         android:id="@+id/labelCongrats"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#f242"
         android:gravity="center_horizontal"

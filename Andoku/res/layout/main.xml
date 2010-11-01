@@ -20,8 +20,8 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:background="@drawable/bg">
@@ -45,41 +45,41 @@
         <Button
             style="@style/NavigationButton"
             android:id="@+id/resumeGameButton"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/button_nav_resume_game"/>
         <Button
             style="@style/NavigationButton"
             android:id="@+id/selectNewGameButton"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/button_nav_select_new_game"/>
         <Button
             style="@style/NavigationButton"
             android:id="@+id/selectFoldersButton"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/button_nav_select_folders"/>
         <Button
             style="@style/NavigationButton"
             android:id="@+id/settingsButton"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/button_nav_settings"/>
         <Button
             style="@style/NavigationButton"
             android:id="@+id/helpButton"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/button_nav_help"/>
         <Button
             style="@style/NavigationButton"
             android:id="@+id/aboutButton"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/button_nav_about"/>
