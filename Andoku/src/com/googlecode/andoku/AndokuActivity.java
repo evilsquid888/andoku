@@ -954,7 +954,8 @@ public class AndokuActivity extends Activity
 				break;
 
 			case GAME_STATE_PLAYING:
-				autoSavePuzzle(); // save for correct 'date-created' timestamp
+				if (!puzzle.isRestored())
+					autoSavePuzzle(); // save for correct 'date-created' timestamp
 				timer.start();
 				break;
 

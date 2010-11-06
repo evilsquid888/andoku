@@ -73,6 +73,8 @@ public class AndokuPuzzle {
 	// errors compared to actual solution; correct value has been eliminated
 	private HashSet<Position> cellErrors;
 
+	private boolean restored = false;
+
 	public AndokuPuzzle(String name, Puzzle puzzle, Difficulty difficulty) {
 		if (puzzle == null)
 			throw new IllegalArgumentException();
@@ -126,6 +128,14 @@ public class AndokuPuzzle {
 	}
 
 	public boolean restoreFromMemento(byte[] b) {
+		boolean success = restoreFromMemento0(b);
+		if (success)
+			restored = true;
+
+		return success;
+	}
+
+	private boolean restoreFromMemento0(byte[] b) {
 		DataInput in = new DataInputStream(new ByteArrayInputStream(b));
 		try {
 			short magic = in.readShort();
@@ -216,6 +226,10 @@ public class AndokuPuzzle {
 		invalidateSolved();
 
 		return true;
+	}
+
+	public boolean isRestored() {
+		return restored;
 	}
 
 	public String getName() {
