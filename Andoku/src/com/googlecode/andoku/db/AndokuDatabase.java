@@ -65,7 +65,7 @@ public class AndokuDatabase {
 	public static final String COL_SIZE = "size"; //             9
 	public static final String COL_CLUES = "clues"; //           "...6.12........3......"
 	public static final String COL_AREAS = "areas"; //           "11122223311122222341.."|""
-	public static final String COL_EXTRA_REGIONS = "extra"; //   "H"|"X"|""
+	public static final String COL_EXTRA_REGIONS = "extra"; //   "X"|"H"|"P"|"C"|""
 
 	private SQLiteStatement insertPuzzleStatement;
 

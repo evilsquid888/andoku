@@ -27,8 +27,10 @@ import com.googlecode.andoku.model.Difficulty;
 public class PuzzleInfo {
 	public static final String AREAS_NONE = "";
 
-	public static final String EXTRA_HYPER = "H";
 	public static final String EXTRA_X = "X";
+	public static final String EXTRA_HYPER = "H";
+	public static final String EXTRA_PERCENT = "P";
+	public static final String EXTRA_COLOR = "C";
 	public static final String EXTRA_NONE = "";
 
 	private final String name;
@@ -36,7 +38,7 @@ public class PuzzleInfo {
 	private final int size;
 	private final String clues; //        "...6.12........3......"
 	private final String areas; //        "11122223311122222341.."|""
-	private final String extraRegions; // "H"|"X"|""
+	private final String extraRegions; // "X"|"H"|"P"|"C"|""
 
 	public static final class Builder {
 		private String name = "";
@@ -56,7 +58,7 @@ public class PuzzleInfo {
 		}
 
 		public Builder setName(String name) {
-			if (name == null)
+			if (!isValidName(name))
 				throw new IllegalArgumentException();
 
 			this.name = name;
@@ -72,7 +74,7 @@ public class PuzzleInfo {
 		}
 
 		public Builder setAreas(String areas) {
-			if (!areas.equals(AREAS_NONE) && areas.length() != size * size)
+			if (!isValidAreas(areas))
 				throw new IllegalArgumentException();
 
 			this.areas = areas;
@@ -80,8 +82,7 @@ public class PuzzleInfo {
 		}
 
 		public Builder setExtraRegions(String extraRegions) {
-			if (!extraRegions.equalsIgnoreCase(EXTRA_HYPER) && !extraRegions.equalsIgnoreCase(EXTRA_X)
-					&& !extraRegions.equalsIgnoreCase(EXTRA_NONE))
+			if (!isValidExtraRegions(extraRegions))
 				throw new IllegalArgumentException();
 
 			this.extraRegions = extraRegions.toUpperCase(Locale.US);
@@ -90,6 +91,59 @@ public class PuzzleInfo {
 
 		public PuzzleInfo build() {
 			return new PuzzleInfo(this);
+		}
+
+		public static boolean isValidClues(String clues) {
+			final int length = clues.length();
+
+			final int size = (int) Math.sqrt(length);
+			if (length != size * size)
+				return false;
+
+			if (size != 9)
+				return false;
+
+			for (int i = 0; i < length; i++) {
+				char c = clues.charAt(i);
+				if (c != '.' && (c < '1' || c > '9'))
+					return false;
+			}
+
+			return true;
+		}
+
+		public boolean isValidName(String name) {
+			return name != null;
+		}
+
+		public boolean isValidDifficulty(int difficulty) {
+			return difficulty >= 0 && difficulty < Difficulty.values().length;
+		}
+
+		public boolean isValidAreas(String areas) {
+			final int length = areas.length();
+
+			if (length == 0)
+				return true;
+
+			if (length != size * size)
+				return false;
+
+			for (int i = 0; i < length; i++) {
+				char c = areas.charAt(i);
+				if (c < '1' || c > '9')
+					return false;
+			}
+
+			return true;
+		}
+
+		public boolean isValidExtraRegions(String extraRegions) {
+			return extraRegions.equalsIgnoreCase(EXTRA_X)
+					|| extraRegions.equalsIgnoreCase(EXTRA_HYPER)
+					|| extraRegions.equalsIgnoreCase(EXTRA_PERCENT)
+					|| extraRegions.equalsIgnoreCase(EXTRA_COLOR)
+					|| extraRegions.equalsIgnoreCase(EXTRA_NONE);
 		}
 	}
 

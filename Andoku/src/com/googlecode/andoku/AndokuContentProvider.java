@@ -305,7 +305,7 @@ public class AndokuContentProvider extends ContentProvider {
 			throw new InvalidParameterException("Missing clues");
 
 		clues = clues.trim().replace('0', '.');
-		if (!isValidClues(clues))
+		if (!PuzzleInfo.Builder.isValidClues(clues))
 			throw new InvalidParameterException("Invalid clues: " + clues);
 
 		PuzzleInfo.Builder builder = new PuzzleInfo.Builder(clues);
@@ -313,7 +313,7 @@ public class AndokuContentProvider extends ContentProvider {
 		String name = values.getAsString(KEY_NAME);
 		if (name != null) {
 			name = name.trim();
-			if (isValidName(name))
+			if (builder.isValidName(name))
 				builder.setName(name);
 			else
 				throw new InvalidParameterException("Invalid name: " + name);
@@ -322,7 +322,7 @@ public class AndokuContentProvider extends ContentProvider {
 		String areas = values.getAsString(KEY_AREAS);
 		if (areas != null) {
 			areas = areas.trim();
-			if (isValidAreas(clues, areas))
+			if (builder.isValidAreas(areas))
 				builder.setAreas(areas);
 			else
 				throw new InvalidParameterException("Invalid areas: " + areas);
@@ -331,7 +331,7 @@ public class AndokuContentProvider extends ContentProvider {
 		String extraRegions = values.getAsString(KEY_EXTRA_REGIONS);
 		if (extraRegions != null) {
 			extraRegions = extraRegions.trim();
-			if (isValidExtraRegions(extraRegions))
+			if (builder.isValidExtraRegions(extraRegions))
 				builder.setExtraRegions(extraRegions);
 			else
 				throw new InvalidParameterException("Invalid extra regions: " + extraRegions);
@@ -339,63 +339,12 @@ public class AndokuContentProvider extends ContentProvider {
 
 		Integer difficulty = values.getAsInteger(KEY_DIFFICULTY);
 		if (difficulty != null) {
-			if (isValidDifficulty(difficulty))
+			if (builder.isValidDifficulty(difficulty))
 				builder.setDifficulty(Difficulty.values()[difficulty]);
 			else
 				throw new InvalidParameterException("Invalid difficulty: " + difficulty);
 		}
 
 		return builder.build();
-	}
-
-	private boolean isValidClues(String clues) {
-		final int length = clues.length();
-
-		final int size = (int) Math.sqrt(length);
-		if (length != size * size)
-			return false;
-
-		if (size != 9)
-			return false;
-
-		for (int i = 0; i < length; i++) {
-			char c = clues.charAt(i);
-			if (c != '.' && (c < '1' || c > '9'))
-				return false;
-		}
-
-		return true;
-	}
-
-	private boolean isValidName(String name) {
-		return true;
-	}
-
-	private boolean isValidAreas(String clues, String areas) {
-		final int length = areas.length();
-
-		if (length == 0)
-			return true;
-
-		if (length != clues.length())
-			return false;
-
-		for (int i = 0; i < length; i++) {
-			char c = areas.charAt(i);
-			if (c < '1' || c > '9')
-				return false;
-		}
-
-		return true;
-	}
-
-	private boolean isValidExtraRegions(String extraRegions) {
-		return extraRegions.equalsIgnoreCase(PuzzleInfo.EXTRA_HYPER)
-				|| extraRegions.equalsIgnoreCase(PuzzleInfo.EXTRA_X)
-				|| extraRegions.equalsIgnoreCase(PuzzleInfo.EXTRA_NONE);
-	}
-
-	private boolean isValidDifficulty(Integer difficulty) {
-		return difficulty >= 0 && difficulty < Difficulty.values().length;
 	}
 }
