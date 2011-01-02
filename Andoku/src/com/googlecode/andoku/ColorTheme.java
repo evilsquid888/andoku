@@ -34,6 +34,8 @@ import android.graphics.drawable.GradientDrawable.Orientation;
 import com.googlecode.andoku.model.PuzzleType;
 
 class ColorTheme implements Theme {
+	private final String symbols;
+
 	private final float borderStrokeWidth;
 
 	private final Drawable background;
@@ -74,6 +76,7 @@ class ColorTheme implements Theme {
 	public static final class Builder {
 		private final Resources resources;
 
+		public String symbols = "123456789";
 		public int[] backgroudColors = { 0xfff7f9f6, 0xfff7f9f6, 0xffb5ccdb };
 		public int puzzleBackgroundColor = 0xffffffff;
 		public int nameTextColor = 0xff222222;
@@ -112,6 +115,8 @@ class ColorTheme implements Theme {
 
 		float displayDensity = resources.getDisplayMetrics().density;
 		float gridWidth = Math.max(1, Math.round(displayDensity));
+
+		symbols = builder.symbols;
 
 		borderStrokeWidth = Math.max(2, Math.round(3 * displayDensity));
 
@@ -231,7 +236,7 @@ class ColorTheme implements Theme {
 	}
 
 	public char getSymbol(int value) {
-		return "123456789".charAt(value);
+		return symbols.charAt(value);
 	}
 
 	public int[] getPuzzlePadding() {
