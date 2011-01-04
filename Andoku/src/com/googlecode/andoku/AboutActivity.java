@@ -51,5 +51,7 @@ public class AboutActivity extends Activity {
 		WebView aboutWebView = (WebView) findViewById(R.id.aboutWebView);
 		aboutWebView.loadUrl("file:///android_asset/"
 				+ getResources().getString(R.string.html_page_about));
+
+		aboutWebView.setBackgroundColor(0);
 	}
 }

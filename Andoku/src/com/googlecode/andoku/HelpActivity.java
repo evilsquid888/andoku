@@ -51,5 +51,7 @@ public class HelpActivity extends Activity {
 		WebView helpWebView = (WebView) findViewById(R.id.helpWebView);
 		helpWebView.loadUrl("file:///android_asset/"
 				+ getResources().getString(R.string.html_page_help));
+
+		helpWebView.setBackgroundColor(0);
 	}
 }
