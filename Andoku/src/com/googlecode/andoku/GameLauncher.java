@@ -20,7 +20,7 @@
 
 package com.googlecode.andoku;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
@@ -32,11 +32,11 @@ import com.googlecode.andoku.source.PuzzleSourceResolver;
 class GameLauncher {
 	private static final String TAG = GameLauncher.class.getName();
 
-	private final Activity activity;
+	private final Context context;
 	private final AndokuDatabase db;
 
-	public GameLauncher(Activity activity, AndokuDatabase db) {
-		this.activity = activity;
+	public GameLauncher(Context context, AndokuDatabase db) {
+		this.context = context;
 		this.db = db;
 	}
 
@@ -104,7 +104,7 @@ class GameLauncher {
 	}
 
 	private int getNumberOfPuzzles(String puzzleSourceId) {
-		PuzzleSource puzzleSource = PuzzleSourceResolver.resolveSource(activity, puzzleSourceId);
+		PuzzleSource puzzleSource = PuzzleSourceResolver.resolveSource(context, puzzleSourceId);
 		try {
 			return puzzleSource.numberOfPuzzles();
 		}
@@ -118,9 +118,9 @@ class GameLauncher {
 	}
 
 	private void startGame(String puzzleSourceId, int number) {
-		Intent intent = new Intent(activity, AndokuActivity.class);
+		Intent intent = new Intent(context, AndokuActivity.class);
 		intent.putExtra(Constants.EXTRA_PUZZLE_SOURCE_ID, puzzleSourceId);
 		intent.putExtra(Constants.EXTRA_PUZZLE_NUMBER, number);
-		activity.startActivity(intent);
+		context.startActivity(intent);
 	}
 }
