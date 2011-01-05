@@ -22,12 +22,10 @@ package com.googlecode.andoku;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.util.Log;
 
 import com.googlecode.andoku.db.AndokuDatabase;
-import com.googlecode.andoku.source.PuzzleIOException;
 import com.googlecode.andoku.source.PuzzleSource;
 import com.googlecode.andoku.source.PuzzleSourceResolver;
 
@@ -46,17 +44,12 @@ class GameLauncher {
 		if (Constants.LOG_V)
 			Log.v(TAG, "startNewGame(" + puzzleSourceId + ")");
 
-		try {
-			int number = findAvailableGame(puzzleSourceId);
+		int number = findAvailableGame(puzzleSourceId);
 
-			startGame(puzzleSourceId, number);
-		}
-		catch (PuzzleIOException e) {
-			handlePuzzleIOException(e);
-		}
+		startGame(puzzleSourceId, number);
 	}
 
-	private int findAvailableGame(String puzzleSourceId) throws PuzzleIOException {
+	private int findAvailableGame(String puzzleSourceId) {
 		if (Constants.LOG_V)
 			Log.v(TAG, "findAvailableGame(" + puzzleSourceId + ")");
 
@@ -110,7 +103,7 @@ class GameLauncher {
 		}
 	}
 
-	private int getNumberOfPuzzles(String puzzleSourceId) throws PuzzleIOException {
+	private int getNumberOfPuzzles(String puzzleSourceId) {
 		PuzzleSource puzzleSource = PuzzleSourceResolver.resolveSource(activity, puzzleSourceId);
 		try {
 			return puzzleSource.numberOfPuzzles();
@@ -129,21 +122,5 @@ class GameLauncher {
 		intent.putExtra(Constants.EXTRA_PUZZLE_SOURCE_ID, puzzleSourceId);
 		intent.putExtra(Constants.EXTRA_PUZZLE_NUMBER, number);
 		activity.startActivity(intent);
-	}
-
-	private void handlePuzzleIOException(PuzzleIOException e) {
-		Log.e(TAG, "Error finding available games", e);
-
-		Resources resources = activity.getResources();
-		String title = resources.getString(R.string.error_title_io_error);
-		String message = resources.getString(R.string.error_message_finding_available);
-
-		Intent intent = new Intent(activity, DisplayErrorActivity.class);
-		intent.putExtra(Constants.EXTRA_ERROR_TITLE, title);
-		intent.putExtra(Constants.EXTRA_ERROR_MESSAGE, message);
-		intent.putExtra(Constants.EXTRA_ERROR_THROWABLE, e);
-		activity.startActivity(intent);
-
-		activity.finish();
 	}
 }

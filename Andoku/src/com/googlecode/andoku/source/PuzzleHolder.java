@@ -33,7 +33,7 @@ public class PuzzleHolder {
 	private final Difficulty difficulty;
 
 	public PuzzleHolder(PuzzleSource source, int number, String name, Puzzle puzzle,
-			Difficulty difficulty) throws PuzzleIOException {
+			Difficulty difficulty) {
 		if (source == null)
 			throw new IllegalArgumentException();
 		if (puzzle == null)

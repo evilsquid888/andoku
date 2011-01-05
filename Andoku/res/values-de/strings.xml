@@ -84,14 +84,6 @@
     <string name="message_reset_all_puzzles_in_variation">Wollen Sie wirklich SÄMTLICHE RÄTSEL in der aktuellen Spielvariante zurücksetzen?</string>
     <string name="message_reset_all_puzzles_in_folder">Wollen Sie wirklich SÄMTLICHE RÄTSEL in diesem Ordner zurücksetzen?</string>
 
-    <!-- Captions for the error page -->
-    <string name="error_title_io_error">I/O-Fehler</string>
-
-    <!-- Messages for the error page -->
-    <string name="error_message_finding_available">Beim Auffinden der verfügbaren Sudoku-Rätsel ist ein Fehler aufgetreten!</string>
-    <string name="error_message_loading_puzzle">Beim Laden des Sudoku-Rätsels ist ein Fehler aufgetreten!</string>
-    <string name="error_message_stack_trace">Stack-Trace:</string>
-
     <!-- Names of the help and about pages for this language (under folder "assets") -->
     <string name="html_page_about">about-de.html</string>
     <string name="html_page_help">help-de.html</string>

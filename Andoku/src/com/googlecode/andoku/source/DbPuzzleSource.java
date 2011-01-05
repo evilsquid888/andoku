@@ -41,10 +41,11 @@ class DbPuzzleSource implements PuzzleSource {
 		return PuzzleSourceIds.forDbFolder(folderId);
 	}
 
-	public PuzzleHolder load(int number) throws PuzzleIOException {
+	public PuzzleHolder load(int number) {
 		PuzzleInfo puzzleInfo = db.loadPuzzle(folderId, number);
 		if (puzzleInfo == null)
-			throw new PuzzleIOException("Puzzle " + number + " not found in folder " + folderId);
+			throw new IndexOutOfBoundsException("Puzzle " + number + " not found in folder "
+					+ folderId);
 
 		String name = puzzleInfo.getName();
 		Puzzle puzzle = createPuzzle(puzzleInfo);

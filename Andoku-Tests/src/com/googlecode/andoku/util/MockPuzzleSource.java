@@ -26,7 +26,6 @@ import com.googlecode.andoku.model.Puzzle;
 import com.googlecode.andoku.model.Solution;
 import com.googlecode.andoku.model.ValueSet;
 import com.googlecode.andoku.source.PuzzleHolder;
-import com.googlecode.andoku.source.PuzzleIOException;
 import com.googlecode.andoku.source.PuzzleSource;
 import com.googlecode.andoku.transfer.PuzzleDecoder;
 
@@ -65,13 +64,13 @@ public class MockPuzzleSource implements PuzzleSource {
 	public static final Difficulty[] DIFFICULTIES = { D1, D2, D3, D4, D5, D6, D7, D8, D9 };
 	public static final String[] SOLUTIONS = { S1, S2, S3, S4, S5, S6, S7, S8, S9 };
 
-	public static AndokuPuzzle createPuzzle(int number) throws PuzzleIOException {
+	public static AndokuPuzzle createPuzzle(int number) {
 		PuzzleSource source = new MockPuzzleSource();
 		PuzzleHolder holder = source.load(number);
 		return new AndokuPuzzle(null, holder.getPuzzle(), holder.getDifficulty());
 	}
 
-	public static AndokuPuzzle createSolvedPuzzle(int number) throws PuzzleIOException {
+	public static AndokuPuzzle createSolvedPuzzle(int number) {
 		AndokuPuzzle puzzle = createPuzzle(number);
 		solve(puzzle, PuzzleDecoder.decodeValues(SOLUTIONS[number]));
 		return puzzle;
@@ -91,7 +90,7 @@ public class MockPuzzleSource implements PuzzleSource {
 		return SOURCE_ID;
 	}
 
-	public PuzzleHolder load(int number) throws PuzzleIOException {
+	public PuzzleHolder load(int number) {
 		Difficulty difficulty = DIFFICULTIES[number];
 		Puzzle puzzle = PuzzleDecoder.decode(PUZZLES[number]);
 		return new PuzzleHolder(this, number, null, puzzle, difficulty);

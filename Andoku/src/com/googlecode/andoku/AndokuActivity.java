@@ -68,7 +68,6 @@ import com.googlecode.andoku.model.Position;
 import com.googlecode.andoku.model.PuzzleType;
 import com.googlecode.andoku.model.ValueSet;
 import com.googlecode.andoku.source.PuzzleHolder;
-import com.googlecode.andoku.source.PuzzleIOException;
 import com.googlecode.andoku.source.PuzzleSource;
 import com.googlecode.andoku.source.PuzzleSourceIds;
 import com.googlecode.andoku.source.PuzzleSourceResolver;
@@ -668,16 +667,11 @@ public class AndokuActivity extends Activity
 	}
 
 	private void gotoPuzzle(int number) {
-		try {
-			setPuzzle(number);
+		setPuzzle(number);
 
-			inputMethod.reset();
+		inputMethod.reset();
 
-			enterGameState(GAME_STATE_READY);
-		}
-		catch (PuzzleIOException e) {
-			handlePuzzleIOException(e);
-		}
+		enterGameState(GAME_STATE_READY);
 	}
 
 	void onCheckPuzzle() {
@@ -796,31 +790,10 @@ public class AndokuActivity extends Activity
 	}
 
 	private void createPuzzle(Bundle savedInstanceState) {
-		try {
-			if (isRestoreSavedInstanceState(savedInstanceState))
-				createPuzzleFromSavedInstanceState(savedInstanceState);
-			else
-				createPuzzleFromIntent();
-		}
-		catch (PuzzleIOException e) {
-			handlePuzzleIOException(e);
-		}
-	}
-
-	private void handlePuzzleIOException(PuzzleIOException e) {
-		Log.e(TAG, "Error loading puzzle", e);
-
-		Resources resources = getResources();
-		String title = resources.getString(R.string.error_title_io_error);
-		String message = getResources().getString(R.string.error_message_loading_puzzle);
-
-		Intent intent = new Intent(this, DisplayErrorActivity.class);
-		intent.putExtra(Constants.EXTRA_ERROR_TITLE, title);
-		intent.putExtra(Constants.EXTRA_ERROR_MESSAGE, message);
-		intent.putExtra(Constants.EXTRA_ERROR_THROWABLE, e);
-		startActivity(intent);
-
-		finish();
+		if (isRestoreSavedInstanceState(savedInstanceState))
+			createPuzzleFromSavedInstanceState(savedInstanceState);
+		else
+			createPuzzleFromIntent();
 	}
 
 	private boolean isRestoreSavedInstanceState(Bundle savedInstanceState) {
@@ -828,8 +801,7 @@ public class AndokuActivity extends Activity
 				&& savedInstanceState.getString(APP_STATE_PUZZLE_SOURCE_ID) != null;
 	}
 
-	private void createPuzzleFromSavedInstanceState(Bundle savedInstanceState)
-			throws PuzzleIOException {
+	private void createPuzzleFromSavedInstanceState(Bundle savedInstanceState) {
 		String puzzleSourceId = savedInstanceState.getString(APP_STATE_PUZZLE_SOURCE_ID);
 		int number = savedInstanceState.getInt(APP_STATE_PUZZLE_NUMBER);
 
@@ -842,7 +814,7 @@ public class AndokuActivity extends Activity
 		enterGameState(savedInstanceState.getInt(APP_STATE_GAME_STATE));
 	}
 
-	private void createPuzzleFromIntent() throws PuzzleIOException {
+	private void createPuzzleFromIntent() {
 		final Intent intent = getIntent();
 		String puzzleSourceId = intent.getStringExtra(Constants.EXTRA_PUZZLE_SOURCE_ID);
 		if (puzzleSourceId == null)
@@ -859,13 +831,13 @@ public class AndokuActivity extends Activity
 		enterGameState(start ? GAME_STATE_PLAYING : GAME_STATE_READY);
 	}
 
-	private void initializePuzzle(String puzzleSourceId, int number) throws PuzzleIOException {
+	private void initializePuzzle(String puzzleSourceId, int number) {
 		source = PuzzleSourceResolver.resolveSource(this, puzzleSourceId);
 
 		setPuzzle(number);
 	}
 
-	private void setPuzzle(int number) throws PuzzleIOException {
+	private void setPuzzle(int number) {
 		puzzleNumber = number;
 
 		puzzle = createAndokuPuzzle(number);
@@ -885,7 +857,7 @@ public class AndokuActivity extends Activity
 		}
 	}
 
-	private AndokuPuzzle createAndokuPuzzle(int number) throws PuzzleIOException {
+	private AndokuPuzzle createAndokuPuzzle(int number) {
 		PuzzleHolder holder = source.load(number);
 		return new AndokuPuzzle(holder.getName(), holder.getPuzzle(), holder.getDifficulty());
 	}

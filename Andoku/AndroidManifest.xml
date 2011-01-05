@@ -109,11 +109,6 @@
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"
                   android:theme="@style/Theme.NoBackground.Light"/>
-
-        <activity android:name=".DisplayErrorActivity"
-                  android:label="@string/app_name"
-                  android:screenOrientation="portrait"
-                  android:theme="@style/Theme.NoBackground.Light"/>
     </application>
 
 </manifest> 

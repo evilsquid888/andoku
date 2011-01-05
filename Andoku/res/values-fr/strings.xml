@@ -86,14 +86,6 @@
     <string name="message_reset_all_puzzles_in_variation">Confirmez-vous la réinitialisation de TOUTES les grilles de cette variation de jeu ?</string>
     <string name="message_reset_all_puzzles_in_folder">Confirmez-vous la réinitialisation de TOUTES les grilles de ce dossier ?</string>
 
-    <!-- Captions for the error page -->
-    <string name="error_title_io_error">I/O Error</string>
-
-    <!-- Messages for the error page -->
-    <string name="error_message_finding_available">Erreur lors de la recherche de nouvelles grilles.</string>
-    <string name="error_message_loading_puzzle">Erreur lors du chargement de la grille.</string>
-    <string name="error_message_stack_trace">Stack trace :</string>
-
     <!-- Names of the help and about pages for this language (under folder "assets") -->
     <string name="html_page_about">about-fr.html</string>
     <string name="html_page_help">help-fr.html</string>

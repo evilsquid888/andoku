@@ -29,8 +29,7 @@ public class PuzzleSourceResolver {
 	private PuzzleSourceResolver() {
 	}
 
-	public static PuzzleSource resolveSource(Context context, String puzzleSourceId)
-			throws PuzzleIOException {
+	public static PuzzleSource resolveSource(Context context, String puzzleSourceId) {
 		if (PuzzleSourceIds.isAssetSource(puzzleSourceId))
 			return resolveAssetSource(context, PuzzleSourceIds.getAssetFolderName(puzzleSourceId));
 
@@ -40,14 +39,12 @@ public class PuzzleSourceResolver {
 		throw new IllegalArgumentException(puzzleSourceId);
 	}
 
-	private static PuzzleSource resolveAssetSource(Context context, String folderName)
-			throws PuzzleIOException {
+	private static PuzzleSource resolveAssetSource(Context context, String folderName) {
 		AssetManager assets = context.getAssets();
 		return new AssetsPuzzleSource(assets, folderName);
 	}
 
-	private static PuzzleSource resolveDbSource(Context context, long folderId)
-			throws PuzzleIOException {
+	private static PuzzleSource resolveDbSource(Context context, long folderId) {
 		AndokuDatabase db = new AndokuDatabase(context);
 		return new DbPuzzleSource(db, folderId);
 	}

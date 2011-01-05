@@ -35,10 +35,6 @@
         <item name="android:minWidth">150dp</item> 
     </style>
 
-    <style name="ErrorTitle" parent="style/NavigationTitle">
-        <item name="android:textColor">#ff00</item> 
-    </style>
-
     <style name="KeypadButton" parent="android:style/Widget.Button">
         <item name="android:background">@drawable/button_bg</item>
         <item name="android:textSize">17dp</item>

@@ -86,14 +86,6 @@
     <string name="message_reset_all_puzzles_in_variation">Vuoi davvero resettare TUTTI I PUZZLE nel gioco corrente?</string>
     <string name="message_reset_all_puzzles_in_folder">Vuoi davvero resettare TUTTI I PUZZLE in questa cartella?</string>
 
-    <!-- Captions for the error page -->
-    <string name="error_title_io_error">Erorre I/O</string>
-
-    <!-- Messages for the error page -->
-    <string name="error_message_finding_available">Errore durante la ricerca dei puzzle disponibili!</string>
-    <string name="error_message_loading_puzzle">Errore durante il caricamento del puzzle!</string>
-    <string name="error_message_stack_trace">Stack trace:</string>
-
     <!-- Names of the help and about pages for this language (under folder "assets") -->
     <string name="html_page_about">about-it.html</string>
     <string name="html_page_help">help-it.html</string>

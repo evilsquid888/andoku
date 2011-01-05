@@ -42,7 +42,7 @@ class AssetsPuzzleSource implements PuzzleSource {
 
 	private final int[] index;
 
-	public AssetsPuzzleSource(AssetManager assets, String folderName) throws PuzzleIOException {
+	public AssetsPuzzleSource(AssetManager assets, String folderName) {
 		this.assets = assets;
 		this.folderName = folderName;
 
@@ -57,16 +57,10 @@ class AssetsPuzzleSource implements PuzzleSource {
 		return index.length;
 	}
 
-	public PuzzleHolder load(int number) throws PuzzleIOException {
+	public PuzzleHolder load(int number) {
 		String puzzleStr = loadPuzzle(number);
 
-		Puzzle puzzle;
-		try {
-			puzzle = PuzzleDecoder.decode(puzzleStr);
-		}
-		catch (IllegalArgumentException e) {
-			throw new PuzzleIOException("Invalid puzzle", e);
-		}
+		Puzzle puzzle = PuzzleDecoder.decode(puzzleStr);
 
 		return new PuzzleHolder(this, number, null, puzzle, getDifficulty());
 	}
@@ -74,7 +68,7 @@ class AssetsPuzzleSource implements PuzzleSource {
 	public void close() {
 	}
 
-	private int[] loadIndex() throws PuzzleIOException {
+	private int[] loadIndex() {
 		try {
 			String indexFile = PUZZLES_FOLDER + folderName + ".idx";
 
@@ -93,11 +87,11 @@ class AssetsPuzzleSource implements PuzzleSource {
 			}
 		}
 		catch (IOException e) {
-			throw new PuzzleIOException(e);
+			throw new AssetsPuzzleSourceException(e);
 		}
 	}
 
-	private String loadPuzzle(int number) throws PuzzleIOException {
+	private String loadPuzzle(int number) {
 		try {
 			String puzzleFile = PUZZLES_FOLDER + folderName + ".adk";
 			int offset = index[number];
@@ -114,7 +108,7 @@ class AssetsPuzzleSource implements PuzzleSource {
 			}
 		}
 		catch (IOException e) {
-			throw new PuzzleIOException(e);
+			throw new AssetsPuzzleSourceException(e);
 		}
 	}
 
