@@ -22,6 +22,7 @@ package com.googlecode.andoku;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.widget.ListView;
 
 public class SettingsActivity extends PreferenceActivity {
 	@Override
@@ -32,6 +33,8 @@ public class SettingsActivity extends PreferenceActivity {
 
 		addPreferencesFromResource(R.xml.settings);
 
-		getListView().setBackgroundResource(R.drawable.bg);
+		final ListView listView = getListView();
+		listView.setBackgroundResource(R.drawable.bg);
+		listView.setCacheColorHint(0);
 	}
 }
