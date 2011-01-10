@@ -21,12 +21,12 @@
 package com.googlecode.andoku.source;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.content.res.AssetManager;
 
@@ -40,13 +40,45 @@ class AssetsPuzzleSource implements PuzzleSource {
 	private final AssetManager assets;
 	private final String folderName;
 
-	private final int[] index;
+	private final List<String> entries;
 
 	public AssetsPuzzleSource(AssetManager assets, String folderName) {
 		this.assets = assets;
 		this.folderName = folderName;
 
-		this.index = loadIndex();
+		this.entries = loadEntries();
+	}
+
+	private List<String> loadEntries() {
+		List<String> entries = new ArrayList<String>(100);
+
+		try {
+			String puzzleFile = PUZZLES_FOLDER + folderName + ".adk";
+
+			InputStream in = assets.open(puzzleFile);
+			try {
+				Reader reader = new InputStreamReader(in, "US-ASCII");
+				BufferedReader br = new BufferedReader(reader, 512);
+				while (true) {
+					String line = br.readLine();
+					if (line == null)
+						break;
+
+					if (line.length() == 0 || line.startsWith("#"))
+						continue;
+						
+						entries.add(line);
+				}
+
+				return entries;
+			}
+			finally {
+				in.close();
+			}
+		}
+		catch (IOException e) {
+			throw new AssetsPuzzleSourceException(e);
+		}
 	}
 
 	public String getSourceId() {
@@ -54,62 +86,15 @@ class AssetsPuzzleSource implements PuzzleSource {
 	}
 
 	public int numberOfPuzzles() {
-		return index.length;
+		return entries.size();
 	}
 
 	public PuzzleHolder load(int number) {
-		String puzzleStr = loadPuzzle(number);
+		String puzzleStr = entries.get(number);
 
 		Puzzle puzzle = PuzzleDecoder.decode(puzzleStr);
 
 		return new PuzzleHolder(this, number, null, puzzle, getDifficulty());
-	}
-
-	public void close() {
-	}
-
-	private int[] loadIndex() {
-		try {
-			String indexFile = PUZZLES_FOLDER + folderName + ".idx";
-
-			InputStream in = assets.open(indexFile);
-			try {
-				DataInputStream din = new DataInputStream(in);
-				int size = din.readInt();
-				int[] offsets = new int[size];
-				for (int idx = 0; idx < size; idx++) {
-					offsets[idx] = din.readInt();
-				}
-				return offsets;
-			}
-			finally {
-				in.close();
-			}
-		}
-		catch (IOException e) {
-			throw new AssetsPuzzleSourceException(e);
-		}
-	}
-
-	private String loadPuzzle(int number) {
-		try {
-			String puzzleFile = PUZZLES_FOLDER + folderName + ".adk";
-			int offset = index[number];
-
-			InputStream in = assets.open(puzzleFile);
-			try {
-				skipFully(in, offset);
-				Reader reader = new InputStreamReader(in, "US-ASCII");
-				BufferedReader br = new BufferedReader(reader, 512);
-				return br.readLine();
-			}
-			finally {
-				in.close();
-			}
-		}
-		catch (IOException e) {
-			throw new AssetsPuzzleSourceException(e);
-		}
 	}
 
 	private Difficulty getDifficulty() {
@@ -120,20 +105,6 @@ class AssetsPuzzleSource implements PuzzleSource {
 		return Difficulty.values()[difficulty];
 	}
 
-	private void skipFully(InputStream in, int bytes) throws IOException {
-		while (bytes > 0) {
-			bytes -= skip(in, bytes);
-		}
-	}
-
-	private long skip(InputStream in, int bytes) throws IOException {
-		long skipped = in.skip(bytes);
-		if (skipped > 0)
-			return skipped;
-
-		if (in.read() != -1)
-			return 1;
-
-		throw new EOFException();
+	public void close() {
 	}
 }
