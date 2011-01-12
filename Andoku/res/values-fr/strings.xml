@@ -109,9 +109,9 @@
 
     <!-- Messages for congratulations/statistics at end of game -->
     <string name="message_congrats">&lt;b&gt;Félicitations, vous avez résolu cette grille !&lt;/b&gt;</string>
-    <string name="message_statistics_title_assets">Statistiques pour &lt;i&gt;%s (%s)&lt;/i&gt; :</string>
+    <string name="message_statistics_title_assets">Statistiques pour &lt;i&gt;%1$s (%2$s)&lt;/i&gt; :</string>
     <string name="message_statistics_title_db">Statistiques pour le dossier &lt;i&gt;%s&lt;/i&gt; :</string>
-    <string name="message_statistics_details">Grilles résolues : %d&lt;br/&gt;Temps moyen : %s&lt;br/&gt;Meilleur temps : %s</string>
+    <string name="message_statistics_details">Grilles résolues : %1$d&lt;br/&gt;Temps moyen : %2$s&lt;br/&gt;Meilleur temps : %3$s</string>
 
     <!-- Folder cannot be opened because it's empty -->
     <string name="message_empty_folder">Le dossier \'%s\' est vide.</string>
@@ -145,7 +145,7 @@
     <string name="prompt_spinner_difficulty">Choisir un niveau de difficulté</string>
     <string name="mini_stats_0">(Vous n\'avez pas encore résolu de grille dans ce niveau de difficulté.)</string>
     <!-- next line uses 'NO-BREAK SPACE' (U+00A0) to avoid undesired line breaks -->
-    <string name="mini_stats_n">(Grilles\u00A0résolues\u00A0:\u00A0%d, temps\u00A0moyen\u00A0:\u00A0%s, meilleur\u00A0temps\u00A0:\u00A0%s)</string>
+    <string name="mini_stats_n">(Grilles\u00A0résolues\u00A0:\u00A0%1$d, temps\u00A0moyen\u00A0:\u00A0%2$s, meilleur\u00A0temps\u00A0:\u00A0%3$s)</string>
 
     <!-- Declares a permission group and a permission that allows external applications to import puzzles into Andoku -->
     <string name="permgroup_label_andoku">Andoku</string>

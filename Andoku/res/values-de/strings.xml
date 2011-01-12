@@ -107,9 +107,9 @@
 
     <!-- Messages for congratulations/statistics at end of game -->
     <string name="message_congrats">&lt;b&gt;Gratuliere, Sie haben das Sudoku-Rätsel gelöst!&lt;/b&gt;</string>
-    <string name="message_statistics_title_assets">Statistik für &lt;i&gt;%s (%s)&lt;/i&gt;:</string>
+    <string name="message_statistics_title_assets">Statistik für &lt;i&gt;%1$s (%2$s)&lt;/i&gt;:</string>
     <string name="message_statistics_title_db">Statistik für Ordner &lt;i&gt;%s&lt;/i&gt;:</string>
-    <string name="message_statistics_details">Gelöste Rätsel: %d&lt;br/&gt;Durchschnittszeit: %s&lt;br/&gt;Bestzeit: %s</string>
+    <string name="message_statistics_details">Gelöste Rätsel: %1$d&lt;br/&gt;Durchschnittszeit: %2$s&lt;br/&gt;Bestzeit: %3$s</string>
 
     <!-- Folder cannot be opened because it's empty -->
     <string name="message_empty_folder">Der Ordner \'%s\' ist leer.</string>
@@ -143,7 +143,7 @@
     <string name="prompt_spinner_difficulty">Schwierigkeitsgrad auswählen</string>
     <string name="mini_stats_0">(Noch kein Rätsel gelöst.)</string>
     <!-- next line uses 'NO-BREAK SPACE' (U+00A0) to avoid undesired line breaks -->
-    <string name="mini_stats_n">(Gelöste\u00A0Rätsel:\u00A0%d, Durchschnittszeit:\u00A0%s, Bestzeit:\u00A0%s)</string>
+    <string name="mini_stats_n">(Gelöste\u00A0Rätsel:\u00A0%1$d, Durchschnittszeit:\u00A0%2$s, Bestzeit:\u00A0%3$s)</string>
 
     <!-- Declares a permission group and a permission that allows external applications to import puzzles into Andoku -->
     <string name="permgroup_label_andoku">Andoku</string>
