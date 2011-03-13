@@ -54,6 +54,8 @@ public final class Puzzle {
 				int value = other.values[row][col];
 				if (value != UNDEFINED)
 					set(row, col, value);
+
+				eliminateValues(row, col, other.eliminated[row][col]);
 			}
 	}
 
