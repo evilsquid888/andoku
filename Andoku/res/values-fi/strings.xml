@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Andoku - a sudoku puzzle game for Android.
+  Copyright (C) 2011  Markus Wiederkehr
+
+  This file is part of Andoku.
+
+  Andoku is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  Andoku is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with Andoku.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- Translation by Rami Selin -->
+
+<resources>
+  <string name="app_name">Andoku</string>
+  <string name="age_0_minutes">0 minuuttia sitten</string>
+  <string name="age_1_day">eilen</string>
+  <string name="age_1_hour">tunti sitten</string>
+  <string name="age_1_minute">minuutti sitten</string>
+  <string name="age_1_week">viikko sitten</string>
+  <string name="age_2_days">2 päivää sitten</string>
+  <string name="age_n_days">%d päivää sitten</string>
+  <string name="age_n_hours">%d tuntia sitten</string>
+  <string name="age_n_minutes">%d minuuttia sitten</string>
+  <string name="age_n_weeks">%d viikkoa sitten</string>
+  <string name="alert_dialog_ok">OK</string>
+  <string name="alert_dialog_cancel">Peruuta</string>
+  <string name="button_nav_resume_game">Jatka peliä</string>
+  <string name="button_nav_select_new_game">Uusi peli</string>
+  <string name="button_nav_select_folders">Kansiot</string>
+  <string name="button_nav_settings">Asetukset</string>
+  <string name="button_nav_help">Ohje</string>
+  <string name="button_nav_about">Tietoja</string>
+  <string name="button_nav_start_game">Jatka</string>
+  <string name="button_nav_back">Takaisin</string>
+  <string name="button_nav_cancel">Peruuta</string>
+  <string name="button_dismiss_congrats">Jatka</string>
+  <string name="button_reset_game">Nollaa peli</string>
+  <string name="button_resume_game">Jatka peliä</string>
+  <string name="button_start_game">Aloita peli</string>
+  <string name="button_clear">T</string>
+  <string name="button_invert">Kää</string>
+  <string name="menu_create_folder">Luo uusi kansio</string>
+  <string name="context_menu_delete_folder">Poista kansio</string>
+  <string name="context_menu_rename_folder">Nimeä kansio uudelleen</string>
+  <string name="dialog_create_folder">Luo uusi kansio</string>
+  <string name="message_create_folder">Uusi kansion nimi:</string>
+  <string name="dialog_delete_folder">Poista kansio</string>
+  <string name="message_delete_folder">Kansio \'%s\' ei ole tyhjä. Haluatko varmasti poistaa sen?</string>
+  <string name="dialog_rename_folder">Nimeä kansio uudelleen</string>
+  <string name="message_rename_folder">Uusi nimi kansiolle \'%s\':</string>
+  <string name="message_invalid_folder_name">Kansion nimessä ei saa olla kauttaviivaa tai se ei voi olla tyhjä!</string>
+  <string name="message_folder_exists">Ei voitu luoda tai nimetä kansiota, koska toinen kansio nimeltä \'%s\' on jo olemassa!</string>
+  <string name="dialog_reset_puzzle">Nollaa pulma?</string>
+  <string name="message_reset_puzzle">Haluatko tyhjentää nykyisen pulman ja nollata ajastimen?</string>
+  <string name="dialog_reset_all_puzzles">Nollaa kaikki pulmat?</string>
+  <string name="message_reset_all_puzzles_in_variation">Haluatko varmasti nollata KAIKKI PULMAT nykyisestä pelimuodosta?</string>
+  <string name="message_reset_all_puzzles_in_folder">Haluatko varmasti nollata KAIKKI PULMAT tästä kansiosta?</string>
+  <string name="html_page_about">about-fi.html</string>
+  <string name="html_page_help">help-fi.html</string>
+  <string name="message_computing_solution">Lasketaan ratkaisua. Odota hetki...</string>
+  <string name="info_puzzle_ok_1">Kaikki on kunnossa. Yksi solu jäljellä.</string>
+  <string name="info_puzzle_ok_n">Kaikki on kunnossa. %d solua jäljellä.</string>
+  <string name="warn_invalid_puzzle">Tämä pulma on virheellinen ja mahdoton ratkaista!</string>
+  <string name="warn_puzzle_errors">Olet valitettavasti tehnyt joitakin virheitä!</string>
+  <string name="info_invalid_solution">Tämä ei ole oikea ratkaisu!\n\nKokeile valikosta löytyvää \'Tarkista pulma\', jolla näet virheiden sijainnin.</string>
+  <string name="menu_check_puzzle">Tarkista pulma</string>
+  <string name="menu_pause">Tauko</string>
+  <string name="menu_reset_puzzle">Nollaa pulma</string>
+  <string name="menu_reset_all_puzzles">Nollaa kaikki pulmat</string>
+  <string name="menu_resume">Jatka</string>
+  <string name="menu_eliminate_values">Karsi arvot</string>
+  <string name="menu_settings">Asetukset</string>
+  <string name="message_congrats">&lt;b&gt;Onnittelut, ratkaisit tämän pulman!&lt;/b&gt;</string>
+  <string name="message_statistics_title_assets">Tilastoja kohteelle &lt;i&gt;%1$s (%2$s)&lt;/i&gt;:</string>
+  <string name="message_statistics_title_db">Tilastoja kansiolle &lt;i&gt;%s&lt;/i&gt;:</string>
+  <string name="message_statistics_details">Ratkaistuja pulmia: %1$d&lt;br/&gt;Keskimääräinen aika: %2$s&lt;br/&gt;Nopein aika: %3$s</string>
+  <string name="message_empty_folder">Kansio \'%s\' on tyhjä.</string>
+  <string name="name_sudoku_squiggly">Koukeroinen sudoku</string>
+  <string name="name_sudoku_squiggly_hyper">Koukeroinen Hyper-Sudoku</string>
+  <string name="name_sudoku_squiggly_x">Koukeroinen X-Sudoku</string>
+  <string name="name_sudoku_squiggly_percent">Koukeroinen prosenttisudoku</string>
+  <string name="name_sudoku_squiggly_color">Koukeroinen värisudoku</string>
+  <string name="name_sudoku_standard">Normaali sudoku</string>
+  <string name="name_sudoku_standard_hyper">Hyper-Sudoku</string>
+  <string name="name_sudoku_standard_x">X-Sudoku</string>
+  <string name="name_sudoku_standard_percent">Prosenttisudoku</string>
+  <string name="name_sudoku_standard_color">Värisudoku</string>
+  <string name="page_title_welcome">Tervetuloa Andokuun</string>
+  <string name="page_title_resume_game">Jatka peliä</string>
+  <string name="page_title_new_game">Aloita uusi peli</string>
+  <string name="page_title_folder_list">Tuodut kansiot</string>
+  <string name="page_title_help">Ohjeita Andokuun</string>
+  <string name="page_title_about">Tietoja Andokusta</string>
+  <string name="spinner_grid">Ruudukon tyyli:</string>
+  <string name="prompt_spinner_grid">Valitse ruudukon tyyli</string>
+  <string name="spinner_extra_regions">erikoisalueet:</string>
+  <string name="prompt_spinner_extra_regions">Valitse erikoisalueet</string>
+  <string name="spinner_difficulty">Vaikeusaste:</string>
+  <string name="prompt_spinner_difficulty">Valitse vaikeusaste</string>
+  <string name="mini_stats_0">(Pulmat vielä ratkaisematta.)</string>
+  <string name="mini_stats_n">(Ratkaistuja\u00A0pulmia:\u00A0%1$d, keskimääräinen\u00A0aika:\u00A0%2$s, nopein\u00A0aika:\u00A0%3$s)</string>
+  <string name="permgroup_label_andoku">Andoku</string>
+  <string name="permgroup_description_andoku">Käyttöluvat, joilla on mahdollista vaikuttaa Andokuun.</string>
+  <string name="perm_label_import">tuo sudokupulmia Andokuun</string>
+  <string name="perm_description_import">Sallii sovelluksen luoda kansioita ja tuoda sudokupulmia Andokuun.</string>
+</resources>

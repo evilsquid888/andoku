@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Andoku - a sudoku puzzle game for Android.
+  Copyright (C) 2011  Markus Wiederkehr
+
+  This file is part of Andoku.
+
+  Andoku is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  Andoku is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with Andoku.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- Translation by Rami Selin -->
+
+<resources>
+  <string name="pref_category_display">Näyttö</string>
+  <string name="pref_title_fullscreen_mode">Kokoruututila</string>
+  <string name="pref_summary_fullscreen_mode">Piilottaa tilarivin pelin aikana. Vaatii uudelleenkäynnistyksen.</string>
+  <string name="pref_title_color_theme">Väriteema</string>
+  <string name="pref_summary_color_theme">Valitse käytettävä väriteema.</string>
+  <string name="pref_title_colored_regions">Värilliset alueet</string>
+  <string name="pref_summary_colored_regions">Käytä värejä näyttämään sudokupulman alueita.</string>
+  <string name="pref_category_behavior">Käyttäytyminen</string>
+  <string name="pref_title_input_method">Syöttötapa</string>
+  <string name="pref_summary_input_method">Valitse numeroiden syöttötapa.</string>
+  <string name="pref_title_check_against_solution">Tarkka virheentarkistus</string>
+  <string name="pref_summary_check_against_solution">Vertaa tilannetta pulman ratkaisuun.</string>
+  <string name="pref_category_game_features">Pelin ominaisuudet</string>
+  <string name="pref_title_highlight_digits">Korosta numeroita</string>
+  <string name="pref_summary_highlight_digits">Korosta numeroa, joka on viimeksi annettu tai on valittuna.</string>
+  <string name="pref_title_show_timer">Näytä ajastin</string>
+  <string name="pref_summary_show_timer">Näyttää sekuntikellon pelin aikana.</string>
+  <string name="pref_title_enable_eliminate_values">Ota käyttöön \'Karsi arvot\'</string>
+  <string name="pref_summary_enable_eliminate_values">Avaa pelivalikkoon kohdan \'Karsi arvot\'.</string>
+</resources>

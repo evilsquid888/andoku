@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Andoku - a sudoku puzzle game for Android.
+  Copyright (C) 2011  Markus Wiederkehr
+
+  This file is part of Andoku.
+
+  Andoku is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  Andoku is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with Andoku.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- Translation by Rami Selin -->
+
+<resources>
+  <string-array name="grid_styles">
+    <item>Normaali</item>
+    <item>Palapeli</item>
+  </string-array>
+  <string-array name="extra_regions">
+    <item>Ei erikoisalueita</item>
+    <item>X-Sudoku</item>
+    <item>Hyper-Sudoku</item>
+    <item>Prosenttisudoku</item>
+    <item>Värisudoku</item>
+  </string-array>
+  <string-array name="difficulties">
+    <item>Helppo</item>
+    <item>Normaali</item>
+    <item>Haastava</item>
+    <item>Vaikea</item>
+    <item>Pirullinen</item>
+  </string-array>
+  <string-array name="pref_entries_colored_regions">
+    <item>Ei koskaan</item>
+    <item>Perinteisellä ja palapelillä ilman erikoisia</item>
+    <item>Kaikilla paitsi palapelillä erikoisalueilla</item>
+    <item>Aina</item>
+  </string-array>
+  <string-array name="pref_entries_highlight_digits">
+    <item>Ei koskaan</item>
+    <item>Vain yksittäiset arvot</item>
+    <item>Sekä yksittäiset että useat arvot</item>
+  </string-array>
+  <string-array name="pref_entries_color_theme">
+    <item>Perinteinen</item>
+    <item>Tumma</item>
+  </string-array>
+  <string-array name="pref_entries_input_method">
+    <item>Solu, sitten arvot</item>
+    <item>Arvot, sitten solu</item>
+    <item>Automaattinen</item>
+  </string-array>
+</resources>
