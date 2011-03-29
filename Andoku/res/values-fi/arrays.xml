@@ -42,8 +42,8 @@
   </string-array>
   <string-array name="pref_entries_colored_regions">
     <item>Ei koskaan</item>
-    <item>Perinteisellä ja palapelillä ilman erikoisia</item>
-    <item>Kaikilla paitsi palapelillä erikoisalueilla</item>
+    <item>Perint. ja pala. ilman erikoisia</item>
+    <item>Kaikilla paitsi pala. erikoisilla</item>
     <item>Aina</item>
   </string-array>
   <string-array name="pref_entries_highlight_digits">
