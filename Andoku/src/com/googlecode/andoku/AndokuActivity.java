@@ -612,7 +612,7 @@ public class AndokuActivity extends Activity
 		// translate event x/y from fingertipView to andokuView coordinates
 		float x = event.getX() + fingertipViewScreenLocation[0] - andokuViewScreenLocation[0];
 		float y = event.getY() + fingertipViewScreenLocation[1] - andokuViewScreenLocation[1];
-		Position position = andokuView.getPositionAt(x, y, 0.5f);
+		Position position = andokuView.getPositionAt(x, y, 0.5f, Util.dipInt(this, 10));
 
 		int action = event.getAction();
 

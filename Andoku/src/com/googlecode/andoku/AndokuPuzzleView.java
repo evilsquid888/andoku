@@ -98,29 +98,22 @@ public class AndokuPuzzleView extends View {
 		return puzzle;
 	}
 
-	public Position getPositionAt(float px, float py, float fuzzy) {
+	public Position getPositionAt(float px, float py, float frameScale, float maxFrame) {
 		if (puzzle == null)
 			return null;
 
 		px -= offsetX;
-		if (px < (-cellWidth * fuzzy) || px >= (cellWidth * (size + fuzzy)))
+		final float frameX = Math.min(maxFrame, cellWidth * frameScale);
+		if (px < -frameX || px >= cellWidth * size + frameX)
 			return null;
 
 		py -= offsetY;
-		if (py < (-cellHeight * fuzzy) || py >= (cellHeight * (size + fuzzy)))
+		final float frameY = Math.min(maxFrame, cellHeight * frameScale);
+		if (py < -frameY || py >= cellHeight * size + frameY)
 			return null;
 
-		int cx = (int) Math.floor(px / cellWidth);
-		if (cx < 0)
-			cx = 0;
-		if (cx >= size)
-			cx = size - 1;
-
-		int cy = (int) Math.floor(py / cellHeight);
-		if (cy < 0)
-			cy = 0;
-		if (cy >= size)
-			cy = size - 1;
+		int cx = Math.max(0, Math.min(size - 1, (int) Math.floor(px / cellWidth)));
+		int cy = Math.max(0, Math.min(size - 1, (int) Math.floor(py / cellHeight)));
 
 		return new Position(cy, cx);
 	}
