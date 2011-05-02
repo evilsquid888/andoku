@@ -91,7 +91,8 @@
     <TableLayout
         android:id="@+id/keypad"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/andoku_keypad_distance">
 
         <TableRow>
             <ImageButton android:id="@+id/input_undo" android:src="@drawable/undo" style="@style/KeypadButton" android:layout_gravity="center_vertical" android:layout_height="match_parent"/>

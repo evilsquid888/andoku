@@ -24,4 +24,6 @@
 	<dimen name="andoku_padding_right">5dp</dimen>
 	<dimen name="andoku_padding_bottom">0dp</dimen>
 	<dimen name="andoku_padding_left">5dp</dimen>
+
+	<dimen name="andoku_keypad_distance">0dp</dimen>
 </resources>
