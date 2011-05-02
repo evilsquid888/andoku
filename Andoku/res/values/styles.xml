@@ -37,14 +37,14 @@
 
     <style name="KeypadButton" parent="android:style/Widget.Button">
         <item name="android:background">@drawable/button_bg</item>
-        <item name="android:textSize">17dp</item>
-        <item name="android:width">62dp</item> 
+        <item name="android:textSize">@dimen/keypad_button_text_size</item>
+        <item name="android:width">@dimen/keypad_button_width</item> 
     </style>
 
     <style name="KeypadToggleButton" parent="android:style/Widget.Button.Toggle">
         <item name="android:background">@drawable/button_toggle_bg</item>
-        <item name="android:textSize">17dp</item>
-        <item name="android:width">62dp</item> 
+        <item name="android:textSize">@dimen/keypad_button_text_size</item>
+        <item name="android:width">@dimen/keypad_button_width</item> 
     </style>
 
 </resources>

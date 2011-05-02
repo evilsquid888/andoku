@@ -26,4 +26,7 @@
 	<dimen name="andoku_padding_left">5dp</dimen>
 
 	<dimen name="andoku_keypad_distance">0dp</dimen>
+
+	<dimen name="keypad_button_text_size">17dp</dimen>
+	<dimen name="keypad_button_width">62dp</dimen>
 </resources>
