@@ -37,6 +37,7 @@ import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -1141,6 +1142,7 @@ public class AndokuActivity extends Activity
 		cancelToast();
 
 		toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+		toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, Util.dipInt(this, 80));
 		// TODO: change toast background to indicate warning..
 		toast.show();
 	}
