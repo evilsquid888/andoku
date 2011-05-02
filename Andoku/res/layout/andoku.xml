@@ -139,7 +139,8 @@
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:baselineAligned="false">
+        android:baselineAligned="false"
+        android:layout_marginTop="@dimen/andoku_navigation_distance">
 
         <ImageButton
             android:id="@+id/buttonBack"
