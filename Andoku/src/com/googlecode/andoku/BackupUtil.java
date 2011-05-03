@@ -74,7 +74,7 @@ class BackupUtil extends Activity {
 		// resources first! Create res/values/secret.xml and add a random string named secret_key.
 		// Please also adjust the value of SD_CARD_BACKUP_DIR so that the backup files of your mod
 		// and the backup files of the original Andoku do not conflict.
-		String secretKey = context.getString(R.string.secret_key);
+		String secretKey = "secretandoku";
 
 		File backupFile = new File(andokuDir, DATABASE_BACKUP_FILE);
 		File backupFileSignature = new File(andokuDir, DATABASE_BACKUP_FILE_SIGNATURE);
