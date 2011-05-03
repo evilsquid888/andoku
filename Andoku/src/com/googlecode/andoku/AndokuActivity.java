@@ -43,16 +43,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 import com.googlecode.andoku.commands.AndokuContext;
 import com.googlecode.andoku.commands.EliminateValuesCommand;
 import com.googlecode.andoku.commands.SetValuesCommand;
@@ -306,6 +308,11 @@ public class AndokuActivity extends Activity
 			undoButton.setEnabled(history.canUndo());
 			redoButton.setEnabled(history.canRedo());
 		}
+
+		// Look up the AdView as a resource and load a request.
+		AdView adView = (AdView) this.findViewById(R.id.adView);
+		adView.loadAd(new AdRequest());
+
 	}
 
 	private void createThemeFromPreferences() {
@@ -448,16 +455,17 @@ public class AndokuActivity extends Activity
 		menu.findItem(MENU_CHECK_PUZZLE).setVisible(gameState == GAME_STATE_PLAYING);
 
 		boolean paused = gameState == GAME_STATE_READY && !puzzle.isSolved() && timer.getTime() > 0;
-		menu.findItem(MENU_PAUSE_RESUME_PUZZLE).setTitle(
-				paused ? R.string.menu_resume : R.string.menu_pause).setIcon(
-				paused ? R.drawable.ic_menu_resume : R.drawable.ic_menu_pause).setVisible(
-				gameState == GAME_STATE_PLAYING || paused);
+		menu.findItem(MENU_PAUSE_RESUME_PUZZLE)
+				.setTitle(paused ? R.string.menu_resume : R.string.menu_pause)
+				.setIcon(paused ? R.drawable.ic_menu_resume : R.drawable.ic_menu_pause)
+				.setVisible(gameState == GAME_STATE_PLAYING || paused);
 
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-		menu.findItem(MENU_ELIMINATE_VALUES).setVisible(
-				gameState == GAME_STATE_PLAYING
-						&& settings.getBoolean(Settings.KEY_ENABLE_ELIMINATE_VALUES, false)).setEnabled(
-				puzzle.canEliminateValues());
+		menu.findItem(MENU_ELIMINATE_VALUES)
+				.setVisible(
+						gameState == GAME_STATE_PLAYING
+								&& settings.getBoolean(Settings.KEY_ENABLE_ELIMINATE_VALUES, false))
+				.setEnabled(puzzle.canEliminateValues());
 
 		menu.findItem(MENU_RESET_PUZZLE).setVisible(gameState == GAME_STATE_PLAYING);
 
@@ -1089,17 +1097,17 @@ public class AndokuActivity extends Activity
 	}
 
 	private Dialog createConfirmResetPuzzleDialog() {
-		return new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle(
-				R.string.dialog_reset_puzzle).setMessage(R.string.message_reset_puzzle)
+		return new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert)
+				.setTitle(R.string.dialog_reset_puzzle).setMessage(R.string.message_reset_puzzle)
 				.setPositiveButton(R.string.alert_dialog_ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						onResetPuzzle(true);
 					}
-				}).setNegativeButton(R.string.alert_dialog_cancel,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int whichButton) {
-							}
-						}).create();
+				})
+				.setNegativeButton(R.string.alert_dialog_cancel, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+					}
+				}).create();
 	}
 
 	private Dialog createConfirmResetAllPuzzlesDialog() {
@@ -1108,14 +1116,14 @@ public class AndokuActivity extends Activity
 				? R.string.message_reset_all_puzzles_in_folder
 				: R.string.message_reset_all_puzzles_in_variation;
 
-		return new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle(
-				R.string.dialog_reset_all_puzzles).setMessage(messageId).setPositiveButton(
-				R.string.alert_dialog_ok, new DialogInterface.OnClickListener() {
+		return new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert)
+				.setTitle(R.string.dialog_reset_all_puzzles).setMessage(messageId)
+				.setPositiveButton(R.string.alert_dialog_ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						onResetAllPuzzles(true);
 					}
-				}).setNegativeButton(R.string.alert_dialog_cancel,
-				new DialogInterface.OnClickListener() {
+				})
+				.setNegativeButton(R.string.alert_dialog_cancel, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 					}
 				}).create();

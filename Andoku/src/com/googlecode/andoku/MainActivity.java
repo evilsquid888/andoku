@@ -28,6 +28,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 import com.googlecode.andoku.db.AndokuDatabase;
 
 public class MainActivity extends Activity {
@@ -44,13 +46,22 @@ public class MainActivity extends Activity {
 		if (Constants.LOG_V)
 			Log.v(TAG, "onCreate(" + savedInstanceState + ")");
 
+
+
 		Util.setFullscreenMode(this);
 
 		super.onCreate(savedInstanceState);
 
+
+
 		BackupUtil.restoreOrBackupDatabase(this);
 
 		setContentView(R.layout.main);
+
+		// Look up the AdView as a resource and load a request.
+		AdView adView = (AdView) this.findViewById(R.id.adView);
+		adView.loadAd(new AdRequest());
+
 
 		db = new AndokuDatabase(this);
 

@@ -27,6 +27,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
 
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+
 public class AboutActivity extends Activity {
 	private static final String TAG = AboutActivity.class.getName();
 
@@ -49,9 +52,13 @@ public class AboutActivity extends Activity {
 		});
 
 		WebView aboutWebView = (WebView) findViewById(R.id.aboutWebView);
+
 		aboutWebView.loadUrl("file:///android_asset/"
 				+ getResources().getString(R.string.html_page_about));
 
 		aboutWebView.setBackgroundColor(0);
+		// Look up the AdView as a resource and load a request.
+		AdView adView = (AdView) this.findViewById(R.id.adView);
+		adView.loadAd(new AdRequest());
 	}
 }
