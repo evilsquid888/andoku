@@ -1,0 +1,16 @@
+to build
+
+1. build andoku-client first
+* erase gen directory then build
+
+2. change BackupUtil.java
+* add secret key 		String secretKey = "secretandoku";
+
+3. build Andoku
+
+4. Now everything should build
+
+5. Run Andoku as Android App!
+
+Voila!
+
