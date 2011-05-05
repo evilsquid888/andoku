@@ -41,6 +41,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.googlecode.andoku.db.AndokuDatabase;
+import com.googlecode.andokusquid.R;
 
 class BackupUtil extends Activity {
 	private static final String TAG = BackupUtil.class.getName();

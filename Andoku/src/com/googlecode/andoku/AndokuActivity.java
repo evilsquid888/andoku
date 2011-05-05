@@ -74,6 +74,7 @@ import com.googlecode.andoku.source.PuzzleHolder;
 import com.googlecode.andoku.source.PuzzleSource;
 import com.googlecode.andoku.source.PuzzleSourceIds;
 import com.googlecode.andoku.source.PuzzleSourceResolver;
+import com.googlecode.andokusquid.R;
 
 public class AndokuActivity extends Activity
 		implements OnTouchListener, OnKeyListener, TickListener {

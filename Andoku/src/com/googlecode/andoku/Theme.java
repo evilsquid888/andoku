@@ -24,6 +24,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 
 import com.googlecode.andoku.model.PuzzleType;
+import com.googlecode.andokusquid.R;
 
 interface Theme {
 	char getSymbol(int value);

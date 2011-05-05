@@ -31,6 +31,7 @@ import android.widget.Button;
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 import com.googlecode.andoku.db.AndokuDatabase;
+import com.googlecode.andokusquid.R;
 
 public class MainActivity extends Activity {
 	private static final String TAG = MainActivity.class.getName();

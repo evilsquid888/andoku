@@ -23,6 +23,7 @@ package com.googlecode.andoku;
 import java.util.EnumSet;
 
 import com.googlecode.andoku.model.PuzzleType;
+import com.googlecode.andokusquid.R;
 
 public enum AreaColorPolicy {
 	NEVER(EnumSet.noneOf(PuzzleType.class)), //

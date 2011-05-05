@@ -20,7 +20,7 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.googlecode.andoku"
+      package="com.googlecode.andokusquid"
       android:installLocation="auto"
       android:versionCode="15"
       android:versionName="1.3.4">
@@ -44,12 +44,12 @@
         android:permissionGroup="com.googlecode.andoku.permission-group.ANDOKU"
         android:protectionLevel="normal"/>
 
-    <application android:name=".Application" android:icon="@drawable/icon" android:label="@string/app_name">
-        <provider android:name=".AndokuContentProvider"
+    <application android:name="com.googlecode.andoku.Application" android:icon="@drawable/icon" android:label="@string/app_name">
+        <provider android:name="com.googlecode.andoku.AndokuContentProvider"
                   android:authorities="com.googlecode.andoku.puzzlesprovider"
                   android:writePermission="com.googlecode.andoku.permission.IMPORT"/>
 
-        <activity android:name=".Main"
+        <activity android:name="com.googlecode.andoku.Main"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"
                   android:theme="@style/Theme.NoBackground.Light">
@@ -58,7 +58,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity"
+        <activity android:name="com.googlecode.andoku.MainActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"
                   android:theme="@style/Theme.NoBackground.Light">
@@ -68,7 +68,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".OpenImportedPuzzleActivity"
+        <activity android:name="com.googlecode.andoku.OpenImportedPuzzleActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"
                   android:theme="@style/Theme.NoBackground.Light">
@@ -78,37 +78,37 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ResumeGameActivity"
+        <activity android:name="com.googlecode.andoku.ResumeGameActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"
                   android:theme="@style/Theme.NoBackground.Light"/>
 
-        <activity android:name=".NewGameActivity"
+        <activity android:name="com.googlecode.andoku.NewGameActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"
                   android:theme="@style/Theme.NoBackground.Light"/>
 
-        <activity android:name=".FolderListActivity"
+        <activity android:name="com.googlecode.andoku.FolderListActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"
                   android:theme="@style/Theme.NoBackground.Light"/>
 
-        <activity android:name=".SettingsActivity"
+        <activity android:name="com.googlecode.andoku.SettingsActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"
                   android:theme="@style/Theme.NoBackground.Light"/>
 
-        <activity android:name=".HelpActivity"
+        <activity android:name="com.googlecode.andoku.HelpActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"
                   android:theme="@style/Theme.NoBackground.Light"/>
 
-        <activity android:name=".AboutActivity"
+        <activity android:name="com.googlecode.andoku.AboutActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"
                   android:theme="@style/Theme.NoBackground.Light"/>
 
-        <activity android:name=".AndokuActivity"
+        <activity android:name="com.googlecode.andoku.AndokuActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"
                   android:theme="@style/Theme.NoBackground.Light"/>

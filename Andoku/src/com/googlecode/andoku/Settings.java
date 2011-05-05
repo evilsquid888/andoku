@@ -20,6 +20,8 @@
 
 package com.googlecode.andoku;
 
+import com.googlecode.andokusquid.R;
+
 // corresponds to res/xml/settings.xml
 public class Settings {
 	public static final String KEY_COLORED_REGIONS = "colored_regions";

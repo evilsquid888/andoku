@@ -20,6 +20,8 @@
 
 package com.googlecode.andoku;
 
+import com.googlecode.andokusquid.R;
+
 public enum HighlightDigitsPolicy {
 	NEVER, ONLY_SINGLE_VALUES, ALL_VALUES
 }

@@ -32,6 +32,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.GradientDrawable.Orientation;
 
 import com.googlecode.andoku.model.PuzzleType;
+import com.googlecode.andokusquid.R;
 
 class ColorTheme implements Theme {
 	private final String symbols;

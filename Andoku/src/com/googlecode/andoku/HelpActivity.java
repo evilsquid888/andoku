@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
+import com.googlecode.andokusquid.R;
 
 public class HelpActivity extends Activity {
 	private static final String TAG = HelpActivity.class.getName();

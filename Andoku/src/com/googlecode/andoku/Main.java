@@ -23,6 +23,7 @@ package com.googlecode.andoku;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import com.googlecode.andokusquid.R;
 
 /**
  * With Andoku 1.1.0 class Main has been renamed in MainActivity. Existing desktop icons no longer

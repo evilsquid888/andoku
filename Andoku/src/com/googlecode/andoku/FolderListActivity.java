@@ -43,6 +43,7 @@ import android.widget.Toast;
 
 import com.googlecode.andoku.db.AndokuDatabase;
 import com.googlecode.andoku.source.PuzzleSourceIds;
+import com.googlecode.andokusquid.R;
 
 public class FolderListActivity extends ListActivity {
 	private static final String TAG = FolderListActivity.class.getName();

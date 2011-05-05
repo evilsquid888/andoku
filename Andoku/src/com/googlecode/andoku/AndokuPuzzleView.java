@@ -38,6 +38,7 @@ import com.googlecode.andoku.model.AndokuPuzzle;
 import com.googlecode.andoku.model.Position;
 import com.googlecode.andoku.model.RegionError;
 import com.googlecode.andoku.model.ValueSet;
+import com.googlecode.andokusquid.R;
 
 public class AndokuPuzzleView extends View {
 	private static final String TAG = AndokuPuzzleView.class.getName();

@@ -34,6 +34,7 @@ import android.view.WindowManager;
 import com.googlecode.andoku.db.AndokuDatabase;
 import com.googlecode.andoku.model.PuzzleType;
 import com.googlecode.andoku.source.PuzzleSourceIds;
+import com.googlecode.andokusquid.R;
 
 class Util {
 	private Util() {

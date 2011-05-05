@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.Button;
+import com.googlecode.andokusquid.R;
 
 public class KeypadButton extends Button {
 	private static final int[] HIGHLIGHTED_STATE_SET = { R.attr.state_highlighted };

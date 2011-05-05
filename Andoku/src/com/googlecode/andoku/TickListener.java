@@ -20,6 +20,8 @@
 
 package com.googlecode.andoku;
 
+import com.googlecode.andokusquid.R;
+
 public interface TickListener {
 	void onTick(long time);
 }

@@ -27,6 +27,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.GradientDrawable.Orientation;
 import android.view.View;
+import com.googlecode.andokusquid.R;
 
 public class FingertipView extends View {
 	private PointF point;

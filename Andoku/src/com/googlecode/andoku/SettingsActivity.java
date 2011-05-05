@@ -23,6 +23,7 @@ package com.googlecode.andoku;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.widget.ListView;
+import com.googlecode.andokusquid.R;
 
 public class SettingsActivity extends PreferenceActivity {
 	@Override

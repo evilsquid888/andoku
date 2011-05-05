@@ -23,6 +23,7 @@ package com.googlecode.andoku;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import com.googlecode.andokusquid.R;
 
 public class TickTimer {
 	private static final String TAG = TickTimer.class.getName();

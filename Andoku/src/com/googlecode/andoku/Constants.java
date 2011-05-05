@@ -20,6 +20,8 @@
 
 package com.googlecode.andoku;
 
+import com.googlecode.andokusquid.R;
+
 public class Constants {
 	private static final String PREFIX = Constants.class.getPackage().getName() + ".";
 

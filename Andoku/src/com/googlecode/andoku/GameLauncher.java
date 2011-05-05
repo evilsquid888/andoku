@@ -28,6 +28,7 @@ import android.util.Log;
 import com.googlecode.andoku.db.AndokuDatabase;
 import com.googlecode.andoku.source.PuzzleSource;
 import com.googlecode.andoku.source.PuzzleSourceResolver;
+import com.googlecode.andokusquid.R;
 
 class GameLauncher {
 	private static final String TAG = GameLauncher.class.getName();

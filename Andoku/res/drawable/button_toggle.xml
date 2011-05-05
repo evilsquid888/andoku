@@ -20,7 +20,7 @@
 -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:andoku="http://schemas.android.com/apk/res/com.googlecode.andoku">
+          xmlns:andoku="http://schemas.android.com/apk/res/com.googlecode.andokusquid">
     <item andoku:state_checked="false" android:drawable="@drawable/button_toggle_off" />
     <item andoku:state_checked="true" android:drawable="@drawable/button_toggle_on" />
 </selector>

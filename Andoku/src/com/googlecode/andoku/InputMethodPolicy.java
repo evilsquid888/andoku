@@ -25,6 +25,7 @@ import com.googlecode.andoku.im.AutomaticInputMethod;
 import com.googlecode.andoku.im.InputMethod;
 import com.googlecode.andoku.im.InputMethodTarget;
 import com.googlecode.andoku.im.ValuesThenCellInputMethod;
+import com.googlecode.andokusquid.R;
 
 public enum InputMethodPolicy {
 	CELL_THEN_VALUES {

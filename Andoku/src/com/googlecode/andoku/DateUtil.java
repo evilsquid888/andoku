@@ -21,6 +21,7 @@
 package com.googlecode.andoku;
 
 import android.content.res.Resources;
+import com.googlecode.andokusquid.R;
 
 public class DateUtil {
 	private DateUtil() {

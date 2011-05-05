@@ -38,6 +38,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import com.googlecode.andoku.db.AndokuDatabase;
 import com.googlecode.andoku.db.GameStatistics;
 import com.googlecode.andoku.source.PuzzleSourceIds;
+import com.googlecode.andokusquid.R;
 
 public class NewGameActivity extends Activity {
 	private static final String TAG = NewGameActivity.class.getName();

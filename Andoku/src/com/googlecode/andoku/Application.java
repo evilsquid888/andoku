@@ -25,6 +25,7 @@ import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import com.googlecode.andokusquid.R;
 
 public class Application extends android.app.Application {
 	private static final String TAG = Application.class.getName();

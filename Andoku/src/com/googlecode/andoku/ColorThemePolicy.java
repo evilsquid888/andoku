@@ -21,6 +21,7 @@
 package com.googlecode.andoku;
 
 import com.googlecode.andoku.ColorTheme.Builder;
+import com.googlecode.andokusquid.R;
 
 public enum ColorThemePolicy {
 	CLASSIC {

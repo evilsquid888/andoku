@@ -38,6 +38,7 @@ import android.util.Log;
 import com.googlecode.andoku.db.AndokuDatabase;
 import com.googlecode.andoku.db.PuzzleInfo;
 import com.googlecode.andoku.model.Difficulty;
+import com.googlecode.andokusquid.R;
 
 public class AndokuContentProvider extends ContentProvider {
 	private static final String TAG = AndokuContentProvider.class.getName();

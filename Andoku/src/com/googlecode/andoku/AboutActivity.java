@@ -29,6 +29,7 @@ import android.webkit.WebView;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
+import com.googlecode.andokusquid.R;
 
 public class AboutActivity extends Activity {
 	private static final String TAG = AboutActivity.class.getName();

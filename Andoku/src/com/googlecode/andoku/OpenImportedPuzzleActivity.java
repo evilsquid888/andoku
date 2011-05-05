@@ -29,6 +29,7 @@ import android.util.Log;
 
 import com.googlecode.andoku.db.AndokuDatabase;
 import com.googlecode.andoku.source.PuzzleSourceIds;
+import com.googlecode.andokusquid.R;
 
 public class OpenImportedPuzzleActivity extends Activity {
 	private static final String TAG = OpenImportedPuzzleActivity.class.getName();

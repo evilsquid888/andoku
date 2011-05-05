@@ -25,6 +25,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.FontMetrics;
 
 import com.googlecode.andoku.model.ValueSet;
+import com.googlecode.andokusquid.R;
 
 public class MultiValuesPainter {
 	private Theme theme;

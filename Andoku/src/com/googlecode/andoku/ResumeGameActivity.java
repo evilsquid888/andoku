@@ -38,6 +38,7 @@ import com.googlecode.andoku.db.AndokuDatabase;
 import com.googlecode.andoku.db.PuzzleId;
 import com.googlecode.andoku.model.PuzzleType;
 import com.googlecode.andoku.source.PuzzleSourceIds;
+import com.googlecode.andokusquid.R;
 
 public class ResumeGameActivity extends ListActivity {
 	private static final String TAG = ResumeGameActivity.class.getName();
