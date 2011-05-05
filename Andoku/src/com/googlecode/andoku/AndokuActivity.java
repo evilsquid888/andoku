@@ -179,6 +179,7 @@ public class AndokuActivity extends Activity
 
 	private InputMethodPolicy inputMethodPolicy;
 	private InputMethod inputMethod;
+	private AdView adView = null;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -191,6 +192,12 @@ public class AndokuActivity extends Activity
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.andoku);
+
+		// Look up the AdView as a resource and load a request.
+		adView = (AdView) this.findViewById(R.id.adView);
+		AdRequest ar = new AdRequest();
+		adView.loadAd(ar);
+		adView.setVisibility(View.VISIBLE);
 
 		db = new AndokuDatabase(this);
 
@@ -309,9 +316,7 @@ public class AndokuActivity extends Activity
 			redoButton.setEnabled(history.canRedo());
 		}
 
-		// Look up the AdView as a resource and load a request.
-		AdView adView = (AdView) this.findViewById(R.id.adView);
-		adView.loadAd(new AdRequest());
+
 
 	}
 
